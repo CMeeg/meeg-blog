@@ -1,0 +1,30 @@
+{
+    "name": "@meeg/gridsome-source-kentico-cloud",
+    "version": "0.1.0",
+    "description": "Kentico Cloud source for Gridsome",
+    "author": "Chris Meagher",
+    "license": "",
+    "homepage": "",
+    "repository": "",
+    "main": "index.js",
+    "keywords": [
+        "gridsome",
+        "gridsome-plugin",
+        "gridsome-source",
+        "kentico",
+        "kentico cloud"
+    ],
+    "dependencies": {
+        "kentico-cloud-delivery": "^5.7.2"
+    },
+    "peerDependencies": {
+        "gridsome": "0.x",
+        "rxjs": "^6.5.2"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "engines": {
+        "node": ">=8.3"
+    }
+}

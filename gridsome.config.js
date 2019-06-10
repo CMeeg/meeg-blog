@@ -6,5 +6,10 @@
 
 module.exports = {
   siteName: 'meeg.dev',
-  plugins: []
+  plugins: [
+    {
+      use: '~/plugins/gridsome-source-kentico-cloud',
+      options: {}
+    }
+  ]
 }
