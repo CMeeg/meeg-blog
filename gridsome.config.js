@@ -6,10 +6,15 @@
 
 module.exports = {
   siteName: 'meeg.dev',
+  siteUrl: 'https://meeg.dev',
+  titleTemplate: '%s - Chris Meagher',
   plugins: [
     {
       use: '~/plugins/gridsome-source-kentico-cloud',
-      options: {}
+      options: {
+        projectId: process.env.KENTICO_CLOUD_PROJECT_ID,
+        previewApiKey: process.env.KENTICO_CLOUD_PREVIEW_API_KEY
+      }
     }
   ]
 }
