@@ -14,9 +14,11 @@
       <p><a href="https://twitter.com/cmeeg">Twitter</a></p>
       <p><a href="https://github.com/cmeeg">GitHub</a></p>
     </header>
-    <main>
-      <slot />
-    </main>
+    <transition name="fade" appear>
+      <main>
+        <slot />
+      </main>
+    </transition>
     <footer>
       &copy; 2019
     </footer>
@@ -30,3 +32,13 @@ query {
   }
 }
 </static-query>
+
+<style>
+.fade-enter-active {
+  transition: opacity .5s;
+}
+
+.fade-enter {
+  opacity: 0;
+}
+</style>
