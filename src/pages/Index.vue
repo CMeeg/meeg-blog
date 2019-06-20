@@ -1,10 +1,8 @@
 <template>
   <Layout>
-    <div v-for="edge in $page.home.edges" :key="edge.node.id">
-      <h1>{{ edge.node.title }}</h1>
+      <h1>{{ homePage.title }}</h1>
 
-      <div v-html="edge.node.summary" />
-    </div>   
+      <div v-html="homePage.summary" />
   </Layout>
 </template>
 
@@ -28,8 +26,13 @@ query Home {
 export default {
   metaInfo () {
     return {
-      title: this.$page.home.edges[0].node.metaTitle || 'Home',
-      description: this.$page.home.edges[0].node.metaDescription || ''
+      title: this.homePage.metaTitle || 'Home',
+      description: this.homePage.metaDescription || ''
+    }
+  },
+  computed: {
+    homePage: function() {
+      return this.$page.home.edges[0].node;
     }
   }
 }
