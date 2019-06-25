@@ -1,5 +1,4 @@
-const KenticoCloud = require('kentico-cloud-delivery');
-const { parse, stringify } = require('flatted/cjs');
+const DeliveryClient = require('./delivery-client');
 const changeCase = require('change-case');
 
 class KenticoCloudSource {
@@ -12,103 +11,111 @@ class KenticoCloudSource {
     };
 
     constructor (api, options) {
-        this.options = options;        
-        this.dataStoreContentTypes = [];
+        this.options = options;
+        
+        this.deliveryClient = new DeliveryClient(options);
 
-        // TODO: Use typeResolvers specified via options.contentTypes?
-        const deliveryClientOptions = {
-            projectId: options.projectId
-        };
-
-        if (options.previewApiKey) {
-            deliveryClientOptions.enablePreviewMode = true;
-            deliveryClientOptions.previewApiKey = options.previewApiKey;
-        }
-
-        this.deliveryClient = new KenticoCloud.DeliveryClient(deliveryClientOptions);
-
-        api.loadSource(async store => {
-            await this.getContentTypes(store);
-            await this.getContent(store);
-        });
+        api.loadSource(async store => this.loadKenticoCloudSource(store));
     }
 
-    async getContentTypes(store) {
-        // Get Content Types from the Delivery API
-        const contentTypesPromise = await this.deliveryClient
-            .types()
-            .getPromise();
-        
-        const contentTypes = parse(stringify(contentTypesPromise.types));
+    async loadKenticoCloudSource(store) {        
+        const dataSourceContentTypes = await this.addContentTypes(store);
+
+        for (const dataSourceContentType of dataSourceContentTypes) {
+            await this.addContent(store, dataSourceContentType);
+        }
+    }
+
+    async addContentTypes(store) {
+        // Get content types from the delivery client
+
+        const contentTypes = await this.deliveryClient.getContentTypes();
+
+        // Add each content type to the store
+
+        const dataSourceContentTypes = [];
 
         for (const contentType of contentTypes) {
-            const { system: { name, codename, elements } } = contentType;
+            const { system: { name, codename } } = contentType;
 
-            // Get typeName
-            const typeName = changeCase.pascalCase(name);
+            // Get route from options, or fallback to a sensible default
 
-            // Get route
             const contentTypeOptions = this.options.contentTypes[codename];
             let route = `/${store.slugify(name)}/:slug`;
+
             if (contentTypeOptions) {
                 route = contentTypeOptions.route || route;
             }
 
-            // Add Content Type to Data Store
+            // Get Gridsome friendly node type name
+
+            const typeName = changeCase.pascalCase(name);
+
+            // Add Content Type to store
+
             store.addContentType({ typeName, route });
 
-            this.dataStoreContentTypes.push({ codename, typeName, contentType });
+            dataSourceContentTypes.push({ codename, typeName, contentType });
         }
+
+        return dataSourceContentTypes;
     }
     
-    async getContent(store) {
-        for (const dataStoreContentType of this.dataStoreContentTypes) {
-            const { codename, typeName, contentType } = dataStoreContentType;
+    async addContent(store, dataSourceContentType) {
+        const { codename, typeName, contentType } = dataSourceContentType;
 
-            const contentItemsPromise = await this.deliveryClient
-                .items()
-                .type(codename)
-                .getPromise();
+        // Get content from the delivery client
 
-            const result = parse(stringify(contentItemsPromise));
-            const { items: contentItems, linkedItems } = result;
+        const content = await this.deliveryClient.getContent(codename);
 
-            const collection = store.getContentType(typeName);
+        const { items: contentItems, linkedItems } = content;
 
-            for (const contentItem of contentItems) {
-                // Get basic item data
-                const { system: { id, name, codename, language, lastModified: date } } = contentItem;
-                const slug = store.slugify(name);
+        // Get the content type collection from the store and add the content to it
 
-                // Initialise fields
-                const fields = {
-                    id,
-                    name,
-                    slug,
-                    codename,
-                    date,
-                    language
-                };
-                
-                // Add Content Elements as fields
-                for (const element of contentType.elements) {
-                    const { codename, name, type } = element;
+        const collection = store.getContentType(typeName);
 
-                    const contentElement = contentItem.elements[codename];
+        for (const contentItem of contentItems) {
+            // Get basic item data
 
-                    if (type === 'url_slug') {
-                        fields.slug = contentElement.value;
-                    }
-                    else {
-                        const fieldName = changeCase.camelCase(name);
+            const { system: { id, name, codename, language, lastModified: date } } = contentItem;
+            const slug = store.slugify(name);
 
-                        fields[fieldName] = contentElement.value;
-                    }
+            // Initialise fields from basic item data
+
+            const fields = {
+                id,
+                name,
+                slug,
+                codename,
+                date,
+                language
+            };
+            
+            // Add Content Elements as fields
+
+            for (const element of contentType.elements) {
+                const { codename, name, type } = element;
+
+                const contentElement = contentItem.elements[codename];
+
+                if (type === 'url_slug') {
+                    // If the content element is a URL slug we need to update the default slug value
+
+                    fields.slug = contentElement.value;
+
+                    continue;
                 }
+                
+                // Otherwise, add the content element as a "custom" field
 
-                // Add Content Item to Data Store
-                collection.addNode(fields);
+                const fieldName = changeCase.camelCase(name);
+
+                fields[fieldName] = contentElement.value;
             }
+
+            // Add the content to the collection
+
+            collection.addNode(fields);
         }
     }
 }
