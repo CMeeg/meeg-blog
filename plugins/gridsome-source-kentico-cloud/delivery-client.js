@@ -39,6 +39,16 @@ class KenticoCloudSourceDeliveryClient {
         return content;
     }
 
+    async getTaxonomyGroups() {
+        const taxonomyGroupsPromise = await this.deliveryClient
+            .taxonomies()
+            .getPromise();
+
+        const taxonomyGroups = this.flatten(taxonomyGroupsPromise);
+
+        return taxonomyGroups;
+    }
+
     flatten(json) {
         return parse(stringify(json));
     }
