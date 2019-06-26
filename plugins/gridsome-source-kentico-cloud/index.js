@@ -6,7 +6,11 @@ class KenticoCloudSource {
         return {
             projectId: undefined,
             previewApiKey: undefined,
-            contentTypes: {}
+            contentTypes: {},
+            elementResolvers: {
+                date_time: KenticoCloudSource.defaultDateTimeElementResolver,
+                default: KenticoCloudSource.defaultElementResolver
+            }
         }
     };
 
@@ -19,27 +23,22 @@ class KenticoCloudSource {
     }
 
     async loadKenticoCloudSource(store) {        
-        const dataSourceContentTypes = await this.addContentTypes(store);
-
-        for (const dataSourceContentType of dataSourceContentTypes) {
-            await this.addContent(store, dataSourceContentType);
-        }
+        await this.addContent(store);
     }
 
-    async addContentTypes(store) {
+    async addContent(store) {
         // Get content types from the delivery client
 
         const contentTypes = await this.deliveryClient.getContentTypes();
 
-        // Add each content type to the store
-
-        const dataSourceContentTypes = [];
+        // Add content of each type to the store
 
         for (const contentType of contentTypes) {
             const { system: { name, codename } } = contentType;
 
             // Get route from options, or fallback to a sensible default
 
+            // TODO: route should be optional
             const contentTypeOptions = this.options.contentTypes[codename];
             let route = `/${store.slugify(name)}/:slug`;
 
@@ -51,72 +50,96 @@ class KenticoCloudSource {
 
             const typeName = changeCase.pascalCase(name);
 
-            // Add Content Type to store
+            // Add content to store
 
-            store.addContentType({ typeName, route });
-
-            dataSourceContentTypes.push({ codename, typeName, contentType });
+            const collection = store.addContentType({ typeName, route });
+            
+            await this.addContentToCollection(store, collection, contentType);
         }
-
-        return dataSourceContentTypes;
     }
     
-    async addContent(store, dataSourceContentType) {
-        const { codename, typeName, contentType } = dataSourceContentType;
-
+    async addContentToCollection(store, collection, contentType) {
+        const { system: { codename: contentTypeCodename } } = contentType;
+        
         // Get content from the delivery client
 
-        const content = await this.deliveryClient.getContent(codename);
+        const content = await this.deliveryClient.getContent(contentTypeCodename);
+
+        // TODO: linkedItems
 
         const { items: contentItems, linkedItems } = content;
 
-        // Get the content type collection from the store and add the content to it
-
-        const collection = store.getContentType(typeName);
-
         for (const contentItem of contentItems) {
-            // Get basic item data
+            // Get system data
 
-            const { system: { id, name, codename, language, lastModified: date } } = contentItem;
+            // TODO: Sitemap locations?
+            // TODO: Do we need a default slug?
+
+            const { system: { id, name, codename, language, type, lastModified: date } } = contentItem;
             const slug = store.slugify(name);
 
-            // Initialise fields from basic item data
+            // Initialise a content node with fields from system data, which should be consistent across all nodes
 
-            const fields = {
+            const node = {
                 id,
                 name,
-                slug,
                 codename,
+                language,
+                type,
                 date,
-                language
+                slug
             };
             
-            // Add Content Elements as fields
+            // Add Content Elements as fields to the node
 
             for (const element of contentType.elements) {
-                const { codename, name, type } = element;
+                const { codename: elementCodename } = element;
 
-                const contentElement = contentItem.elements[codename];
+                const contentElement = contentItem.elements[elementCodename];
 
-                if (type === 'url_slug') {
+                const elementResolver = this.getElementResolver(contentElement);
+
+                if (typeof(elementResolver) === 'undefined') {
+                    continue;
+                }
+
+                const value = elementResolver(contentElement);
+
+                if (contentElement.type === 'url_slug') {
                     // If the content element is a URL slug we need to update the default slug value
 
-                    fields.slug = contentElement.value;
+                    node.slug = value;
 
                     continue;
                 }
                 
-                // Otherwise, add the content element as a "custom" field
+                // Otherwise, add the content element as a "custom" field on the node
 
-                const fieldName = changeCase.camelCase(name);
+                const fieldName = this.getElementFieldName(contentElement);
 
-                fields[fieldName] = contentElement.value;
+                node[fieldName] = value;
             }
 
-            // Add the content to the collection
+            // Add the content node to the collection
 
-            collection.addNode(fields);
+            collection.addNode(node);
         }
+    }
+
+    getElementResolver(contentElement) {
+        return this.options.elementResolvers[contentElement.type] || this.options.elementResolvers.default;
+    }
+
+    static defaultDateTimeElementResolver(contentElement) {
+        return new Date(contentElement.value);
+    }
+
+    static defaultElementResolver(contentElement) {
+        return contentElement.value;
+    }
+
+    getElementFieldName(contentElement) {
+        return changeCase.camelCase(contentElement.name);
     }
 }
 
