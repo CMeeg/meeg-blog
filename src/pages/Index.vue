@@ -21,8 +21,8 @@ query Home($page: Int) {
         id,
         title,
         summary,
-        metaTitle,
-        metaDescription
+        pageMetadataMetaTitle,
+        pageMetadataMetaDescription
       }
     }
 	}
@@ -35,7 +35,9 @@ query Home($page: Int) {
       node {
         id,
         title,
-        author,
+        author {
+          name
+        },
         summary,
         slug
         # articleTopics,
@@ -56,8 +58,8 @@ export default {
   },
   metaInfo () {
     return {
-      title: this.homePage.metaTitle || 'Home',
-      description: this.homePage.metaDescription || ''
+      title: this.homePage.pageMetadataMetaTitle || 'Home',
+      description: this.homePage.pageMetadataMetaDescription || ''
     }
   },
   computed: {

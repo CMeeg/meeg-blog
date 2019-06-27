@@ -8,7 +8,7 @@
 query ArticleSeries ($id: String!) {
   articleSeries (id: $id) {
     title
-    metaTitle
+    pageMetadataMetaTitle
   }
 }
 </page-query>
@@ -17,7 +17,7 @@ query ArticleSeries ($id: String!) {
 export default {
   metaInfo () {
     return {
-      title: this.$page.articleSeries.metaTitle
+      title: this.$page.articleSeries.pageMetadataMetaTitle
     }
   }
 }

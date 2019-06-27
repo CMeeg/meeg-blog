@@ -6,6 +6,8 @@ class KenticoCloudSource {
         return {
             projectId: undefined,
             previewApiKey: undefined,
+            linkedItemTypeName: 'LinkedItem',
+            taxonomyTypeNamePrefix: 'Taxonomy',
             contentTypes: {},
             elementResolvers: {
                 number: KenticoCloudSource.defaultNumberElementResolver,
@@ -39,13 +41,13 @@ class KenticoCloudSource {
         const taxonomyGroupsMap = {};
 
         for (const taxonomyGroup of taxonomyGroups.taxonomies) {
-            const { system: { name, codename }, terms } = taxonomyGroup;
+            const { system: { codename }, terms } = taxonomyGroup;
 
             // Get Gridsome friendly node type name
 
-            // TODO: The prefix is to prevent collisions with content types, but this should really be configurable
+            // The prefix is added to prevent possible collisions with content types
 
-            const typeName = 'Taxonomy' + changeCase.pascalCase(name);
+            const typeName = this.options.taxonomyTypeNamePrefix + this.getTypeName(codename);
 
             // Add taxonomy group to store
 
@@ -90,13 +92,13 @@ class KenticoCloudSource {
         // Add content of each type to the store
 
         for (const contentType of contentTypes) {
-            const { system: { name, codename }, elements } = contentType;
+            const { system: { codename }, elements } = contentType;
 
             // Get route from options, or fallback to a sensible default
 
             // TODO: route should be optional
             const contentTypeOptions = this.options.contentTypes[codename];
-            let route = `/${store.slugify(name)}/:slug`;
+            let route = `/${store.slugify(codename)}/:slug`;
 
             if (contentTypeOptions) {
                 route = contentTypeOptions.route || route;
@@ -104,7 +106,7 @@ class KenticoCloudSource {
 
             // Get Gridsome friendly node type name
 
-            const typeName = changeCase.pascalCase(name);
+            const typeName = this.getTypeName(codename);
 
             // Add content type to store
 
@@ -140,65 +142,23 @@ class KenticoCloudSource {
 
         const content = await this.deliveryClient.getContent(contentTypeCodename);
 
-        // TODO: linkedItems
-
         const { items: contentItems, linkedItems } = content;
 
         for (const contentItem of contentItems) {
-            // Get system data
+            const node = this.createNode(store, contentItem);
 
-            // TODO: Sitemap locations?
-            // TODO: Do we need a default slug?
-
-            const { system: { id, name, codename, language, type, lastModified: date } } = contentItem;
-            const slug = store.slugify(name);
-
-            // Initialise a content node with fields from system data, which should be consistent across all nodes
-
-            const node = {
-                id,
-                name,
-                codename,
-                language,
-                type,
-                date: new Date(date),
-                slug
-            };
-            
-            // Add Content Elements as fields to the node
-
-            for (const element of contentType.elements) {
-                const { codename: elementCodename } = element;
-
-                const contentElement = contentItem.elements[elementCodename];
-
-                // TODO:
-                // * Linked items
-                // * Asset
-                // * Rich text
-                // * Custom element
-
-                const elementResolver = this.getElementResolver(contentElement);
-
-                if (typeof(elementResolver) === 'undefined') {
-                    continue;
-                }
-
-                // Get the element's value
-
-                const fieldValue = elementResolver(contentElement);
-                
-                // Add the content element as a "custom" field on the node
-
-                const fieldName = this.getElementFieldName(contentElement);
-
-                node[fieldName] = fieldValue;
-            }
+            this.addLinkedItems(store, collection, node, linkedItems);
 
             // Add the content node to the collection
 
-            collection.addNode(node);
+            collection.addNode(node.item);
         }
+    }
+
+    getTypeName(codename) {
+        const typeName = changeCase.pascalCase(codename);
+
+        return typeName;
     }
 
     getElementResolver(contentElement) {
@@ -230,7 +190,115 @@ class KenticoCloudSource {
             return 'slug';
         }
 
-        return changeCase.camelCase(contentElement.name);
+        const fieldName = changeCase.camelCase(contentElement.codename);
+
+        return fieldName;
+    }
+
+    addLinkedItems(store, collection, node, linkedItems) {
+        const typeName = this.options.linkedItemTypeName;
+
+        for (const linkedItemField of node.linkedItemFields) {
+            const linkedItemFieldName = linkedItemField.fieldName;
+
+            collection.addReference(linkedItemFieldName, typeName);
+
+            if (collection.typeName !== typeName) {
+                for (const linkedItemCodename of linkedItemField.value) {
+                    const linkedItem = linkedItems.filter(item => item.system.codename === linkedItemCodename);
+
+                    this.addLinkedItem(store, linkedItem[0], linkedItems);
+                }
+            }
+
+            node.item[linkedItemFieldName] = linkedItemField.value;
+        }
+    }
+
+    addLinkedItem(store, linkedItem, linkedItems) {
+        const typeName = this.options.linkedItemTypeName;
+
+        let collection = store.getContentType(typeName);
+
+        if (typeof(collection) === 'undefined') {
+            collection = store.addContentType(typeName);
+        }
+        
+        const node = this.createNode(store, linkedItem);
+        node.item.sourceId = node.item.id;
+        node.item.id = node.item.codename;
+
+        this.addLinkedItems(store, collection, node, linkedItems);
+
+        const existingNode = collection.getNode(node.item.id);
+
+        if (existingNode === null) {
+            collection.addNode(node.item);
+        }
+    }
+
+    createNode(store, contentItem) {
+        // Get system data
+
+        // TODO: Sitemap locations?
+
+        const { system: { id, name, codename, language, type, lastModified }, elements } = contentItem;
+
+        // Initialise a content node with fields from system data, which should be consistent across all nodes
+
+        const node = {
+            item: {
+                id,
+                name,
+                codename,
+                language,
+                type,
+                lastModified: new Date(lastModified),
+                slug: store.slugify(name)
+            },
+            linkedItemFields: []
+        };
+            
+        // Add Content Elements as fields to the node
+
+        for (const elementCodename in elements) {
+            const contentElement = elements[elementCodename];
+            contentElement.codename = elementCodename;
+
+            // TODO:
+            // * Asset
+            // * Rich text
+            // * Custom element
+
+            const fieldName = this.getElementFieldName(contentElement);
+
+            if (contentElement.type === 'modular_content') {
+                const linkedItemField = {
+                    fieldName,
+                    value: contentElement.value
+                };
+                
+                node.linkedItemFields.push(linkedItemField);
+
+                continue;
+            }
+
+            const elementResolver = this.getElementResolver(contentElement);
+
+            if (typeof(elementResolver) === 'undefined') {
+                continue;
+            }
+
+            // Get the element's value
+
+            const fieldValue = elementResolver(contentElement);
+            
+            // Add the content element as a "custom" field on the node
+
+            node.item[fieldName] = fieldValue;
+        }
+
+        return node;
     }
 }
 

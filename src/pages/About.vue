@@ -14,8 +14,8 @@ query Author {
         id,
         name,
         bio,
-        metaTitle,
-        metaDescription
+        pageMetadataMetaTitle,
+        pageMetadataMetaDescription
       }
     }
 	}
@@ -26,8 +26,8 @@ query Author {
 export default {
   metaInfo () {
     return {
-      title: this.aboutPage.metaTitle || 'About',
-      description: this.aboutPage.metaDescription || ''
+      title: this.aboutPage.pageMetadataMetaTitle || 'About',
+      description: this.aboutPage.pageMetadataMetaDescription || ''
     }
   },
   computed: {
