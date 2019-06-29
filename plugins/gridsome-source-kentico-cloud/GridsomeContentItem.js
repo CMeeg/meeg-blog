@@ -1,23 +1,26 @@
+const { ContentItem } = require('kentico-cloud-delivery');
 const changeCase = require('change-case');
 
-class GridsomeContentType {
-    constructor(contentType) {
-        this.contentType = contentType;
-    }
+class GridsomeContentItem extends ContentItem {
+    constructor(codename) {
+        super({
+            propertyResolver: ((fieldName) => {
+                return this.getPropertyFieldName(fieldName);
+            })
+        });
 
-    getCodename() {
-        return this.contentType.system.codename;
+        this.codename = codename;
     }
 
     getTypeName() {
-        const typeName = changeCase.pascalCase(this.getCodename());
+        const typeName = changeCase.pascalCase(this.codename);
 
         return typeName;
     }
 
     getRoute() {
         // TODO: This was `store.slugify` - need to implement something like that rather than a straight case conversion
-        let route = `/${this.slugify(this.getCodename())}/:slug`;
+        let route = `/${this.slugify(this.codename)}/:slug`;
         
         return route;
     }
@@ -26,20 +29,26 @@ class GridsomeContentType {
         return changeCase.kebabCase(value);
     }
 
-    createContentNodes(content) {
-        const { items: contentItems, linkedItems } = content;
+    getPropertyFieldName(fieldName) {
+        const propertyFieldName = changeCase.camelCase(fieldName);
 
-        const contentNodes = contentItems.map(contentItem => this.createContentNode(contentItem, linkedItems));
-
-        return contentNodes;
+        return propertyFieldName;
     }
 
-    createContentNode(contentItem, linkedItems) {
+    createNode() {
+        const node = this.initNode();
+
+        this.addElements(node);
+
+        return node;
+    }
+
+    initNode() {
         // Get system data
 
         // TODO: Sitemap locations?
-
-        const { system: { id, name, codename, language, type, lastModified }, elements } = contentItem;
+        
+        const { id, name, codename, language, type, lastModified } = this.system;
 
         // Initialise a content node with fields from system data, which should be consistent across all nodes
 
@@ -54,14 +63,17 @@ class GridsomeContentType {
                 slug: this.slugify(name)
             },
             linkedItemFields: [],
-            linkedItems,
             taxonomyFields: []
         };
-            
+
+        return node;
+    }
+
+    addElements(node) {
         // Add Content Elements as fields to the node
 
-        for (const elementCodename in elements) {
-            const contentElement = elements[elementCodename];
+        for (const elementCodename in this.elements) {
+            const contentElement = this.elements[elementCodename];
             contentElement.codename = elementCodename;
 
             // TODO:
@@ -79,6 +91,8 @@ class GridsomeContentType {
                 
                 node.linkedItemFields.push(linkedItemField);
 
+                node.item[fieldName] = contentElement.value;
+
                 continue;
             }
 
@@ -89,6 +103,8 @@ class GridsomeContentType {
                 };
 
                 node.taxonomyFields.push(taxonomyField);
+
+                node.item[fieldName] = contentElement.value.map(value => value.codename);
 
                 continue;
             }
@@ -107,8 +123,6 @@ class GridsomeContentType {
 
             node.item[fieldName] = fieldValue;
         }
-
-        return node;
     }
 
     getElementFieldName(contentElement) {
@@ -176,4 +190,4 @@ class GridsomeContentType {
     }
 }
 
-module.exports = GridsomeContentType;
+module.exports = GridsomeContentItem;

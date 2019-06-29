@@ -1,6 +1,6 @@
 const {TypeResolver, DeliveryClient } = require('kentico-cloud-delivery');
 
-class KenticoCloudSourceDeliveryClient {
+class GridsomeDeliveryClient {
     constructor(options) {
         this.options = options;
 
@@ -9,13 +9,14 @@ class KenticoCloudSourceDeliveryClient {
             typeResolvers: []
         };
 
-        // for (const codename in options.contentTypes) {
-        //     const ContentType = options.contentTypes[codename];
+        for (const contentType of options.contentTypes) {
+            const codename = contentType.codename;
+            const ContentType = contentType.contentType;
 
-        //     deliveryClientOptions.typeResolvers.push(
-        //         new TypeResolver(codename, () => new ContentType(codename))
-        //     );
-        // }
+            deliveryClientOptions.typeResolvers.push(
+                new TypeResolver(codename, () => new ContentType(codename))
+            );
+        }
 
         if (options.previewApiKey) {
             deliveryClientOptions.enablePreviewMode = true;
@@ -51,4 +52,4 @@ class KenticoCloudSourceDeliveryClient {
     }
 }
 
-module.exports = KenticoCloudSourceDeliveryClient;
+module.exports = GridsomeDeliveryClient;
