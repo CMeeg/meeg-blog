@@ -76,11 +76,7 @@ class KenticoCloudSource {
         for (const contentItem of contentItems) {
             const contentNode = contentItem.createNode();
 
-            this.addLinkedItemFields(collection, contentNode);
-
-            this.addTaxonomyFields(collection, contentNode);
-            
-            collection.addNode(contentNode.item);
+            this.addNode(collection, contentNode);
         }
     }
 
@@ -100,27 +96,31 @@ class KenticoCloudSource {
             const existingNode = collection.getNode(linkedNode.item.id);
     
             if (existingNode === null) {
-                this.addLinkedItemFields(collection, linkedNode);
-
-                this.addTaxonomyFields(collection, linkedNode);
-
-                collection.addNode(linkedNode.item);
+                this.addNode(collection, linkedNode);
             }
         }
     }
+    
+    addNode(collection, node) {
+        this.addLinkedItemFields(collection, node);
 
-    addLinkedItemFields(collection, contentNode) {
+        this.addTaxonomyFields(collection, node);
+        
+        collection.addNode(node.item);
+    }
+
+    addLinkedItemFields(collection, node) {
         const typeName = this.options.linkedItemTypeName;
 
-        for (const linkedItemField of contentNode.linkedItemFields) {
+        for (const linkedItemField of node.linkedItemFields) {
             const fieldName = linkedItemField.fieldName;
 
             collection.addReference(fieldName, typeName);
         }
     }
 
-    addTaxonomyFields(collection, contentNode) {
-        for (const taxonomyField of contentNode.taxonomyFields) {
+    addTaxonomyFields(collection, node) {
+        for (const taxonomyField of node.taxonomyFields) {
             const fieldName = taxonomyField.fieldName;
             const codename = taxonomyField.taxonomyGroup;
 

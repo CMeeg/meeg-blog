@@ -38,7 +38,7 @@ class GridsomeContentItem extends ContentItem {
     createNode() {
         const node = this.initNode();
 
-        this.addElements(node);
+        this.addFields(node);
 
         return node;
     }
@@ -69,59 +69,35 @@ class GridsomeContentItem extends ContentItem {
         return node;
     }
 
-    addElements(node) {
+    addFields(node) {
         // Add Content Elements as fields to the node
 
-        for (const elementCodename in this.elements) {
-            const contentElement = this.elements[elementCodename];
-            contentElement.codename = elementCodename;
+        for (const codename in this.elements) {
+            const element = this.elements[codename];
+            const fieldName = this.getPropertyFieldName(codename);
+            let field = this[fieldName];
+
+            if (element.type === 'modular_content') {
+                // "Linked items" fields are different to all others for some reason so we force it to be more uniform
+
+                field = {
+                    name: element.name,
+                    type: element.type,
+                    value: element.value,
+                    linkedItems: field
+                };
+            }
+
+            field.fieldName = fieldName;
 
             // TODO:
             // * Asset
             // * Rich text
             // * Custom element
 
-            const fieldName = this.getElementFieldName(contentElement);
+            const fieldResolver = this.getFieldResolver(field);
 
-            if (contentElement.type === 'modular_content') {
-                const linkedItemField = {
-                    fieldName,
-                    value: contentElement.value
-                };
-                
-                node.linkedItemFields.push(linkedItemField);
-
-                node.item[fieldName] = contentElement.value;
-
-                continue;
-            }
-
-            if (contentElement.type === 'taxonomy') {
-                const taxonomyField = {
-                    fieldName,
-                    taxonomyGroup: contentElement.taxonomy_group
-                };
-
-                node.taxonomyFields.push(taxonomyField);
-
-                node.item[fieldName] = contentElement.value.map(value => value.codename);
-
-                continue;
-            }
-
-            const elementResolver = this.getElementResolver(contentElement);
-
-            if (typeof(elementResolver) === 'undefined') {
-                continue;
-            }
-
-            // Get the element's value
-
-            const fieldValue = elementResolver(contentElement);
-            
-            // Add the content element as a "custom" field on the node
-
-            node.item[fieldName] = fieldValue;
+            fieldResolver(node, field);
         }
     }
 
@@ -135,58 +111,102 @@ class GridsomeContentItem extends ContentItem {
         return fieldName;
     }
 
-    getElementResolver(contentElement) {
-        let elementResolver = this.getFieldElementResolver(contentElement);
+    getFieldResolver(field) {
+        let fieldResolver = this.getFieldNameFieldResolver(field);
 
-        if (elementResolver === null) {
-            elementResolver = this.getTypeElementResolver(contentElement);
+        if (fieldResolver === null) {
+            fieldResolver = this.getFieldTypeFieldResolver(field);
         }
 
-        return elementResolver;
+        return fieldResolver;
     }
 
-    getFieldElementResolver(contentElement) {
-        const fieldName = this.getElementFieldName(contentElement);
+    getFieldNameFieldResolver(field) {
+        const fieldName = field.fieldName;
 
-        const elementResolver = this[fieldName + 'ElementResolver'];
+        const fieldResolver = this[fieldName + 'FieldResolver'];
 
-        if (typeof(elementResolver) === 'undefined') {
+        if (typeof(fieldResolver) === 'undefined') {
             return null;
         }
 
-        return elementResolver;
+        return fieldResolver;
     }
 
-    getTypeElementResolver(contentElement) {
-        const typeName = changeCase.camelCase(contentElement.type);
+    getFieldTypeFieldResolver(field) {
+        const typeName = changeCase.camelCase(field.type);
 
-        const elementResolver = this[typeName + 'TypeElementResolver'];
+        const fieldResolver = this[typeName + 'TypeFieldResolver'];
 
-        if (typeof(elementResolver) === 'undefined') {
-            return this.defaultElementResolver;
+        if (typeof(fieldResolver) === 'undefined') {
+            return this.defaultFieldResolver;
         }
 
-        return elementResolver;
+        return fieldResolver;
     }
 
-    numberTypeElementResolver(contentElement, contentItem) {
-        return Number(contentElement.value);
+    numberTypeFieldResolver(node, field) {
+        const fieldName = field.fieldName;
+        const value = Number(field.value);
+
+        node.item[fieldName] = value;
     }
 
-    dateTimeTypeElementResolver(contentElement, contentItem) {
-        return new Date(contentElement.value);
+    dateTimeTypeFieldResolver(node, field) {
+        const fieldName = field.fieldName;
+        const value = new Date(field.value);
+
+        node.item[fieldName] = value;
     }
 
-    multipleChoiceTypeElementResolver(contentElement, contentItem) {
-        return contentElement.value.map(value => value.name);
+    multipleChoiceTypeFieldResolver(node, field) {
+        const fieldName = field.fieldName;
+        const value = field.value.map(choice => choice.name);
+
+        node.item[fieldName] = value;
     }
 
-    taxonomyTypeElementResolver(contentElement, contentItem) {
-        return contentElement.value.map(value => value.codename);
+    modularContentTypeFieldResolver(node, field) {
+        const fieldName = field.fieldName;
+        const linkedItems = field.linkedItems;
+        const value = field.value;
+
+        const linkedItemField = {
+            fieldName,
+            linkedItems
+        };
+        
+        node.linkedItemFields.push(linkedItemField);
+
+        node.item[fieldName] = value;
     }
 
-    defaultElementResolver(contentElement, contentItem) {
-        return contentElement.value;
+    taxonomyTypeFieldResolver(node, field) {
+        const fieldName = field.fieldName;
+        const value = field.taxonomyTerms.map(term => term.codename);
+        const taxonomyGroup = field.taxonomyGroup;
+
+        node.item[fieldName] = value;
+
+        const taxonomyField = {
+            fieldName,
+            taxonomyGroup
+        };
+
+        node.taxonomyFields.push(taxonomyField);
+    }
+
+    urlSlugTypeFieldResolver(node, field) {
+        const value = field.value;
+
+        node.item.slug = value;
+    }
+
+    defaultFieldResolver(node, field) {
+        const fieldName = field.fieldName;
+        const value = field.value;
+
+        node.item[fieldName] = value;
     }
 }
 
