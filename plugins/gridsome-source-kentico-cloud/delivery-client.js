@@ -1,31 +1,36 @@
-const KenticoCloud = require('kentico-cloud-delivery');
-const { parse, stringify } = require('flatted/cjs');
+const {TypeResolver, DeliveryClient } = require('kentico-cloud-delivery');
 
 class KenticoCloudSourceDeliveryClient {
     constructor(options) {
         this.options = options;
 
-        // TODO: Use typeResolvers specified via options.contentTypes?
         const deliveryClientOptions = {
-            projectId: options.projectId
+            projectId: options.projectId,
+            typeResolvers: []
         };
+
+        // for (const codename in options.contentTypes) {
+        //     const ContentType = options.contentTypes[codename];
+
+        //     deliveryClientOptions.typeResolvers.push(
+        //         new TypeResolver(codename, () => new ContentType(codename))
+        //     );
+        // }
 
         if (options.previewApiKey) {
             deliveryClientOptions.enablePreviewMode = true;
             deliveryClientOptions.previewApiKey = options.previewApiKey;
         }
 
-        this.deliveryClient = new KenticoCloud.DeliveryClient(deliveryClientOptions);
+        this.deliveryClient = new DeliveryClient(deliveryClientOptions);
     }
 
     async getContentTypes() {
         const contentTypesPromise = await this.deliveryClient
             .types()
             .getPromise();
-        
-        const contentTypes = this.flatten(contentTypesPromise.types);
 
-        return contentTypes;
+        return contentTypesPromise;
     }
     
     async getContent(codename) {
@@ -34,9 +39,7 @@ class KenticoCloudSourceDeliveryClient {
             .type(codename)
             .getPromise();
 
-        const content = this.flatten(contentPromise);
-
-        return content;
+        return contentPromise;
     }
 
     async getTaxonomyGroups() {
@@ -44,13 +47,7 @@ class KenticoCloudSourceDeliveryClient {
             .taxonomies()
             .getPromise();
 
-        const taxonomyGroups = this.flatten(taxonomyGroupsPromise);
-
-        return taxonomyGroups;
-    }
-
-    flatten(json) {
-        return parse(stringify(json));
+        return taxonomyGroupsPromise;
     }
 }
 
