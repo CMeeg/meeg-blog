@@ -10,6 +10,7 @@ class KenticoCloudSourcePlugin {
             previewApiKey: undefined,
             linkedItemTypeName: 'LinkedItem',
             taxonomyTypeNamePrefix: 'Taxonomy',
+            assetTypeName: 'Asset',
             contentTypesPath: './plugins/gridsome-source-kentico-cloud/content-types'
         }
     };

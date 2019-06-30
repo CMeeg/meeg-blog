@@ -1,5 +1,6 @@
 const { ContentItem } = require('kentico-cloud-delivery');
 const changeCase = require('change-case');
+const url = require('url');
 
 class GridsomeContentItem extends ContentItem {
     constructor(codename) {
@@ -26,6 +27,7 @@ class GridsomeContentItem extends ContentItem {
     }
 
     slugify(value) {
+        // TODO: This used to use `store.slugify` - need to look into what that does and use that here
         return changeCase.kebabCase(value);
     }
 
@@ -62,6 +64,7 @@ class GridsomeContentItem extends ContentItem {
                 lastModified: new Date(lastModified),
                 slug: this.slugify(name)
             },
+            assetFields: [],
             linkedItemFields: [],
             taxonomyFields: []
         };
@@ -88,10 +91,30 @@ class GridsomeContentItem extends ContentItem {
                 };
             }
 
+            if (element.type === 'asset') {
+                // The AssetModel doesn't have width and height, but the element value does so we will map those values across
+
+                field.assets = field.assets.map(asset => {
+                    const url = asset.url;
+
+                    element.value
+                        .filter(elementAsset => elementAsset.url === url)
+                        .map(elementAsset => {
+                            asset.width = elementAsset.width;
+                            asset.height = elementAsset.height;
+                        });
+
+                    // We also need to extract the id from the url
+
+                    asset.id = this.getAssetId(url);
+
+                    return asset;
+                });
+            }
+
             field.fieldName = fieldName;
 
             // TODO:
-            // * Asset
             // * Rich text
             // * Custom element
 
@@ -101,14 +124,14 @@ class GridsomeContentItem extends ContentItem {
         }
     }
 
-    getElementFieldName(contentElement) {
-        if (contentElement.type === 'url_slug') {
-            return 'slug';
-        }
+    getAssetId(assetUrl) {
+        const url = new URL(assetUrl);
+        const pathname = url.pathname;
 
-        const fieldName = changeCase.camelCase(contentElement.codename);
+        // The id is the second part of the path
+        const pathParts = pathname.split('/', 3);
 
-        return fieldName;
+        return pathParts[2];
     }
 
     getFieldResolver(field) {
@@ -194,6 +217,21 @@ class GridsomeContentItem extends ContentItem {
         };
 
         node.taxonomyFields.push(taxonomyField);
+    }
+
+    assetTypeFieldResolver(node, field) {
+        const fieldName = field.fieldName;
+        const assets = field.assets;
+        const value = assets.map(asset => asset.id);
+
+        const assetField = {
+            fieldName,
+            assets
+        };
+        
+        node.assetFields.push(assetField);
+
+        node.item[fieldName] = value;
     }
 
     urlSlugTypeFieldResolver(node, field) {

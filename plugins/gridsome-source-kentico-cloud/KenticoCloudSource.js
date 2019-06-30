@@ -7,17 +7,17 @@ class KenticoCloudSource {
     }
 
     async load(store) {
-        await this.addTaxonomyGroups(store);
+        await this.addTaxonomyGroupNodes(store);
 
         for (const contentType of this.options.contentTypes) {
             const codename = contentType.codename;
             const ContentType = contentType.contentType;
 
-            await this.addContent(store, new ContentType(codename));
+            await this.addContentNodes(store, new ContentType(codename));
         }
     }
 
-    async addTaxonomyGroups(store) {
+    async addTaxonomyGroupNodes(store) {
         // TODO: Move taxonomy stuff out to another class?
 
         const taxonomyGroups = await this.deliveryClient.getTaxonomyGroups();
@@ -32,7 +32,7 @@ class KenticoCloudSource {
 
             collection.addReference('terms', typeName);
 
-            this.addTaxonomyTerms(collection, terms);
+            this.addTaxonomyTermNodes(collection, terms);
         }
     }
 
@@ -43,7 +43,7 @@ class KenticoCloudSource {
         return typeName;
     }
 
-    addTaxonomyTerms(collection, terms) {
+    addTaxonomyTermNodes(collection, terms) {
         if (terms.length === 0) {
             return;
         }
@@ -57,11 +57,11 @@ class KenticoCloudSource {
 
             // Terms can be nested
 
-            this.addTaxonomyTerms(collection, term.terms);
+            this.addTaxonomyTermNodes(collection, term.terms);
         }
     }
 
-    async addContent(store, contentType) {
+    async addContentNodes(store, contentType) {
         const typeName = contentType.getTypeName();
         const route = contentType.getRoute();
 
@@ -71,16 +71,16 @@ class KenticoCloudSource {
 
         const { items: contentItems, linkedItems } = content;
 
-        this.addLinkedItems(store, linkedItems);
+        this.addLinkedItemNodes(store, linkedItems);
 
         for (const contentItem of contentItems) {
             const contentNode = contentItem.createNode();
 
-            this.addNode(collection, contentNode);
+            this.addContentNode(store, collection, contentNode);
         }
     }
 
-    addLinkedItems(store, linkedItems) {
+    addLinkedItemNodes(store, linkedItems) {
         // TODO: Move linked item stuff out to another class?
 
         const typeName = this.options.linkedItemTypeName;
@@ -96,15 +96,17 @@ class KenticoCloudSource {
             const existingNode = collection.getNode(linkedNode.item.id);
     
             if (existingNode === null) {
-                this.addNode(collection, linkedNode);
+                this.addContentNode(store, collection, linkedNode);
             }
         }
     }
     
-    addNode(collection, node) {
+    addContentNode(store, collection, node) {
         this.addLinkedItemFields(collection, node);
 
         this.addTaxonomyFields(collection, node);
+
+        this.addAssetFields(store, collection, node);
         
         collection.addNode(node.item);
     }
@@ -125,6 +127,33 @@ class KenticoCloudSource {
             const codename = taxonomyField.taxonomyGroup;
 
             const typeName = this.getTaxonomyTypeName(codename);
+
+            collection.addReference(fieldName, typeName);
+        }
+    }
+
+    addAssetFields(store, collection, node) {
+        const typeName = this.options.assetTypeName;
+
+        let assetCollection = store.getContentType(typeName);
+
+        if (typeof(assetCollection) === 'undefined') {
+            assetCollection = store.addContentType(typeName);
+        }
+
+        for (const assetField of node.assetFields) {
+            const fieldName = assetField.fieldName;
+            const assets = assetField.assets;
+
+            for (const asset of assets) {
+                const id = asset.id;
+
+                const existingNode = collection.getNode(id);
+        
+                if (existingNode === null) {
+                    assetCollection.addNode(asset);
+                }
+            }
 
             collection.addReference(fieldName, typeName);
         }
