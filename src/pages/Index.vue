@@ -63,7 +63,7 @@ export default {
     }
   },
   computed: {
-    homePage: function() {
+    homePage() {
       return this.$page.home.edges[0].node;
     }
   }

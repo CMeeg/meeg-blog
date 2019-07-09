@@ -46,10 +46,10 @@ class GridsomeContentItem extends ContentItem {
     }
 
     getLinkHtml(link, context) {
-        const typeName = this.getTypeName();
         const id = link.linkId;
+        const typeName = this.getTypeName();
 
-        const html = `<item-link :type="${typeName}" :id="${id}">${context.linkText}</item-link>`;
+        const html = `<item-link id="${id}" type="${typeName}">${context.linkText}</item-link>`;
 
         return html;
     }
@@ -57,8 +57,10 @@ class GridsomeContentItem extends ContentItem {
     getComponentHtml(item, context) {
         const componentName = changeCase.kebabCase(this.codename);
         const id = item.system.id;
-
-        const html = `<${componentName} :id="'${id}'" />`;
+        const codename = item.system.codename;
+        const typeName = this.getTypeName();
+        
+        const html = `<${componentName} id="${id}" codename="${codename}" type="${typeName}" />`;
 
         return html;
     }
@@ -76,7 +78,7 @@ class GridsomeContentItem extends ContentItem {
 
         // TODO: Sitemap locations?
         
-        const { id, name, codename, language, type, lastModified } = this.system;
+        const { id, name, codename, language: languageCode, type, lastModified } = this.system;
 
         const typeName = this.getTypeName();
 
@@ -87,7 +89,7 @@ class GridsomeContentItem extends ContentItem {
                 id,
                 name,
                 codename,
-                language,
+                languageCode,
                 type,
                 typeName,
                 lastModified: new Date(lastModified),
@@ -148,7 +150,7 @@ class GridsomeContentItem extends ContentItem {
 
             const fieldResolver = this.getFieldResolver(field);
 
-            fieldResolver(node, field);
+            fieldResolver.apply(this, [node, field]);
         }
     }
 

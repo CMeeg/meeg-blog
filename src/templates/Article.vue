@@ -1,7 +1,7 @@
 <template>
-  <Layout :title="$page.article.title">
-    <v-runtime-template :template="$page.article.body" />
-  </Layout>
+  <layout :title="$page.article.title">
+    <rich-text :html="$page.article.body" />
+  </layout>
 </template>
 
 <page-query>
@@ -15,11 +15,16 @@ query Article ($id: String!) {
 </page-query>
 
 <script>
+import RichText from '../components/RichText.vue';
+
 export default {
   metaInfo () {
     return {
       title: this.$page.article.pageMetadataMetaTitle
     }
+  },
+  components: {
+    RichText
   }
 }
 </script>
