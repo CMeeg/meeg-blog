@@ -1,6 +1,6 @@
 <template>
   <Layout :title="$page.article.title">
-    <div v-html="$page.article.body" />
+    <v-runtime-template :template="$page.article.body" />
   </Layout>
 </template>
 

@@ -6,7 +6,7 @@
 
       <ul>
         <li v-for="article in $page.latestArticles.edges" :key="article.node.id">
-          <g-link :to="`article/${article.node.slug}`">{{ article.node.title }}</g-link>
+          <g-link :to="article.node.path">{{ article.node.title }}</g-link>
         </li>
       </ul>
       <Pager :info="$page.latestArticles.pageInfo"/>
@@ -39,7 +39,7 @@ query Home($page: Int) {
           name
         },
         summary,
-        slug
+        path
         # articleTopics,
         # date,
         # lastUpdated

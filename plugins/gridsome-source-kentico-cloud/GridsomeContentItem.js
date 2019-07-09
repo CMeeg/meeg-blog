@@ -5,9 +5,18 @@ const url = require('url');
 class GridsomeContentItem extends ContentItem {
     constructor(codename) {
         super({
-            propertyResolver: ((fieldName) => {
+            propertyResolver: (fieldName) => {
                 return this.getPropertyFieldName(fieldName);
-            })
+            },
+            richTextResolver: (item, context) => {
+                return this.getComponentHtml(item, context);
+            },
+            linkResolver: (link, context) => {
+                // TODO: This seems to be being ignored
+                return {
+                    asHtml: this.getLinkHtml(link, context)
+                }
+            }
         });
 
         this.codename = codename;
@@ -20,14 +29,13 @@ class GridsomeContentItem extends ContentItem {
     }
 
     getRoute() {
-        // TODO: This was `store.slugify` - need to implement something like that rather than a straight case conversion
         let route = `/${this.slugify(this.codename)}/:slug`;
         
         return route;
     }
 
     slugify(value) {
-        // TODO: This used to use `store.slugify` - need to look into what that does and use that here
+        // TODO: https://github.com/sindresorhus/slugify
         return changeCase.kebabCase(value);
     }
 
@@ -35,6 +43,24 @@ class GridsomeContentItem extends ContentItem {
         const propertyFieldName = changeCase.camelCase(fieldName);
 
         return propertyFieldName;
+    }
+
+    getLinkHtml(link, context) {
+        const typeName = this.getTypeName();
+        const id = link.linkId;
+
+        const html = `<item-link :type="${typeName}" :id="${id}">${context.linkText}</item-link>`;
+
+        return html;
+    }
+
+    getComponentHtml(item, context) {
+        const componentName = changeCase.kebabCase(this.codename);
+        const id = item.system.id;
+
+        const html = `<${componentName} :id="'${id}'" />`;
+
+        return html;
     }
 
     createNode() {
@@ -52,6 +78,8 @@ class GridsomeContentItem extends ContentItem {
         
         const { id, name, codename, language, type, lastModified } = this.system;
 
+        const typeName = this.getTypeName();
+
         // Initialise a content node with fields from system data, which should be consistent across all nodes
 
         const node = {
@@ -61,8 +89,9 @@ class GridsomeContentItem extends ContentItem {
                 codename,
                 language,
                 type,
+                typeName,
                 lastModified: new Date(lastModified),
-                slug: this.slugify(name)
+                slug: null // Will be overwritten if a `URL slug` type field is present on the content type
             },
             assetFields: [],
             linkedItemFields: [],
@@ -104,7 +133,7 @@ class GridsomeContentItem extends ContentItem {
                             asset.height = elementAsset.height;
                         });
 
-                    // We also need to extract the id from the url
+                    // We also need to extract an id from the url as it is not provided
 
                     asset.id = this.getAssetId(url);
 
@@ -115,7 +144,6 @@ class GridsomeContentItem extends ContentItem {
             field.fieldName = fieldName;
 
             // TODO:
-            // * Rich text
             // * Custom element
 
             const fieldResolver = this.getFieldResolver(field);
@@ -185,6 +213,14 @@ class GridsomeContentItem extends ContentItem {
     multipleChoiceTypeFieldResolver(node, field) {
         const fieldName = field.fieldName;
         const value = field.value.map(choice => choice.name);
+
+        node.item[fieldName] = value;
+    }
+
+    richTextTypeFieldResolver(node, field) {
+        const fieldName = field.fieldName;
+        const html = field.getHtml();
+        const value = `<div class="rich-text">${html}</div>`;
 
         node.item[fieldName] = value;
     }
