@@ -1,6 +1,6 @@
 const { ContentItem } = require('kentico-cloud-delivery');
 const changeCase = require('change-case');
-const url = require('url');
+const cheerio = require('cheerio');
 
 class GridsomeContentItem extends ContentItem {
     constructor(codename) {
@@ -58,9 +58,8 @@ class GridsomeContentItem extends ContentItem {
         const componentName = changeCase.kebabCase(this.codename);
         const id = item.system.id;
         const codename = item.system.codename;
-        const typeName = this.getTypeName();
         
-        const html = `<${componentName} id="${id}" codename="${codename}" type="${typeName}" />`;
+        const html = `<${componentName} id="${id}" codename="${codename}" />`;
 
         return html;
     }
@@ -221,10 +220,51 @@ class GridsomeContentItem extends ContentItem {
 
     richTextTypeFieldResolver(node, field) {
         const fieldName = field.fieldName;
-        const html = field.getHtml();
-        const value = `<div class="rich-text">${html}</div>`;
+        const html = this.getRichTextHtml(node, field);
 
-        node.item[fieldName] = value;
+        node.item[fieldName] = html;
+    }
+
+    getRichTextHtml(node, field) {
+        let html = field.getHtml();
+
+        html = `<div class="rich-text">${html}</div>`;
+        
+        const $ = cheerio.load(html, {decodeEntities: false});
+
+        // Resolve item links
+        // N.B. This shouldn't be necessary, but the `linkResolver` feature of the Kentico Cloud SDK doesn't appear to work
+        
+        const itemLinks = $('a[data-item-id]');
+        const links = field.links;
+
+        itemLinks.each((index, element) => {
+            const itemLink = $(element);
+            const itemId = itemLink.data('itemId');
+            const link = links.filter(link => link.linkId === itemId)[0];
+            const typeName = changeCase.pascalCase(link.type);
+            const linkText = itemLink.html();
+
+            const itemLinkHtml = `<item-link id="${itemId}" type="${typeName}">${linkText}</item-link>`;
+
+            itemLink.replaceWith(itemLinkHtml);
+        });
+
+        // Unwrap components
+
+        const components = $('p[data-type="item"]');
+
+        components.each((index, element) => {
+            const component = $(element);
+
+            const componentHtml = component.html();
+
+            component.replaceWith(componentHtml);
+        });
+
+        html = cheerio.html($('.rich-text'), {decodeEntities: false});
+
+        return html;
     }
 
     modularContentTypeFieldResolver(node, field) {

@@ -22,8 +22,7 @@ query CodeSnippet {
 export default {
     props: [
         'id',
-        'codename',
-        'type'
+        'codename'
     ],
     computed: {
         codeSnippet() {
