@@ -76,7 +76,9 @@ class KenticoCloudSource {
         for (const contentItem of contentItems) {
             const contentNode = contentItem.createNode();
 
-            this.addContentNode(store, collection, contentNode);
+            const node = this.addContentNode(store, collection, contentNode);
+
+            this.addItemLinkNode(store, node);
         }
     }
 
@@ -108,7 +110,7 @@ class KenticoCloudSource {
 
         this.addAssetFields(store, collection, node);
         
-        collection.addNode(node.item);
+        return collection.addNode(node.item);
     }
 
     addLinkedItemFields(collection, node) {
@@ -157,6 +159,25 @@ class KenticoCloudSource {
 
             collection.addReference(fieldName, typeName);
         }
+    }
+
+    addItemLinkNode(store, node) {
+        // TODO: Make this an option
+        const typeName = 'ItemLink';
+
+        let itemLinkCollection = store.getContentType(typeName);
+
+        if (typeof(itemLinkCollection) === 'undefined') {
+            itemLinkCollection = store.addContentType(typeName);
+        }
+
+        const itemLinkNode = {
+            id: node.id,
+            typeName: node.typeName,
+            path: node.path
+        };
+
+        itemLinkCollection.addNode(itemLinkNode);
     }
 }
 
