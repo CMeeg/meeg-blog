@@ -75,8 +75,6 @@ class GridsomeContentItem extends ContentItem {
   initNode() {
     // Get system data
 
-    // TODO: Sitemap locations?
-
     const { id, name, codename, language: languageCode, type, lastModified } = this.system;
 
     const typeName = this.getTypeName();
