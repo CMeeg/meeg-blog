@@ -1,24 +1,25 @@
 <template>
-    <v-runtime-template :template="html" />
+  <v-runtime-template :template="html" />
 </template>
 
 <script>
-import VRuntimeTemplate from "v-runtime-template";
-import ItemLink from "~/components/ItemLink.vue";
-import CodeSnippet from "~/components/CodeSnippet.vue";
+import VRuntimeTemplate from 'v-runtime-template';
+import ItemLink from '~/components/ItemLink.vue';
+import CodeSnippet from '~/components/CodeSnippet.vue';
 
 export default {
-    props: [
-        'html'
-    ],
-    components: {
-        VRuntimeTemplate,
-        ItemLink,
-        CodeSnippet
+  components: {
+    VRuntimeTemplate,
+    /* eslint-disable vue/no-unused-components */
+    ItemLink,
+    CodeSnippet
+    /* eslint-enable vue/no-unused-components */
+  },
+  props: {
+    html: {
+      type: String,
+      required: true
     }
-}
+  }
+};
 </script>
-
-<style>
-
-</style>

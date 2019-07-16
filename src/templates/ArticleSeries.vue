@@ -1,6 +1,6 @@
 <template>
   <Layout :title="$page.articleSeries.title">
-      
+    <p>TODO</p>
   </Layout>
 </template>
 

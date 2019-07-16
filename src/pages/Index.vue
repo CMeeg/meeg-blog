@@ -1,15 +1,15 @@
 <template>
   <Layout>
-      <h1>{{ homePage.title }}</h1>
+    <h1>{{ homePage.title }}</h1>
 
-      <div v-html="homePage.summary" />
+    <div v-html="homePage.summary" />
 
-      <ul>
-        <li v-for="article in $page.latestArticles.edges" :key="article.node.id">
-          <g-link :to="article.node.path">{{ article.node.title }}</g-link>
-        </li>
-      </ul>
-      <Pager :info="$page.latestArticles.pageInfo"/>
+    <ul>
+      <li v-for="article in $page.latestArticles.edges" :key="article.node.id">
+        <g-link :to="article.node.path">{{ article.node.title }}</g-link>
+      </li>
+    </ul>
+    <Pager :info="$page.latestArticles.pageInfo" />
   </Layout>
 </template>
 
@@ -25,7 +25,7 @@ query Home($page: Int) {
         pageMetadataMetaDescription
       }
     }
-	}
+  }
   latestArticles: allArticle(perPage: 10, page: $page) @paginate {
     pageInfo {
       totalPages
@@ -50,22 +50,22 @@ query Home($page: Int) {
 </page-query>
 
 <script>
-import { Pager } from 'gridsome'
+import { Pager } from 'gridsome';
 
 export default {
   components: {
     Pager
   },
-  metaInfo () {
+  metaInfo() {
     return {
       title: this.homePage.pageMetadataMetaTitle || 'Home',
       description: this.homePage.pageMetadataMetaDescription || ''
-    }
+    };
   },
   computed: {
     homePage() {
       return this.$page.home.edges[0].node;
     }
   }
-}
+};
 </script>

@@ -18,6 +18,6 @@ module.exports = function (api) {
     // For v-runtime-template to work, you must use the with-compiler Vue.js version
     // See https://github.com/alexjoverm/v-runtime-template
 
-    config.resolve.alias["vue"] = "vue/dist/vue.common";
+    config.resolve.alias['vue'] = 'vue/dist/vue.common';
   })
 }

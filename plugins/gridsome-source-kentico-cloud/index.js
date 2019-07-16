@@ -4,45 +4,45 @@ const glob = require('glob');
 const path = require('path');
 
 class KenticoCloudSourcePlugin {
-    static defaultOptions() {
-        return {
-            projectId: undefined,
-            previewApiKey: undefined,
-            linkedItemTypeName: 'LinkedItem',
-            taxonomyTypeNamePrefix: 'Taxonomy',
-            assetTypeName: 'Asset',
-            contentTypesPath: './plugins/gridsome-source-kentico-cloud/content-types'
-        }
-    };
-
-    constructor (api, options) {
-        options.contentTypes = this.loadContentTypes(options.contentTypesPath);
-        
-        var deliveryClient = new DeliveryClient(options);
-
-        var kenticoCloudSource = new KenticoCloudSource(deliveryClient, options);
-
-        api.loadSource(async store => kenticoCloudSource.load(store));
+  static defaultOptions() {
+    return {
+      projectId: undefined,
+      previewApiKey: undefined,
+      linkedItemTypeName: 'LinkedItem',
+      taxonomyTypeNamePrefix: 'Taxonomy',
+      assetTypeName: 'Asset',
+      contentTypesPath: './plugins/gridsome-source-kentico-cloud/content-types'
     }
+  };
 
-    loadContentTypes(contentTypesPath) {
-        const extension = '.js';
+  constructor(api, options) {
+    options.contentTypes = this.loadContentTypes(options.contentTypesPath);
 
-        const contentTypesGlob = path.join(contentTypesPath, '/*') + extension;
+    var deliveryClient = new DeliveryClient(options);
 
-        const contentTypes = glob.sync(contentTypesGlob).map(file => {
-            const codename = path.basename(file, extension);
-            const contentTypePath = path.resolve(file);
-            const contentType = require(contentTypePath);
+    var kenticoCloudSource = new KenticoCloudSource(deliveryClient, options);
 
-            return {
-                codename,
-                contentType
-            };
-        });
+    api.loadSource(async store => kenticoCloudSource.load(store));
+  }
 
-        return contentTypes;
-    }
+  loadContentTypes(contentTypesPath) {
+    const extension = '.js';
+
+    const contentTypesGlob = path.join(contentTypesPath, '/*') + extension;
+
+    const contentTypes = glob.sync(contentTypesGlob).map(file => {
+      const codename = path.basename(file, extension);
+      const contentTypePath = path.resolve(file);
+      const contentType = require(contentTypePath);
+
+      return {
+        codename,
+        contentType
+      };
+    });
+
+    return contentTypes;
+  }
 }
 
 module.exports = KenticoCloudSourcePlugin;

@@ -1,55 +1,55 @@
-const {TypeResolver, DeliveryClient } = require('kentico-cloud-delivery');
+const { TypeResolver, DeliveryClient } = require('kentico-cloud-delivery');
 
 class GridsomeDeliveryClient {
-    constructor(options) {
-        this.options = options;
+  constructor(options) {
+    this.options = options;
 
-        const deliveryClientOptions = {
-            projectId: options.projectId,
-            typeResolvers: []
-        };
+    const deliveryClientOptions = {
+      projectId: options.projectId,
+      typeResolvers: []
+    };
 
-        for (const contentType of options.contentTypes) {
-            const codename = contentType.codename;
-            const ContentType = contentType.contentType;
+    for (const contentType of options.contentTypes) {
+      const codename = contentType.codename;
+      const ContentType = contentType.contentType;
 
-            deliveryClientOptions.typeResolvers.push(
-                new TypeResolver(codename, () => new ContentType(codename))
-            );
-        }
-
-        if (options.previewApiKey) {
-            deliveryClientOptions.enablePreviewMode = true;
-            deliveryClientOptions.previewApiKey = options.previewApiKey;
-        }
-
-        this.deliveryClient = new DeliveryClient(deliveryClientOptions);
+      deliveryClientOptions.typeResolvers.push(
+        new TypeResolver(codename, () => new ContentType(codename))
+      );
     }
 
-    async getContentTypes() {
-        const contentTypesPromise = await this.deliveryClient
-            .types()
-            .getPromise();
-
-        return contentTypesPromise;
-    }
-    
-    async getContent(codename) {
-        const contentPromise = await this.deliveryClient
-            .items()
-            .type(codename)
-            .getPromise();
-
-        return contentPromise;
+    if (options.previewApiKey) {
+      deliveryClientOptions.enablePreviewMode = true;
+      deliveryClientOptions.previewApiKey = options.previewApiKey;
     }
 
-    async getTaxonomyGroups() {
-        const taxonomyGroupsPromise = await this.deliveryClient
-            .taxonomies()
-            .getPromise();
+    this.deliveryClient = new DeliveryClient(deliveryClientOptions);
+  }
 
-        return taxonomyGroupsPromise;
-    }
+  async getContentTypes() {
+    const contentTypesPromise = await this.deliveryClient
+      .types()
+      .getPromise();
+
+    return contentTypesPromise;
+  }
+
+  async getContent(codename) {
+    const contentPromise = await this.deliveryClient
+      .items()
+      .type(codename)
+      .getPromise();
+
+    return contentPromise;
+  }
+
+  async getTaxonomyGroups() {
+    const taxonomyGroupsPromise = await this.deliveryClient
+      .taxonomies()
+      .getPromise();
+
+    return taxonomyGroupsPromise;
+  }
 }
 
 module.exports = GridsomeDeliveryClient;

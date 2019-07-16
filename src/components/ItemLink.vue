@@ -1,5 +1,7 @@
 <template>
-    <g-link :to="itemLink.path"><slot /></g-link>
+  <g-link :to="itemLink.path">
+    <slot />
+  </g-link>
 </template>
 
 <static-query>
@@ -18,26 +20,28 @@ query ItemLink {
 
 <script>
 export default {
-    props: [
-        'id',
-        'type'
-    ],
-    computed: {
-        itemLink() {
-            const itemLink = this.$static.itemLinks.edges.filter(
-                edge => edge.node.id === this.id && edge.node.typeName === this.type
-            );
-
-            if (itemLink.length === 1) {
-                return itemLink[0].node;
-            }
-
-            return null;
-        }
+  props: {
+    id: {
+      type: String,
+      required: true
+    },
+    type: {
+      type: String,
+      required: true
     }
-}
+  },
+  computed: {
+    itemLink() {
+      const itemLink = this.$static.itemLinks.edges.filter(
+        edge => edge.node.id === this.id && edge.node.typeName === this.type
+      );
+
+      if (itemLink.length === 1) {
+        return itemLink[0].node;
+      }
+
+      return null;
+    }
+  }
+};
 </script>
-
-<style>
-
-</style>

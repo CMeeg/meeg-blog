@@ -1,8 +1,8 @@
 <template>
   <Layout>
-      <h1>{{ aboutPage.name }}</h1>
+    <h1>{{ aboutPage.name }}</h1>
 
-      <div v-html="aboutPage.bio" />
+    <div v-html="aboutPage.bio" />
   </Layout>
 </template>
 
@@ -18,22 +18,22 @@ query Author {
         pageMetadataMetaDescription
       }
     }
-	}
+  }
 }
 </page-query>
 
 <script>
 export default {
-  metaInfo () {
+  metaInfo() {
     return {
       title: this.aboutPage.pageMetadataMetaTitle || 'About',
       description: this.aboutPage.pageMetadataMetaDescription || ''
-    }
+    };
   },
   computed: {
     aboutPage: function() {
       return this.$page.author.edges[0].node;
     }
   }
-}
+};
 </script>
