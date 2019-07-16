@@ -1,5 +1,6 @@
 const { ContentItem } = require('kentico-cloud-delivery');
 const changeCase = require('change-case');
+const slugify = require('@sindresorhus/slugify');
 const cheerio = require('cheerio');
 
 class GridsomeContentItem extends ContentItem {
@@ -35,8 +36,7 @@ class GridsomeContentItem extends ContentItem {
   }
 
   slugify(value) {
-    // TODO: https://github.com/sindresorhus/slugify
-    return changeCase.kebabCase(value);
+    return slugify(value);
   }
 
   getPropertyFieldName(fieldName) {
