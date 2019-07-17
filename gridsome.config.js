@@ -1,4 +1,4 @@
-// This is where project configuration and plugin options are located. 
+// This is where project configuration and plugin options are located.
 // Learn more: https://gridsome.org/docs/config
 
 // Changes here require a server restart.
@@ -12,8 +12,13 @@ module.exports = {
     {
       use: '~/plugins/gridsome-source-kentico-cloud',
       options: {
-        projectId: process.env.KENTICO_CLOUD_PROJECT_ID,
-        previewApiKey: process.env.KENTICO_CLOUD_PREVIEW_API_KEY
+        deliveryClientConfig: {
+          projectId: process.env.KENTICO_CLOUD_PROJECT_ID,
+          previewApiKey: process.env.KENTICO_CLOUD_PREVIEW_API_KEY,
+          enablePreviewMode: JSON.parse(process.env.KENTICO_CLOUD_ENABLE_PREVIEW_MODE),
+          enableAdvancedLogging: JSON.parse(process.env.KENTICO_CLOUD_ENABLED_ADVANCED_LOGGING),
+          defaultLanguage: process.env.KENTICO_CLOUD_DEFAULT_LANGUAGE
+        }
       }
     }
   ]

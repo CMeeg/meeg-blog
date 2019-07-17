@@ -1,29 +1,26 @@
 const { TypeResolver, DeliveryClient } = require('kentico-cloud-delivery');
 
 class GridsomeDeliveryClient {
-  constructor(options) {
-    this.options = options;
+  constructor(deliveryClientConfig, contentTypes) {
+    const typeResolvers = this.getTypeResolvers(contentTypes);
+    deliveryClientConfig.typeResolvers = typeResolvers;
 
-    const deliveryClientOptions = {
-      projectId: options.projectId,
-      typeResolvers: []
-    };
+    this.deliveryClient = new DeliveryClient(deliveryClientConfig);
+  }
 
-    for (const contentType of options.contentTypes) {
+  getTypeResolvers(contentTypes) {
+    const typeResolvers = [];
+
+    for (const contentType of contentTypes) {
       const codename = contentType.codename;
       const ContentType = contentType.contentType;
 
-      deliveryClientOptions.typeResolvers.push(
+      typeResolvers.push(
         new TypeResolver(codename, () => new ContentType(codename))
       );
     }
 
-    if (options.previewApiKey) {
-      deliveryClientOptions.enablePreviewMode = true;
-      deliveryClientOptions.previewApiKey = options.previewApiKey;
-    }
-
-    this.deliveryClient = new DeliveryClient(deliveryClientOptions);
+    return typeResolvers;
   }
 
   async getContentTypes() {
@@ -38,6 +35,7 @@ class GridsomeDeliveryClient {
     const contentPromise = await this.deliveryClient
       .items()
       .type(codename)
+      .depthParameter(3)
       .getPromise();
 
     return contentPromise;

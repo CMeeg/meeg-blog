@@ -6,8 +6,9 @@ const path = require('path');
 class KenticoCloudSourcePlugin {
   static defaultOptions() {
     return {
-      projectId: undefined,
-      previewApiKey: undefined,
+      deliveryClientConfig: {
+        projectId: ''
+      },
       linkedItemTypeName: 'LinkedItem',
       taxonomyTypeNamePrefix: 'Taxonomy',
       assetTypeName: 'Asset',
@@ -18,7 +19,7 @@ class KenticoCloudSourcePlugin {
   constructor(api, options) {
     options.contentTypes = this.loadContentTypes(options.contentTypesPath);
 
-    var deliveryClient = new DeliveryClient(options);
+    var deliveryClient = new DeliveryClient(options.deliveryClientConfig, options.contentTypes);
 
     var kenticoCloudSource = new KenticoCloudSource(deliveryClient, options);
 
