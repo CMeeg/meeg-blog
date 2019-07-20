@@ -1,7 +1,6 @@
 const DeliveryClient = require('./GridsomeDeliveryClient');
 const KenticoCloudSource = require('./KenticoCloudSource');
-const glob = require('glob');
-const path = require('path');
+const GridsomeContentTypeManager = require('./GridsomeContentTypeManager');
 
 class KenticoCloudSourcePlugin {
   static defaultOptions() {
@@ -9,40 +8,38 @@ class KenticoCloudSourcePlugin {
       deliveryClientConfig: {
         projectId: ''
       },
+      contentTypeConfig: {
+        contentItemPath: './plugins/gridsome-source-kentico-cloud/content-types'
+      },
       linkedItemTypeName: 'LinkedItem',
       taxonomyTypeNamePrefix: 'Taxonomy',
-      assetTypeName: 'Asset',
-      contentTypesPath: './plugins/gridsome-source-kentico-cloud/content-types'
+      assetTypeName: 'Asset'
     }
   };
 
   constructor(api, options) {
-    options.contentTypes = this.loadContentTypes(options.contentTypesPath);
+    const contentTypeManager = this.getContentTypeManager(options);
 
-    var deliveryClient = new DeliveryClient(options.deliveryClientConfig, options.contentTypes);
-
-    var kenticoCloudSource = new KenticoCloudSource(deliveryClient, options);
+    const kenticoCloudSource = this.getKenticoCloudSource(options, contentTypeManager);
 
     api.loadSource(async store => kenticoCloudSource.load(store));
   }
 
-  loadContentTypes(contentTypesPath) {
-    const extension = '.js';
+  getContentTypeManager(options) {
+    const deliveryClient = new DeliveryClient(options.deliveryClientConfig);
 
-    const contentTypesGlob = path.join(contentTypesPath, '/*') + extension;
+    const contentTypeManager = new GridsomeContentTypeManager(deliveryClient, options.contentTypeConfig);
 
-    const contentTypes = glob.sync(contentTypesGlob).map(file => {
-      const codename = path.basename(file, extension);
-      const contentTypePath = path.resolve(file);
-      const contentType = require(contentTypePath);
+    return contentTypeManager;
+  }
 
-      return {
-        codename,
-        contentType
-      };
-    });
+  getKenticoCloudSource(options, contentTypeManager) {
+    const deliveryClient = new DeliveryClient(options.deliveryClientConfig, contentTypeManager);
 
-    return contentTypes;
+    // TODO: Don't pass in options - separate concerns into their own classes
+    const kenticoCloudSource = new KenticoCloudSource(deliveryClient, contentTypeManager, options);
+
+    return kenticoCloudSource;
   }
 }
 

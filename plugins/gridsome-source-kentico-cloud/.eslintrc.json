@@ -19,6 +19,7 @@
     ],
     "rules": {
         "space-before-function-paren": "off",
+        "space-unary-ops": "off",
         "semi": "off"
     }
 }

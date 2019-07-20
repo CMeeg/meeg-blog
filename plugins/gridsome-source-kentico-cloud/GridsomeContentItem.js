@@ -1,65 +1,61 @@
 const { ContentItem } = require('kentico-cloud-delivery');
 const changeCase = require('change-case');
-const slugify = require('@sindresorhus/slugify');
 const cheerio = require('cheerio');
 
 class GridsomeContentItem extends ContentItem {
-  constructor(codename) {
+  constructor(typeName) {
     super({
       propertyResolver: (fieldName) => {
-        return this.getPropertyFieldName(fieldName);
+        return this.resolveProperty(fieldName);
       },
       richTextResolver: (item, context) => {
-        return this.getComponentHtml(item, context);
+        return this.resolveRichText(item, context);
       },
       linkResolver: (link, context) => {
-        // TODO: This seems to be being ignored
-        return {
-          asHtml: this.getLinkHtml(link, context)
-        }
+        // TODO: Ask Kentico Cloud why this seems to be being ignored
+        return this.resolveLink(link, context);
       }
     });
 
-    this.codename = codename;
+    this.typeName = typeName;
   }
 
-  getTypeName() {
-    const typeName = changeCase.pascalCase(this.codename);
-
-    return typeName;
+  resolveProperty(fieldName) {
+    return this.getFieldName(fieldName);
   }
 
-  getRoute() {
-    const route = `/${this.slugify(this.codename)}/:slug`;
+  getFieldName(fieldName) {
+    const nodeFieldName = changeCase.camelCase(fieldName);
 
-    return route;
+    return nodeFieldName;
   }
 
-  slugify(value) {
-    return slugify(value);
+  resolveRichText(item, context) {
+    const id = item.system.id;
+    const codename = item.system.codename;
+
+    return this.getComponentHtml(id, codename);
   }
 
-  getPropertyFieldName(fieldName) {
-    const propertyFieldName = changeCase.camelCase(fieldName);
+  getComponentHtml(id, codename) {
+    const componentName = changeCase.kebabCase(codename);
 
-    return propertyFieldName;
-  }
-
-  getLinkHtml(link, context) {
-    const id = link.linkId;
-    const typeName = this.getTypeName();
-
-    const html = `<item-link id="${id}" type="${typeName}">${context.linkText}</item-link>`;
+    const html = `<${componentName} id="${id}" codename="${codename}" />`;
 
     return html;
   }
 
-  getComponentHtml(item, context) {
-    const componentName = changeCase.kebabCase(this.codename);
-    const id = item.system.id;
-    const codename = item.system.codename;
+  resolveLink(link, context) {
+    const id = link.linkId;
+    const text = context.linkText;
 
-    const html = `<${componentName} id="${id}" codename="${codename}" />`;
+    return {
+      asHtml: this.getLinkHtml(id, this.typeName, text)
+    }
+  }
+
+  getLinkHtml(id, typeName, text) {
+    const html = `<item-link id="${id}" type="${typeName}">${text}</item-link>`;
 
     return html;
   }
@@ -77,8 +73,6 @@ class GridsomeContentItem extends ContentItem {
 
     const { id, name, codename, language: languageCode, type, lastModified } = this.system;
 
-    const typeName = this.getTypeName();
-
     // Initialise a content node with fields from system data, which should be consistent across all nodes
 
     const node = {
@@ -88,7 +82,7 @@ class GridsomeContentItem extends ContentItem {
         codename,
         languageCode,
         type,
-        typeName,
+        typeName: this.typeName,
         lastModified: new Date(lastModified),
         slug: null // Will be overwritten if a `URL slug` type field is present on the content type
       },
@@ -105,11 +99,12 @@ class GridsomeContentItem extends ContentItem {
 
     for (const codename in this.elements) {
       const element = this.elements[codename];
-      const fieldName = this.getPropertyFieldName(codename);
+      const fieldName = this.getFieldName(codename);
       let field = this[fieldName];
 
       if (element.type === 'modular_content') {
         // "Linked items" fields are different to all others for some reason so we force it to be more uniform
+        // TODO : Ask Kentico Cloud to make it consistent
 
         field = {
           name: element.name,
@@ -121,6 +116,7 @@ class GridsomeContentItem extends ContentItem {
 
       if (element.type === 'asset') {
         // The AssetModel doesn't have width and height, but the element value does so we will map those values across
+        // TODO: Ask Kentico Cloud to add width and height
 
         field.assets = field.assets.map(asset => {
           const url = asset.url;
@@ -133,6 +129,7 @@ class GridsomeContentItem extends ContentItem {
             });
 
           // We also need to extract an id from the url as it is not provided
+          // TODO: Ask Kentico Cloud if it can be provided
 
           asset.id = this.getAssetId(url);
 
@@ -213,6 +210,7 @@ class GridsomeContentItem extends ContentItem {
     const fieldName = field.fieldName;
     const value = field.value.map(choice => choice.name);
 
+    // TODO: Maybe the value should include the "code name" also
     node.item[fieldName] = value;
   }
 
@@ -239,16 +237,18 @@ class GridsomeContentItem extends ContentItem {
     itemLinks.each((index, element) => {
       const itemLink = $(element);
       const itemId = itemLink.data('itemId');
-      const link = links.filter(link => link.linkId === itemId)[0];
+      const link = links.filter(l => l.linkId === itemId)[0];
+      // TODO: This assumes the default settings for getting the type name - can we pass in the type manager or content types to use here?
       const typeName = changeCase.pascalCase(link.type);
       const linkText = itemLink.html();
 
-      const itemLinkHtml = `<item-link id="${itemId}" type="${typeName}">${linkText}</item-link>`;
+      const itemLinkHtml = this.getLinkHtml(itemId, typeName, linkText);
 
       itemLink.replaceWith(itemLinkHtml);
     });
 
     // Unwrap components
+    // TODO: This may not work depending on delivery client settings i.e. these may not be `p` elements
 
     const components = $('p[data-type="item"]');
 

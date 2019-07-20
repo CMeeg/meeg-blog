@@ -1,30 +1,48 @@
 const { TypeResolver, DeliveryClient } = require('kentico-cloud-delivery');
 
 class GridsomeDeliveryClient {
-  constructor(deliveryClientConfig, contentTypes) {
-    const typeResolvers = this.getTypeResolvers(contentTypes);
-    deliveryClientConfig.typeResolvers = typeResolvers;
-
-    this.deliveryClient = new DeliveryClient(deliveryClientConfig);
+  constructor(deliveryClientConfig, contentTypeManager) {
+    this.deliveryClientConfig = deliveryClientConfig;
+    this.contentTypeManager = contentTypeManager;
   }
 
-  getTypeResolvers(contentTypes) {
-    const typeResolvers = [];
-
-    for (const contentType of contentTypes) {
-      const codename = contentType.codename;
-      const ContentType = contentType.contentType;
-
-      typeResolvers.push(
-        new TypeResolver(codename, () => new ContentType(codename))
-      );
+  async getDeliveryClient() {
+    if (typeof(this.deliveryClient) !== 'undefined') {
+      return this.deliveryClient;
     }
+
+    const typeResolvers = await this.getTypeResolvers();
+    this.deliveryClientConfig.typeResolvers = typeResolvers;
+
+    this.deliveryClient = new DeliveryClient(this.deliveryClientConfig);
+
+    return this.deliveryClient;
+  }
+
+  async getTypeResolvers() {
+    if (typeof(this.contentTypeManager) === 'undefined') {
+      return null;
+    }
+
+    // Create type resolvers from content types
+
+    const contentTypes = await this.contentTypeManager.getContentTypes();
+
+    const typeResolvers = contentTypes.map(contentType => {
+      const codename = contentType.codename;
+      const typeName = contentType.typeName;
+      const ContentItem = contentType.ContentItem;
+
+      return new TypeResolver(codename, () => new ContentItem(typeName))
+    });
 
     return typeResolvers;
   }
 
   async getContentTypes() {
-    const contentTypesPromise = await this.deliveryClient
+    const deliveryClient = new DeliveryClient(this.deliveryClientConfig);
+
+    const contentTypesPromise = await deliveryClient
       .types()
       .getPromise();
 
@@ -32,7 +50,9 @@ class GridsomeDeliveryClient {
   }
 
   async getContent(codename) {
-    const contentPromise = await this.deliveryClient
+    const deliveryClient = await this.getDeliveryClient();
+
+    const contentPromise = await deliveryClient
       .items()
       .type(codename)
       .depthParameter(3)
@@ -42,7 +62,9 @@ class GridsomeDeliveryClient {
   }
 
   async getTaxonomyGroups() {
-    const taxonomyGroupsPromise = await this.deliveryClient
+    const deliveryClient = await this.getDeliveryClient();
+
+    const taxonomyGroupsPromise = await deliveryClient
       .taxonomies()
       .getPromise();
 

@@ -1,19 +1,19 @@
 const changeCase = require('change-case');
 
 class KenticoCloudSource {
-  constructor(deliveryClient, options) {
+  constructor(deliveryClient, contentTypeManager, options) {
     this.deliveryClient = deliveryClient;
+    this.contentTypeManager = contentTypeManager;
     this.options = options;
   }
 
   async load(store) {
     await this.addTaxonomyGroupNodes(store);
 
-    for (const contentType of this.options.contentTypes) {
-      const codename = contentType.codename;
-      const ContentType = contentType.contentType;
+    const contentTypes = await this.contentTypeManager.getContentTypes();
 
-      await this.addContentNodes(store, new ContentType(codename));
+    for (const contentType of contentTypes) {
+      await this.addContentNodes(store, contentType);
     }
   }
 
@@ -62,12 +62,14 @@ class KenticoCloudSource {
   }
 
   async addContentNodes(store, contentType) {
-    const typeName = contentType.getTypeName();
-    const route = contentType.getRoute();
+    const codename = contentType.codename;
+    const typeName = contentType.typeName;
+    const route = contentType.route;
 
+    // TODO: Create this only if needed i.e. if there are content items
     const collection = store.addContentType({ typeName, route });
 
-    const content = await this.deliveryClient.getContent(contentType.codename);
+    const content = await this.deliveryClient.getContent(codename);
 
     const { items: contentItems, linkedItems } = content;
 
