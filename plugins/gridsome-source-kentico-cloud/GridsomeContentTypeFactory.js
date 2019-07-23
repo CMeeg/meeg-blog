@@ -54,7 +54,8 @@ class GridsomeContentTypeFactory {
   }
 
   getTypeName(codename) {
-    const typeName = changeCase.pascalCase(codename);
+    const typeNamePrefix = this.options.contentTypeNamePrefix;
+    const typeName = typeNamePrefix + changeCase.pascalCase(codename);
 
     return typeName;
   }

@@ -47,11 +47,12 @@ class GridsomeDeliveryClient {
 
   async getContent(codename) {
     const deliveryClient = this.getDeliveryClient();
+    const depth = this.deliveryClientConfig.contentItemsDepth;
 
     const contentItems = await deliveryClient
       .items()
       .type(codename)
-      .depthParameter(3)
+      .depthParameter(depth)
       .getPromise();
 
     return contentItems;
