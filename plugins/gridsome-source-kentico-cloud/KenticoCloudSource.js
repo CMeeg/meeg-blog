@@ -1,16 +1,18 @@
 const changeCase = require('change-case');
 
 class KenticoCloudSource {
-  constructor(deliveryClient, contentTypeManager, options) {
+  constructor(deliveryClient, contentTypeFactory, options) {
     this.deliveryClient = deliveryClient;
-    this.contentTypeManager = contentTypeManager;
+    this.contentTypeFactory = contentTypeFactory;
     this.options = options;
   }
 
   async load(store) {
     await this.addTaxonomyGroupNodes(store);
 
-    const contentTypes = await this.contentTypeManager.getContentTypes();
+    const contentTypes = await this.getContentTypes();
+
+    this.addTypeResolvers(contentTypes);
 
     for (const contentType of contentTypes) {
       await this.addContentNodes(store, contentType);
@@ -58,6 +60,28 @@ class KenticoCloudSource {
       // Terms can be nested
 
       this.addTaxonomyTermNodes(collection, term.terms);
+    }
+  }
+
+  async getContentTypes() {
+    const kcContentTypes = await this.deliveryClient.getContentTypes();
+
+    const contentTypes = kcContentTypes.types.map(contentType => {
+      return this.contentTypeFactory.createContentType(contentType.system.codename);
+    });
+
+    return contentTypes;
+  }
+
+  addTypeResolvers(contentTypes) {
+    for (const contentType of contentTypes) {
+      const codename = contentType.codename;
+      const ContentItem = contentType.ContentItem;
+
+      this.deliveryClient.addTypeResolver(
+        codename,
+        () => new ContentItem(contentType.typeName)
+      );
     }
   }
 

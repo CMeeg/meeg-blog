@@ -1,74 +1,70 @@
 const { TypeResolver, DeliveryClient } = require('kentico-cloud-delivery');
 
 class GridsomeDeliveryClient {
-  constructor(deliveryClientConfig, contentTypeManager) {
+  constructor(deliveryClientConfig) {
     this.deliveryClientConfig = deliveryClientConfig;
-    this.contentTypeManager = contentTypeManager;
+
+    this.deliveryClient = null;
   }
 
-  async getDeliveryClient() {
-    if (typeof(this.deliveryClient) !== 'undefined') {
+  getDeliveryClient() {
+    if (this.deliveryClient !== null) {
       return this.deliveryClient;
     }
-
-    const typeResolvers = await this.getTypeResolvers();
-    this.deliveryClientConfig.typeResolvers = typeResolvers;
 
     this.deliveryClient = new DeliveryClient(this.deliveryClientConfig);
 
     return this.deliveryClient;
   }
 
-  async getTypeResolvers() {
-    if (typeof(this.contentTypeManager) === 'undefined') {
-      return null;
+  addTypeResolver(codename, createContentItemFunc) {
+    if (typeof(this.deliveryClientConfig.typeResolvers) === 'undefined') {
+      this.deliveryClientConfig.typeResolvers = [];
     }
 
-    // Create type resolvers from content types
+    this.deliveryClientConfig.typeResolvers.push(
+      new TypeResolver(
+        codename,
+        createContentItemFunc
+      )
+    );
 
-    const contentTypes = await this.contentTypeManager.getContentTypes();
+    // We can't add a type resolver after the delivery client has been created so
+    // we clear it out so it can be recreated by `getDeliveryClient`
 
-    const typeResolvers = contentTypes.map(contentType => {
-      const codename = contentType.codename;
-      const typeName = contentType.typeName;
-      const ContentItem = contentType.ContentItem;
-
-      return new TypeResolver(codename, () => new ContentItem(typeName))
-    });
-
-    return typeResolvers;
+    this.deliveryClient = null;
   }
 
   async getContentTypes() {
-    const deliveryClient = new DeliveryClient(this.deliveryClientConfig);
+    const deliveryClient = this.getDeliveryClient();
 
-    const contentTypesPromise = await deliveryClient
+    const contentTypes = await deliveryClient
       .types()
       .getPromise();
 
-    return contentTypesPromise;
+    return contentTypes;
   }
 
   async getContent(codename) {
-    const deliveryClient = await this.getDeliveryClient();
+    const deliveryClient = this.getDeliveryClient();
 
-    const contentPromise = await deliveryClient
+    const contentItems = await deliveryClient
       .items()
       .type(codename)
       .depthParameter(3)
       .getPromise();
 
-    return contentPromise;
+    return contentItems;
   }
 
   async getTaxonomyGroups() {
-    const deliveryClient = await this.getDeliveryClient();
+    const deliveryClient = this.getDeliveryClient();
 
-    const taxonomyGroupsPromise = await deliveryClient
+    const taxonomyGroups = await deliveryClient
       .taxonomies()
       .getPromise();
 
-    return taxonomyGroupsPromise;
+    return taxonomyGroups;
   }
 }
 

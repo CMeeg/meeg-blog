@@ -1,6 +1,6 @@
 const DeliveryClient = require('./GridsomeDeliveryClient');
 const KenticoCloudSource = require('./KenticoCloudSource');
-const GridsomeContentTypeManager = require('./GridsomeContentTypeManager');
+const GridsomeContentTypeFactory = require('./GridsomeContentTypeFactory');
 
 class KenticoCloudSourcePlugin {
   static defaultOptions() {
@@ -18,28 +18,14 @@ class KenticoCloudSourcePlugin {
   };
 
   constructor(api, options) {
-    const contentTypeManager = this.getContentTypeManager(options);
-
-    const kenticoCloudSource = this.getKenticoCloudSource(options, contentTypeManager);
-
-    api.loadSource(async store => kenticoCloudSource.load(store));
-  }
-
-  getContentTypeManager(options) {
     const deliveryClient = new DeliveryClient(options.deliveryClientConfig);
 
-    const contentTypeManager = new GridsomeContentTypeManager(deliveryClient, options.contentTypeConfig);
-
-    return contentTypeManager;
-  }
-
-  getKenticoCloudSource(options, contentTypeManager) {
-    const deliveryClient = new DeliveryClient(options.deliveryClientConfig, contentTypeManager);
+    const contentTypeFactory = new GridsomeContentTypeFactory(options.contentTypeConfig);
 
     // TODO: Don't pass in options - separate concerns into their own classes
-    const kenticoCloudSource = new KenticoCloudSource(deliveryClient, contentTypeManager, options);
+    const kenticoCloudSource = new KenticoCloudSource(deliveryClient, contentTypeFactory, options);
 
-    return kenticoCloudSource;
+    api.loadSource(async store => kenticoCloudSource.load(store));
   }
 }
 
