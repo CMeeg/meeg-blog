@@ -204,14 +204,6 @@ class GridsomeContentItem extends ContentItem {
     node.item[fieldName] = value;
   }
 
-  multipleChoiceTypeFieldResolver(node, field) {
-    const fieldName = field.fieldName;
-    const value = field.value.map(choice => choice.name);
-
-    // TODO: Maybe the value should include the "code name" also
-    node.item[fieldName] = value;
-  }
-
   richTextTypeFieldResolver(node, field) {
     const fieldName = field.fieldName;
     const html = this.richTextHtmlParser.getRichTextHtml(field);

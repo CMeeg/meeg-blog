@@ -9,7 +9,9 @@ query CodeSnippet {
       node {
         codename,
         code,
-        language
+        language {
+          name
+        }
       }
     }
   }
