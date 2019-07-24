@@ -1,9 +1,8 @@
 const { ContentItem } = require('kentico-cloud-delivery');
 const changeCase = require('change-case');
-const cheerio = require('cheerio');
 
 class GridsomeContentItem extends ContentItem {
-  constructor(typeName) {
+  constructor(typeName, richTextHtmlParser) {
     super({
       propertyResolver: (fieldName) => {
         return this.resolveProperty(fieldName);
@@ -13,11 +12,13 @@ class GridsomeContentItem extends ContentItem {
       },
       linkResolver: (link, context) => {
         // TODO: Ask Kentico Cloud why this seems to be being ignored
+        // Removing this results in warnings from the DeliveryClient when advanced logging is turned on
         return this.resolveLink(link, context);
       }
     });
 
     this.typeName = typeName;
+    this.richTextHtmlParser = richTextHtmlParser;
   }
 
   resolveProperty(fieldName) {
@@ -31,18 +32,11 @@ class GridsomeContentItem extends ContentItem {
   }
 
   resolveRichText(item, context) {
+    const type = item.system.type;
     const id = item.system.id;
     const codename = item.system.codename;
 
-    return this.getComponentHtml(id, codename);
-  }
-
-  getComponentHtml(id, codename) {
-    const componentName = changeCase.kebabCase(codename);
-
-    const html = `<${componentName} id="${id}" codename="${codename}" />`;
-
-    return html;
+    return this.richTextHtmlParser.getComponentHtml(type, id, codename);
   }
 
   resolveLink(link, context) {
@@ -50,14 +44,8 @@ class GridsomeContentItem extends ContentItem {
     const text = context.linkText;
 
     return {
-      asHtml: this.getLinkHtml(id, this.typeName, text)
+      asHtml: this.richTextHtmlParser.getLinkHtml(id, this.typeName, text)
     }
-  }
-
-  getLinkHtml(id, typeName, text) {
-    const html = `<item-link id="${id}" type="${typeName}">${text}</item-link>`;
-
-    return html;
   }
 
   createNode() {
@@ -73,7 +61,7 @@ class GridsomeContentItem extends ContentItem {
 
     const { id, name, codename, language: languageCode, type, lastModified } = this.system;
 
-    // Initialise a content node with fields from system data, which should be consistent across all nodes
+    // Initialise a content node with fields from system data, which should be consistent across all nodes in Gridsome
 
     const node = {
       item: {
@@ -137,10 +125,10 @@ class GridsomeContentItem extends ContentItem {
         });
       }
 
-      field.fieldName = fieldName;
+      // Get a Field Resolver and use it to add the field and its value to the node
+      // TODO: Custom element fields
 
-      // TODO:
-      // * Custom element
+      field.fieldName = fieldName;
 
       const fieldResolver = this.getFieldResolver(field);
 
@@ -153,16 +141,26 @@ class GridsomeContentItem extends ContentItem {
     const pathname = url.pathname;
 
     // The id is the second part of the path
+    // TODO: This doesn't seem to match up with the actual id - it does seem to be unique per asset so it is ok to use, but the actual id would be better
+
     const pathParts = pathname.split('/', 3);
 
     return pathParts[2];
   }
 
   getFieldResolver(field) {
+    // Try to get a field resolver based on the field name
+
     let fieldResolver = this.getFieldNameFieldResolver(field);
 
     if (fieldResolver === null) {
+      // Fall back to getting a field resolver based on the field type
+
       fieldResolver = this.getFieldTypeFieldResolver(field);
+    }
+
+    if (fieldResolver === null) {
+      fieldResolver = this.defaultFieldResolver;
     }
 
     return fieldResolver;
@@ -186,7 +184,7 @@ class GridsomeContentItem extends ContentItem {
     const fieldResolver = this[typeName + 'TypeFieldResolver'];
 
     if (typeof (fieldResolver) === 'undefined') {
-      return this.defaultFieldResolver;
+      return null;
     }
 
     return fieldResolver;
@@ -216,53 +214,9 @@ class GridsomeContentItem extends ContentItem {
 
   richTextTypeFieldResolver(node, field) {
     const fieldName = field.fieldName;
-    const html = this.getRichTextHtml(node, field);
+    const html = this.richTextHtmlParser.getRichTextHtml(field);
 
     node.item[fieldName] = html;
-  }
-
-  getRichTextHtml(node, field) {
-    let html = field.getHtml();
-
-    html = `<div class="rich-text">${html}</div>`;
-
-    const $ = cheerio.load(html, { decodeEntities: false });
-
-    // Resolve item links
-    // N.B. This shouldn't be necessary, but the `linkResolver` feature of the Kentico Cloud SDK doesn't appear to work
-
-    const itemLinks = $('a[data-item-id]');
-    const links = field.links;
-
-    itemLinks.each((index, element) => {
-      const itemLink = $(element);
-      const itemId = itemLink.data('itemId');
-      const link = links.filter(l => l.linkId === itemId)[0];
-      // TODO: This assumes the default settings for getting the type name - can we pass in the type manager or content types to use here?
-      const typeName = changeCase.pascalCase(link.type);
-      const linkText = itemLink.html();
-
-      const itemLinkHtml = this.getLinkHtml(itemId, typeName, linkText);
-
-      itemLink.replaceWith(itemLinkHtml);
-    });
-
-    // Unwrap components
-    // TODO: This may not work depending on delivery client settings i.e. these may not be `p` elements
-
-    const components = $('p[data-type="item"]');
-
-    components.each((index, element) => {
-      const component = $(element);
-
-      const componentHtml = component.html();
-
-      component.replaceWith(componentHtml);
-    });
-
-    html = cheerio.html($('.rich-text'), { decodeEntities: false });
-
-    return html;
   }
 
   modularContentTypeFieldResolver(node, field) {

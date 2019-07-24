@@ -1,9 +1,10 @@
 const changeCase = require('change-case');
 
 class KenticoCloudSource {
-  constructor(deliveryClient, contentTypeFactory, options) {
+  constructor(deliveryClient, contentTypeFactory, richTextHtmlParser, options) {
     this.deliveryClient = deliveryClient;
     this.contentTypeFactory = contentTypeFactory;
+    this.richTextHtmlParser = richTextHtmlParser;
     this.options = options;
   }
 
@@ -99,7 +100,7 @@ class KenticoCloudSource {
 
       this.deliveryClient.addTypeResolver(
         codename,
-        () => new ContentItem(contentType.typeName)
+        () => new ContentItem(contentType.typeName, this.richTextHtmlParser)
       );
     }
   }

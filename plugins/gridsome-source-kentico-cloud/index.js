@@ -1,6 +1,7 @@
 const DeliveryClient = require('./GridsomeDeliveryClient');
 const KenticoCloudSource = require('./KenticoCloudSource');
 const GridsomeContentTypeFactory = require('./GridsomeContentTypeFactory');
+const RichTextHtmlParser = require('./RichTextHtmlParser');
 
 class KenticoCloudSourcePlugin {
   static defaultOptions() {
@@ -18,6 +19,11 @@ class KenticoCloudSourcePlugin {
         linkedItemTypeName: 'LinkedItem',
         assetTypeName: 'Asset',
         itemLinkTypeName: 'ItemLink'
+      },
+      richTextHtmlParserConfig: {
+        wrapperCssClass: 'rich-text',
+        itemLinkSelector: 'a[data-item-id]',
+        componentSelector: 'p[data-type="item"]'
       }
     }
   };
@@ -27,7 +33,9 @@ class KenticoCloudSourcePlugin {
 
     const contentTypeFactory = new GridsomeContentTypeFactory(options.contentTypeConfig);
 
-    const kenticoCloudSource = new KenticoCloudSource(deliveryClient, contentTypeFactory, options.dataStoreConfig);
+    const richTextHtmlParser = new RichTextHtmlParser(contentTypeFactory, options.richTextHtmlParserConfig);
+
+    const kenticoCloudSource = new KenticoCloudSource(deliveryClient, contentTypeFactory, richTextHtmlParser, options.dataStoreConfig);
 
     api.loadSource(async store => kenticoCloudSource.load(store));
   }
