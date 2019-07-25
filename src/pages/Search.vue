@@ -1,14 +1,21 @@
 <template>
   <layout>
-    <h1>Search</h1>
+    <h1>{{ pageNode.title }}</h1>
   </layout>
 </template>
 
 <script>
+import metadata from '~/mixins/Metadata';
+
 export default {
-  metaInfo: function() {
-    return {
-      title: 'Search'
+  mixins: [
+    metadata
+  ],
+  computed: {
+    pageNode: function() {
+      return {
+        title: 'Search'
+      }
     }
   }
 }

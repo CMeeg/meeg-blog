@@ -7,7 +7,7 @@
 module.exports = {
   siteName: 'meeg.dev',
   siteUrl: 'https://meeg.dev',
-  titleTemplate: '%s - Chris Meagher',
+  titleTemplate: '%s',
   plugins: [
     {
       use: '~/plugins/gridsome-source-kentico-cloud',

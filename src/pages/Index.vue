@@ -1,8 +1,8 @@
 <template>
   <layout>
-    <h1>{{ homePage.title }}</h1>
+    <h1>{{ pageNode.title }}</h1>
 
-    <div v-html="homePage.summary" />
+    <div v-html="pageNode.summary" />
 
     <ul>
       <li v-for="article in $page.latestArticles.edges" :key="article.node.id">
@@ -50,20 +50,18 @@ query Home($page: Int) {
 </page-query>
 
 <script>
+import metadata from '~/mixins/Metadata';
 import { Pager } from 'gridsome';
 
 export default {
   components: {
     Pager
   },
-  metaInfo() {
-    return {
-      title: this.homePage.pageMetadataMetaTitle || 'Home',
-      description: this.homePage.pageMetadataMetaDescription || ''
-    };
-  },
+  mixins: [
+    metadata
+  ],
   computed: {
-    homePage() {
+    pageNode: function() {
       return this.$page.home.edges[0].node;
     }
   }

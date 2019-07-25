@@ -1,5 +1,5 @@
 <template>
-  <layout :title="$page.articleSeries.title">
+  <layout :title="pageNode.title">
     <p>TODO</p>
   </layout>
 </template>
@@ -14,10 +14,15 @@ query ArticleSeries ($id: String!) {
 </page-query>
 
 <script>
+import metadata from '~/mixins/Metadata';
+
 export default {
-  metaInfo: function() {
-    return {
-      title: this.$page.articleSeries.pageMetadataMetaTitle
+  mixins: [
+    metadata
+  ],
+  computed: {
+    pageNode: function() {
+      return this.$page.articleSeries;
     }
   }
 }

@@ -1,8 +1,8 @@
 <template>
   <layout>
-    <h1>{{ aboutPage.name }}</h1>
+    <h1>{{ pageNode.name }}</h1>
 
-    <div v-html="aboutPage.bio" />
+    <div v-html="pageNode.bio" />
   </layout>
 </template>
 
@@ -23,16 +23,19 @@ query Author {
 </page-query>
 
 <script>
+import metadata from '~/mixins/Metadata';
+
 export default {
-  metaInfo: function() {
-    return {
-      title: this.aboutPage.pageMetadataMetaTitle || 'About',
-      description: this.aboutPage.pageMetadataMetaDescription || ''
-    };
-  },
+  mixins: [
+    metadata
+  ],
   computed: {
-    aboutPage: function() {
-      return this.$page.author.edges[0].node;
+    pageNode: function() {
+      const node = this.$page.author.edges[0].node;
+
+      node.title = node.name;
+
+      return node;
     }
   }
 };
