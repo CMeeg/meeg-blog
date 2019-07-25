@@ -20,7 +20,7 @@
       </main>
     </transition>
     <footer>
-      &copy; 2019
+      &copy; {{ currentYear }}
     </footer>
   </div>
 </template>
@@ -32,6 +32,16 @@ query {
   }
 }
 </static-query>
+
+<script>
+export default {
+  data: function() {
+    return {
+      currentYear: new Date().getFullYear()
+    }
+  }
+};
+</script>
 
 <style>
 .fade-enter-active {

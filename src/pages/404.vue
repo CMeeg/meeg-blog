@@ -1,13 +1,15 @@
 <template>
-  <Layout>
+  <layout>
     <h1>Page not found</h1>
-  </Layout>
+  </layout>
 </template>
 
 <script>
 export default {
-  metaInfo: {
-    title: 'Page not found'
+  metaInfo: function() {
+    return {
+      title: 'Page not found'
+    }
   }
 }
 </script>

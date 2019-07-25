@@ -1,13 +1,15 @@
 <template>
-  <Layout>
+  <layout>
     <h1>Search</h1>
-  </Layout>
+  </layout>
 </template>
 
 <script>
 export default {
-  metaInfo: {
-    title: 'Search'
+  metaInfo: function() {
+    return {
+      title: 'Search'
+    }
   }
 }
 </script>

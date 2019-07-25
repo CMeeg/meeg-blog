@@ -1,7 +1,7 @@
 <template>
-  <Layout :title="$page.articleSeries.title">
+  <layout :title="$page.articleSeries.title">
     <p>TODO</p>
-  </Layout>
+  </layout>
 </template>
 
 <page-query>
@@ -15,7 +15,7 @@ query ArticleSeries ($id: String!) {
 
 <script>
 export default {
-  metaInfo () {
+  metaInfo: function() {
     return {
       title: this.$page.articleSeries.pageMetadataMetaTitle
     }

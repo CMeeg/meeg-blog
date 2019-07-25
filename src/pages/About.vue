@@ -1,9 +1,9 @@
 <template>
-  <Layout>
+  <layout>
     <h1>{{ aboutPage.name }}</h1>
 
     <div v-html="aboutPage.bio" />
-  </Layout>
+  </layout>
 </template>
 
 <page-query>
@@ -24,7 +24,7 @@ query Author {
 
 <script>
 export default {
-  metaInfo() {
+  metaInfo: function() {
     return {
       title: this.aboutPage.pageMetadataMetaTitle || 'About',
       description: this.aboutPage.pageMetadataMetaDescription || ''

@@ -15,7 +15,7 @@ query Article ($id: String!) {
 </page-query>
 
 <script>
-import RichText from '../components/RichText.vue';
+import RichText from '~/components/RichText.vue';
 
 export default {
   metaInfo () {

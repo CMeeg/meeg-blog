@@ -1,5 +1,5 @@
 <template>
-  <Layout>
+  <layout>
     <h1>{{ homePage.title }}</h1>
 
     <div v-html="homePage.summary" />
@@ -10,7 +10,7 @@
       </li>
     </ul>
     <Pager :info="$page.latestArticles.pageInfo" />
-  </Layout>
+  </layout>
 </template>
 
 <page-query>
@@ -28,7 +28,7 @@ query Home($page: Int) {
   }
   latestArticles: allArticle(perPage: 10, page: $page) @paginate {
     pageInfo {
-      totalPages
+      totalPages,
       currentPage
     }
     edges {

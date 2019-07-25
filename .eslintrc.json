@@ -23,6 +23,7 @@
         "space-before-function-paren": "off",
         "space-unary-ops": "off",
         "semi": "off",
-        "vue/singleline-html-element-content-newline": "off"
+        "vue/singleline-html-element-content-newline": "off",
+        "vue/max-attributes-per-line": "off"
     }
 }

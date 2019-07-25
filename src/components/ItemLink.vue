@@ -31,7 +31,7 @@ export default {
     }
   },
   computed: {
-    itemLink() {
+    itemLink: function() {
       const itemLink = this.$static.itemLinks.edges.filter(
         edge => edge.node.id === this.id && edge.node.typeName === this.type
       );

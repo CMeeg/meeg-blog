@@ -31,7 +31,7 @@ export default {
     }
   },
   computed: {
-    codeSnippet() {
+    codeSnippet: function() {
       const codeSnippet = this.$static.codeSnippets.edges.filter(
         edge => edge.node.codename === this.codename
       );
