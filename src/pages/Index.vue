@@ -2,7 +2,7 @@
   <layout>
     <h1>{{ pageNode.title }}</h1>
 
-    <div v-html="pageNode.summary" />
+    <rich-text :html="pageNode.summary" />
 
     <ul>
       <li v-for="article in $page.latestArticles.edges" :key="article.node.id">
@@ -39,7 +39,14 @@ query Home($page: Int) {
           name
         },
         summary,
-        path
+        path,
+        pageMetadataMetaTitle,
+        pageMetadataMetaDescription,
+        pageMetadataOpenGraphTitle,
+        pageMetadataOpenGraphDescription,
+        pageMetadataOpenGraphImage {
+          url
+        }
         # articleTopics,
         # date,
         # lastUpdated
@@ -50,11 +57,13 @@ query Home($page: Int) {
 </page-query>
 
 <script>
-import metadata from '~/mixins/Metadata';
+import RichText from '~/components/RichText.vue';
 import { Pager } from 'gridsome';
+import metadata from '~/mixins/Metadata';
 
 export default {
   components: {
+    RichText,
     Pager
   },
   mixins: [
@@ -62,7 +71,11 @@ export default {
   ],
   computed: {
     pageNode: function() {
-      return this.$page.home.edges[0].node;
+      const node = this.$page.home.edges[0].node;
+
+      node.url = '/';
+
+      return node;
     }
   }
 };

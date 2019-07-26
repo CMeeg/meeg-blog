@@ -1,16 +1,16 @@
+const { merge } = require('lodash');
+const appConfig = require('~/app.config.js');
+
 var metadata = {
   metaInfo: function() {
-    const node = this.pageNode;
+    const defaultMetaInfo = this.getDefaultMetaInfo();
+    const pageMetaInfo = this.getPageMetaInfo();
 
-    if (node === null) {
-      return;
-    }
-
-    const meta = {};
-
-    this.addPageMetadata(meta, node);
-    this.addOpenGraphMetadata(meta, node);
-    this.addTwitterCardMetadata(meta, node);
+    const meta = merge(
+      {},
+      defaultMetaInfo,
+      pageMetaInfo
+    );
 
     return meta;
   },
@@ -20,50 +20,97 @@ var metadata = {
     }
   },
   methods: {
-    addPageMetadata: function(meta, node) {
-      const title = `${node.pageMetadataMetaTitle || node.title} - Chris Meagher`;
+    getDefaultMetaInfo() {
+      const node = this.pageNode;
 
-      meta.title = title;
-
-      this.addMetadataItem(meta, { name: 'title', content: title });
-      this.addMetadataItem(meta, { name: 'description', content: node.pageMetadataMetaDescription });
-    },
-    addOpenGraphMetadata: function(meta, node) {
-      // TODO: Are any of these required? I.e. we should bail out if not set
-
-      this.addMetadataItem(meta, { name: 'og:type', content: 'website' });
-      // TODO: Needs to be absolute url
-      this.addMetadataItem(meta, { name: 'og:url', content: node.path });
-      // TODO: Title and desription may need to be different for social media
-      this.addMetadataItem(meta, { name: 'og:title', content: node.title });
-      this.addMetadataItem(meta, { name: 'og:description', content: node.pageMetadataMetaDescription });
-      // TODO: Populate this - needs to be absolute url
-      this.addMetadataItem(meta, { name: 'og:image', content: null });
-    },
-    addTwitterCardMetadata: function(meta, node) {
-      // TODO: Are any of these required? I.e. we should bail out if not set
-
-      this.addMetadataItem(meta, { name: 'twitter:card', content: 'summary_large_image' });
-      // TODO: Needs to be absolute url
-      this.addMetadataItem(meta, { name: 'twitter:url', content: node.path });
-      // TODO: Title and desription may need to be different for social media
-      this.addMetadataItem(meta, { name: 'twitter:title', content: node.title });
-      this.addMetadataItem(meta, { name: 'twitter:description', content: node.pageMetadataMetaDescription });
-      // TODO: Populate this - needs to be absolute url
-      this.addMetadataItem(meta, { name: 'twitter:image', content: null });
-    },
-    addMetadataItem: function(meta, item) {
-      if (!this.isSet(item.content)) {
+      if (node === null) {
         return;
       }
 
-      if (typeof(meta.meta) === 'undefined') {
-        meta.meta = [];
+      const metaInfo = {};
+
+      this.addBasicMetaInfo(metaInfo, node);
+      this.addOpenGraphMetaInfo(metaInfo, node);
+      this.addTwitterCardMetaInfo(metaInfo, node);
+
+      return metaInfo;
+    },
+    getPageMetaInfo() {
+      return {};
+    },
+    addBasicMetaInfo: function(metaInfo, node) {
+      const title = node.pageMetadataMetaTitle || node.title;
+
+      metaInfo.title = title;
+
+      this.addMetaItems(metaInfo, [
+        { name: 'description', content: node.pageMetadataMetaDescription }
+      ]);
+    },
+    addOpenGraphMetaInfo: function(metaInfo, node) {
+      const title = node.pageMetadataOpenGraphTitle || node.pageMetadataMetaTitle || node.title;
+      const description = node.pageMetadataOpenGraphDescription || node.pageMetadataMetaDescription;
+      const url = node.url || node.path;
+
+      this.addMetaItems(metaInfo, [
+        { name: 'og:type', content: 'website' },
+        { name: 'og:title', content: title },
+        { name: 'og:url', content: appConfig.getSiteUrl(url) },
+        { name: 'og:description', content: description },
+        { name: 'og:site_name', content: appConfig.siteName },
+        // TODO: Populate this - needs to be absolute url and have a fallback image
+        { name: 'og:image', content: null }
+      ]);
+
+      /*
+      TODO: Add these optional image props, if possible
+      <meta property="og:image:type" content="image/jpeg" />
+      <meta property="og:image:width" content="400" />
+      <meta property="og:image:height" content="300" />
+      <meta property="og:image:alt" content="A shiny red apple with a bite taken out" />
+      */
+    },
+    addTwitterCardMetaInfo: function(metaInfo, node) {
+      const title = node.pageMetadataOpenGraphTitle || node.pageMetadataMetaTitle || node.title;
+      const description = node.pageMetadataOpenGraphDescription || node.pageMetadataMetaDescription;
+      const url = node.url || node.path;
+
+      this.addMetaItems(metaInfo, [
+        { name: 'twitter:card', content: 'summary' },
+        { name: 'twitter:site', content: `@${appConfig.siteTwitterUser}` },
+        { name: 'twitter:title', content: title },
+        { name: 'twitter:description', content: description },
+        { name: 'twitter:url', content: appConfig.getSiteUrl(url) },
+        // TODO: Populate this - needs to be absolute url and have a fallback image
+        { name: 'twitter:image', content: null }
+      ]);
+
+      /*
+      TODO: Add these, if possible
+      twitter:image:alt
+      */
+    },
+    addMetaItems: function(metaInfo, items) {
+      for (const item of items) {
+        this.addMetaItem(metaInfo, item);
       }
 
-      meta.meta.push(item);
+      return true;
     },
-    isSet(content) {
+    addMetaItem: function(metaInfo, item) {
+      if (!this.canAddMetaItem(item)) {
+        return;
+      }
+
+      if (typeof(metaInfo.meta) === 'undefined') {
+        metaInfo.meta = [];
+      }
+
+      metaInfo.meta.push({ key: item.name, name: item.name, content: item.content });
+    },
+    canAddMetaItem(item) {
+      const content = item.content;
+
       if (typeof(content) === 'undefined') {
         return false;
       }

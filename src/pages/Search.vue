@@ -14,7 +14,8 @@ export default {
   computed: {
     pageNode: function() {
       return {
-        title: 'Search'
+        title: 'Search',
+        url: '/search'
       }
     }
   }

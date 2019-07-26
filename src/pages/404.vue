@@ -14,7 +14,8 @@ export default {
   computed: {
     pageNode: function() {
       return {
-        title: 'Page not found'
+        title: 'Page not found',
+        url: '/404'
       }
     }
   }

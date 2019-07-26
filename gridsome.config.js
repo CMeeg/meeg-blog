@@ -4,10 +4,12 @@
 // Changes here require a server restart.
 // To restart press CTRL + C in terminal and run `gridsome develop`
 
+const appConfig = require('./src/app.config.js');
+
 module.exports = {
-  siteName: 'meeg.dev',
-  siteUrl: 'https://meeg.dev',
-  titleTemplate: '%s',
+  siteName: appConfig.siteName,
+  siteUrl: appConfig.siteUrl,
+  titleTemplate: appConfig.titleTemplate,
   plugins: [
     {
       use: '~/plugins/gridsome-source-kentico-cloud',

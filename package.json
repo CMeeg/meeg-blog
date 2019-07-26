@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "gridsome": "^0.6.6",
+    "lodash": "^4.17.11",
     "v-runtime-template": "^1.10.0"
   },
   "peerDependencies": {},

@@ -7,8 +7,15 @@
 <page-query>
 query ArticleSeries ($id: String!) {
   articleSeries (id: $id) {
-    title
-    pageMetadataMetaTitle
+    title,
+    path,
+    pageMetadataMetaTitle,
+    pageMetadataMetaDescription,
+    pageMetadataOpenGraphTitle,
+    pageMetadataOpenGraphDescription,
+    pageMetadataOpenGraphImage {
+      url
+    }
   }
 }
 </page-query>
