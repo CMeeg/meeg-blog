@@ -20,6 +20,7 @@
         "vue"
     ],
     "rules": {
+        "brace-style": "off",
         "space-before-function-paren": "off",
         "space-unary-ops": "off",
         "semi": "off",

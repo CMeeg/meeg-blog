@@ -16,6 +16,13 @@ class RichTextHtmlParser {
 
     const $ = cheerio.load(html, { decodeEntities: false });
 
+    // Kentico Cloud can return empty an empty paragrpah element if there is no content, which is of no use
+    // If the rich text element has no text content, just return an empty string
+
+    if ($(`.${wrapperCssClass}`).text().trim() === '') {
+      return '';
+    }
+
     // Resolve item links
     // N.B. This shouldn't be necessary, but the `linkResolver` feature of the Kentico Cloud SDK doesn't appear to work
 

@@ -94,8 +94,6 @@ var metadata = {
       for (const item of items) {
         this.addMetaItem(metaInfo, item);
       }
-
-      return true;
     },
     addMetaItem: function(metaInfo, item) {
       if (!this.canAddMetaItem(item)) {
