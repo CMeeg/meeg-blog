@@ -14,7 +14,8 @@ query ArticleSeries ($id: String!) {
     pageMetadataOpenGraphTitle,
     pageMetadataOpenGraphDescription,
     pageMetadataOpenGraphImage {
-      url
+      url,
+      description
     }
   }
 }

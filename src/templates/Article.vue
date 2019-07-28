@@ -20,7 +20,8 @@ query Article ($id: String!) {
     pageMetadataOpenGraphTitle,
     pageMetadataOpenGraphDescription,
     pageMetadataOpenGraphImage {
-      url
+      url,
+      description
     }
   }
 }

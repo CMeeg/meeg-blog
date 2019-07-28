@@ -21,8 +21,15 @@ query Home($page: Int) {
         id,
         title,
         summary,
+        path,
         pageMetadataMetaTitle,
-        pageMetadataMetaDescription
+        pageMetadataMetaDescription,
+        pageMetadataOpenGraphTitle,
+        pageMetadataOpenGraphDescription,
+        pageMetadataOpenGraphImage {
+          url,
+          description
+        }
       }
     }
   }
@@ -39,17 +46,10 @@ query Home($page: Int) {
           name
         },
         summary,
-        path,
-        pageMetadataMetaTitle,
-        pageMetadataMetaDescription,
-        pageMetadataOpenGraphTitle,
-        pageMetadataOpenGraphDescription,
-        pageMetadataOpenGraphImage {
-          url
-        }
+        path
         # articleTopics,
-        # date,
-        # lastUpdated
+        publishedDate,
+        lastUpdated
       }
     }
   }

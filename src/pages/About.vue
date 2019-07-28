@@ -22,7 +22,8 @@ query Author {
         pageMetadataOpenGraphTitle,
         pageMetadataOpenGraphDescription,
         pageMetadataOpenGraphImage {
-          url
+          url,
+          description
         }
       }
     }
