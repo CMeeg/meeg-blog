@@ -4,12 +4,9 @@
 
     <rich-text :html="pageNode.summary" />
 
-    <ul>
-      <li v-for="article in $page.latestArticles.edges" :key="article.node.id">
-        <g-link :to="article.node.path">{{ article.node.title }}</g-link>
-      </li>
-    </ul>
-    <Pager :info="$page.latestArticles.pageInfo" />
+    <node-list :nodes="$page.latestArticles" :pager-options="{ prevLabel: 'See newer articles', nextLabel: 'See older articles' }">
+      <article-summary slot="node" slot-scope="{ node }" :article="node" />
+    </node-list>
   </layout>
 </template>
 
@@ -33,22 +30,22 @@ query Home($page: Int) {
       }
     }
   }
-  latestArticles: allArticle(perPage: 10, page: $page) @paginate {
+  latestArticles: allArticle(sortBy: "sortDate", perPage: 10, page: $page) @paginate {
     pageInfo {
       totalPages,
       currentPage
-    }
+    },
     edges {
       node {
-        id,
         title,
-        author {
-          name
-        },
         summary,
-        path
-        # articleTopics,
-        publishedDate,
+        tag {
+          id,
+          name,
+          path
+        },
+        path,
+        date,
         lastUpdated
       }
     }
@@ -58,13 +55,15 @@ query Home($page: Int) {
 
 <script>
 import RichText from '~/components/RichText.vue';
-import { Pager } from 'gridsome';
+import NodeList from '~/components/NodeList.vue';
+import ArticleSummary from '~/components/ArticleSummary.vue';
 import metadata from '~/mixins/Metadata';
 
 export default {
   components: {
     RichText,
-    Pager
+    NodeList,
+    ArticleSummary
   },
   mixins: [
     metadata

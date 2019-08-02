@@ -1,7 +1,7 @@
 const DeliveryClient = require('./GridsomeDeliveryClient');
 const KenticoCloudSource = require('./KenticoCloudSource');
-const GridsomeContentTypeFactory = require('./GridsomeContentTypeFactory');
-const RichTextHtmlParser = require('./RichTextHtmlParser');
+const GridsomeContentItemFactory = require('./GridsomeContentItemFactory');
+const GridsomeTaxonomyItemFactory = require('./GridsomeTaxonomyItemFactory');
 
 class KenticoCloudSourcePlugin {
   static defaultOptions() {
@@ -10,34 +10,38 @@ class KenticoCloudSourcePlugin {
         projectId: '',
         contentItemsDepth: 3
       },
-      contentTypeConfig: {
-        contentTypeNamePrefix: '',
-        contentItemPath: './plugins/gridsome-source-kentico-cloud/content-types'
-      },
-      dataStoreConfig: {
-        taxonomyTypeNamePrefix: 'Taxonomy',
-        linkedItemTypeName: 'LinkedItem',
+      contentItemConfig: {
+        contentItemTypeNamePrefix: '',
+        contentItemPath: './plugins/gridsome-source-kentico-cloud/content-items',
+        richText: {
+          wrapperCssClass: 'rich-text',
+          itemLinkSelector: 'a[data-item-id]',
+          componentSelector: 'p[data-type="item"]'
+        },
         assetTypeName: 'Asset',
         itemLinkTypeName: 'ItemLink'
       },
-      richTextHtmlParserConfig: {
-        wrapperCssClass: 'rich-text',
-        itemLinkSelector: 'a[data-item-id]',
-        componentSelector: 'p[data-type="item"]'
+      taxonomyConfig: {
+        taxonomyTypeNamePrefix: 'Taxonomy',
+        addRoutingTo: []
       }
     }
   };
 
   constructor(api, options) {
-    const deliveryClient = new DeliveryClient(options.deliveryClientConfig);
+    api.loadSource(async store => {
+      const deliveryClient = new DeliveryClient(options.deliveryClientConfig);
+      const contentItemFactory = new GridsomeContentItemFactory(options.contentItemConfig);
+      const taxonomyItemFactory = new GridsomeTaxonomyItemFactory(options.taxonomyConfig);
 
-    const contentTypeFactory = new GridsomeContentTypeFactory(options.contentTypeConfig);
+      const kenticoCloudSource = new KenticoCloudSource(
+        deliveryClient,
+        contentItemFactory,
+        taxonomyItemFactory
+      );
 
-    const richTextHtmlParser = new RichTextHtmlParser(contentTypeFactory, options.richTextHtmlParserConfig);
-
-    const kenticoCloudSource = new KenticoCloudSource(deliveryClient, contentTypeFactory, richTextHtmlParser, options.dataStoreConfig);
-
-    api.loadSource(async store => kenticoCloudSource.load(store));
+      await kenticoCloudSource.load(store)
+    });
   }
 }
 

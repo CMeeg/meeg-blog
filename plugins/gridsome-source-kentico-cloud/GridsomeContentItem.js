@@ -2,7 +2,7 @@ const { ContentItem } = require('kentico-cloud-delivery');
 const changeCase = require('change-case');
 
 class GridsomeContentItem extends ContentItem {
-  constructor(typeName, richTextHtmlParser) {
+  constructor(typeName, route, richTextHtmlParser) {
     super({
       propertyResolver: (fieldName) => {
         return this.resolveProperty(fieldName);
@@ -18,6 +18,7 @@ class GridsomeContentItem extends ContentItem {
     });
 
     this.typeName = typeName;
+    this.route = route;
     this.richTextHtmlParser = richTextHtmlParser;
   }
 
@@ -61,6 +62,10 @@ class GridsomeContentItem extends ContentItem {
 
     const { id, name, codename, language: languageCode, type, lastModified } = this.system;
 
+    // If the content item's id and name are the same, this is a Rich Text Component
+
+    const isComponent = id === name;
+
     // Initialise a content node with fields from system data, which should be consistent across all nodes in Gridsome
 
     const node = {
@@ -71,7 +76,9 @@ class GridsomeContentItem extends ContentItem {
         languageCode,
         type,
         typeName: this.typeName,
-        lastModified: new Date(lastModified),
+        route: isComponent ? null : this.route, // Components are not independent content and so will not have a route
+        isComponent: isComponent,
+        date: new Date(lastModified),
         slug: null // Will be overwritten if a `URL slug` type field is present on the content type
       },
       assetFields: [],
@@ -194,27 +201,27 @@ class GridsomeContentItem extends ContentItem {
     const fieldName = field.fieldName;
     const value = Number(field.value);
 
-    node.item[fieldName] = value;
+    this.addField(node, fieldName, value);
   }
 
   dateTimeTypeFieldResolver(node, field) {
     const fieldName = field.fieldName;
     const value = new Date(field.value);
 
-    node.item[fieldName] = value;
+    this.addField(node, fieldName, value);
   }
 
   richTextTypeFieldResolver(node, field) {
     const fieldName = field.fieldName;
     const html = this.richTextHtmlParser.getRichTextHtml(field);
 
-    node.item[fieldName] = html;
+    this.addField(node, fieldName, html);
   }
 
   modularContentTypeFieldResolver(node, field) {
     const fieldName = field.fieldName;
     const linkedItems = field.linkedItems;
-    const value = field.value;
+    const value = linkedItems.map(linkedItem => linkedItem.system.id);
 
     const linkedItemField = {
       fieldName,
@@ -223,7 +230,7 @@ class GridsomeContentItem extends ContentItem {
 
     node.linkedItemFields.push(linkedItemField);
 
-    node.item[fieldName] = value;
+    this.addField(node, fieldName, value);
   }
 
   taxonomyTypeFieldResolver(node, field) {
@@ -231,14 +238,14 @@ class GridsomeContentItem extends ContentItem {
     const value = field.taxonomyTerms.map(term => term.codename);
     const taxonomyGroup = field.taxonomyGroup;
 
-    node.item[fieldName] = value;
-
     const taxonomyField = {
       fieldName,
       taxonomyGroup
     };
 
     node.taxonomyFields.push(taxonomyField);
+
+    this.addField(node, fieldName, value);
   }
 
   assetTypeFieldResolver(node, field) {
@@ -253,7 +260,7 @@ class GridsomeContentItem extends ContentItem {
 
     node.assetFields.push(assetField);
 
-    node.item[fieldName] = value;
+    this.addField(node, fieldName, value);
   }
 
   urlSlugTypeFieldResolver(node, field) {
@@ -266,7 +273,26 @@ class GridsomeContentItem extends ContentItem {
     const fieldName = field.fieldName;
     const value = field.value;
 
+    this.addField(node, fieldName, value);
+  }
+
+  addField(node, name, value) {
+    const fieldName = this.getUniqueFieldName(node, name);
+
     node.item[fieldName] = value;
+  }
+
+  getUniqueFieldName(node, name) {
+    let fieldName = name;
+    let fieldNameCount = 0;
+
+    while (node.item.hasOwnProperty(fieldName)) {
+      fieldNameCount++;
+
+      fieldName = `${name}${fieldNameCount}`;
+    }
+
+    return fieldName;
   }
 }
 

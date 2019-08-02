@@ -11,7 +11,6 @@ query Author {
   author: allAuthor(filter: { codename: { eq: "chris_meagher" }}, limit: 1) {
     edges {
       node {
-        id,
         firstName,
         lastName,
         fullName,

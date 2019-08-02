@@ -20,6 +20,11 @@ module.exports = {
           enablePreviewMode: JSON.parse(process.env.KENTICO_CLOUD_ENABLE_PREVIEW_MODE),
           enableAdvancedLogging: JSON.parse(process.env.KENTICO_CLOUD_ENABLED_ADVANCED_LOGGING),
           defaultLanguage: process.env.KENTICO_CLOUD_DEFAULT_LANGUAGE
+        },
+        taxonomyConfig: {
+          addRoutingTo: [
+            'tag'
+          ]
         }
       }
     }

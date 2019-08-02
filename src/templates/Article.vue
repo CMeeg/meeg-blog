@@ -1,5 +1,5 @@
 <template>
-  <layout :title="pageNode.title">
+  <layout>
     <rich-text :html="pageNode.body" />
   </layout>
 </template>
@@ -9,9 +9,9 @@ query Article ($id: String!) {
   article (id: $id) {
     title,
     body,
-    publishedDate,
+    date,
     lastUpdated,
-    articleTopics {
+    tag {
       name
     },
     path,
@@ -60,12 +60,12 @@ export default {
 
       this.addMetaItems(metaInfo, [
         { name: 'og:type', content: 'article' },
-        { name: 'article:published_time', content: node.publishedDate },
+        { name: 'article:published_time', content: node.date },
         { name: 'article:modified_time', content: new Date(node.lastUpdated).getTime() === 0 ? null : node.lastUpdated },
         { name: 'article:author', content: appConfig.getSiteUrl('/about') }
       ]);
 
-      for (const tag of node.articleTopics) {
+      for (const tag of node.tag) {
         this.addMetaItem(metaInfo, { name: 'article:tag', content: tag.name });
       }
     }

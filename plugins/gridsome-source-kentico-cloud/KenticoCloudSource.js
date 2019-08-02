@@ -1,29 +1,49 @@
-const changeCase = require('change-case');
-
 class KenticoCloudSource {
-  constructor(deliveryClient, contentTypeFactory, richTextHtmlParser, options) {
+  constructor(deliveryClient, contentItemFactory, taxonomyItemFactory) {
     this.deliveryClient = deliveryClient;
-    this.contentTypeFactory = contentTypeFactory;
-    this.richTextHtmlParser = richTextHtmlParser;
-    this.options = options;
+    this.contentItemFactory = contentItemFactory;
+    this.taxonomyItemFactory = taxonomyItemFactory;
   }
 
   async load(store) {
-    // Deal with Taxonomy first because the content item nodes may have references to Taxonomy terms in Taxonomy fields
+    // Content types are used to configure type resolvers on the deliveryClient
 
-    await this.addTaxonomyGroupNodes(store);
-
-    // Content types dictate the content items that are fetched and added to the data store
-
-    const contentTypes = await this.getContentTypes();
-
-    // Content types are also used to configure type resolvers on the deliveryClient
+    const contentTypes = await this.deliveryClient.getContentTypes();
 
     this.addTypeResolvers(contentTypes);
 
-    for (const contentType of contentTypes) {
+    // Add Taxonomy nodes first because the content item nodes may require references to Taxonomy terms in Taxonomy fields
+
+    await this.addTaxonomyGroupNodes(store);
+
+    // Add Content item nodes
+
+    for (const contentType of contentTypes.types) {
       await this.addContentNodes(store, contentType);
     }
+  }
+
+  addTypeResolvers(contentTypes) {
+    // Each content type holds a reference to a ContentItem type that will be used as a type resolver
+
+    for (const contentType of contentTypes.types) {
+      const codename = contentType.system.codename;
+
+      this.deliveryClient.addTypeResolver(
+        codename,
+        () => this.contentItemFactory.createContentItem(contentType)
+      );
+    }
+  }
+
+  getCollection(store, typeName, route = null) {
+    const collection = store.getContentType(typeName);
+
+    if (typeof (collection) !== 'undefined') {
+      return collection;
+    }
+
+    return store.addContentType({ typeName, route });
   }
 
   async addTaxonomyGroupNodes(store) {
@@ -34,29 +54,19 @@ class KenticoCloudSource {
     for (const taxonomyGroup of taxonomyGroups.taxonomies) {
       // Add the taxonomy group to the store
 
-      const codename = taxonomyGroup.system.codename;
-      const terms = taxonomyGroup.terms;
+      const taxonomyItem = this.taxonomyItemFactory.createTaxonomyItem(taxonomyGroup);
+      const typeName = taxonomyItem.typeName;
+      const route = taxonomyItem.route;
 
-      const typeName = this.getTaxonomyTypeName(codename);
-
-      // These nodes are not intended to be navigable pages so they have no route or path
-
-      const collection = store.addContentType(typeName);
+      const collection = this.getCollection(store, typeName, route);
 
       // Add taxonomy terms from this group to the collection
       // The reference is added because terms can be nested so the term nodes hold references to other terms
 
       collection.addReference('terms', typeName);
 
-      this.addTaxonomyTermNodes(collection, terms);
+      this.addTaxonomyTermNodes(collection, taxonomyItem.terms);
     }
-  }
-
-  getTaxonomyTypeName(codename) {
-    const typeNamePrefix = this.options.taxonomyTypeNamePrefix;
-    const typeName = typeNamePrefix + changeCase.pascalCase(codename);
-
-    return typeName;
   }
 
   addTaxonomyTermNodes(collection, terms) {
@@ -66,9 +76,10 @@ class KenticoCloudSource {
 
     for (const term of terms) {
       collection.addNode({
-        id: term.codename,
+        id: term.id,
         name: term.name,
-        terms: term.terms.map(childTerm => childTerm.codename)
+        slug: term.slug,
+        terms: term.terms.map(childTerm => childTerm.id)
       });
 
       // Terms can be nested so we will recursively call this function
@@ -77,41 +88,12 @@ class KenticoCloudSource {
     }
   }
 
-  async getContentTypes() {
-    // Get all content types defined in Kentico Cloud
-
-    const kcContentTypes = await this.deliveryClient.getContentTypes();
-
-    // Create a Gridsome content type to represent each Kentico Cloud content type
-
-    const contentTypes = kcContentTypes.types.map(contentType => {
-      return this.contentTypeFactory.createContentType(contentType.system.codename);
-    });
-
-    return contentTypes;
-  }
-
-  addTypeResolvers(contentTypes) {
-    // Each content type holds a reference to a ContentItem type that will be used as a type resolver
-
-    for (const contentType of contentTypes) {
-      const codename = contentType.codename;
-      const ContentItem = contentType.ContentItem;
-
-      this.deliveryClient.addTypeResolver(
-        codename,
-        () => new ContentItem(contentType.typeName, this.richTextHtmlParser)
-      );
-    }
-  }
-
   async addContentNodes(store, contentType) {
     // Fetch content items from the delivery client
 
-    const codename = contentType.codename;
+    const codename = contentType.system.codename;
 
     const content = await this.deliveryClient.getContent(codename);
-
     const { items: contentItems, linkedItems } = content;
 
     if (contentItems.length === 0) {
@@ -120,74 +102,85 @@ class KenticoCloudSource {
       return;
     }
 
-    // Create the collection using the type name and route defined by the content type
+    // Add the linked item nodes first because the content item nodes may have
+    // references to linked items in Linked Item fields
 
-    const typeName = contentType.typeName;
-    const route = contentType.route;
+    // This will also add Rich Text Components as content nodes, which
+    // aren't available when fetching content items from the delivery client
 
-    const collection = store.addContentType({ typeName, route });
+    this.addContentItemNodes(store, linkedItems);
 
-    // Add the linked item nodes first because the content item nodes may have references to linked items in Linked Item fields
+    // Now add the content items
 
-    this.addLinkedItemNodes(store, linkedItems);
-
-    for (const contentItem of contentItems) {
-      // Create the content item node and add it to the collection
-
-      const contentNode = contentItem.createNode();
-
-      const node = this.addContentNode(store, collection, contentNode);
-
-      // Also use the content item node to create an ItemLink node that will be used to resolve links to content items inside rich text fields
-
-      this.addItemLinkNode(store, node);
-    }
+    this.addContentItemNodes(store, contentItems);
   }
 
-  addLinkedItemNodes(store, linkedItems) {
-    // Create the linked item collection
+  addContentItemNodes(store, contentItems) {
+    for (const contentItem of contentItems) {
+      // Create the content item node
 
-    const typeName = this.options.linkedItemTypeName;
+      const node = contentItem.createNode();
 
-    const collection = store.addContentType(typeName);
+      // Get the appropriate collection to add the node to
 
-    for (const linkedItem of linkedItems) {
-      // Create the linked item node and add it to the collection
+      const typeName = node.item.typeName;
+      const route = node.item.route;
 
-      const linkedNode = linkedItem.createNode();
+      const collection = this.getCollection(store, typeName, route);
 
-      // Linked items use codenames as their id, but we will preserve the "source" id in a separate field for reference
+      // Add the node to the collection
 
-      linkedNode.item.sourceId = linkedNode.item.id;
-      linkedNode.item.id = linkedNode.item.codename;
-
-      // There is potential for linked items to be repeated, so only add it to the collection if it doesn't already exist
-
-      const existingNode = collection.getNode(linkedNode.item.id);
-
-      if (existingNode === null) {
-        this.addContentNode(store, collection, linkedNode);
-      }
+      this.addContentNode(store, collection, node);
     }
   }
 
   addContentNode(store, collection, node) {
+    const existingNode = collection.getNode(node.item.id);
+
+    if (existingNode !== null) {
+      return existingNode;
+    }
+
     this.addLinkedItemFields(collection, node);
 
     this.addTaxonomyFields(collection, node);
 
     this.addAssetFields(store, collection, node);
 
-    return collection.addNode(node.item);
+    const collectionNode = collection.addNode(node.item);
+
+    if (!collectionNode.isComponent) {
+      // Also use the content item node to create an ItemLink node that will
+      // be used to resolve links to content items inside rich text fields
+
+      this.addItemLinkNode(store, collectionNode);
+    }
+
+    return collectionNode;
   }
 
   addLinkedItemFields(collection, node) {
     // Add a reference to the linked items collection for all linked item fields defined on the node
 
-    const typeName = this.options.linkedItemTypeName;
-
     for (const linkedItemField of node.linkedItemFields) {
+      if (linkedItemField.linkedItems.length === 0) {
+        // There are no linked items so no need to do anything
+
+        continue;
+      }
+
+      // We need a type name to add a reference
+
+      const typeNames = linkedItemField.linkedItems.map(linkedItem => linkedItem.typeName);
+
+      if (typeNames.length > 1) {
+        // TODO: Throw or log an error/warning that linked items must be
+        // of the same type as Gridsome does not allow references to multiple
+        // types on the same field
+      }
+
       const fieldName = linkedItemField.fieldName;
+      const typeName = typeNames[0];
 
       collection.addReference(fieldName, typeName);
     }
@@ -200,7 +193,7 @@ class KenticoCloudSource {
       const fieldName = taxonomyField.fieldName;
       const codename = taxonomyField.taxonomyGroup;
 
-      const typeName = this.getTaxonomyTypeName(codename);
+      const typeName = this.taxonomyItemFactory.getTypeName(codename);
 
       collection.addReference(fieldName, typeName);
     }
@@ -209,13 +202,9 @@ class KenticoCloudSource {
   addAssetFields(store, collection, node) {
     // Get or create the Asset collection
 
-    const typeName = this.options.assetTypeName;
+    const typeName = this.contentItemFactory.getAssetTypeName();
 
-    let assetCollection = store.getContentType(typeName);
-
-    if (typeof (assetCollection) === 'undefined') {
-      assetCollection = store.addContentType(typeName);
-    }
+    const assetCollection = this.getCollection(store, typeName);
 
     // Add a reference to the Asset collection for all asset fields defined on the node
 
@@ -242,13 +231,9 @@ class KenticoCloudSource {
   addItemLinkNode(store, node) {
     // Get or create the Item Link collection
 
-    const typeName = this.options.itemLinkTypeName;
+    const typeName = this.contentItemFactory.getItemLinkTypeName();
 
-    let itemLinkCollection = store.getContentType(typeName);
-
-    if (typeof (itemLinkCollection) === 'undefined') {
-      itemLinkCollection = store.addContentType(typeName);
-    }
+    const collection = this.getCollection(store, typeName);
 
     // Add the Item Link node to the collection
     // The path is generated by Gridsome based on the route defined by the content type
@@ -259,7 +244,7 @@ class KenticoCloudSource {
       path: node.path
     };
 
-    itemLinkCollection.addNode(itemLinkNode);
+    collection.addNode(itemLinkNode);
   }
 }
 

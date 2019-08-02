@@ -4,9 +4,10 @@
 
 <static-query>
 query CodeSnippet {
-  codeSnippets: allLinkedItem(filter: { typeName: { eq: "CodeSnippet" }}) {
+  codeSnippets: allCodeSnippet {
     edges {
       node {
+        id,
         codename,
         code,
         language {
@@ -33,7 +34,7 @@ export default {
   computed: {
     codeSnippet: function() {
       const codeSnippet = this.$static.codeSnippets.edges.filter(
-        edge => edge.node.codename === this.codename
+        edge => edge.node.id === this.id
       );
 
       if (codeSnippet.length === 1) {

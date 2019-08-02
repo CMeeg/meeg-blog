@@ -2,8 +2,8 @@ const changeCase = require('change-case');
 const cheerio = require('cheerio');
 
 class RichTextHtmlParser {
-  constructor(contentTypeFactory, options) {
-    this.contentTypeFactory = contentTypeFactory;
+  constructor(typeNameResolver, options) {
+    this.typeNameResolver = typeNameResolver;
     this.options = options;
   }
 
@@ -34,7 +34,7 @@ class RichTextHtmlParser {
       const itemLink = $(element);
       const itemId = itemLink.data('itemId');
       const link = links.filter(l => l.linkId === itemId)[0];
-      const typeName = this.contentTypeFactory.getTypeName(link.type);
+      const typeName = this.typeNameResolver(link.type);
       const linkText = itemLink.html();
 
       const itemLinkHtml = this.getLinkHtml(itemId, typeName, linkText);
