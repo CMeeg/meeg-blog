@@ -2,11 +2,11 @@
   <layout>
     <h1>{{ pageNode.title }}</h1>
 
+    <p>Updated <time :datetime="pageNode.lastUpdated">{{ pageNode.lastUpdated }}</time></p>
+
     <rich-text :html="pageNode.summary" />
 
-    <node-list :nodes="pageNode.articlesInSeries">
-      <article-summary slot="node" slot-scope="{ node }" :article="node" />
-    </node-list>
+    <article-summary-list :articles="articles" />
   </layout>
 </template>
 
@@ -27,6 +27,7 @@ query ArticleSeries ($id: String!) {
       lastUpdated
     },
     path,
+    lastUpdated,
     pageMetadataMetaTitle,
     pageMetadataMetaDescription,
     pageMetadataOpenGraphTitle,
@@ -41,15 +42,13 @@ query ArticleSeries ($id: String!) {
 
 <script>
 import RichText from '~/components/RichText.vue';
-import NodeList from '~/components/NodeList.vue';
-import ArticleSummary from '~/components/ArticleSummary.vue';
+import ArticleSummaryList from '~/components/ArticleSummaryList.vue';
 import metadata from '~/mixins/Metadata';
 
 export default {
   components: {
     RichText,
-    NodeList,
-    ArticleSummary
+    ArticleSummaryList
   },
   mixins: [
     metadata
@@ -57,6 +56,15 @@ export default {
   computed: {
     pageNode: function() {
       return this.$page.articleSeries;
+    },
+    articles: function() {
+      return {
+        edges: this.pageNode.articlesInSeries.map(article => {
+          return {
+            node: article
+          };
+        })
+      };
     }
   }
 }

@@ -4,9 +4,7 @@
 
     <rich-text :html="pageNode.summary" />
 
-    <node-list :nodes="$page.latestArticles" :pager-options="{ prevLabel: 'See newer articles', nextLabel: 'See older articles' }">
-      <article-summary slot="node" slot-scope="{ node }" :article="node" />
-    </node-list>
+    <article-summary-list :articles="$page.latestArticles" />
   </layout>
 </template>
 
@@ -55,15 +53,13 @@ query Home($page: Int) {
 
 <script>
 import RichText from '~/components/RichText.vue';
-import NodeList from '~/components/NodeList.vue';
-import ArticleSummary from '~/components/ArticleSummary.vue';
+import ArticleSummaryList from '~/components/ArticleSummaryList.vue';
 import metadata from '~/mixins/Metadata';
 
 export default {
   components: {
     RichText,
-    NodeList,
-    ArticleSummary
+    ArticleSummaryList
   },
   mixins: [
     metadata

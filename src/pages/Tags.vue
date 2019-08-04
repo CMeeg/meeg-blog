@@ -45,8 +45,8 @@ export default {
   computed: {
     pageNode: function() {
       return {
-        title: 'Search',
-        url: '/search'
+        title: 'Tags',
+        url: '/tags'
       }
     }
   }

@@ -8,7 +8,6 @@
         <ul>
           <li><g-link to="/">Home</g-link></li>
           <li><g-link to="/about">About</g-link></li>
-          <li><g-link to="/search">Search</g-link></li>
         </ul>
       </nav>
       <p><a :href="`https://twitter.com/${ twitterUser }`">Twitter</a></p>
