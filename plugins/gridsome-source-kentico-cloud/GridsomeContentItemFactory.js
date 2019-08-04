@@ -20,7 +20,11 @@ class GridsomeContentItemFactory {
   }
 
   getRoute(codename) {
-    const route = `/${slugify(codename)}/:slug`;
+    const route = this.options.routes[codename];
+
+    if (typeof(route) === 'undefined') {
+      return `/${slugify(codename)}/:slug`;
+    }
 
     return route;
   }

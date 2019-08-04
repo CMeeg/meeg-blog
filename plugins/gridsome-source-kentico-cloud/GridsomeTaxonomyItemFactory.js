@@ -1,6 +1,5 @@
 const changeCase = require('change-case');
 const GridsomeTaxonomyItem = require('./GridsomeTaxonomyItem');
-const slugify = require('@sindresorhus/slugify');
 
 class GridsomeTaxonomyItemFactory {
   constructor(options) {
@@ -15,23 +14,13 @@ class GridsomeTaxonomyItemFactory {
   }
 
   getRoute(codename) {
-    if (!this.addRouting(codename)) {
+    const route = this.options.routes[codename];
+
+    if (typeof(route) === 'undefined') {
       return null;
     }
 
-    const route = `/${slugify(codename)}/:slug`;
-
     return route;
-  }
-
-  addRouting(codename) {
-    const addRoutingTo = this.options.addRoutingTo;
-
-    if (!Array.isArray(addRoutingTo)) {
-      return false;
-    }
-
-    return addRoutingTo.includes(codename);
   }
 
   createTaxonomyItem(taxonomyGroup) {

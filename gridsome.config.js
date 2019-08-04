@@ -21,10 +21,17 @@ module.exports = {
           enableAdvancedLogging: JSON.parse(process.env.KENTICO_CLOUD_ENABLED_ADVANCED_LOGGING),
           defaultLanguage: process.env.KENTICO_CLOUD_DEFAULT_LANGUAGE
         },
+        contentItemConfig: {
+          routes: {
+            article: '/articles/:slug',
+            article_series: '/series/:slug',
+            author: '/about'
+          }
+        },
         taxonomyConfig: {
-          addRoutingTo: [
-            'tag'
-          ]
+          routes: {
+            tag: '/tags/:slug'
+          }
         }
       }
     }

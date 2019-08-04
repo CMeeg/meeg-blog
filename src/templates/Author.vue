@@ -7,24 +7,20 @@
 </template>
 
 <page-query>
-query Author {
-  author: allAuthor(filter: { codename: { eq: "chris_meagher" }}, limit: 1) {
-    edges {
-      node {
-        firstName,
-        lastName,
-        fullName,
-        bio,
-        path,
-        pageMetadataMetaTitle,
-        pageMetadataMetaDescription,
-        pageMetadataOpenGraphTitle,
-        pageMetadataOpenGraphDescription,
-        pageMetadataOpenGraphImage {
-          url,
-          description
-        }
-      }
+query Author ($id: String!) {
+  author (id: $id) {
+    firstName,
+    lastName,
+    fullName,
+    bio,
+    path,
+    pageMetadataMetaTitle,
+    pageMetadataMetaDescription,
+    pageMetadataOpenGraphTitle,
+    pageMetadataOpenGraphDescription,
+    pageMetadataOpenGraphImage {
+      url,
+      description
     }
   }
 }
@@ -43,10 +39,9 @@ export default {
   ],
   computed: {
     pageNode: function() {
-      const node = this.$page.author.edges[0].node;
+      const node = this.$page.author;
 
       node.title = node.fullName;
-      node.url = '/about';
 
       return node;
     }

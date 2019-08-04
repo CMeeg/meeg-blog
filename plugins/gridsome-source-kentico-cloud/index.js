@@ -13,6 +13,7 @@ class KenticoCloudSourcePlugin {
       contentItemConfig: {
         contentItemTypeNamePrefix: '',
         contentItemPath: './plugins/gridsome-source-kentico-cloud/content-items',
+        routes: [],
         richText: {
           wrapperCssClass: 'rich-text',
           itemLinkSelector: 'a[data-item-id]',
@@ -23,7 +24,7 @@ class KenticoCloudSourcePlugin {
       },
       taxonomyConfig: {
         taxonomyTypeNamePrefix: 'Taxonomy',
-        addRoutingTo: []
+        routes: []
       }
     }
   };
