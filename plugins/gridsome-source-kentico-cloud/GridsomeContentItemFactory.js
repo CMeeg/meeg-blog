@@ -1,8 +1,5 @@
 const changeCase = require('change-case');
-const glob = require('glob');
 const GridsomeContentItem = require('./GridsomeContentItem');
-const path = require('path');
-const RichTextHtmlParser = require('./RichTextHtmlParser');
 const slugify = require('@sindresorhus/slugify');
 
 class GridsomeContentItemFactory {
@@ -29,50 +26,34 @@ class GridsomeContentItemFactory {
     return route;
   }
 
-  createContentItem(contentType) {
-    const codename = contentType.system.codename;
-    const typeName = this.getTypeName(codename);
-
-    if (this.contentItems === null) {
-      this.contentItems = this.loadContentItemsFromFileSystem();
-    }
-
-    const route = this.getRoute(codename);
-    const richTextHtmlParser = this.getRichTextHtmlParser();
-
-    const ContentItem = this.contentItems[codename];
+  getContentItem(codename) {
+    const ContentItem = this.options.contentItems[codename];
 
     if (typeof(ContentItem) === 'undefined') {
-      // Fallback to GridsomeContentItem if there is no specific content item defined for this content type
-
-      return new GridsomeContentItem(typeName, route, richTextHtmlParser);
+      return GridsomeContentItem;
     }
 
-    return new ContentItem(typeName, route, richTextHtmlParser);
-  }
-
-  loadContentItemsFromFileSystem() {
-    // We will try to load GridsomeContentItem types from the path provided
-
-    const contentItemPath = this.options.contentItemPath;
-    const extension = '.js';
-    const contentItemGlob = `${path.join(contentItemPath, '/*')}${extension}`;
-
-    const contentItems = {};
-
-    glob.sync(contentItemGlob).forEach(file => {
-      const codename = path.basename(file, extension);
-      const contentItemPath = path.resolve(file);
-      const contentItem = require(contentItemPath);
-
-      contentItems[codename] = contentItem;
-    });
-
-    return contentItems;
+    return ContentItem;
   }
 
   getRichTextHtmlParser() {
-    return new RichTextHtmlParser(this.getTypeName, this.options.richText);
+    if (this.options.richText.htmlParser === null) {
+      return null;
+    }
+
+    const HtmlParser = this.options.richText.htmlParser;
+
+    return new HtmlParser(this.getTypeName, this.options.richText);
+  }
+
+  createContentItem(contentType) {
+    const codename = contentType.system.codename;
+    const typeName = this.getTypeName(codename);
+    const route = this.getRoute(codename);
+    const ContentItem = this.getContentItem(codename);
+    const richTextHtmlParser = this.getRichTextHtmlParser();
+
+    return new ContentItem(typeName, route, richTextHtmlParser);
   }
 
   getAssetTypeName() {

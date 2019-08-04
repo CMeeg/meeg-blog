@@ -1,7 +1,7 @@
 const changeCase = require('change-case');
 const cheerio = require('cheerio');
 
-class RichTextHtmlParser {
+class GridsomeRichTextHtmlParser {
   constructor(typeNameResolver, options) {
     this.typeNameResolver = typeNameResolver;
     this.options = options;
@@ -79,4 +79,4 @@ class RichTextHtmlParser {
   }
 }
 
-module.exports = RichTextHtmlParser;
+module.exports = GridsomeRichTextHtmlParser;

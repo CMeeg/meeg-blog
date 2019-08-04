@@ -1,6 +1,6 @@
 const GridsomeContentItem = require('../GridsomeContentItem');
 
-class Article extends GridsomeContentItem {
+class ArticleContentItem extends GridsomeContentItem {
   addFields(node) {
     super.addFields(node);
 
@@ -76,4 +76,4 @@ class Article extends GridsomeContentItem {
   }
 }
 
-module.exports = Article;
+module.exports = ArticleContentItem;

@@ -4,7 +4,9 @@
 // Changes here require a server restart.
 // To restart press CTRL + C in terminal and run `gridsome develop`
 
-const appConfig = require('./src/app.config.js');
+const appConfig = require('./src/app.config');
+const ArticleContentItem = require('./plugins/gridsome-source-kentico-cloud/content-items/ArticleContentItem');
+const ArticleSeriesContentItem = require('./plugins/gridsome-source-kentico-cloud/content-items/ArticleSeriesContentItem');
 
 module.exports = {
   siteName: appConfig.siteName,
@@ -22,6 +24,10 @@ module.exports = {
           defaultLanguage: process.env.KENTICO_CLOUD_DEFAULT_LANGUAGE
         },
         contentItemConfig: {
+          contentItems: {
+            article: ArticleContentItem,
+            article_series: ArticleSeriesContentItem
+          },
           routes: {
             article: '/articles/:slug',
             article_series: '/series/:slug',

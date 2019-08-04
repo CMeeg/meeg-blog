@@ -3,19 +3,25 @@ const changeCase = require('change-case');
 
 class GridsomeContentItem extends ContentItem {
   constructor(typeName, route, richTextHtmlParser) {
-    super({
+    const data = {
       propertyResolver: (fieldName) => {
         return this.resolveProperty(fieldName);
-      },
-      richTextResolver: (item, context) => {
+      }
+    };
+
+    if (richTextHtmlParser !== null) {
+      data.richTextResolver = (item, context) => {
         return this.resolveRichText(item, context);
-      },
-      linkResolver: (link, context) => {
+      };
+
+      data.linkResolver = (link, context) => {
         // TODO: Ask Kentico Cloud why this seems to be being ignored
         // Removing this results in warnings from the DeliveryClient when advanced logging is turned on
         return this.resolveLink(link, context);
-      }
-    });
+      };
+    }
+
+    super(data);
 
     this.typeName = typeName;
     this.route = route;
@@ -213,7 +219,9 @@ class GridsomeContentItem extends ContentItem {
 
   richTextTypeFieldResolver(node, field) {
     const fieldName = field.fieldName;
-    const html = this.richTextHtmlParser.getRichTextHtml(field);
+    const html = this.richTextHtmlParser === null
+      ? field.getHtml()
+      : this.richTextHtmlParser.getRichTextHtml(field);
 
     this.addField(node, fieldName, html);
   }
