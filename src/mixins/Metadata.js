@@ -113,6 +113,8 @@ var metadata = {
         return asset;
       }
 
+      // TODO: Create this image
+
       return {
         url: appConfig.getSiteUrl('/assets/og-fallback.jpg'),
         description: null
