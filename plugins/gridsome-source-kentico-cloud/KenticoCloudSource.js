@@ -1,3 +1,5 @@
+const { ImageUrlBuilder, ImageCompressionEnum, ImageFormatEnum } = require('kentico-cloud-delivery');
+
 class KenticoCloudSource {
   constructor(deliveryClient, contentItemFactory, taxonomyItemFactory) {
     this.deliveryClient = deliveryClient;
@@ -21,6 +23,10 @@ class KenticoCloudSource {
     for (const contentType of contentTypes.types) {
       await this.addContentNodes(store, contentType);
     }
+
+    // Add custom GraphQL schema fields
+
+    this.addSchemaFields(store);
   }
 
   addTypeResolvers(contentTypes) {
@@ -245,6 +251,121 @@ class KenticoCloudSource {
     };
 
     collection.addNode(itemLinkNode);
+  }
+
+  addSchemaFields(store) {
+    this.addAssetSchemaFields(store);
+  }
+
+  addAssetSchemaFields(store) {
+    const typeName = this.contentItemFactory.getAssetTypeName();
+
+    const collection = this.getCollection(store, typeName);
+
+    collection.addSchemaField('url', ({ graphql }) => ({
+      type: graphql.GraphQLString,
+      args: {
+        width: {
+          type: graphql.GraphQLInt,
+          defaultValue: null
+        },
+        height: {
+          type: graphql.GraphQLInt,
+          defaultValue: null
+        },
+        automaticFormat: {
+          type: graphql.GraphQLBoolean,
+          defaultValue: null
+        },
+        format: {
+          type: graphql.GraphQLString,
+          defaultValue: null
+        },
+        lossless: {
+          type: graphql.GraphQLBoolean,
+          defaultValue: null
+        },
+        quality: {
+          type: graphql.GraphQLInt,
+          defaultValue: null
+        },
+        dpr: {
+          type: graphql.GraphQLInt,
+          defaultValue: null
+        }
+      },
+      resolve (node, args) {
+        const url = node.url;
+        const type = node.type;
+
+        let urlBuilder = new ImageUrlBuilder(url);
+
+        if (args.width !== null) {
+          urlBuilder = urlBuilder.withWidth(args.width);
+        }
+
+        if (args.height !== null) {
+          urlBuilder = urlBuilder.withHeight(args.height);
+        }
+
+        if (args.automaticFormat !== null) {
+          if (args.automaticFormat) {
+            switch (type.toLowerCase()) {
+              case 'image/gif':
+                urlBuilder = urlBuilder.withAutomaticFormat(ImageFormatEnum.Gif)
+                break;
+              case 'image/jpeg':
+                urlBuilder = urlBuilder.withAutomaticFormat(ImageFormatEnum.Jpg)
+                break;
+              case 'image/png':
+                urlBuilder = urlBuilder.withAutomaticFormat(ImageFormatEnum.Png)
+                break;
+            }
+          }
+        }
+
+        if (args.format !== null) {
+          switch (args.format.toLowerCase()) {
+            case 'gif':
+              urlBuilder = urlBuilder.withFormat(ImageFormatEnum.Gif)
+              break;
+            case 'jpg':
+            case 'jpeg':
+              urlBuilder = urlBuilder.withFormat(ImageFormatEnum.Jpg)
+              break;
+            case 'pjpg':
+            case 'pjpeg':
+              urlBuilder = urlBuilder.withFormat(ImageFormatEnum.Pjpg)
+              break;
+            case 'png':
+              urlBuilder = urlBuilder.withFormat(ImageFormatEnum.Png)
+              break;
+            case 'png8':
+              urlBuilder = urlBuilder.withFormat(ImageFormatEnum.Png8)
+              break;
+            case 'webp':
+              urlBuilder = urlBuilder.withFormat(ImageFormatEnum.Webp)
+              break;
+          }
+        }
+
+        if (args.lossless !== null) {
+          const compression = args.lossless ? ImageCompressionEnum.Lossless : ImageCompressionEnum.Lossy;
+
+          urlBuilder = urlBuilder.withCompression(compression);
+        }
+
+        if (args.quality !== null) {
+          urlBuilder = urlBuilder.withQuality(args.quality);
+        }
+
+        if (args.dpr !== null) {
+          urlBuilder = urlBuilder.withDpr(args.dpr);
+        }
+
+        return urlBuilder.getUrl();
+      }
+    }));
   }
 }
 

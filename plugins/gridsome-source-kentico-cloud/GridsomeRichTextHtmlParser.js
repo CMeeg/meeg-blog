@@ -16,7 +16,7 @@ class GridsomeRichTextHtmlParser {
 
     const $ = cheerio.load(html, { decodeEntities: false });
 
-    // Kentico Cloud can return empty an empty paragraph element if there is no content, which is of no use
+    // Kentico Cloud can return an empty paragraph element if there is no content, which is of no use
     // If the rich text element has no text content, just return an empty string
 
     if ($(`.${wrapperCssClass}`).text().trim() === '') {

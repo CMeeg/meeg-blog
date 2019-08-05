@@ -9,7 +9,8 @@ query Asset {
       node {
         id,
         name,
-        url,
+        url(width: 1200, format: "webp"),
+        placeholderUrl: url(width: 50, format: "webp"),
         type,
         size,
         description,
@@ -55,7 +56,7 @@ export default {
             name: 'lazy-image',
             props: {
               src: this.asset.url,
-              srcPlaceholder: `${this.asset.url}?width=50`,
+              srcPlaceholder: this.asset.placeholderUrl,
               alt: this.asset.description
             }
           };
