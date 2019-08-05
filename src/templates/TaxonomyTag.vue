@@ -39,7 +39,7 @@ query TaxonomyTag($id: String!, $page: Int) {
 
 <script>
 import NodeList from '~/components/NodeList.vue';
-import ArticleSummary from '~/components/ArticleSummary.vue';
+import ArticleSummary from '~/components/articles/ArticleSummary.vue';
 import metadata from '~/mixins/Metadata';
 
 export default {

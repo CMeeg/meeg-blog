@@ -34,7 +34,7 @@ query Series($page: Int) {
 
 <script>
 import NodeList from '~/components/NodeList.vue';
-import ArticleSeriesSummary from '~/components/ArticleSeriesSummary.vue';
+import ArticleSeriesSummary from '~/components/article-series/ArticleSeriesSummary.vue';
 import metadata from '~/mixins/Metadata';
 
 export default {

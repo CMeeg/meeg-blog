@@ -15,8 +15,8 @@
 
 <script>
 import Card from '~/components/Card.vue';
-import RichText from '~/components/RichText.vue';
-import TagList from '~/components/TagList.vue';
+import RichText from '~/components/kentico-cloud/RichText.vue';
+import TagList from '~/components/tags/TagList.vue';
 
 export default {
   components: {

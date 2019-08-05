@@ -6,7 +6,7 @@
 
 <script>
 import NodeList from '~/components/NodeList.vue';
-import ArticleSummary from '~/components/ArticleSummary.vue';
+import ArticleSummary from '~/components/articles/ArticleSummary.vue';
 
 export default {
   components: {

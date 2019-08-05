@@ -49,6 +49,7 @@ export default {
     },
     assetComponent: function () {
       switch (this.asset.type) {
+        case 'image/gif':
         case 'image/jpeg':
         case 'image/png':
         case 'image/webp':

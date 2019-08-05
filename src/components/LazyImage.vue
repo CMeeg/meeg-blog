@@ -3,6 +3,8 @@
     :src="src"
     :src-placeholder="srcPlaceholder"
     :alt="alt"
+    :srcset="srcset"
+    :sizes="sizes"
   />
 </template>
 
@@ -27,6 +29,16 @@ export default {
       type: String,
       required: false,
       default: ''
+    },
+    srcset: {
+      type: String,
+      required: false,
+      default: null
+    },
+    sizes: {
+      type: String,
+      required: false,
+      default: null
     }
   }
 };

@@ -20,7 +20,7 @@
 
 <script>
 import Card from '~/components/Card.vue';
-import RichText from '~/components/RichText.vue';
+import RichText from '~/components/kentico-cloud/RichText.vue';
 
 export default {
   components: {

@@ -1,14 +1,14 @@
 <template>
   <div>
-    <ul>
-      <li v-for="edge in nodes.edges" :key="edge.node.id">
-        <slot name="node" :node="edge.node" />
+    <ul v-if="nodeItems.length">
+      <li v-for="node in nodeItems" :key="node.id">
+        <slot name="node" :node="node" />
       </li>
     </ul>
 
     <pager
-      v-if="hasPageInfo"
-      :info="nodes.pageInfo"
+      v-if="pageInfo"
+      :info="pageInfo"
       :show-links="false"
       :show-navigation="true"
       :range="1"
@@ -22,6 +22,7 @@
 
 <script>
 import { Pager } from 'gridsome';
+import { system } from '~/utils';
 
 export default {
   components: {
@@ -29,7 +30,7 @@ export default {
   },
   props: {
     nodes: {
-      type: Object,
+      type: [ Object, Array ],
       required: true
     },
     pagerOptions: {
@@ -46,6 +47,36 @@ export default {
   data: function() {
     return {
       hasPageInfo: typeof(this.nodes.pageInfo) !== 'undefined'
+    }
+  },
+  computed: {
+    nodeItems: function() {
+      let nodes = this.nodes;
+
+      if (system.isObject(nodes)) {
+        if (nodes.hasOwnProperty('edges')) {
+          nodes = this.nodes.edges;
+        }
+      }
+
+      return nodes.map(node => {
+        if (node.hasOwnProperty('node')) {
+          return node.node;
+        }
+
+        return node;
+      });
+    },
+    pageInfo: function() {
+      if (Array.isArray(this.nodes)) {
+        return null;
+      }
+
+      if (this.nodes.hasOwnProperty('pageInfo')) {
+        return this.nodes.pageInfo;
+      }
+
+      return null;
     }
   }
 }

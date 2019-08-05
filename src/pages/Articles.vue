@@ -32,7 +32,7 @@ query Articles($page: Int) {
 </page-query>
 
 <script>
-import ArticleSummaryList from '~/components/ArticleSummaryList.vue';
+import ArticleSummaryList from '~/components/articles/ArticleSummaryList.vue';
 import metadata from '~/mixins/Metadata';
 
 export default {

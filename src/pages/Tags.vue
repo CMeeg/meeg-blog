@@ -31,7 +31,7 @@ query Tags {
 
 <script>
 import Card from '~/components/Card.vue';
-import TagList from '~/components/TagList.vue';
+import TagList from '~/components/tags/TagList.vue';
 import metadata from '~/mixins/Metadata';
 
 export default {

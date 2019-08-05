@@ -41,8 +41,8 @@ query ArticleSeries ($id: String!) {
 </page-query>
 
 <script>
-import RichText from '~/components/RichText.vue';
-import ArticleSummaryList from '~/components/ArticleSummaryList.vue';
+import RichText from '~/components/kentico-cloud/RichText.vue';
+import ArticleSummaryList from '~/components/articles/ArticleSummaryList.vue';
 import metadata from '~/mixins/Metadata';
 
 export default {
