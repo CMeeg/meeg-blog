@@ -129,10 +129,10 @@ class GridsomeContentItem extends ContentItem {
               asset.height = elementAsset.height;
             });
 
-          // We also need to extract an id from the url as it is not provided
+          // We will use the asset url as the id as it is unique, and the id is not provided
           // TODO: Ask Kentico Cloud if it can be provided
 
-          asset.id = this.getAssetId(url);
+          asset.id = url;
 
           return asset;
         });
@@ -147,18 +147,6 @@ class GridsomeContentItem extends ContentItem {
 
       fieldResolver.apply(this, [node, field]);
     }
-  }
-
-  getAssetId(assetUrl) {
-    const url = new URL(assetUrl);
-    const pathname = url.pathname;
-
-    // The id is the second part of the path
-    // TODO: This doesn't seem to match up with the actual id - it does seem to be unique per asset so it is ok to use, but the actual id would be better
-
-    const pathParts = pathname.split('/', 3);
-
-    return pathParts[2];
   }
 
   getFieldResolver(field) {

@@ -6,15 +6,15 @@
 
 <static-query>
 query ItemLink {
-    itemLinks: allItemLink {
-        edges {
-            node {
-                id,
-                typeName,
-                path
-            }
-        }
+  itemLinks: allItemLink {
+    edges {
+      node {
+        id,
+        typeName,
+        path
+      }
     }
+  }
 }
 </static-query>
 

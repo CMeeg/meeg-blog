@@ -19,7 +19,8 @@ class KenticoCloudSourcePlugin {
           htmlParser: GridsomeRichTextHtmlParser,
           wrapperCssClass: 'rich-text',
           itemLinkSelector: 'a[data-item-id]',
-          componentSelector: 'p[data-type="item"]'
+          componentSelector: 'p[data-type="item"]',
+          assetSelector: 'figure[data-asset-id]'
         },
         assetTypeName: 'Asset',
         itemLinkTypeName: 'ItemLink'
@@ -43,7 +44,7 @@ class KenticoCloudSourcePlugin {
         taxonomyItemFactory
       );
 
-      await kenticoCloudSource.load(store)
+      await kenticoCloudSource.load(store);
     });
   }
 }
