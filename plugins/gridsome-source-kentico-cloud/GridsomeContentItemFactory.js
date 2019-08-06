@@ -1,5 +1,6 @@
 const changeCase = require('change-case');
 const GridsomeContentItem = require('./GridsomeContentItem');
+const GridsomeRichTextHtmlTransformer = require('./GridsomeRichTextHtmlTransformer');
 const slugify = require('@sindresorhus/slugify');
 
 class GridsomeContentItemFactory {
@@ -36,14 +37,8 @@ class GridsomeContentItemFactory {
     return ContentItem;
   }
 
-  getRichTextHtmlParser() {
-    if (this.options.richText.htmlParser === null) {
-      return null;
-    }
-
-    const HtmlParser = this.options.richText.htmlParser;
-
-    return new HtmlParser(this.getTypeName, this.options.richText);
+  getRichTextHtmlTransformer() {
+    return new GridsomeRichTextHtmlTransformer(this.options.richText);
   }
 
   createContentItem(contentType) {
@@ -51,9 +46,10 @@ class GridsomeContentItemFactory {
     const typeName = this.getTypeName(codename);
     const route = this.getRoute(codename);
     const ContentItem = this.getContentItem(codename);
-    const richTextHtmlParser = this.getRichTextHtmlParser();
+    const richTextHtmlTransformer = this.getRichTextHtmlTransformer();
+    const data = {};
 
-    return new ContentItem(typeName, route, richTextHtmlParser);
+    return new ContentItem(typeName, route, richTextHtmlTransformer, data);
   }
 
   getAssetTypeName() {

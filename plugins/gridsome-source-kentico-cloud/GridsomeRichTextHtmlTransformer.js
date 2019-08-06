@@ -1,14 +1,38 @@
 const changeCase = require('change-case');
 const cheerio = require('cheerio');
 
-class GridsomeRichTextHtmlParser {
-  constructor(typeNameResolver, options) {
-    this.typeNameResolver = typeNameResolver;
+class GridsomeRichTextHtmlTransformer {
+  constructor(options) {
     this.options = options;
   }
 
-  getRichTextHtml(field) {
+  canTransformRichText() {
+    return this.options.wrapperCssClass !== null;
+  }
+
+  canTransformLinks() {
+    return this.canTransformRichText()
+      && this.options.itemLinkSelector !== null
+      && this.options.itemLinkComponentName !== null;
+  }
+
+  canTransformComponents() {
+    return this.canTransformRichText()
+      && this.options.componentSelector !== null;
+  }
+
+  canTransformAssets() {
+    return this.canTransformRichText()
+      && this.options.assetSelector !== null
+      && this.options.assetComponentName !== null;
+  }
+
+  transformRichTextHtml(field) {
     let html = field.getHtml();
+
+    if (!this.canTransformRichText()) {
+      return html;
+    }
 
     const wrapperCssClass = this.options.wrapperCssClass;
 
@@ -23,18 +47,18 @@ class GridsomeRichTextHtmlParser {
       return '';
     }
 
-    // Resolve item links
+    // Transform item links
     // N.B. This shouldn't be necessary, but the `linkResolver` feature of the Kentico Cloud SDK doesn't appear to work
 
-    this.parseItemLinks(field, $);
+    this.transformItemLinks($);
 
     // Unwrap components
 
-    this.parseComponents(field, $);
+    this.transformComponents($);
 
-    // Resolve assets
+    // Transform assets
 
-    this.parseAssets(field, $);
+    this.transformAssets($);
 
     // Return the parsed html
 
@@ -43,7 +67,11 @@ class GridsomeRichTextHtmlParser {
     return html;
   }
 
-  parseComponents(field, $) {
+  transformComponents($) {
+    if (!this.canTransformComponents()) {
+      return;
+    }
+
     const componentSelector = this.options.componentSelector;
     const components = $(componentSelector);
 
@@ -56,44 +84,59 @@ class GridsomeRichTextHtmlParser {
     });
   }
 
-  getComponentHtml(type, id, codename) {
+  getComponentName(codename) {
+    const componentNamePrefix = this.options.componentNamePrefix.length;
+    const componentCodename = componentNamePrefix.length > 0
+      ? `${componentNamePrefix}-${codename}`
+      : codename;
+
+    return changeCase.kebabCase(componentCodename);
+  }
+
+  getComponentHtml(id, type) {
     // Rich text components will be rendered as Vue components
 
-    const componentName = changeCase.kebabCase(type);
+    const componentName = this.getComponentName(type);
 
-    const html = `<${componentName} id="${id}" codename="${codename}" />`;
+    const html = `<${componentName} :node="getNode('${type}', '${id}')" />`;
 
     return html;
   }
 
-  parseItemLinks(field, $) {
+  transformItemLinks($) {
+    if (!this.canTransformLinks()) {
+      return;
+    }
+
     const itemLinkSelector = this.options.itemLinkSelector;
     const itemLinks = $(itemLinkSelector);
-    const links = field.links;
 
     itemLinks.each((index, element) => {
       const itemLink = $(element);
       const itemId = itemLink.data('itemId');
-      const link = links.filter(l => l.linkId === itemId)[0];
-      const typeName = this.typeNameResolver(link.type);
       const linkText = itemLink.html();
 
-      const itemLinkHtml = this.getLinkHtml(itemId, typeName, linkText);
+      const itemLinkHtml = this.getLinkHtml(itemId, linkText);
 
       itemLink.replaceWith(itemLinkHtml);
     });
   }
 
-  getLinkHtml(id, typeName, text) {
+  getLinkHtml(id, text) {
     // Links to content items in rich text fields will be rendered as Vue components
 
-    // TODO: Generate component name based on type name set in options
-    const html = `<item-link id="${id}" type="${typeName}">${text}</item-link>`;
+    const componentName = this.getComponentName(this.options.itemLinkComponentName);
+
+    const html = `<${componentName} :node="getNode('item_link', '${id}')">${text}</item-link>`;
 
     return html;
   }
 
-  parseAssets(field, $) {
+  transformAssets($) {
+    if (!this.canTransformAssets()) {
+      return;
+    }
+
     const assetSelector = this.options.assetSelector;
     const assets = $(assetSelector);
 
@@ -113,7 +156,7 @@ class GridsomeRichTextHtmlParser {
       // TODO: The asset id is available in the `data-asset-id` attribute, but
       // the url is currently used as the Gridsome node id because the id is not
       // available in asset data retrieved via the delivery API - the below will
-      // need to change if/when the id is made avaiable
+      // need to change if/when the id is made available
 
       const assetHtml = this.getAssetHtml(assetId);
 
@@ -124,11 +167,12 @@ class GridsomeRichTextHtmlParser {
   getAssetHtml(id) {
     // Assets will be rendered as Vue components
 
-    // TODO: Generate component name based on type name set in options
-    const html = `<asset id="${id}" />`;
+    const componentName = this.getComponentName(this.options.assetComponentName);
+
+    const html = `<${componentName} :node="getNode('asset', '${id}')" />`;
 
     return html;
   }
 }
 
-module.exports = GridsomeRichTextHtmlParser;
+module.exports = GridsomeRichTextHtmlTransformer;

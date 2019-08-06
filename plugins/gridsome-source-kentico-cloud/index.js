@@ -1,7 +1,6 @@
 const DeliveryClient = require('./GridsomeDeliveryClient');
 const KenticoCloudSource = require('./KenticoCloudSource');
 const GridsomeContentItemFactory = require('./GridsomeContentItemFactory');
-const GridsomeRichTextHtmlParser = require('./GridsomeRichTextHtmlParser');
 const GridsomeTaxonomyItemFactory = require('./GridsomeTaxonomyItemFactory');
 
 class KenticoCloudSourcePlugin {
@@ -16,11 +15,13 @@ class KenticoCloudSourcePlugin {
         contentItems: {},
         routes: {},
         richText: {
-          htmlParser: GridsomeRichTextHtmlParser,
           wrapperCssClass: 'rich-text',
+          componentNamePrefix: '',
           itemLinkSelector: 'a[data-item-id]',
+          itemLinkComponentName: 'item-link',
           componentSelector: 'p[data-type="item"]',
-          assetSelector: 'figure[data-asset-id]'
+          assetSelector: 'figure[data-asset-id]',
+          assetComponentName: 'asset'
         },
         assetTypeName: 'Asset',
         itemLinkTypeName: 'ItemLink'

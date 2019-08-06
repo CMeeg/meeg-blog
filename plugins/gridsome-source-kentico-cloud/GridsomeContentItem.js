@@ -1,31 +1,42 @@
 const { ContentItem } = require('kentico-cloud-delivery');
 const changeCase = require('change-case');
+const { merge } = require('lodash');
 
 class GridsomeContentItem extends ContentItem {
-  constructor(typeName, route, richTextHtmlParser) {
-    const data = {
+  constructor(typeName, route, richTextHtmlTransformer, data) {
+    const defaultData = {
       propertyResolver: (fieldName) => {
         return this.resolveProperty(fieldName);
       }
     };
 
-    if (richTextHtmlParser !== null) {
-      data.richTextResolver = (item, context) => {
+    if (richTextHtmlTransformer.canTransformComponents()) {
+      defaultData.richTextResolver = (item, context) => {
         return this.resolveRichText(item, context);
       };
+    }
 
-      data.linkResolver = (link, context) => {
+    if (richTextHtmlTransformer.canTransformLinks()) {
+      defaultData.linkResolver = (link, context) => {
         // TODO: Ask Kentico Cloud why this seems to be being ignored
         // Removing this results in warnings from the DeliveryClient when advanced logging is turned on
         return this.resolveLink(link, context);
       };
     }
 
-    super(data);
+    // Allows for overriding of defaults and setting of other `data` options via constructor
+
+    const mergedData = merge(
+      {},
+      defaultData,
+      data
+    );
+
+    super(mergedData);
 
     this.typeName = typeName;
     this.route = route;
-    this.richTextHtmlParser = richTextHtmlParser;
+    this.richTextHtmlTransformer = richTextHtmlTransformer;
   }
 
   resolveProperty(fieldName) {
@@ -39,11 +50,10 @@ class GridsomeContentItem extends ContentItem {
   }
 
   resolveRichText(item, context) {
-    const type = item.system.type;
     const id = item.system.id;
-    const codename = item.system.codename;
+    const type = item.system.type;
 
-    return this.richTextHtmlParser.getComponentHtml(type, id, codename);
+    return this.richTextHtmlTransformer.getComponentHtml(id, type);
   }
 
   resolveLink(link, context) {
@@ -51,7 +61,7 @@ class GridsomeContentItem extends ContentItem {
     const text = context.linkText;
 
     return {
-      asHtml: this.richTextHtmlParser.getLinkHtml(id, this.typeName, text)
+      asHtml: this.richTextHtmlTransformer.getLinkHtml(id, text)
     }
   }
 
@@ -207,9 +217,7 @@ class GridsomeContentItem extends ContentItem {
 
   richTextTypeFieldResolver(node, field) {
     const fieldName = field.fieldName;
-    const html = this.richTextHtmlParser === null
-      ? field.getHtml()
-      : this.richTextHtmlParser.getRichTextHtml(field);
+    const html = this.richTextHtmlTransformer.transformRichTextHtml(field);
 
     this.addField(node, fieldName, html);
   }
