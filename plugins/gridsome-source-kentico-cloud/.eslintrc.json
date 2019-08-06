@@ -19,8 +19,9 @@
     ],
     "rules": {
         "brace-style": "off",
+        "operator-linebreak": ["error", "before"],
+        "semi": "off",
         "space-before-function-paren": "off",
-        "space-unary-ops": "off",
-        "semi": "off"
+        "space-unary-ops": "off"
     }
 }

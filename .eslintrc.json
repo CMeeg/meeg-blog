@@ -21,10 +21,11 @@
     ],
     "rules": {
         "brace-style": "off",
+        "operator-linebreak": ["error", "before"],
+        "semi": "off",
         "space-before-function-paren": "off",
         "space-unary-ops": "off",
-        "semi": "off",
-        "vue/singleline-html-element-content-newline": "off",
-        "vue/max-attributes-per-line": "off"
+        "vue/max-attributes-per-line": "off",
+        "vue/singleline-html-element-content-newline": "off"
     }
 }
