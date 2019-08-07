@@ -14,7 +14,7 @@ module.exports = {
   titleTemplate: appConfig.titleTemplate,
   plugins: [
     {
-      use: '~/plugins/gridsome-source-kentico-cloud',
+      use: '@meeg/gridsome-source-kentico-cloud',
       options: {
         deliveryClientConfig: {
           projectId: process.env.KENTICO_CLOUD_PROJECT_ID,

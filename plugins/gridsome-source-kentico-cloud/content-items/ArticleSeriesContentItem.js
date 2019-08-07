@@ -1,4 +1,4 @@
-const GridsomeContentItem = require('../GridsomeContentItem');
+const { GridsomeContentItem } = require('@meeg/gridsome-source-kentico-cloud');
 
 class ArticleSeriesContentItem extends GridsomeContentItem {
   addFields(node) {
