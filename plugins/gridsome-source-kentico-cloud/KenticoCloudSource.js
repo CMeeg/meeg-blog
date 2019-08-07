@@ -1,10 +1,11 @@
 const { ImageUrlBuilder, ImageCompressionEnum, ImageFormatEnum } = require('kentico-cloud-delivery');
 
 class KenticoCloudSource {
-  constructor(deliveryClient, contentItemFactory, taxonomyItemFactory) {
+  constructor(deliveryClient, contentItemFactory, taxonomyItemFactory, logger) {
     this.deliveryClient = deliveryClient;
     this.contentItemFactory = contentItemFactory;
     this.taxonomyItemFactory = taxonomyItemFactory;
+    this.logger = logger.extend('source');
   }
 
   async load(store) {
@@ -35,6 +36,8 @@ class KenticoCloudSource {
     for (const contentType of contentTypes.types) {
       const codename = contentType.system.codename;
 
+      this.logger.log('Adding type resolver for content type %s', codename);
+
       this.deliveryClient.addTypeResolver(
         codename,
         () => this.contentItemFactory.createContentItem(contentType)
@@ -49,7 +52,13 @@ class KenticoCloudSource {
       return collection;
     }
 
-    return store.addContentType({ typeName, route });
+    const type = {
+      typeName, route
+    };
+
+    this.logger.log('Creating Gridsome content type %o', type);
+
+    return store.addContentType(type);
   }
 
   async addTaxonomyGroupNodes(store) {
@@ -81,12 +90,16 @@ class KenticoCloudSource {
     }
 
     for (const term of terms) {
-      collection.addNode({
+      const termNode = {
         id: term.id,
         name: term.name,
         slug: term.slug,
         terms: term.terms.map(childTerm => childTerm.id)
-      });
+      };
+
+      this.logger.log('Adding Gridsome node for taxonomy term %o', term);
+
+      collection.addNode(termNode);
 
       // Terms can be nested so we will recursively call this function
 
@@ -105,18 +118,26 @@ class KenticoCloudSource {
     if (contentItems.length === 0) {
       // There are no content items to process so we go no further
 
+      this.logger.log('No content items found for content type %s', codename);
+
       return;
     }
 
-    // Add the linked item nodes first because the content item nodes may have
-    // references to linked items in Linked Item fields
+    if (linkedItems.length > 0) {
+      // Add the linked item nodes first because the content item nodes may have
+      // references to linked items in Linked Item fields
 
-    // This will also add Rich Text Components as content nodes, which
-    // aren't available when fetching content items from the delivery client
+      // This will also add Rich Text Components as content nodes, which
+      // aren't available when fetching content items from the delivery client
 
-    this.addContentItemNodes(store, linkedItems);
+      this.logger.log('Adding linked items for content of type %s', codename);
+
+      this.addContentItemNodes(store, linkedItems);
+    }
 
     // Now add the content items
+
+    this.logger.log('Adding content items for content of type %s', codename);
 
     this.addContentItemNodes(store, contentItems);
   }
@@ -126,6 +147,8 @@ class KenticoCloudSource {
       // Create the content item node
 
       const node = contentItem.createNode();
+
+      this.logger.log('Creating Gridsome node for content %O', node);
 
       // Get the appropriate collection to add the node to
 
@@ -226,6 +249,8 @@ class KenticoCloudSource {
         const existingNode = collection.getNode(id);
 
         if (existingNode === null) {
+          this.logger.log('Creating Gridsome node for asset %o', asset);
+
           assetCollection.addNode(asset);
         }
       }
@@ -250,6 +275,8 @@ class KenticoCloudSource {
       path: node.path
     };
 
+    this.logger.log('Creating Gridsome node for item link %o', itemLinkNode);
+
     collection.addNode(itemLinkNode);
   }
 
@@ -258,6 +285,8 @@ class KenticoCloudSource {
   }
 
   addAssetSchemaFields(store) {
+    // TODO: This doesn't feel like the right place to do this
+
     const typeName = this.contentItemFactory.getAssetTypeName();
 
     const collection = this.getCollection(store, typeName);

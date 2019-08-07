@@ -21,7 +21,7 @@ module.exports = {
           previewApiKey: process.env.KENTICO_CLOUD_PREVIEW_API_KEY,
           enablePreviewMode: JSON.parse(process.env.KENTICO_CLOUD_ENABLE_PREVIEW_MODE),
           enableAdvancedLogging: JSON.parse(process.env.KENTICO_CLOUD_ENABLED_ADVANCED_LOGGING),
-          defaultLanguage: process.env.KENTICO_CLOUD_DEFAULT_LANGUAGE
+          defaultLanguage: 'en-GB'
         },
         contentItemConfig: {
           contentItems: {
@@ -38,6 +38,9 @@ module.exports = {
           routes: {
             tag: '/tags/:slug'
           }
+        },
+        loggerConfig: {
+          enable: process.env.KENTICO_CLOUD_LOGGER_ENABLE
         }
       }
     }

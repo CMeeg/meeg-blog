@@ -2,6 +2,7 @@ const DeliveryClient = require('./GridsomeDeliveryClient');
 const KenticoCloudSource = require('./KenticoCloudSource');
 const GridsomeContentItemFactory = require('./GridsomeContentItemFactory');
 const GridsomeTaxonomyItemFactory = require('./GridsomeTaxonomyItemFactory');
+const Logger = require('./Logger');
 
 class KenticoCloudSourcePlugin {
   static defaultOptions() {
@@ -29,11 +30,16 @@ class KenticoCloudSourcePlugin {
       taxonomyConfig: {
         taxonomyTypeNamePrefix: 'Taxonomy',
         routes: {}
+      },
+      loggerConfig: {
+        enable: 'gridsome-source-kentico-cloud'
       }
     }
   };
 
   constructor(api, options) {
+    const logger = new Logger('gridsome-source-kentico-cloud', options.loggerConfig);
+
     api.loadSource(async store => {
       const deliveryClient = new DeliveryClient(options.deliveryClientConfig);
       const contentItemFactory = new GridsomeContentItemFactory(options.contentItemConfig);
@@ -42,10 +48,15 @@ class KenticoCloudSourcePlugin {
       const kenticoCloudSource = new KenticoCloudSource(
         deliveryClient,
         contentItemFactory,
-        taxonomyItemFactory
+        taxonomyItemFactory,
+        logger
       );
 
+      logger.log('Started loading content from Kentico Cloud');
+
       await kenticoCloudSource.load(store);
+
+      logger.log('Finished loading content from Kentico Cloud');
     });
   }
 }
