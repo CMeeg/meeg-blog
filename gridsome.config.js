@@ -38,9 +38,6 @@ module.exports = {
           routes: {
             tag: '/tags/:slug'
           }
-        },
-        loggerConfig: {
-          enable: process.env.KENTICO_CLOUD_LOGGER_ENABLE
         }
       }
     }
