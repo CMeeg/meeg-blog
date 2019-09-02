@@ -697,8 +697,8 @@
 
 "@meeg/gridsome-source-kentico-cloud@^0.1.0":
   version "0.1.0"
-  resolved "https://cpmeeg.pkgs.visualstudio.com/_packaging/Meeg/npm/registry/@meeg/gridsome-source-kentico-cloud/-/gridsome-source-kentico-cloud-0.1.0.tgz#8d0c5e2a74d7dd96a9ceabb704bf464ce2ac0139"
-  integrity sha1-jQxeKnTX3Zapzqu3BL9GTOKsATk=
+  resolved "https://registry.yarnpkg.com/@meeg/gridsome-source-kentico-cloud/-/gridsome-source-kentico-cloud-0.1.0.tgz#88d387e2cdb1de050b052935758427e1c66d1971"
+  integrity sha512-gG1L0xJULInTcABFCCY/ezR1XrhbVf7+yPS3zfKSQRFx0tnnlWmaiLYdFTitf13Cz7AYZ4F9B+Fffwn7maJ0+A==
   dependencies:
     "@sindresorhus/slugify" "^0.9.1"
     change-case "^3.1.0"
@@ -736,8 +736,8 @@
 
 "@sindresorhus/slugify@^0.9.1":
   version "0.9.1"
-  resolved "https://cpmeeg.pkgs.visualstudio.com/_packaging/Meeg/npm/registry/@sindresorhus/slugify/-/slugify-0.9.1.tgz#892ad24d70b442c0a14fe519cb4019d59bc5069f"
-  integrity sha1-iSrSTXC0QsChT+UZy0AZ1ZvFBp8=
+  resolved "https://registry.yarnpkg.com/@sindresorhus/slugify/-/slugify-0.9.1.tgz#892ad24d70b442c0a14fe519cb4019d59bc5069f"
+  integrity sha512-b6heYM9dzZD13t2GOiEQTDE0qX+I1GyOotMwKh9VQqzuNiVdPVT8dM43fe9HNb/3ul+Qwd5oKSEDrDIfhq3bnQ==
   dependencies:
     escape-string-regexp "^1.0.5"
     lodash.deburr "^4.1.0"
@@ -1363,7 +1363,7 @@ aws4@^1.8.0:
 
 axios@0.18.0:
   version "0.18.0"
-  resolved "https://cpmeeg.pkgs.visualstudio.com/_packaging/Meeg/npm/registry/axios/-/axios-0.18.0.tgz#32d53e4851efdc0a11993b6cd000789d70c05102"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.18.0.tgz#32d53e4851efdc0a11993b6cd000789d70c05102"
   integrity sha1-MtU+SFHv3AoRmTts0AB4nXDAUQI=
   dependencies:
     follow-redirects "^1.3.0"
@@ -1857,8 +1857,8 @@ chalk@^2.0.0, chalk@^2.1.0, chalk@^2.4.1, chalk@^2.4.2:
 
 change-case@^3.1.0:
   version "3.1.0"
-  resolved "https://cpmeeg.pkgs.visualstudio.com/_packaging/Meeg/npm/registry/change-case/-/change-case-3.1.0.tgz#0e611b7edc9952df2e8513b27b42de72647dd17e"
-  integrity sha1-DmEbftyZUt8uhROye0LecmR90X4=
+  resolved "https://registry.yarnpkg.com/change-case/-/change-case-3.1.0.tgz#0e611b7edc9952df2e8513b27b42de72647dd17e"
+  integrity sha512-2AZp7uJZbYEzRPsFoa+ijKdvp9zsrnnt6+yFokfwEpeJm0xuJDVoxiRCAaTzyJND8GJkofo2IcKWaUZ/OECVzw==
   dependencies:
     camel-case "^3.0.0"
     constant-case "^2.0.0"
@@ -1886,8 +1886,8 @@ chardet@^0.7.0:
 
 cheerio@^1.0.0-rc.3:
   version "1.0.0-rc.3"
-  resolved "https://cpmeeg.pkgs.visualstudio.com/_packaging/Meeg/npm/registry/cheerio/-/cheerio-1.0.0-rc.3.tgz#094636d425b2e9c0f4eb91a46c05630c9a1a8bf6"
-  integrity sha1-CUY21CWy6cD065GkbAVjDJoai/Y=
+  resolved "https://registry.yarnpkg.com/cheerio/-/cheerio-1.0.0-rc.3.tgz#094636d425b2e9c0f4eb91a46c05630c9a1a8bf6"
+  integrity sha512-0td5ijfUPuubwLUu0OBoe98gZj8C/AA+RW3v67GPlGOrvxWjZmBXiBCRU+I8VEiNyJzjth40POfHiz2RB3gImA==
   dependencies:
     css-select "~1.2.0"
     dom-serializer "~0.1.1"
@@ -2119,7 +2119,7 @@ consolidate@^0.15.1:
 
 constant-case@^2.0.0:
   version "2.0.0"
-  resolved "https://cpmeeg.pkgs.visualstudio.com/_packaging/Meeg/npm/registry/constant-case/-/constant-case-2.0.0.tgz#4175764d389d3fa9c8ecd29186ed6005243b6a46"
+  resolved "https://registry.yarnpkg.com/constant-case/-/constant-case-2.0.0.tgz#4175764d389d3fa9c8ecd29186ed6005243b6a46"
   integrity sha1-QXV2TTidP6nI7NKRhu1gBSQ7akY=
   dependencies:
     snake-case "^2.1.0"
@@ -2495,7 +2495,7 @@ debug@2, debug@2.6.9, debug@^2.2.0, debug@^2.3.3, debug@^2.6.8, debug@^2.6.9:
   dependencies:
     ms "2.0.0"
 
-debug@^3.2.5, debug@^3.2.6:
+debug@^3.0.0, debug@^3.2.5, debug@^3.2.6:
   version "3.2.6"
   resolved "https://registry.yarnpkg.com/debug/-/debug-3.2.6.tgz#e83d17de16d8a7efb7717edbe5fb10135eee629b"
   integrity sha512-mel+jf7nrtEl5Pn1Qx46zARXKDpBbvzezse7p7LqINmdoIk8PYP5SySaxEmYv6TZ0JyEKA1hsCId6DIhgITtWQ==
@@ -2770,7 +2770,7 @@ domutils@^1.5.1, domutils@^1.7.0:
 
 dot-case@^2.1.0:
   version "2.1.1"
-  resolved "https://cpmeeg.pkgs.visualstudio.com/_packaging/Meeg/npm/registry/dot-case/-/dot-case-2.1.1.tgz#34dcf37f50a8e93c2b3bca8bb7fb9155c7da3bee"
+  resolved "https://registry.yarnpkg.com/dot-case/-/dot-case-2.1.1.tgz#34dcf37f50a8e93c2b3bca8bb7fb9155c7da3bee"
   integrity sha1-NNzzf1Co6TwrO8qLt/uRVcfaO+4=
   dependencies:
     no-case "^2.2.0"
@@ -3578,11 +3578,11 @@ flush-write-stream@^1.0.0:
     readable-stream "^2.3.6"
 
 follow-redirects@^1.3.0:
-  version "1.7.0"
-  resolved "https://cpmeeg.pkgs.visualstudio.com/_packaging/Meeg/npm/registry/follow-redirects/-/follow-redirects-1.7.0.tgz#489ebc198dc0e7f64167bd23b03c4c19b5784c76"
-  integrity sha1-SJ68GY3A5/ZBZ70jsDxMGbV4THY=
+  version "1.8.1"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.8.1.tgz#24804f9eaab67160b0e840c085885d606371a35b"
+  integrity sha512-micCIbldHioIegeKs41DoH0KS3AXfFzgS30qVkM6z/XOE/GJgvmsoc839NUqa1B9udYe9dQxgv7KFwng6+p/dw==
   dependencies:
-    debug "^3.2.6"
+    debug "^3.0.0"
 
 for-in@^1.0.2:
   version "1.0.2"
@@ -4106,7 +4106,7 @@ he@1.2.x, he@^1.1.0:
 
 header-case@^1.0.0:
   version "1.0.1"
-  resolved "https://cpmeeg.pkgs.visualstudio.com/_packaging/Meeg/npm/registry/header-case/-/header-case-1.0.1.tgz#9535973197c144b09613cd65d317ef19963bd02d"
+  resolved "https://registry.yarnpkg.com/header-case/-/header-case-1.0.1.tgz#9535973197c144b09613cd65d317ef19963bd02d"
   integrity sha1-lTWXMZfBRLCWE81l0xfvGZY70C0=
   dependencies:
     no-case "^2.2.0"
@@ -4609,7 +4609,7 @@ is-jpg@^2.0.0:
 
 is-lower-case@^1.1.0:
   version "1.1.3"
-  resolved "https://cpmeeg.pkgs.visualstudio.com/_packaging/Meeg/npm/registry/is-lower-case/-/is-lower-case-1.1.3.tgz#7e147be4768dc466db3bfb21cc60b31e6ad69393"
+  resolved "https://registry.yarnpkg.com/is-lower-case/-/is-lower-case-1.1.3.tgz#7e147be4768dc466db3bfb21cc60b31e6ad69393"
   integrity sha1-fhR75HaNxGbbO/shzGCzHmrWk5M=
   dependencies:
     lower-case "^1.1.0"
@@ -4715,7 +4715,7 @@ is-unc-path@^1.0.0:
 
 is-upper-case@^1.1.0:
   version "1.1.2"
-  resolved "https://cpmeeg.pkgs.visualstudio.com/_packaging/Meeg/npm/registry/is-upper-case/-/is-upper-case-1.1.2.tgz#8d0b1fa7e7933a1e58483600ec7d9661cbaf756f"
+  resolved "https://registry.yarnpkg.com/is-upper-case/-/is-upper-case-1.1.2.tgz#8d0b1fa7e7933a1e58483600ec7d9661cbaf756f"
   integrity sha1-jQsfp+eTOh5YSDYA7H2WYcuvdW8=
   dependencies:
     upper-case "^1.1.0"
@@ -4920,15 +4920,15 @@ jsprim@^1.2.2:
 
 kentico-cloud-core@1.4.3:
   version "1.4.3"
-  resolved "https://cpmeeg.pkgs.visualstudio.com/_packaging/Meeg/npm/registry/kentico-cloud-core/-/kentico-cloud-core-1.4.3.tgz#c40e39bbd8f1c2787e81d18e9eda1633d1357732"
-  integrity sha1-xA45u9jxwnh+gdGOntoWM9E1dzI=
+  resolved "https://registry.yarnpkg.com/kentico-cloud-core/-/kentico-cloud-core-1.4.3.tgz#c40e39bbd8f1c2787e81d18e9eda1633d1357732"
+  integrity sha512-YJHpyCSSXX4fBAyy4126Y9IAsVM0N9AWQ8myOGe9b41ecm3WBMRfUH8D3a/HQB5owHAob5WPgiKlHGQ9kAwUJg==
   dependencies:
     axios "0.18.0"
 
 kentico-cloud-delivery@^5.7.2:
   version "5.7.2"
-  resolved "https://cpmeeg.pkgs.visualstudio.com/_packaging/Meeg/npm/registry/kentico-cloud-delivery/-/kentico-cloud-delivery-5.7.2.tgz#716ca7d46f32e031e3a78480d8fc5cab5b338d0e"
-  integrity sha1-cWyn1G8y4DHjp4SA2Pxcq1szjQ4=
+  resolved "https://registry.yarnpkg.com/kentico-cloud-delivery/-/kentico-cloud-delivery-5.7.2.tgz#716ca7d46f32e031e3a78480d8fc5cab5b338d0e"
+  integrity sha512-5iudO7Mc25PhgA7l+Js+VyJXYLb1FBb/ZwoAONXAGfhfhwtIAIX9BYGO/vMxKZ6TLsiIhn7ZBFkflckLTIXRCg==
   dependencies:
     kentico-cloud-core "1.4.3"
     parse5 "5.1.0"
@@ -5094,8 +5094,8 @@ lodash.uniqueid@^4.0.1:
 
 lodash@^4.15.0, lodash@^4.17.15:
   version "4.17.15"
-  resolved "https://cpmeeg.pkgs.visualstudio.com/_packaging/Meeg/npm/registry/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
-  integrity sha1-tEf2ZwoEVbv+7dETku/zMOoJdUg=
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
+  integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
 
 lodash@^4.17.11, lodash@^4.17.3, lodash@^4.17.5:
   version "4.17.11"
@@ -5151,7 +5151,7 @@ loud-rejection@^1.0.0:
 
 lower-case-first@^1.0.0:
   version "1.0.2"
-  resolved "https://cpmeeg.pkgs.visualstudio.com/_packaging/Meeg/npm/registry/lower-case-first/-/lower-case-first-1.0.2.tgz#e5da7c26f29a7073be02d52bac9980e5922adfa1"
+  resolved "https://registry.yarnpkg.com/lower-case-first/-/lower-case-first-1.0.2.tgz#e5da7c26f29a7073be02d52bac9980e5922adfa1"
   integrity sha1-5dp8JvKacHO+AtUrrJmA5ZIq36E=
   dependencies:
     lower-case "^1.1.2"
@@ -6057,13 +6057,13 @@ parse-json@^4.0.0:
 
 parse5@5.1.0:
   version "5.1.0"
-  resolved "https://cpmeeg.pkgs.visualstudio.com/_packaging/Meeg/npm/registry/parse5/-/parse5-5.1.0.tgz#c59341c9723f414c452975564c7c00a68d58acd2"
-  integrity sha1-xZNByXI/QUxFKXVWTHwApo1YrNI=
+  resolved "https://registry.yarnpkg.com/parse5/-/parse5-5.1.0.tgz#c59341c9723f414c452975564c7c00a68d58acd2"
+  integrity sha512-fxNG2sQjHvlVAYmzBZS9YlDp6PTSSDwa98vkD4QgVDDCAo84z5X1t5XyJQ62ImdLXx5NdIIfihey6xpum9/gRQ==
 
 parse5@^3.0.1:
   version "3.0.3"
-  resolved "https://cpmeeg.pkgs.visualstudio.com/_packaging/Meeg/npm/registry/parse5/-/parse5-3.0.3.tgz#042f792ffdd36851551cf4e9e066b3874ab45b5c"
-  integrity sha1-BC95L/3TaFFVHPTp4Gazh0q0W1w=
+  resolved "https://registry.yarnpkg.com/parse5/-/parse5-3.0.3.tgz#042f792ffdd36851551cf4e9e066b3874ab45b5c"
+  integrity sha512-rgO9Zg5LLLkfJF9E6CCmXlSE4UVceloys8JrFqCcHloC3usd/kJCyPDwH2SOlzix2j3xaP9sUX3e8+kvkuleAA==
   dependencies:
     "@types/node" "*"
 
@@ -6074,7 +6074,7 @@ parseurl@~1.3.3:
 
 pascal-case@^2.0.0:
   version "2.0.1"
-  resolved "https://cpmeeg.pkgs.visualstudio.com/_packaging/Meeg/npm/registry/pascal-case/-/pascal-case-2.0.1.tgz#2d578d3455f660da65eca18ef95b4e0de912761e"
+  resolved "https://registry.yarnpkg.com/pascal-case/-/pascal-case-2.0.1.tgz#2d578d3455f660da65eca18ef95b4e0de912761e"
   integrity sha1-LVeNNFX2YNpl7KGO+VtODekSdh4=
   dependencies:
     camel-case "^3.0.0"
@@ -6092,7 +6092,7 @@ path-browserify@0.0.0:
 
 path-case@^2.1.0:
   version "2.1.1"
-  resolved "https://cpmeeg.pkgs.visualstudio.com/_packaging/Meeg/npm/registry/path-case/-/path-case-2.1.1.tgz#94b8037c372d3fe2906e465bb45e25d226e8eea5"
+  resolved "https://registry.yarnpkg.com/path-case/-/path-case-2.1.1.tgz#94b8037c372d3fe2906e465bb45e25d226e8eea5"
   integrity sha1-lLgDfDctP+KQbkZbtF4l0ibo7qU=
   dependencies:
     no-case "^2.2.0"
@@ -6933,8 +6933,8 @@ redent@^1.0.0:
 
 reflect-metadata@0.1.13:
   version "0.1.13"
-  resolved "https://cpmeeg.pkgs.visualstudio.com/_packaging/Meeg/npm/registry/reflect-metadata/-/reflect-metadata-0.1.13.tgz#67ae3ca57c972a2aa1642b10fe363fe32d49dc08"
-  integrity sha1-Z648pXyXKiqhZCsQ/jY/4y1J3Ag=
+  resolved "https://registry.yarnpkg.com/reflect-metadata/-/reflect-metadata-0.1.13.tgz#67ae3ca57c972a2aa1642b10fe363fe32d49dc08"
+  integrity sha512-Ts1Y/anZELhSsjMcU605fU9RE4Oi3p5ORujwbIKXfWa+0Zxs510Qrmrce5/Jowq3cHSZSJqBjypxmHarc+vEWg==
 
 regenerate-unicode-properties@^8.0.2:
   version "8.1.0"
@@ -7257,7 +7257,7 @@ send@0.17.1:
 
 sentence-case@^2.1.0:
   version "2.1.1"
-  resolved "https://cpmeeg.pkgs.visualstudio.com/_packaging/Meeg/npm/registry/sentence-case/-/sentence-case-2.1.1.tgz#1f6e2dda39c168bf92d13f86d4a918933f667ed4"
+  resolved "https://registry.yarnpkg.com/sentence-case/-/sentence-case-2.1.1.tgz#1f6e2dda39c168bf92d13f86d4a918933f667ed4"
   integrity sha1-H24t2jnBaL+S0T+G1KkYkz9mftQ=
   dependencies:
     no-case "^2.2.0"
@@ -7405,7 +7405,7 @@ slice-ansi@^2.1.0:
 
 snake-case@^2.1.0:
   version "2.1.0"
-  resolved "https://cpmeeg.pkgs.visualstudio.com/_packaging/Meeg/npm/registry/snake-case/-/snake-case-2.1.0.tgz#41bdb1b73f30ec66a04d4e2cad1b76387d4d6d9f"
+  resolved "https://registry.yarnpkg.com/snake-case/-/snake-case-2.1.0.tgz#41bdb1b73f30ec66a04d4e2cad1b76387d4d6d9f"
   integrity sha1-Qb2xtz8w7GagTU4srRt2OH1NbZ8=
   dependencies:
     no-case "^2.2.0"
@@ -7833,7 +7833,7 @@ svgo@^1.0.0:
 
 swap-case@^1.1.0:
   version "1.1.2"
-  resolved "https://cpmeeg.pkgs.visualstudio.com/_packaging/Meeg/npm/registry/swap-case/-/swap-case-1.1.2.tgz#c39203a4587385fad3c850a0bd1bcafa081974e3"
+  resolved "https://registry.yarnpkg.com/swap-case/-/swap-case-1.1.2.tgz#c39203a4587385fad3c850a0bd1bcafa081974e3"
   integrity sha1-w5IDpFhzhfrTyFCgvRvK+ggZdOM=
   dependencies:
     lower-case "^1.1.1"
@@ -7965,7 +7965,7 @@ timsort@^0.3.0:
 
 title-case@^2.1.0:
   version "2.1.1"
-  resolved "https://cpmeeg.pkgs.visualstudio.com/_packaging/Meeg/npm/registry/title-case/-/title-case-2.1.1.tgz#3e127216da58d2bc5becf137ab91dae3a7cd8faa"
+  resolved "https://registry.yarnpkg.com/title-case/-/title-case-2.1.1.tgz#3e127216da58d2bc5becf137ab91dae3a7cd8faa"
   integrity sha1-PhJyFtpY0rxb7PE3q5Ha46fNj6o=
   dependencies:
     no-case "^2.2.0"
@@ -8224,7 +8224,7 @@ upath@^1.1.1:
 
 upper-case-first@^1.1.0, upper-case-first@^1.1.2:
   version "1.1.2"
-  resolved "https://cpmeeg.pkgs.visualstudio.com/_packaging/Meeg/npm/registry/upper-case-first/-/upper-case-first-1.1.2.tgz#5d79bedcff14419518fd2edb0a0507c9b6859115"
+  resolved "https://registry.yarnpkg.com/upper-case-first/-/upper-case-first-1.1.2.tgz#5d79bedcff14419518fd2edb0a0507c9b6859115"
   integrity sha1-XXm+3P8UQZUY/S7bCgUHybaFkRU=
   dependencies:
     upper-case "^1.1.1"
