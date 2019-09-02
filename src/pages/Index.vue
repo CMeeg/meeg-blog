@@ -1,33 +1,77 @@
 <template>
-  <Layout>
-    
-    <!-- Learn how to use images here: https://gridsome.org/docs/images -->
-    <g-image alt="Example image" src="~/favicon.png" width="135" />
-    
-    <h1>Hello, world!</h1>
-   
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur excepturi labore tempore expedita, et iste tenetur suscipit explicabo! Dolores, aperiam non officia eos quod asperiores
-    </p>
+  <layout>
+    <h1>{{ pageNode.title }}</h1>
 
-    <p class="home-links">
-      <a href="https://gridsome.org/docs" target="_blank" rel="noopener">Gridsome Docs</a>
-      <a href="https://github.com/gridsome/gridsome" target="_blank" rel="noopener">GitHub</a>
-    </p>
+    <rich-text :html="pageNode.summary" />
 
-  </Layout>
+    <article-summary-list :articles="$page.latestArticles" />
+  </layout>
 </template>
 
-<script>
-export default {
-  metaInfo: {
-    title: 'Hello, world!'
+<page-query>
+query Home($page: Int) {
+  home: allLandingPage(filter: { codename: { eq: "home" }}, limit: 1) {
+    edges {
+      node {
+        id,
+        title,
+        summary,
+        path,
+        pageMetadataMetaTitle,
+        pageMetadataMetaDescription,
+        pageMetadataOpenGraphTitle,
+        pageMetadataOpenGraphDescription,
+        pageMetadataOpenGraphImage {
+          url,
+          description
+        }
+      }
+    }
+  }
+  latestArticles: allArticle(sortBy: "sortDate", perPage: 10, page: $page) @paginate {
+    pageInfo {
+      totalPages,
+      currentPage
+    },
+    edges {
+      node {
+        title,
+        summary,
+        tag {
+          id,
+          name,
+          path
+        },
+        path,
+        date,
+        lastUpdated
+      }
+    }
   }
 }
-</script>
+</page-query>
 
-<style>
-.home-links a {
-  margin-right: 1rem;
-}
-</style>
+<script>
+import RichText from '~/components/kentico-cloud/RichText.vue';
+import ArticleSummaryList from '~/components/articles/ArticleSummaryList.vue';
+import metadata from '~/mixins/Metadata';
+
+export default {
+  components: {
+    RichText,
+    ArticleSummaryList
+  },
+  mixins: [
+    metadata
+  ],
+  computed: {
+    pageNode: function() {
+      const node = this.$page.home.edges[0].node;
+
+      node.url = '/';
+
+      return node;
+    }
+  }
+};
+</script>

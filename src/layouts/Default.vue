@@ -1,50 +1,50 @@
 <template>
-  <div class="layout">
-    <header class="header">
+  <div>
+    <header>
       <strong>
-        <g-link to="/">{{ $static.metaData.siteName }}</g-link>
+        <g-link to="/">{{ siteName }}</g-link>
       </strong>
-      <nav class="nav">
-        <g-link class="nav__link" to="/">Home</g-link>
-        <g-link class="nav__link" to="/about">About</g-link>
+      <nav>
+        <ul>
+          <li><g-link to="/">Home</g-link></li>
+          <li><g-link to="/about">About</g-link></li>
+        </ul>
       </nav>
+      <p><a :href="`https://twitter.com/${ twitterUser }`">Twitter</a></p>
+      <p><a :href="`https://github.com/${ gitHubUser }`">GitHub</a></p>
     </header>
-    <slot/>
+    <transition name="fade" appear>
+      <main>
+        <slot />
+      </main>
+    </transition>
+    <footer>
+      &copy; {{ currentYear }}
+    </footer>
   </div>
 </template>
 
-<static-query>
-query {
-  metaData {
-    siteName
+<script>
+const appConfig = require('~/app.config.js');
+
+export default {
+  data: function() {
+    return {
+      siteName: appConfig.siteName,
+      twitterUser: appConfig.siteTwitterUser,
+      gitHubUser: appConfig.siteGitHubUser,
+      currentYear: new Date().getFullYear()
+    }
   }
-}
-</static-query>
+};
+</script>
 
 <style>
-body {
-  font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-  margin:0;
-  padding:0;
-  line-height: 1.5;
+.fade-enter-active {
+  transition: opacity .5s;
 }
 
-.layout {
-  max-width: 760px;
-  margin: 0 auto;
-  padding-left: 20px;
-  padding-right: 20px;
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-  height: 80px;
-}
-
-.nav__link {
-  margin-left: 20px;
+.fade-enter {
+  opacity: 0;
 }
 </style>

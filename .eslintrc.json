@@ -1,0 +1,31 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es6": true,
+        "node": true
+    },
+    "extends": [
+        "plugin:vue/recommended",
+        "standard"
+    ],
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly"
+    },
+    "parserOptions": {
+        "ecmaVersion": 2018
+    },
+    "plugins": [
+        "vue"
+    ],
+    "rules": {
+        "brace-style": "off",
+        "operator-linebreak": ["error", "before"],
+        "semi": "off",
+        "space-before-function-paren": "off",
+        "space-unary-ops": "off",
+        "vue/max-attributes-per-line": "off",
+        "vue/singleline-html-element-content-newline": "off"
+    }
+}

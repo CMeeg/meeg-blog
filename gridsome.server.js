@@ -13,4 +13,11 @@ module.exports = function (api) {
   api.createPages(({ createPage }) => {
     // Use the Pages API here: https://gridsome.org/docs/pages-api
   })
+
+  api.configureWebpack(config => {
+    // For v-runtime-template to work, you must use the with-compiler Vue.js version
+    // See https://github.com/alexjoverm/v-runtime-template
+
+    config.resolve.alias['vue'] = 'vue/dist/vue.common';
+  })
 }
