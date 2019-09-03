@@ -42,6 +42,13 @@ module.exports = function (api) {
             content: [
               './src/**/*.vue'
             ],
+            whitelist: [
+              'g-image',
+              'g-image--lazy',
+              'g-image--loaded',
+              'active',
+              'active--exact'
+            ],
             defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || []
           }));
         }

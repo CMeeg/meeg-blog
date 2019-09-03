@@ -1,6 +1,10 @@
 module.exports = {
   theme: {
-    extend: {}
+    extend: {
+      fontFamily: {
+        'heading': ['Pacifico', 'cursive']
+      }
+    }
   },
   variants: {},
   plugins: []
