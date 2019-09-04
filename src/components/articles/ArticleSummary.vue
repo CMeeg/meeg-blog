@@ -1,14 +1,18 @@
 <template>
   <card>
-    <h2 slot="header"><g-link :to="article.path">{{ article.title }}</g-link></h2>
+    <div slot="header" class="text-center">
+      <h2 class="font-heading text-lg"><g-link :to="article.path">{{ article.title }}</g-link></h2>
+      <p class="text-gray-600 text-xs my-2"><time :datetime="article.date" class="inline-block pb-2 px-6 border-b-2">{{ new Date(article.date).toDateString() }}</time></p>
+    </div>
 
     <div slot="body">
-      <p v-if="article.hasUpdates">Updated <time :datetime="article.lastUpdated">{{ article.lastUpdated }}</time></p>
-      <p>Posted <time :datetime="article.date">{{ article.date }}</time></p>
-
-      <rich-text :html="article.summary" />
-
       <tag-list :tags="article.tag" />
+
+      <div class="text-sm">
+        <rich-text :html="article.summary" />
+      </div>
+
+      <p class="mt-2 text-right"><g-link :to="article.path" class="inline-block text-white text-sm rounded-lg bg-red-400 p-2">Read this post</g-link></p>
     </div>
   </card>
 </template>

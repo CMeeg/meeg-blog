@@ -1,8 +1,10 @@
 <template>
   <layout>
-    <h1>{{ pageNode.title }}</h1>
+    <h1 class="hidden">{{ pageNode.title }}</h1>
 
-    <rich-text :html="pageNode.summary" />
+    <div class="font-serif italic text-center leading-tight mt-4 mb-8">
+      <rich-text :html="pageNode.summary" />
+    </div>
 
     <article-summary-list :articles="$page.latestArticles" />
   </layout>

@@ -1,5 +1,5 @@
 <template>
-  <div class="font-sans">
+  <div>
     <header class="sticky top-0 flex justify-between px-4 py-2 border-red-600 border-t-4 bg-white shadow-md">
       <g-link to="/" class="flex flex-none">
         <g-image src="~/assets/img/cmeeg.jpg" width="200" alt="Chris Meagher" class="w-16 h-16 rounded-full border-2 border-gray-300 mr-2" />

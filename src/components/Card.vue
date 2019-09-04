@@ -1,10 +1,6 @@
 <template>
-  <div class="card">
-    <div class="card-header">
-      <slot name="header" />
-    </div>
-    <div class="card-body">
-      <slot name="body" />
-    </div>
+  <div class="mx-auto mb-4 p-4 bg-white rounded-lg shadow-md">
+    <slot name="header" />
+    <slot name="body" />
   </div>
 </template>
