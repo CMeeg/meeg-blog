@@ -27,7 +27,7 @@ query Author ($id: String!) {
 </page-query>
 
 <script>
-import RichText from '~/components/kentico-cloud/RichText.vue';
+import RichText from '~/components/kontent/RichText.vue';
 import metadata from '~/mixins/Metadata';
 
 export default {

@@ -52,7 +52,7 @@ query Home($page: Int) {
 </page-query>
 
 <script>
-import RichText from '~/components/kentico-cloud/RichText.vue';
+import RichText from '~/components/kontent/RichText.vue';
 import ArticleSummaryList from '~/components/articles/ArticleSummaryList.vue';
 import metadata from '~/mixins/Metadata';
 
