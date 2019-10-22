@@ -1,5 +1,5 @@
 <template>
-  <layout>
+  <div>
     <h1>{{ pageNode.name }}</h1>
 
     <p>{{ pageSummary }}</p>
@@ -7,7 +7,7 @@
     <node-list :nodes="pageNode.belongsTo" :pager-options="{ prevLabel: 'See newer articles', nextLabel: 'See older articles' }">
       <article-summary slot="node" slot-scope="{ node }" :article="node" />
     </node-list>
-  </layout>
+  </div>
 </template>
 
 <page-query>

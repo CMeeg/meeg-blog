@@ -1,11 +1,11 @@
 <template>
-  <layout>
+  <div>
     <h1>{{ pageNode.title }}</h1>
 
     <node-list :nodes="$page.latestSeries" :pager-options="{ prevLabel: 'See newer series', nextLabel: 'See older series' }">
       <article-series-summary slot="node" slot-scope="{ node }" :series="node" />
     </node-list>
-  </layout>
+  </div>
 </template>
 
 <page-query>

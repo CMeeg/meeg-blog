@@ -1,9 +1,9 @@
 <template>
-  <layout>
+  <div>
     <h1>{{ pageNode.fullName }}</h1>
 
     <rich-text :html="pageNode.bio" />
-  </layout>
+  </div>
 </template>
 
 <page-query>

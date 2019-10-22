@@ -1,7 +1,7 @@
 <template>
-  <layout>
+  <div>
     <h1>{{ pageNode.title }}</h1>
-  </layout>
+  </div>
 </template>
 
 <script>

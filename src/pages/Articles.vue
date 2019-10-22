@@ -1,9 +1,9 @@
 <template>
-  <layout>
+  <div>
     <h1>{{ pageNode.title }}</h1>
 
     <article-summary-list :articles="$page.latestArticles" />
-  </layout>
+  </div>
 </template>
 
 <page-query>

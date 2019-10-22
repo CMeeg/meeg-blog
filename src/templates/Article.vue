@@ -1,5 +1,5 @@
 <template>
-  <layout>
+  <div>
     <h1>{{ pageNode.title }} </h1>
 
     <p>Posted <time :datetime="pageNode.date">{{ pageNode.date }}</time></p>
@@ -28,7 +28,7 @@
     <rich-text :html="pageNode.body" />
 
     <tag-list :tags="pageNode.tag" />
-  </layout>
+  </div>
 </template>
 
 <page-query>

@@ -1,5 +1,5 @@
 <template>
-  <layout>
+  <div>
     <h1>{{ pageNode.title }}</h1>
 
     <h2>Find articles by tag</h2>
@@ -9,7 +9,7 @@
         <tag-list :tags="$static.tags.edges" :display-as-cloud="true" />
       </div>
     </card>
-  </layout>
+  </div>
 </template>
 
 <static-query>

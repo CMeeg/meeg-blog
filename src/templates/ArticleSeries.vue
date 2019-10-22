@@ -1,5 +1,5 @@
 <template>
-  <layout>
+  <div>
     <h1>{{ pageNode.title }}</h1>
 
     <p>Updated <time :datetime="pageNode.lastUpdated">{{ pageNode.lastUpdated }}</time></p>
@@ -7,7 +7,7 @@
     <rich-text :html="pageNode.summary" />
 
     <article-summary-list :articles="articles" />
-  </layout>
+  </div>
 </template>
 
 <page-query>
