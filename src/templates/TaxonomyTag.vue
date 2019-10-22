@@ -11,7 +11,7 @@
 </template>
 
 <page-query>
-query TaxonomyTag($id: String!, $page: Int) {
+query TaxonomyTag($id: ID!, $page: Int) {
   tag: taxonomyTag(id: $id) {
     name,
     belongsTo(sortBy: "sortDate", perPage: 10, page: $page) @paginate {

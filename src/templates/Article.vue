@@ -32,7 +32,7 @@
 </template>
 
 <page-query>
-query Article ($id: String!) {
+query Article ($id: ID!) {
   article (id: $id) {
     title,
     date,
@@ -79,7 +79,7 @@ query Article ($id: String!) {
 
 <script>
 import Card from '~/components/Card.vue';
-import RichText from '~/components/kentico-cloud/RichText.vue';
+import RichText from '~/components/kontent/RichText.vue';
 import TagList from '~/components/tags/TagList.vue';
 import metadata from '~/mixins/Metadata';
 import appConfig from '~/app.config.js';
