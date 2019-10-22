@@ -1,11 +1,11 @@
 <template>
   <div>
-    <header class="sticky top-0 flex justify-between px-4 py-2 border-red-600 border-t-4 bg-white shadow-md">
-      <g-link to="/" class="flex flex-none">
-        <g-image src="~/assets/img/cmeeg.jpg" width="200" alt="Chris Meagher" class="w-16 h-16 rounded-full border-2 border-gray-300 mr-2" />
-        <p class="self-center leading-tight">
-          <strong class="font-heading text-xl font-normal">Chris Meagher</strong><br>
-          <span class="italic">{{ siteName }}</span>
+    <header class="relative top-0 flex justify-between px-4 py-2 border-red-600 border-t-4 bg-white shadow-md">
+      <g-link to="/" class="flex flex-none text-black hover:no-underline focus:no-underline">
+        <g-image src="~/assets/img/cmeeg.jpg" width="200" alt="Chris Meagher" class="w-16 h-16 rounded-full border border-gray-400 mr-2" />
+        <p class="self-center leading-none pt-3 pr-4 pb-1 border-b-2 border-white hover:border-gray-400 focus:border-gray-400">
+          <strong class="font-serif text-xl font-normal">Chris Meagher</strong><br>
+          <span class="font-mono italic text-gray-600">{{ siteName }}</span>
         </p>
       </g-link>
       <p class="flex-shrink self-center">
@@ -13,15 +13,15 @@
         <a :href="`https://github.com/${ gitHubUser }`"><g-image src="~/assets/img/github.png" alt="GitHub" class="w-6 h-6 m-1" /></a>
       </p>
     </header>
-    <main class="p-4 bg-gray-100">
+    <main class="p-4 pb-2 bg-gray-100">
       <slot />
     </main>
-    <footer class="px-4">
-      <p>&copy; {{ currentYear }}</p>
-      <nav>
+    <footer class="p-4 pt-0 bg-gray-100 font-serif">
+      <p class="inline-block pr-4">&copy; {{ currentYear }}</p>
+      <nav class="text-red-600 inline-block">
         <ul>
-          <li><g-link to="/about">About me</g-link></li>
-          <li><g-link to="/thanks">Thanks!</g-link></li>
+          <li class="inline-block pr-4"><g-link to="/about/">About me</g-link></li>
+          <li class="inline-block"><g-link to="/thanks/">Thanks!</g-link></li>
         </ul>
       </nav>
     </footer>

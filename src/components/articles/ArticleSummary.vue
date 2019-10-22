@@ -12,7 +12,7 @@
         <rich-text :html="article.summary" />
       </div>
 
-      <p class="mt-2 text-right"><g-link :to="article.path" class="inline-block text-white text-sm rounded-lg bg-red-400 p-2">Read this post</g-link></p>
+      <p class="mt-2 text-right"><g-link :to="article.path" class="inline-block text-white text-sm rounded-lg bg-red-600 hover:bg-red-500 hover:no-underline focus:no-underline p-2">Read this post</g-link></p>
     </div>
   </card>
 </template>

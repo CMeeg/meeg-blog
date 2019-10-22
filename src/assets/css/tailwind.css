@@ -3,7 +3,16 @@
 @tailwind base;
 
 body {
-    @apply min-h-screen font-sans antialiased text-gray-900;
+    @apply min-h-screen font-sans antialiased text-gray-800;
+}
+
+a {
+    @apply text-red-600;
+}
+
+a:hover,
+a:focus {
+    @apply underline;
 }
 
 @tailwind components;
