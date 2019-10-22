@@ -12,6 +12,12 @@ module.exports = {
   siteName: appConfig.siteName,
   siteUrl: appConfig.siteUrl,
   titleTemplate: appConfig.titleTemplate,
+  templates: {
+    Article: '/articles/:slug',
+    ArticleSeries: '/series/:slug',
+    Author: '/about/',
+    TaxonomyTag: '/tags/:slug'
+  },
   plugins: [
     {
       use: '@meeg/gridsome-source-kentico-kontent',
@@ -29,16 +35,6 @@ module.exports = {
           contentItems: {
             article: ArticleContentItem,
             article_series: ArticleSeriesContentItem
-          },
-          routes: {
-            article: '/articles/:slug',
-            article_series: '/series/:slug',
-            author: '/about'
-          }
-        },
-        taxonomyConfig: {
-          routes: {
-            tag: '/tags/:slug'
           }
         }
       }

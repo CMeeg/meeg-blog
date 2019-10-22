@@ -16,7 +16,6 @@ query Home($page: Int) {
         id,
         title,
         summary,
-        path,
         pageMetadataMetaTitle,
         pageMetadataMetaDescription,
         pageMetadataOpenGraphTitle,

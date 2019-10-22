@@ -11,7 +11,7 @@
 </template>
 
 <page-query>
-query ArticleSeries ($id: String!) {
+query ArticleSeries ($id: ID!) {
   articleSeries (id: $id) {
     title,
     summary,

@@ -7,7 +7,7 @@
 </template>
 
 <page-query>
-query Author ($id: String!) {
+query Author ($id: ID!) {
   author (id: $id) {
     firstName,
     lastName,

@@ -32,7 +32,7 @@
 </template>
 
 <page-query>
-query Article ($id: String!) {
+query Article ($id: ID!) {
   article (id: $id) {
     title,
     date,
