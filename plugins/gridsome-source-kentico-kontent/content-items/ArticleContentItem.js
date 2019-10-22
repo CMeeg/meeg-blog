@@ -1,4 +1,4 @@
-const { GridsomeContentItem } = require('@meeg/gridsome-source-kentico-cloud');
+const { GridsomeContentItem } = require('@meeg/gridsome-source-kentico-kontent');
 
 class ArticleContentItem extends GridsomeContentItem {
   addFields(node) {
@@ -70,7 +70,7 @@ class ArticleContentItem extends GridsomeContentItem {
       return true;
     }
 
-    // If a date value is null in Kentico Cloud it can be parsed as a zero UTC date
+    // If a date value is null in Kentico Kontent it can be parsed as a zero UTC date
 
     return date.getTime() === 0;
   }

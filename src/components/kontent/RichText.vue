@@ -47,9 +47,9 @@ query RichText {
 
 <script>
 import VRuntimeTemplate from 'v-runtime-template';
-import ItemLink from '~/components/kentico-cloud/rich-text/ItemLink.vue';
-import Asset from '~/components/kentico-cloud/rich-text/Asset.vue';
-import CodeSnippet from '~/components/kentico-cloud/rich-text/CodeSnippet.vue';
+import ItemLink from '~/components/kontent/rich-text/ItemLink.vue';
+import Asset from '~/components/kontent/rich-text/Asset.vue';
+import CodeSnippet from '~/components/kontent/rich-text/CodeSnippet.vue';
 
 export default {
   components: {

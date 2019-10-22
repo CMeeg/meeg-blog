@@ -7,8 +7,8 @@
     "explore": "gridsome explore"
   },
   "dependencies": {
-    "@meeg/gridsome-source-kentico-cloud": "^0.1.0",
-    "gridsome": "^0.6.7",
+    "@meeg/gridsome-source-kentico-kontent": "^0.3.0",
+    "gridsome": "~0.7.8",
     "lodash": "^4.17.11",
     "v-lazy-image": "^1.3.2",
     "v-runtime-template": "^1.10.0",
