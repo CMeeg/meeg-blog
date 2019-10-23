@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="max-w-3xl mx-auto">
     <h1 class="hidden">{{ pageNode.title }}</h1>
 
     <div class="font-serif italic text-center leading-tight mt-4 mb-8">
