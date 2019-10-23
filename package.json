@@ -9,23 +9,23 @@
   "dependencies": {
     "@meeg/gridsome-source-kentico-kontent": "^0.3.0",
     "gridsome": "~0.7.8",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.15",
     "v-lazy-image": "^1.3.2",
     "v-runtime-template": "^1.10.0",
     "vue": "^2.0.0"
   },
   "devDependencies": {
-    "@fullhuman/postcss-purgecss": "^1.2.0",
-    "eslint": "^5.16.0",
-    "eslint-config-standard": "^12.0.0",
-    "eslint-plugin-import": "2.13.0",
-    "eslint-plugin-node": "7.0.0",
-    "eslint-plugin-promise": "4.0.0",
-    "eslint-plugin-standard": "4.0.0",
+    "@fullhuman/postcss-purgecss": "^1.3.0",
+    "eslint": "^6.5.1",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "2.18.2",
+    "eslint-plugin-node": "10.0.0",
+    "eslint-plugin-promise": "4.2.1",
+    "eslint-plugin-standard": "4.0.1",
     "eslint-plugin-vue": "^5.2.3",
     "postcss-preset-env": "^6.7.0",
     "stylelint": "^11.1.1",
     "stylelint-config-recommended": "^3.0.0",
-    "tailwindcss": "^1.1.2"
+    "tailwindcss": "^1.1.3"
   }
 }

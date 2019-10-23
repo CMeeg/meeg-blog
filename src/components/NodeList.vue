@@ -56,13 +56,13 @@ export default {
       let nodes = this.nodes;
 
       if (system.isObject(nodes)) {
-        if (nodes.hasOwnProperty('edges')) {
+        if (Object.prototype.hasOwnProperty.call(nodes, 'edges')) {
           nodes = this.nodes.edges;
         }
       }
 
       return nodes.map(node => {
-        if (node.hasOwnProperty('node')) {
+        if (Object.prototype.hasOwnProperty.call(node, 'node')) {
           return node.node;
         }
 
@@ -74,7 +74,7 @@ export default {
         return null;
       }
 
-      if (this.nodes.hasOwnProperty('pageInfo')) {
+      if (Object.prototype.hasOwnProperty.call(this.nodes, 'pageInfo')) {
         return this.nodes.pageInfo;
       }
 
