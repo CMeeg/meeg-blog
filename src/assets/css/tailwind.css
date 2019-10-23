@@ -3,7 +3,7 @@
 @tailwind base;
 
 body {
-    @apply min-h-screen font-sans antialiased text-gray-800;
+    @apply min-h-screen font-sans antialiased text-gray-800 bg-gray-100;
 }
 
 a {

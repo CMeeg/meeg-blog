@@ -13,17 +13,21 @@
         <a :href="`https://github.com/${ gitHubUser }`"><g-image src="~/assets/img/github.png" alt="GitHub" class="w-6 h-6 m-1" /></a>
       </p>
     </header>
-    <main class="p-4 pb-2 bg-gray-100">
-      <slot />
+    <main class="p-4 pb-2">
+      <div class="max-w-3xl mx-auto">
+        <slot />
+      </div>
     </main>
-    <footer class="p-4 pt-0 bg-gray-100 font-serif flex justify-center">
-      <p class="pr-4">&copy; {{ currentYear }}</p>
-      <nav class="text-red-600">
-        <ul>
-          <li class="inline-block pr-4"><g-link to="/about/">About me</g-link></li>
-          <li class="inline-block"><g-link to="/thanks/">Thanks!</g-link></li>
-        </ul>
-      </nav>
+    <footer class="flex justify-center font-serif">
+      <div class="px-6 py-4 border-t border-gray-400">
+        <p class="inline-block pr-4">&copy; {{ currentYear }}</p>
+        <nav class="inline-block text-red-600">
+          <ul>
+            <li class="inline-block pr-4"><g-link to="/about/">About me</g-link></li>
+            <li class="inline-block"><g-link to="/thanks/">Thanks!</g-link></li>
+          </ul>
+        </nav>
+      </div>
     </footer>
   </div>
 </template>
