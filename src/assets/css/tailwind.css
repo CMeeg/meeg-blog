@@ -15,5 +15,26 @@ a:focus {
     @apply underline;
 }
 
+.pager {
+    @apply mb-4;
+  }
+
+  .pager nav {
+      @apply flex justify-center;
+  }
+
+  .pager__link {
+    @apply border-red-600 border inline-block text-red-600 text-sm rounded-lg p-2 mx-2;
+  }
+
+  .pager__link:hover,
+  .pager__link:focus {
+    @apply border-red-500 text-red-500 no-underline;
+  }
+
+  .pager__link:empty {
+      @apply hidden;
+  }
+
 @tailwind components;
 @tailwind utilities;

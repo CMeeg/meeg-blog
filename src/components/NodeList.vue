@@ -6,17 +6,19 @@
       </li>
     </ul>
 
-    <pager
-      v-if="pageInfo"
-      :info="pageInfo"
-      :show-links="false"
-      :show-navigation="true"
-      :range="1"
-      :first-label="null"
-      :prev-label="pagerOptions.prevLabel"
-      :next-label="pagerOptions.nextLabel"
-      :last-label="null"
-    />
+    <div v-if="pageInfo" class="pager">
+      <pager
+        :info="pageInfo"
+        :show-links="false"
+        :show-navigation="true"
+        :range="1"
+        link-class="pager__link"
+        :first-label="null"
+        :prev-label="pagerOptions.prevLabel"
+        :next-label="pagerOptions.nextLabel"
+        :last-label="null"
+      />
+    </div>
   </div>
 </template>
 

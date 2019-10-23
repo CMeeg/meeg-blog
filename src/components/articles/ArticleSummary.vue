@@ -1,7 +1,7 @@
 <template>
   <card>
     <div slot="header" class="text-center">
-      <h2 class="font-heading text-lg"><g-link :to="article.path">{{ article.title }}</g-link></h2>
+      <h2 class="font-cursive text-lg"><g-link :to="article.path">{{ article.title }}</g-link></h2>
       <p class="text-gray-600 text-xs my-2"><time :datetime="article.date" class="inline-block pb-2 px-6 border-b-2">{{ new Date(article.date).toDateString() }}</time></p>
     </div>
 

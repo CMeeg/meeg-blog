@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>{{ pageNode.title }}</h1>
+    <page-intro :title="pageNode.title" />
 
     <article-summary-list :articles="$page.latestArticles" />
   </div>
@@ -32,11 +32,13 @@ query Articles($page: Int) {
 </page-query>
 
 <script>
+import PageIntro from '~/components/PageIntro.vue';
 import ArticleSummaryList from '~/components/articles/ArticleSummaryList.vue';
 import metadata from '~/mixins/Metadata';
 
 export default {
   components: {
+    PageIntro,
     ArticleSummaryList
   },
   mixins: [
