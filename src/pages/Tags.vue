@@ -6,7 +6,7 @@
 
     <card>
       <div slot="body">
-        <tag-list :tags="$static.tags.edges" :display-as-cloud="true" />
+        <tag-list :tags="$static.tags.edges" />
       </div>
     </card>
   </div>
