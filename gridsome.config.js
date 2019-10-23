@@ -7,11 +7,22 @@
 const appConfig = require('./src/app.config');
 const ArticleContentItem = require('./plugins/gridsome-source-kentico-kontent/content-items/ArticleContentItem');
 const ArticleSeriesContentItem = require('./plugins/gridsome-source-kentico-kontent/content-items/ArticleSeriesContentItem');
+const tailwind = require('tailwindcss');
+const purgecss = require('@fullhuman/postcss-purgecss');
+
+const postcssPlugins = [
+  tailwind()
+];
+
+if (process.env.NODE_ENV === 'production') {
+  postcssPlugins.push(purgecss());
+}
 
 module.exports = {
   siteName: appConfig.siteName,
   siteUrl: appConfig.siteUrl,
   titleTemplate: appConfig.titleTemplate,
+  runtimeCompiler: true,
   templates: {
     Article: '/articles/:slug',
     ArticleSeries: '/series/:slug',
@@ -39,5 +50,12 @@ module.exports = {
         }
       }
     }
-  ]
+  ],
+  css: {
+    loaderOptions: {
+      postcss: {
+        plugins: postcssPlugins
+      }
+    }
+  }
 }
