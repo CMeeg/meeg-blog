@@ -27,8 +27,8 @@ query Author ($id: ID!) {
 </page-query>
 
 <script>
-import RichText from '~/components/kontent/RichText.vue';
-import metadata from '~/mixins/Metadata';
+import RichText from '@/components/kontent/RichText.vue';
+import metadata from '@/mixins/Metadata';
 
 export default {
   components: {

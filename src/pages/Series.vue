@@ -33,9 +33,9 @@ query Series($page: Int) {
 </page-query>
 
 <script>
-import NodeList from '~/components/NodeList.vue';
-import ArticleSeriesSummary from '~/components/article-series/ArticleSeriesSummary.vue';
-import metadata from '~/mixins/Metadata';
+import NodeList from '@/components/NodeList.vue';
+import ArticleSeriesSummary from '@/components/article-series/ArticleSeriesSummary.vue';
+import metadata from '@/mixins/Metadata';
 
 export default {
   components: {
@@ -49,7 +49,7 @@ export default {
     pageNode: function() {
       return {
         title: 'Article Series',
-        url: '/series'
+        url: '/series/'
       }
     }
   }

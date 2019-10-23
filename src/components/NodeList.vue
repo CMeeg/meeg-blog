@@ -24,7 +24,7 @@
 
 <script>
 import { Pager } from 'gridsome';
-import { system } from '~/utils';
+import { system } from '@/utils';
 
 export default {
   components: {
@@ -32,7 +32,7 @@ export default {
   },
   props: {
     nodes: {
-      type: [ Object, Array ],
+      type: [Object, Array],
       required: true
     },
     pagerOptions: {

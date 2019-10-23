@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import metadata from '~/mixins/Metadata';
+import metadata from '@/mixins/Metadata';
 
 export default {
   mixins: [
@@ -15,7 +15,7 @@ export default {
     pageNode: function() {
       return {
         title: 'Page not found',
-        url: '/404'
+        url: '/404/'
       }
     }
   }

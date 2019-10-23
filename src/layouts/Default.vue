@@ -33,7 +33,7 @@
 </template>
 
 <script>
-const appConfig = require('~/app.config.js');
+const appConfig = require('@/app.config.js');
 
 export default {
   data: function() {

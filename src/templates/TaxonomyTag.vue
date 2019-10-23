@@ -38,9 +38,9 @@ query TaxonomyTag($id: ID!, $page: Int) {
 </page-query>
 
 <script>
-import NodeList from '~/components/NodeList.vue';
-import ArticleSummary from '~/components/articles/ArticleSummary.vue';
-import metadata from '~/mixins/Metadata';
+import NodeList from '@/components/NodeList.vue';
+import ArticleSummary from '@/components/articles/ArticleSummary.vue';
+import metadata from '@/mixins/Metadata';
 
 export default {
   components: {

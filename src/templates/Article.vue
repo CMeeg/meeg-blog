@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h1>{{ pageNode.title }} </h1>
-
-    <p>Posted <time :datetime="pageNode.date">{{ pageNode.date }}</time></p>
+    <page-intro :title="pageNode.title">
+      <p slot="body">Posted <time :datetime="pageNode.date">{{ pageNode.date }}</time></p>
+    </page-intro>
 
     <card v-if="pageNode.hasUpdates">
       <h2 slot="header">This article has been updated</h2>
@@ -78,14 +78,16 @@ query Article ($id: ID!) {
 </page-query>
 
 <script>
-import Card from '~/components/Card.vue';
-import RichText from '~/components/kontent/RichText.vue';
-import TagList from '~/components/tags/TagList.vue';
-import metadata from '~/mixins/Metadata';
-import appConfig from '~/app.config.js';
+import PageIntro from '@/components/PageIntro.vue';
+import Card from '@/components/Card.vue';
+import RichText from '@/components/kontent/RichText.vue';
+import TagList from '@/components/tags/TagList.vue';
+import metadata from '@/mixins/Metadata';
+import appConfig from '@/app.config.js';
 
 export default {
   components: {
+    PageIntro,
     Card,
     RichText,
     TagList

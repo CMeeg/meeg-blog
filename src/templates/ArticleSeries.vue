@@ -42,9 +42,9 @@ query ArticleSeries ($id: ID!) {
 </page-query>
 
 <script>
-import RichText from '~/components/kontent/RichText.vue';
-import ArticleSummaryList from '~/components/articles/ArticleSummaryList.vue';
-import metadata from '~/mixins/Metadata';
+import RichText from '@/components/kontent/RichText.vue';
+import ArticleSummaryList from '@/components/articles/ArticleSummaryList.vue';
+import metadata from '@/mixins/Metadata';
 
 export default {
   components: {

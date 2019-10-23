@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import LazyImage from '~/components/LazyImage.vue';
+import LazyImage from '@/components/LazyImage.vue';
 
 export default {
   components: {

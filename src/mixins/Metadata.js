@@ -1,5 +1,5 @@
 const { merge } = require('lodash');
-const appConfig = require('~/app.config.js');
+const appConfig = require('@/app.config.js');
 
 var metadata = {
   metaInfo: function() {

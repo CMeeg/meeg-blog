@@ -30,9 +30,9 @@ query Tags {
 </static-query>
 
 <script>
-import Card from '~/components/Card.vue';
-import TagList from '~/components/tags/TagList.vue';
-import metadata from '~/mixins/Metadata';
+import Card from '@/components/Card.vue';
+import TagList from '@/components/tags/TagList.vue';
+import metadata from '@/mixins/Metadata';
 
 export default {
   components: {
@@ -46,7 +46,7 @@ export default {
     pageNode: function() {
       return {
         title: 'Tags',
-        url: '/tags'
+        url: '/tags/'
       }
     }
   }

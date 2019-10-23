@@ -18,9 +18,9 @@
 </template>
 
 <script>
-import Card from '~/components/Card.vue';
-import RichText from '~/components/kontent/RichText.vue';
-import TagList from '~/components/tags/TagList.vue';
+import Card from '@/components/Card.vue';
+import RichText from '@/components/kontent/RichText.vue';
+import TagList from '@/components/tags/TagList.vue';
 
 export default {
   components: {

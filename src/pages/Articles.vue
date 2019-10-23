@@ -32,9 +32,9 @@ query Articles($page: Int) {
 </page-query>
 
 <script>
-import PageIntro from '~/components/PageIntro.vue';
-import ArticleSummaryList from '~/components/articles/ArticleSummaryList.vue';
-import metadata from '~/mixins/Metadata';
+import PageIntro from '@/components/PageIntro.vue';
+import ArticleSummaryList from '@/components/articles/ArticleSummaryList.vue';
+import metadata from '@/mixins/Metadata';
 
 export default {
   components: {
@@ -48,7 +48,7 @@ export default {
     pageNode: function() {
       return {
         title: 'Articles',
-        url: '/articles'
+        url: '/articles/'
       }
     }
   }
