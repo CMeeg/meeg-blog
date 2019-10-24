@@ -1,8 +1,6 @@
 <template>
   <div>
-    <h1>{{ pageNode.title }}</h1>
-
-    <h2>Find articles by tag</h2>
+    <page-intro :title="pageNode.title" />
 
     <card>
       <div slot="body">
@@ -30,12 +28,14 @@ query Tags {
 </static-query>
 
 <script>
+import PageIntro from '@/components/PageIntro.vue';
 import Card from '@/components/Card.vue';
 import TagList from '@/components/tags/TagList.vue';
 import metadata from '@/mixins/Metadata';
 
 export default {
   components: {
+    PageIntro,
     Card,
     TagList
   },

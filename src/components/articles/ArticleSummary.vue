@@ -6,7 +6,9 @@
     </div>
 
     <div slot="body">
-      <tag-list :tags="article.tag" />
+      <div v-if="article.tag" class="mb-2 text-xs">
+        <tag-list :tags="article.tag" />
+      </div>
 
       <div class="text-sm md:text-base">
         <rich-text :html="article.summary" />
