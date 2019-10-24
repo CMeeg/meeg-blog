@@ -19,6 +19,19 @@ a:focus {
   @apply mb-6;
 }
 
+.rich-text ol,
+.rich-text ul {
+  @apply list-outside ml-4;
+}
+
+.rich-text ol {
+  @apply list-decimal;
+}
+
+.rich-text ul {
+  @apply list-disc;
+}
+
 .pager {
     @apply mb-4;
   }
