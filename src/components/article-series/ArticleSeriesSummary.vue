@@ -1,19 +1,22 @@
 <template>
   <card>
-    <h2 slot="header"><g-link :to="series.path">{{ series.title }}</g-link></h2>
+    <div slot="header" class="text-center">
+      <h2 class="font-cursive text-lg md:text-2xl"><g-link :to="series.path">{{ series.title }}</g-link></h2>
+      <p class="text-gray-600 text-xs my-2"><time :datetime="series.lastUpdated" class="inline-block pb-2 px-6 border-b-2">{{ new Date(series.lastUpdated).toDateString() }}</time></p>
+    </div>
 
     <div slot="body">
-      <p>Updated <time :datetime="series.lastUpdated">{{ series.lastUpdated }}</time></p>
+      <div class="text-sm md:text-base">
+        <rich-text :html="series.summary" />
 
-      <rich-text :html="series.summary" />
+        <h3 class="font-cursive text-base md:text-lg mt-4 mb-2">Articles in this series</h3>
 
-      <p>Articles in this series:</p>
-
-      <ol>
-        <li v-for="article in series.articlesInSeries" :key="article.id">
-          <g-link :to="article.path">{{ article.title }}</g-link>
-        </li>
-      </ol>
+        <ol class="list-decimal list-outside ml-4">
+          <li v-for="article in series.articlesInSeries" :key="article.id" class="mb-1">
+            <g-link :to="article.path">{{ article.title }}</g-link>
+          </li>
+        </ol>
+      </div>
     </div>
   </card>
 </template>

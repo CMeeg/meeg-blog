@@ -1,6 +1,6 @@
 <template>
   <div class="mt-4 mb-6">
-    <h1 v-if="title" class="font-cursive text-4xl mb-2">{{ title }}</h1>
+    <h1 v-if="title" class="font-cursive text-4xl md:text-5xl mb-2">{{ title }}</h1>
     <slot name="body" />
   </div>
 </template>

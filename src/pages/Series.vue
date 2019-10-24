@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>{{ pageNode.title }}</h1>
+    <page-intro :title="pageNode.title" />
 
     <node-list :nodes="$page.latestSeries" :pager-options="{ prevLabel: 'See newer series', nextLabel: 'See older series' }">
       <article-series-summary slot="node" slot-scope="{ node }" :series="node" />
@@ -33,12 +33,14 @@ query Series($page: Int) {
 </page-query>
 
 <script>
+import PageIntro from '@/components/PageIntro.vue';
 import NodeList from '@/components/NodeList.vue';
 import ArticleSeriesSummary from '@/components/article-series/ArticleSeriesSummary.vue';
 import metadata from '@/mixins/Metadata';
 
 export default {
   components: {
+    PageIntro,
     NodeList,
     ArticleSeriesSummary
   },

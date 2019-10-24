@@ -13,6 +13,12 @@ a:focus {
     @apply underline;
 }
 
+.rich-text p,
+.rich-text ol,
+.rich-text ul {
+  @apply mb-6;
+}
+
 .pager {
     @apply mb-4;
   }
