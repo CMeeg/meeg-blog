@@ -1,6 +1,8 @@
 <template>
   <div>
-    <page-intro :title="pageNode.title" />
+    <page-intro :title="pageNode.title">
+      <p slot="body" class="font-serif italic md:text-lg leading-tight">All published article series are listed below</p>
+    </page-intro>
 
     <node-list :nodes="$page.latestSeries" :pager-options="{ prevLabel: 'See newer series', nextLabel: 'See older series' }">
       <article-series-summary slot="node" slot-scope="{ node }" :series="node" />

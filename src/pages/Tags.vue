@@ -1,6 +1,8 @@
 <template>
   <div>
-    <page-intro :title="pageNode.title" />
+    <page-intro :title="pageNode.title">
+      <p slot="body" class="font-serif italic md:text-lg leading-tight">All tags used by published articles are listed below</p>
+    </page-intro>
 
     <card>
       <div slot="body">

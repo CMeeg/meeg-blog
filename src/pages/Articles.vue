@@ -1,6 +1,8 @@
 <template>
   <div>
-    <page-intro :title="pageNode.title" />
+    <page-intro :title="pageNode.title">
+      <p slot="body" class="font-serif italic md:text-lg leading-tight">All published articles are listed below</p>
+    </page-intro>
 
     <article-summary-list :articles="$page.latestArticles" />
   </div>
