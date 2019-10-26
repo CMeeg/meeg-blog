@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>{{ pageNode.fullName }}</h1>
+    <page-intro title="About me" />
 
     <rich-text :html="pageNode.bio" />
   </div>
@@ -9,8 +9,6 @@
 <page-query>
 query Author ($id: ID!) {
   author (id: $id) {
-    firstName,
-    lastName,
     fullName,
     bio,
     path,
@@ -27,11 +25,13 @@ query Author ($id: ID!) {
 </page-query>
 
 <script>
+import PageIntro from '@/components/PageIntro.vue';
 import RichText from '@/components/kontent/RichText.vue';
 import metadata from '@/mixins/Metadata';
 
 export default {
   components: {
+    PageIntro,
     RichText
   },
   mixins: [
