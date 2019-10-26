@@ -1,8 +1,10 @@
 <template>
   <div>
-    <h1>{{ pageNode.name }}</h1>
-
-    <p>{{ pageSummary }}</p>
+    <page-intro :title="pageNode.name">
+      <div slot="body">
+        <p class="font-serif italic md:text-lg leading-tight">{{ pageSummary }}</p>
+      </div>
+    </page-intro>
 
     <node-list :nodes="pageNode.belongsTo" :pager-options="{ prevLabel: 'See newer articles', nextLabel: 'See older articles' }">
       <article-summary slot="node" slot-scope="{ node }" :article="node" />
@@ -38,12 +40,14 @@ query TaxonomyTag($id: ID!, $page: Int) {
 </page-query>
 
 <script>
+import PageIntro from '@/components/PageIntro.vue';
 import NodeList from '@/components/NodeList.vue';
 import ArticleSummary from '@/components/articles/ArticleSummary.vue';
 import metadata from '@/mixins/Metadata';
 
 export default {
   components: {
+    PageIntro,
     NodeList,
     ArticleSummary
   },
@@ -63,14 +67,14 @@ export default {
       const name = this.pageNode.name;
 
       if (count === 0) {
-        return `There are no articles about ${name}.`;
+        return `There are no articles about ${name}`;
       }
 
       if (count === 1) {
-        return `There is 1 article about ${name}.`;
+        return `There is 1 article about ${name}`;
       }
 
-      return `There are ${count} articles about ${name}.`;
+      return `There are ${count} articles about ${name}`;
     }
   }
 }
