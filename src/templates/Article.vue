@@ -1,33 +1,49 @@
 <template>
   <div>
     <page-intro :title="pageNode.title">
-      <p slot="body">Posted <time :datetime="pageNode.date">{{ pageNode.date }}</time></p>
+      <div slot="body">
+        <p class="text-gray-600 mb-2 flex align-middle">
+          <svg class="stroke-current h-6 w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+            <line x1="16" y1="2" x2="16" y2="6" />
+            <line x1="8" y1="2" x2="8" y2="6" />
+            <line x1="3" y1="10" x2="21" y2="10" />
+          </svg>
+          <time :datetime="pageNode.date" class="pl-2">{{ new Date(pageNode.date).toDateString() }}</time>
+        </p>
+
+        <div class="mb-6 flex align-middle">
+          <svg class="flex-shrink-0 stroke-current text-gray-600 h-6 w-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" />
+            <line x1="7" y1="7" x2="7.01" y2="7" />
+          </svg>
+          <tag-list :tags="pageNode.tag" list-class="flex flex-wrap justify-start pl-2" :show-tag-icon="false" />
+        </div>
+      </div>
     </page-intro>
 
-    <card v-if="pageNode.hasUpdates">
-      <h2 slot="header">This article has been updated</h2>
-
-      <div slot="body">
-        <p>Updated <time :datetime="pageNode.lastUpdated">{{ pageNode.lastUpdated }}</time></p>
-
-        <rich-text :html="pageNode.changeLog" />
-      </div>
-    </card>
-
     <card v-for="series in pageNode.series.edges" :key="series.node.id">
-      <h2 slot="header">This article is a part of the series: <g-link :to="series.node.path">{{ series.node.title }}</g-link></h2>
+      <h2 slot="header" class="font-cursive text-base md:text-lg mb-2">This article is part of the series: <g-link :to="series.node.path">{{ series.node.title }}</g-link></h2>
       <div slot="body">
-        <ol>
-          <li v-for="article in series.node.articlesInSeries" :key="article.id">
+        <ol class="list-decimal list-outside ml-4">
+          <li v-for="article in series.node.articlesInSeries" :key="article.id" class="mb-1">
             <g-link :to="article.path">{{ article.title }}</g-link>
           </li>
         </ol>
       </div>
     </card>
 
-    <rich-text :html="pageNode.body" />
+    <card v-if="pageNode.hasUpdates">
+      <h2 slot="header" class="font-cursive text-base md:text-lg mb-2">This article has been updated</h2>
 
-    <tag-list :tags="pageNode.tag" />
+      <div slot="body">
+        <div class="text-sm md:text-base">
+          <rich-text :html="pageNode.changeLog" />
+        </div>
+      </div>
+    </card>
+
+    <rich-text :html="pageNode.body" />
   </div>
 </template>
 
