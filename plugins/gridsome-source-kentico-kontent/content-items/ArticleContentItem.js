@@ -1,8 +1,8 @@
 const { GridsomeContentItem } = require('@meeg/gridsome-source-kentico-kontent');
 
 class ArticleContentItem extends GridsomeContentItem {
-  addFields(node) {
-    super.addFields(node);
+  async addFields(node) {
+    await super.addFields(node);
 
     this.ensureDateField(node);
 

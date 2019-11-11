@@ -82,6 +82,10 @@ a:focus {
       @apply hidden;
   }
 
+.shiki {
+  @apply p-4 mb-6 font-mono overflow-auto;
+}
+
 @tailwind components;
 
 @tailwind utilities;

@@ -35,7 +35,7 @@ query RichText {
       node {
         id,
         codename,
-        code,
+        highlightedCode,
         language {
           name
         }

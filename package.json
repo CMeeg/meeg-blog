@@ -10,6 +10,8 @@
     "@meeg/gridsome-source-kentico-kontent": "^0.3.0",
     "gridsome": "~0.7.8",
     "lodash": "^4.17.15",
+    "oniguruma": "7.0.0",
+    "shiki": "^0.1.6",
     "v-lazy-image": "^1.3.2",
     "v-runtime-template": "^1.10.0",
     "vue": "^2.0.0"

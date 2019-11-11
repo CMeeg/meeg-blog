@@ -1,5 +1,6 @@
 <template>
-  <pre class="code-snippet">{{ node.code }}</pre>
+  <!-- eslint-disable-next-line vue/no-v-html -->
+  <div v-html="node.highlightedCode" />
 </template>
 
 <script>

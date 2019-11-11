@@ -7,6 +7,7 @@
 const appConfig = require('./src/app.config');
 const ArticleContentItem = require('./plugins/gridsome-source-kentico-kontent/content-items/ArticleContentItem');
 const ArticleSeriesContentItem = require('./plugins/gridsome-source-kentico-kontent/content-items/ArticleSeriesContentItem');
+const CodeSnippet = require('./plugins/gridsome-source-kentico-kontent/content-items/CodeSnippet');
 const tailwind = require('tailwindcss');
 const purgecss = require('@fullhuman/postcss-purgecss');
 
@@ -45,7 +46,8 @@ module.exports = {
         contentItemConfig: {
           contentItems: {
             article: ArticleContentItem,
-            article_series: ArticleSeriesContentItem
+            article_series: ArticleSeriesContentItem,
+            code_snippet: CodeSnippet
           }
         }
       }
