@@ -113,10 +113,8 @@ var metadata = {
         return asset;
       }
 
-      // TODO: Create this image
-
       return {
-        url: appConfig.getSiteUrl('/assets/og-fallback.jpg'),
+        url: appConfig.getSiteUrl('/assets/img/meeg-dev.png'),
         description: null
       };
     }
