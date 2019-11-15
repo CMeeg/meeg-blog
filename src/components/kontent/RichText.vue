@@ -42,6 +42,16 @@ query RichText {
       }
     }
   }
+
+  message_box: allMessageBox {
+    edges {
+      node {
+        id,
+        codename,
+        message
+      }
+    }
+  }
 }
 </static-query>
 
@@ -50,14 +60,17 @@ import VRuntimeTemplate from 'v-runtime-template';
 import ItemLink from '@/components/kontent/rich-text/ItemLink.vue';
 import Asset from '@/components/kontent/rich-text/Asset.vue';
 import CodeSnippet from '@/components/kontent/rich-text/CodeSnippet.vue';
+import MessageBox from '@/components/kontent/rich-text/MessageBox.vue';
 
 export default {
+  name: 'RichText',
   components: {
     VRuntimeTemplate,
     /* eslint-disable vue/no-unused-components */
     ItemLink,
     Asset,
-    CodeSnippet
+    CodeSnippet,
+    MessageBox
     /* eslint-enable vue/no-unused-components */
   },
   props: {

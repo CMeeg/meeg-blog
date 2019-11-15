@@ -61,6 +61,13 @@ a:focus {
   @apply list-disc;
 }
 
+.rich-text ol ol,
+.rich-text ol ul,
+.rich-text ul ol,
+.rich-text ul ul {
+  @apply my-2 ml-5;
+}
+
 .pager {
     @apply mb-4;
   }
