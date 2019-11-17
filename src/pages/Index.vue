@@ -2,7 +2,7 @@
   <div>
     <h1 class="hidden">{{ pageNode.title }}</h1>
 
-    <div class="font-serif italic text-center md:text-lg leading-tight mt-4 mb-2">
+    <div class="font-serif italic text-center md:text-lg leading-tight mt-4 mb-2 md:mt-8 md:mb-10">
       <rich-text :html="pageNode.summary" />
     </div>
 
