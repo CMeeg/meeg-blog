@@ -7,7 +7,7 @@
     "explore": "gridsome explore"
   },
   "dependencies": {
-    "@meeg/gridsome-source-kentico-kontent": "^0.3.0",
+    "@meeg/gridsome-source-kentico-kontent": "0.4.0",
     "gridsome": "~0.7.8",
     "lodash": "^4.17.15",
     "oniguruma": "7.0.0",
