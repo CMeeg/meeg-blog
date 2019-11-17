@@ -2,44 +2,52 @@
   <div>
     <page-intro :title="pageNode.title" />
 
-    <div class="rich-text">
-      <p>
-        Thank you to the creators and contributors of these projects for releasing
-        your awesome work and making it free or open source so that people like me
-        can use it in our own projects like this blog:
-      </p>
-
-      <ul>
-        <li><g-link to="https://gridsome.org/">Gridsome</g-link></li>
-        <li><g-link to="https://kontent.ai/">Kentico Kontent</g-link></li>
-        <li><g-link to="https://feathericons.com/">Feather icons</g-link></li>
-        <li><g-link to="https://tailwindcss.com/">Tailwind</g-link></li>
-        <li>
-          <g-link to="https://github.com/googlefonts/Pacifico">Pacifico font</g-link>
-          via <g-link to="https://fonts.google.com/specimen/Pacifico">Google fonts</g-link>
-        </li>
-      </ul>
-    </div>
+    <rich-text :html="pageNode.body" />
   </div>
 </template>
 
+<page-query>
+query Thanks {
+  thanks: allLandingPage(filter: { codename: { eq: "thanks" }}, limit: 1) {
+    edges {
+      node {
+        id,
+        title,
+        body,
+        pageMetadataMetaTitle,
+        pageMetadataMetaDescription,
+        pageMetadataOpenGraphTitle,
+        pageMetadataOpenGraphDescription,
+        pageMetadataOpenGraphImage {
+          url,
+          description
+        }
+      }
+    }
+  }
+}
+</page-query>
+
 <script>
 import PageIntro from '@/components/PageIntro.vue';
+import RichText from '@/components/kontent/RichText.vue';
 import metadata from '@/mixins/Metadata';
 
 export default {
   components: {
-    PageIntro
+    PageIntro,
+    RichText
   },
   mixins: [
     metadata
   ],
   computed: {
     pageNode: function() {
-      return {
-        title: 'Thanks!',
-        url: '/thanks/'
-      }
+      const node = this.$page.thanks.edges[0].node;
+
+      node.url = '/thanks/';
+
+      return node;
     }
   }
 }
