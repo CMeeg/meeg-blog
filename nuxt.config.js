@@ -1,3 +1,4 @@
+require('dotenv').config();
 
 export default {
   mode: 'universal',
@@ -34,15 +35,22 @@ export default {
   */
   buildModules: [
     '@nuxt/typescript-build',
+    // Doc: https://github.com/nuxt-community/dotenv-module
+    '@nuxtjs/dotenv',
     // Doc: https://github.com/nuxt-community/nuxt-tailwindcss
-    '@nuxtjs/tailwindcss',
+    '@nuxtjs/tailwindcss'
   ],
   /*
   ** Nuxt.js modules
   */
   modules: [
-    // Doc: https://github.com/nuxt-community/dotenv-module
-    '@nuxtjs/dotenv',
+    [
+      'storyblok-nuxt',
+      {
+        accessToken: process.env.STORYBLOK_PREVIEW_TOKEN,
+        cacheProvider: 'memory'
+      }
+    ]
   ],
   /*
   ** Build configuration
