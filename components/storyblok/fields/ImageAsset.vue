@@ -1,7 +1,5 @@
 <template>
-  <img
-    :src="src"
-  />
+  <img :src="src" />
 </template>
 
 <script>
@@ -19,15 +17,15 @@ export default {
   },
   computed: {
     src: function() {
-      const filename = this.field.filename;
-      const imageService = 'https://img2.storyblok.com';
-      const path = filename.replace('https://a.storyblok.com/', '');
+      const filename = this.field.filename
+      const imageService = 'https://img2.storyblok.com'
+      const path = filename.replace('https://a.storyblok.com/', '')
 
       if (this.options === '') {
-        return `${imageService}/${path}`;
+        return `${imageService}/${path}`
       }
 
-      return `${imageService}/${this.options}/${path}`;
+      return `${imageService}/${this.options}/${path}`
     }
   }
 }

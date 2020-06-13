@@ -3,9 +3,6 @@ require('dotenv').config()
 
 export default {
   mode: 'universal',
-  /*
-  ** Headers of the page
-  */
   head: {
     title: pkg.name,
     meta: [
@@ -15,39 +12,25 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.png' },
-      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Pacifico&text=ChrisMeag&display=swap' },
-      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Zilla+Slab|Open+Sans&display=swap' }
+      {
+        rel: 'stylesheet',
+        href:
+          'https://fonts.googleapis.com/css?family=Pacifico&text=ChrisMeag&display=swap'
+      },
+      {
+        rel: 'stylesheet',
+        href:
+          'https://fonts.googleapis.com/css?family=Zilla+Slab|Open+Sans&display=swap'
+      }
     ]
   },
-  /*
-  ** Customize the progress-bar color
-  */
   loading: { color: '#68d391' },
-  /*
-  ** Global CSS
-  */
-  css: [
-  ],
-  /*
-  ** Plugins to load before mounting the App
-  */
-  plugins: [
-    '~/plugins/components',
-    '~/plugins/filters'
-  ],
-  /*
-  ** Nuxt.js dev-modules
-  */
+  plugins: ['~/plugins/components', '~/plugins/filters'],
   buildModules: [
     '@nuxt/typescript-build',
-    // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv',
-    // Doc: https://github.com/nuxt-community/nuxt-tailwindcss
     '@nuxtjs/tailwindcss'
   ],
-  /*
-  ** Nuxt.js modules
-  */
   modules: [
     [
       'storyblok-nuxt',
@@ -57,23 +40,20 @@ export default {
       }
     ]
   ],
-  /*
-  ** Router configuration
-  */
   router: {
-    middleware: [
-      'setCacheVersion',
-      'setGlobal'
-    ]
+    middleware: ['setCacheVersion', 'setGlobal']
   },
-  /*
-  ** Build configuration
-  */
   build: {
-    /*
-    ** You can extend webpack config here
-    */
-    extend (config, ctx) {
+    extend(config, ctx) {
+      // Run ESLint on save
+      if (ctx.isDev && ctx.isClient) {
+        config.module.rules.push({
+          enforce: 'pre',
+          test: /\.(js|vue)$/,
+          loader: 'eslint-loader',
+          exclude: /(node_modules)/
+        })
+      }
     }
   }
 }

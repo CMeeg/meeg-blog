@@ -1,4 +1,4 @@
-export default function ({ store }) {
+export default function({ store }) {
   if (!store.state.cacheVersion) {
     store.dispatch('loadCacheVersion')
   }

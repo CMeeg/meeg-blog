@@ -6,22 +6,46 @@
           <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
             <!-- Mobile menu button -->
             <button
-              @click="toggleMainNav"
               :aria-expanded="mainNavIsOpen ? 'true' : 'false'"
               class="inline-flex items-center justify-center p-2 rounded-md text-gray-300 hover:text-green-400 hover:bg-gray-700 focus:outline-none focus:bg-gray-700 focus:text-green-400 transition duration-150 ease-in-out"
               aria-label="Main menu"
+              @click="toggleMainNav"
             >
               <!-- Icon when menu is closed -->
-              <svg v-if="mainNavIsClosed" class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+              <svg
+                v-if="mainNavIsClosed"
+                class="block h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
               </svg>
               <!-- Icon when menu is open -->
-              <svg v-if="mainNavIsOpen" class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+              <svg
+                v-if="mainNavIsOpen"
+                class="block h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
               </svg>
             </button>
           </div>
-          <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
+          <div
+            class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start"
+          >
             <div class="flex-shrink-0">
               <nuxt-link to="/" class="block text-center sm:inline-block">
                 <field-image-asset
@@ -31,11 +55,19 @@
                   alt=""
                 />
               </nuxt-link>
-              <nuxt-link to="/" class="block text-xl text-white font-cursive align-middle sm:inline-block sm:px-3 sm:text-2xl">Chris Meagher</nuxt-link>
+              <nuxt-link
+                to="/"
+                class="block text-xl text-white font-cursive align-middle sm:inline-block sm:px-3 sm:text-2xl"
+              >
+                Chris Meagher
+              </nuxt-link>
             </div>
             <div class="hidden sm:block sm:ml-6 sm:py-4">
               <ul class="main-nav flex">
-                <li :key="index" v-for="(navitem, index) in $store.state.global.main_nav">
+                <li
+                  v-for="(navitem, index) in $store.state.global.main_nav"
+                  :key="index"
+                >
                   <nuxt-link
                     :to="navitem.link.cached_url"
                     class="inline-block ml-4 px-3 py-2 rounded-md text-sm font-medium leading-5 text-gray-300 hover:text-green-400 hover:bg-gray-700 focus:outline-none focus:text-green-400 focus:bg-gray-700 transition duration-150 ease-in-out"
@@ -49,12 +81,12 @@
         </div>
       </div>
 
-      <div
-        :class="mainNavIsOpen ? 'block' : 'hidden'"
-        class="sm:hidden"
-      >
+      <div :class="mainNavIsOpen ? 'block' : 'hidden'" class="sm:hidden">
         <ul class="main-nav px-2 pt-2 pb-3">
-          <li :key="index" v-for="(navitem, index) in $store.state.global.main_nav">
+          <li
+            v-for="(navitem, index) in $store.state.global.main_nav"
+            :key="index"
+          >
             <nuxt-link
               :to="navitem.link.cached_url"
               class="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-green-400 hover:bg-gray-700 focus:outline-none focus:text-green-400 focus:bg-gray-700 transition duration-150 ease-in-out"
