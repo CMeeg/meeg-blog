@@ -1,4 +1,5 @@
-require('dotenv').config();
+const pkg = require('./package')
+require('dotenv').config()
 
 export default {
   mode: 'universal',
@@ -6,20 +7,22 @@ export default {
   ** Headers of the page
   */
   head: {
-    title: process.env.npm_package_name || '',
+    title: pkg.name,
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
+      { hid: 'description', name: 'description', content: pkg.description }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.png' },
+      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Pacifico&text=ChrisMeag&display=swap' },
+      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Zilla+Slab|Open+Sans&display=swap' }
     ]
   },
   /*
   ** Customize the progress-bar color
   */
-  loading: { color: '#fff' },
+  loading: { color: '#68d391' },
   /*
   ** Global CSS
   */
@@ -29,6 +32,8 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    '~/plugins/components',
+    '~/plugins/filters'
   ],
   /*
   ** Nuxt.js dev-modules
@@ -52,6 +57,15 @@ export default {
       }
     ]
   ],
+  /*
+  ** Router configuration
+  */
+  router: {
+    middleware: [
+      'setCacheVersion',
+      'setGlobal'
+    ]
+  },
   /*
   ** Build configuration
   */
