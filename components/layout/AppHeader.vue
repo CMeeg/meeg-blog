@@ -64,12 +64,9 @@
             </div>
             <div class="hidden sm:block sm:ml-6 sm:py-4">
               <ul class="main-nav flex">
-                <li
-                  v-for="(navitem, index) in $store.state.global.main_nav"
-                  :key="index"
-                >
+                <li v-for="(navitem, index) in mainNavItems" :key="index">
                   <nuxt-link
-                    :to="navitem.link.cached_url"
+                    :to="getNavUrl(navitem.link.cached_url)"
                     class="inline-block ml-4 px-3 py-2 rounded-md text-sm font-medium leading-5 text-gray-300 hover:text-green-400 hover:bg-gray-700 focus:outline-none focus:text-green-400 focus:bg-gray-700 transition duration-150 ease-in-out"
                   >
                     {{ navitem.name }}
@@ -83,12 +80,9 @@
 
       <div :class="mainNavIsOpen ? 'block' : 'hidden'" class="sm:hidden">
         <ul class="main-nav px-2 pt-2 pb-3">
-          <li
-            v-for="(navitem, index) in $store.state.global.main_nav"
-            :key="index"
-          >
+          <li v-for="(navitem, index) in mainNavItems" :key="index">
             <nuxt-link
-              :to="navitem.link.cached_url"
+              :to="getNavUrl(navitem.link.cached_url)"
               class="mt-1 block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-green-400 hover:bg-gray-700 focus:outline-none focus:text-green-400 focus:bg-gray-700 transition duration-150 ease-in-out"
             >
               {{ navitem.name }}
@@ -108,11 +102,21 @@ export default {
     }
   },
   computed: {
+    mainNavItems: function() {
+      return this.$store.state.global.main_nav
+    },
     mainNavIsClosed: function() {
       return !this.mainNavIsOpen
     }
   },
   methods: {
+    getNavUrl: function(url) {
+      if (url === '/') {
+        return url
+      }
+
+      return `/${url}`
+    },
     toggleMainNav: function() {
       this.mainNavIsOpen = this.mainNavIsClosed
     }

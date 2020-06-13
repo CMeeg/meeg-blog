@@ -1,21 +1,21 @@
 <template>
   <div>
-    <default-header />
+    <app-header />
     <main role="main">
       <nuxt />
     </main>
-    <default-footer />
+    <app-footer />
   </div>
 </template>
 
 <script>
-import DefaultHeader from '~/components/layout/DefaultHeader.vue'
-import DefaultFooter from '~/components/layout/DefaultFooter.vue'
+import AppHeader from '~/components/layout/AppHeader.vue'
+import AppFooter from '~/components/layout/AppFooter.vue'
 
 export default {
   components: {
-    DefaultHeader,
-    DefaultFooter
+    AppHeader,
+    AppFooter
   }
 }
 </script>
