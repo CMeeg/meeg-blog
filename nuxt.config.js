@@ -25,7 +25,7 @@ export default {
     ]
   },
   loading: { color: '#68d391' },
-  plugins: ['~/plugins/components', '~/plugins/filters'],
+  plugins: ['~/plugins/components', '~/plugins/filters', '~/plugins/storyblok'],
   buildModules: [
     '@nuxt/typescript-build',
     '@nuxtjs/dotenv',
