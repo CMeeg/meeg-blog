@@ -1,6 +1,6 @@
 import Vue from 'vue'
 
-Vue.filter('dashify', function(value) {
+Vue.filter('dashify', function(value, prefix) {
   if (typeof value === 'undefined') {
     return 'undefined'
   }
@@ -12,5 +12,9 @@ Vue.filter('dashify', function(value) {
     .toLowerCase()
     .replace(/[ _]/g, '-')
 
-  return 'blok-' + dashified
+  if (typeof prefix === 'undefined') {
+    prefix = 'blok'
+  }
+
+  return `${prefix}-${dashified}`
 })

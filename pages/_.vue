@@ -1,10 +1,10 @@
 <template>
   <div>
     <component
-      :is="story.content.component | dashify"
+      :is="story.content.component | dashify('story')"
       v-if="story.content.component"
       :key="story.content._uid"
-      :blok="story.content"
+      :story="story"
     />
   </div>
 </template>

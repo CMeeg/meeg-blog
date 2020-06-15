@@ -12,9 +12,14 @@
 <script>
 export default {
   props: {
-    blok: {
+    story: {
       type: Object,
       required: true
+    }
+  },
+  data() {
+    return {
+      blok: this.story.content
     }
   }
 }
