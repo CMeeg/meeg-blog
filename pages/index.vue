@@ -1,35 +1,23 @@
 <template>
-  <main v-editable="story.content" role="main">
-    <h1>{{ story.content.title }}</h1>
-
-    <div v-for="article in articles.stories" :key="article.content._uid">
-      <h2>
-        <nuxt-link :to="'/' + article.full_slug">
-          {{ article.content.title }}
-        </nuxt-link>
-      </h2>
-      <small>
-        {{ article.published_at }}
-      </small>
-      <p>
-        {{ article.content.summary }}
-      </p>
-    </div>
+  <main role="main">
+    <field-blocks :blocks="story.content.body" />
   </main>
 </template>
 
 <script>
 export default {
   asyncData(context) {
-    let path = context.route.path
+    const path = 'home'
 
     const storyblok = context.app.$storyblok()
 
     const story = storyblok.get(path)
 
     const articles = storyblok.getAll({
-      starts_with: path.substr(1),
-      is_startpage: 0
+      starts_with: 'blog/',
+      is_startpage: 0,
+      sort_by: 'sort_by_date:desc',
+      per_page: 3
     })
 
     return Promise.all([story, articles]).then(results => {

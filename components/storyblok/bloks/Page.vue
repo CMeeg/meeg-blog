@@ -1,6 +1,6 @@
 <template>
-  <div v-editable="blok" class="util__flex-eq">
-    <h1>{{ blok.name }}</h1>
+  <div v-editable="blok">
+    <field-blocks :blocks="blok.body" />
   </div>
 </template>
 

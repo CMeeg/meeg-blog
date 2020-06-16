@@ -1,9 +1,7 @@
 <template>
   <div>
     <app-header />
-    <main role="main">
-      <nuxt />
-    </main>
+    <nuxt />
     <app-footer />
   </div>
 </template>

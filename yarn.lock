@@ -1007,6 +1007,18 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
+"@marvr/storyblok-rich-text-types@2.0.0-alpha.2":
+  version "2.0.0-alpha.2"
+  resolved "https://registry.yarnpkg.com/@marvr/storyblok-rich-text-types/-/storyblok-rich-text-types-2.0.0-alpha.2.tgz#55333fa550468d427fa434c8ee09fc31fb915ce9"
+  integrity sha512-scHvpLo3XtXh90NfK1iwzRBw7oxqlxafIIGSlUoo7KcRTxJ/ey8yeCKxvTzn6evY7favejhDIrMhYt937AbM+A==
+
+"@marvr/storyblok-rich-text-vue-renderer@^2.0.0-alpha.2":
+  version "2.0.0-alpha.2"
+  resolved "https://registry.yarnpkg.com/@marvr/storyblok-rich-text-vue-renderer/-/storyblok-rich-text-vue-renderer-2.0.0-alpha.2.tgz#3a7c29170e425102ea20411860d305b7236c6126"
+  integrity sha512-su9QmfphGFcjBSY54pDHnEIOeNNzC0arRuk1AYsLiBekV2/TTCZy9Ewe4weudZxx5vvCBjeXcb7kxbZxLw1AGQ==
+  dependencies:
+    "@marvr/storyblok-rich-text-types" "2.0.0-alpha.2"
+
 "@nuxt/babel-preset-app@2.12.2":
   version "2.12.2"
   resolved "https://registry.yarnpkg.com/@nuxt/babel-preset-app/-/babel-preset-app-2.12.2.tgz#0e87c4f4f578868e74f6fa9e2a38cace5c77dac8"
@@ -1709,6 +1721,13 @@
     vue-template-es2015-compiler "^1.9.0"
   optionalDependencies:
     prettier "^1.18.2"
+
+"@vue/composition-api@^0.6.4":
+  version "0.6.4"
+  resolved "https://registry.yarnpkg.com/@vue/composition-api/-/composition-api-0.6.4.tgz#b12a85183eecdbb18453efae28853edb77b4a625"
+  integrity sha512-WQUqp61c1WH5pAmbUM5xUBYZYWh3TV48h1jLl2pofidXGglTS9+bvCfHKTk0bsA/U5ZbzfUMa1IpQGUGdYZYeA==
+  dependencies:
+    tslib "^2.0.0"
 
 "@vue/test-utils@^1.0.0-beta.27":
   version "1.0.3"
@@ -9482,6 +9501,11 @@ tslib@^1.9.0:
   version "1.13.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.13.0.tgz#c881e13cc7015894ed914862d276436fa9a47043"
   integrity sha512-i/6DQjL8Xf3be4K/E6Wgpekn5Qasl1usyw++dAA35Ue5orEn65VIxOA+YvNNl9HV3qv70T7CNwjODHZrLwvd1Q==
+
+tslib@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.0.0.tgz#18d13fc2dce04051e20f074cc8387fd8089ce4f3"
+  integrity sha512-lTqkx847PI7xEDYJntxZH89L2/aXInsyF2luSafe/+0fHOMjlBNXdH6th7f70qxLDhul7KZK0zC8V5ZIyHl0/g==
 
 tty-browserify@0.0.0:
   version "0.0.0"

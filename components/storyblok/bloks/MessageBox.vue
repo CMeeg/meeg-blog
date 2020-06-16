@@ -1,6 +1,6 @@
 <template>
-  <div v-editable="blok">
-    {{ blok.headline }}
+  <div>
+    <field-rich-text :doc="blok.message" />
   </div>
 </template>
 

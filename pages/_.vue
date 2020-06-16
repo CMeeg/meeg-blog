@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <main role="main">
     <component
-      :is="story.content.component | dashify('story')"
+      :is="story.content.component | dashify"
       v-if="story.content.component"
       :key="story.content._uid"
-      :story="story"
+      :blok="story.content"
     />
-  </div>
+  </main>
 </template>
 
 <script>
@@ -18,7 +18,9 @@ export default {
   },
   data() {
     return {
-      story: { content: {} }
+      story: {
+        content: {}
+      }
     }
   },
   mounted() {
