@@ -2,24 +2,16 @@
   <main role="main">
     <field-blocks :blocks="story.content.body" />
 
-    <div class="mx-auto px-6 pb-8 max-w-6xl">
-      <div class="gap-6 grid grid-rows-none md:grid-cols-3">
-        <article-card
-          v-for="article in articles.stories"
-          :key="article._uid"
-          :article="article"
-        />
-      </div>
-    </div>
+    <article-list :articles="articles" />
   </main>
 </template>
 
 <script>
-import ArticleCard from '~/components/blog/ArticleCard.vue'
+import ArticleList from '~/components/blog/ArticleList.vue'
 
 export default {
   components: {
-    ArticleCard
+    ArticleList
   },
   asyncData(context) {
     const storyblok = context.app.$storyblok()

@@ -1,25 +1,18 @@
 <template>
-  <main v-editable="story.content" role="main">
-    <h1>{{ story.content.title }}</h1>
+  <main role="main">
+    <field-blocks :blocks="story.content.body" />
 
-    <div v-for="article in articles.stories" :key="article.content._uid">
-      <h2>
-        <nuxt-link :to="'/' + article.full_slug">
-          {{ article.content.title }}
-        </nuxt-link>
-      </h2>
-      <small>
-        {{ article.published_at }}
-      </small>
-      <p>
-        {{ article.content.summary }}
-      </p>
-    </div>
+    <article-list :articles="articles" />
   </main>
 </template>
 
 <script>
+import ArticleList from '~/components/blog/ArticleList.vue'
+
 export default {
+  components: {
+    ArticleList
+  },
   asyncData(context) {
     let path = context.route.path
 
@@ -29,7 +22,9 @@ export default {
 
     const articles = storyblok.getAll({
       starts_with: path.substr(1),
-      is_startpage: 0
+      is_startpage: 0,
+      sort_by: 'first_published_at:desc',
+      per_page: 12
     })
 
     return Promise.all([story, articles]).then(results => {
