@@ -18,3 +18,11 @@ Vue.filter('dashify', function(value, prefix) {
 
   return `${prefix}-${dashified}`
 })
+
+Vue.filter('rootRelative', function(url) {
+  if (url.startsWith('/')) {
+    return url
+  }
+
+  return `/${url}`
+})

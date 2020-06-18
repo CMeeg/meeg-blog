@@ -13,6 +13,11 @@ module.exports = {
           'Palatino',
           'serif'
         ]
+      },
+      minWidth: {
+        '0': '0',
+        xs: '20rem',
+        full: '100%'
       }
     }
   },

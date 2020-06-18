@@ -117,6 +117,23 @@ const storyblok = function(context) {
           window.location.reload()
         }
       })
+    },
+    getStoryDate: story => {
+      if (story.sort_by_date !== null) {
+        return new Date(story.sort_by_date)
+      }
+
+      if (story.first_published_at !== null) {
+        return new Date(story.first_published_at)
+      }
+
+      if (story.published_at !== null) {
+        return new Date(story.published_at)
+      }
+
+      if (story.created_at !== null) {
+        return new Date(story.created_at)
+      }
     }
   }
 }

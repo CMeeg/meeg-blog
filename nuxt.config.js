@@ -28,7 +28,8 @@ export default {
   plugins: [
     '~/plugins/composition-api.js',
     '~/plugins/storyblok',
-    '~/plugins/components',
+    '~/plugins/app-components',
+    '~/plugins/sb-components',
     '~/plugins/filters'
   ],
   buildModules: [
