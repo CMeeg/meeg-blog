@@ -1,11 +1,6 @@
 <template>
   <div>
-    <component
-      :is="blok.component | dashify"
-      v-for="blok in blocks"
-      :key="blok._uid"
-      :blok="blok"
-    />
+    <blok v-for="blok in blocks" :key="blok._uid" :blok="blok" />
   </div>
 </template>
 

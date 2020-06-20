@@ -1,7 +1,7 @@
 <template>
   <header>
     <nav>
-      <div class="mx-auto px-2 max-w-6xl sm:px-6">
+      <max-width-container>
         <div class="relative flex items-center justify-between h-24">
           <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
             <!-- Mobile menu button -->
@@ -76,17 +76,18 @@
             </div>
           </div>
         </div>
-      </div>
+      </max-width-container>
 
       <div
         :class="mainNavIsOpen ? 'block' : 'hidden'"
         class="bg-gray-800 sm:hidden"
       >
-        <ul class="main-nav p-2 pb-3">
+        <ul class="main-nav px-6 py-2">
           <li v-for="(navitem, index) in mainNavItems" :key="index">
             <nuxt-link
               :to="navitem.link.cached_url | rootRelative"
               class="block mt-1 px-3 py-2 font-medium text-base text-gray-300 rounded-md duration-300 ease-in-out transition hover:text-green-400 hover:bg-gray-900 focus:text-green-400 focus:bg-gray-900 focus:outline-none"
+              @click.native="toggleMainNav"
             >
               {{ navitem.name }}
             </nuxt-link>
@@ -119,9 +120,3 @@ export default {
   }
 }
 </script>
-
-<style>
-.main-nav .nuxt-link-active {
-  @apply text-green-400 bg-gray-900;
-}
-</style>

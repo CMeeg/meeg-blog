@@ -17,9 +17,3 @@ export default {
   }
 }
 </script>
-
-<style>
-body {
-  @apply bg-gray-900 min-w-xs min-h-screen font-sans antialiased text-white;
-}
-</style>

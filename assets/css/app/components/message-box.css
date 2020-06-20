@@ -1,0 +1,3 @@
+.message-box .rich-text p {
+    @apply mb-3;
+}

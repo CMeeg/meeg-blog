@@ -2,7 +2,11 @@
   <div
     class="overflow-hidden p-6 border border-gray-700 bg-gray-800 rounded-lg"
   >
-    <slot name="header" />
-    <slot name="body" />
+    <div>
+      <slot name="header" />
+    </div>
+    <div>
+      <slot name="body" />
+    </div>
   </div>
 </template>

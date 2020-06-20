@@ -1,7 +1,7 @@
 <template>
   <card>
-    <div slot="header">
-      <p class="pb-2 text-gray-500 text-xs uppercase">
+    <template v-slot:header>
+      <p class="mb-2 text-gray-500 text-xs uppercase">
         <time :datetime="articleDate">
           {{ articleDate }}
         </time>
@@ -14,10 +14,12 @@
           {{ article.content.title }}
         </nuxt-link>
       </h2>
-    </div>
-    <p slot="body" class="text-sm">
-      {{ article.content.summary }}
-    </p>
+    </template>
+    <template v-slot:body>
+      <p class="text-gray-300 text-sm">
+        {{ article.content.summary }}
+      </p>
+    </template>
   </card>
 </template>
 

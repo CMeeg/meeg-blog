@@ -1,0 +1,35 @@
+.rich-text a {
+    @apply text-green-400;
+}
+
+    .rich-text a:focus {
+        @apply underline outline-none;
+    }
+
+    .rich-text a:hover {
+        @apply underline;
+    }
+
+.rich-text code {
+    @apply inline-block px-2 text-purple-400 bg-gray-800;
+}
+
+.rich-text h2 {
+    @apply mb-3 font-serif leading-tight text-3xl;
+}
+
+.rich-text p {
+    @apply mb-6 leading-relaxed text-gray-300;
+}
+
+.rich-text ul {
+    @apply pb-3 ml-5 list-disc list-outside;
+}
+
+    .rich-text ul p {
+        @apply mb-3;
+    }
+
+    .rich-text ul ul {
+        @apply pb-0;
+    }

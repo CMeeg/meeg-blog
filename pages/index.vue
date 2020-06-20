@@ -2,7 +2,9 @@
   <main role="main">
     <field-blocks :blocks="story.content.body" />
 
-    <article-list :articles="articles" />
+    <max-width-container>
+      <article-list :articles="articles" />
+    </max-width-container>
   </main>
 </template>
 

@@ -1,9 +1,13 @@
 <template>
-  <div v-editable="blok" class="mx-auto px-6 py-8 max-w-2xl text-center">
-    <h1 class="font-serif text-4xl sm:text-5xl">{{ blok.title }}</h1>
+  <page-heading v-editable="blok">
+    <template v-slot:title>
+      {{ blok.title }}
+    </template>
 
-    <field-rich-text :doc="blok.intro" />
-  </div>
+    <template v-slot:intro>
+      <field-rich-text :doc="blok.intro" />
+    </template>
+  </page-heading>
 </template>
 
 <script>

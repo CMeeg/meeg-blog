@@ -2,7 +2,9 @@
   <main role="main">
     <field-blocks :blocks="story.content.body" />
 
-    <article-list :articles="articles" />
+    <max-width-container>
+      <article-list :articles="articles" />
+    </max-width-container>
   </main>
 </template>
 
@@ -14,7 +16,7 @@ export default {
     ArticleList
   },
   asyncData(context) {
-    let path = context.route.path
+    const path = context.route.path
 
     const storyblok = context.app.$storyblok()
 
