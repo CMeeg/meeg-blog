@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { Block } from '@marvr/storyblok-rich-text-types'
+import { Block, Mark } from '@marvr/storyblok-rich-text-types'
 import Page from '~/components/storyblok/bloks/Page.vue'
 import Blok from '~/components/storyblok/Blok.vue'
 import PageHeading from '~/components/storyblok/bloks/PageHeading.vue'
@@ -9,6 +9,8 @@ import RichText from '~/components/storyblok/fields/RichText.vue'
 import ImageAsset from '~/components/storyblok/fields/ImageAsset.vue'
 import VueRichTextRenderer from '@marvr/storyblok-rich-text-vue-renderer'
 import RichTextDocument from '~/components/storyblok/fields/rich-text/blocks/Document.vue'
+import RichTextCodeBlock from '~/components/storyblok/fields/rich-text/blocks/Code.vue'
+import RichTextCodeMark from '~/components/storyblok/fields/rich-text/marks/Code.vue'
 import RichTextBlok from '~/components/storyblok/fields/rich-text/components/Blok.vue'
 
 Vue.component('blok', Blok)
@@ -30,7 +32,11 @@ Vue.component('field-image-asset', ImageAsset)
 Vue.use(VueRichTextRenderer, {
   resolvers: {
     blocks: {
-      [Block.DOCUMENT]: RichTextDocument
+      [Block.DOCUMENT]: RichTextDocument,
+      [Block.CODE]: RichTextCodeBlock
+    },
+    marks: {
+      [Mark.CODE]: RichTextCodeMark
     },
     components: {
       message_box: RichTextBlok

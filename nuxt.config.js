@@ -30,7 +30,8 @@ export default {
     '~/plugins/storyblok',
     '~/plugins/app-components',
     '~/plugins/sb-components',
-    '~/plugins/filters'
+    '~/plugins/filters',
+    '~/plugins/code-highlighter'
   ],
   buildModules: [
     '@nuxt/typescript-build',

@@ -10,10 +10,6 @@
         @apply underline;
     }
 
-.rich-text code {
-    @apply inline-block px-2 text-purple-400 bg-gray-800;
-}
-
 .rich-text h2 {
     @apply mb-3 font-serif leading-tight text-3xl;
 }
