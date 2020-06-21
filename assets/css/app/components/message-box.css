@@ -1,3 +1,3 @@
-.message-box .rich-text p {
+.message-box .content-block p {
     @apply mb-3;
 }

@@ -30,9 +30,7 @@ export default {
     return Promise.all([story, articles]).then(results => {
       return {
         ...results[0],
-        articles: {
-          ...results[1]
-        }
+        articles: results[1].stories
       }
     })
   },

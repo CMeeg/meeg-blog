@@ -1,4 +1,29 @@
-const apiGet = function({ api, path, query, successCallback, errorCallback }) {
+const apiGetStories = function({
+  api,
+  path,
+  query,
+  successCallback,
+  errorCallback
+}) {
+  const apiPath = getFullApiStoriesPath(path)
+
+  return api
+    .get(apiPath, query)
+    .then(res => {
+      return successCallback(res)
+    })
+    .catch(res => {
+      errorCallback(res)
+    })
+}
+
+const getFullApiStoriesPath = function(path) {
+  const apiBasePath = 'cdn/stories'
+
+  if (!path) {
+    return apiBasePath
+  }
+
   if (path.startsWith('/')) {
     path = path.substr(1)
   }
@@ -7,8 +32,14 @@ const apiGet = function({ api, path, query, successCallback, errorCallback }) {
     path = path.slice(0, -1)
   }
 
+  return `${apiBasePath}/${path}`
+}
+
+const apiGetTags = function({ api, query, successCallback, errorCallback }) {
+  const apiPath = 'cdn/tags'
+
   return api
-    .get(`cdn/stories/${path}`, query)
+    .get(apiPath, query)
     .then(res => {
       return successCallback(res)
     })
@@ -74,7 +105,7 @@ const storyblok = function(context) {
         }
       const errorCallback = options.errorCallback || defaultErrorCallback
 
-      return apiGet({
+      return apiGetStories({
         api: context.app.$storyapi,
         path: path,
         query: query,
@@ -93,15 +124,37 @@ const storyblok = function(context) {
         options.successCallback ||
         function(res) {
           return {
-            total: res.headers.total,
-            stories: res.data.stories
+            stories: {
+              total: res.headers.total,
+              stories: res.data.stories
+            }
           }
         }
       const errorCallback = options.errorCallback || defaultErrorCallback
 
-      return apiGet({
+      return apiGetStories({
         api: context.app.$storyapi,
-        path: '',
+        path: null,
+        query: query,
+        successCallback: res => successCallback(res),
+        errorCallback: res => errorCallback(context, res)
+      })
+    },
+    getTags: (query, options) => {
+      query = query || {}
+      options = options || {}
+
+      query.version = version
+
+      const successCallback =
+        options.successCallback ||
+        function(res) {
+          return res.data
+        }
+      const errorCallback = options.errorCallback || defaultErrorCallback
+
+      return apiGetTags({
+        api: context.app.$storyapi,
         query: query,
         successCallback: res => successCallback(res),
         errorCallback: res => errorCallback(context, res)

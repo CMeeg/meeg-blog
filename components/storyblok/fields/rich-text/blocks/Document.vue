@@ -1,5 +1,5 @@
 <template>
-  <div class="rich-text"><slot /></div>
+  <div class="content-block"><slot /></div>
 </template>
 
 <script lang="ts">

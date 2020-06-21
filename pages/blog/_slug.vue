@@ -15,7 +15,12 @@
           <span class="inline-block ml-2">&#8226;</span>
           <ul v-if="story.tag_list" class="flex items-center">
             <li v-for="tag in story.tag_list" :key="tag" class="ml-2">
-              {{ tag }}
+              <nuxt-link
+                :to="{ name: 'tags-tag', params: { tag: tag } }"
+                class="text-green-400 focus:underline focus:outline-none hover:underline"
+              >
+                {{ tag }}
+              </nuxt-link>
             </li>
           </ul>
         </div>
