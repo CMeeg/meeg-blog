@@ -50,13 +50,19 @@ const apiGetTags = function({ api, query, successCallback, errorCallback }) {
 
 const defaultErrorCallback = function(context, res) {
   if (!res.response) {
-    console.error(res)
+    if (context.isDev) {
+      console.error(res)
+    }
+
     context.error({
       statusCode: 404,
       message: 'Failed to receive content from api'
     })
   } else {
-    console.error(res.response.data)
+    if (context.isDev) {
+      console.error(res.response)
+    }
+
     context.error({
       statusCode: res.response.status,
       message: res.response.data
@@ -66,7 +72,7 @@ const defaultErrorCallback = function(context, res) {
 
 const isEditMode = function(context) {
   let editMode = false
-  const $window = process.browser ? window : undefined
+  const $window = process.client ? window : undefined
 
   if (
     context.query._storyblok ||

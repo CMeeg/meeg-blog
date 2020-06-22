@@ -31,7 +31,8 @@ export default {
     '~/plugins/app-components',
     '~/plugins/sb-components',
     '~/plugins/filters',
-    '~/plugins/code-highlighter'
+    '~/plugins/code-highlighter',
+    '~/plugins/vue-content-placeholders'
   ],
   buildModules: [
     '@nuxt/typescript-build',
@@ -48,7 +49,7 @@ export default {
     ]
   ],
   router: {
-    middleware: ['setCacheVersion', 'setGlobal']
+    middleware: ['setCacheVersion']
   },
   build: {
     extend(config, ctx) {
