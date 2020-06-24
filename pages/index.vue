@@ -3,7 +3,7 @@
     <field-blocks :blocks="story.content.body" />
 
     <max-width-container>
-      <article-list :articles="articles" />
+      <article-list starts-with="blog/" :per-page="3" />
     </max-width-container>
   </main>
 </template>
@@ -16,32 +16,12 @@ export default {
     ArticleList
   },
   asyncData(context) {
-    const storyblok = context.app.$storyblok()
-
-    const story = storyblok.get('home')
-
-    const articles = storyblok.getAll({
-      starts_with: 'blog/',
-      is_startpage: 0,
-      sort_by: 'first_published_at:desc',
-      per_page: 3
-    })
-
-    return Promise.all([story, articles]).then(results => {
-      return {
-        ...results[0],
-        articles: results[1].stories
-      }
-    })
+    return context.app.$storyblok().get('home')
   },
   data() {
     return {
       story: {
         content: {}
-      },
-      articles: {
-        total: 0,
-        stories: []
       }
     }
   },

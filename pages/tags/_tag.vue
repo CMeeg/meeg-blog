@@ -15,7 +15,7 @@
     </page-heading>
 
     <max-width-container>
-      <article-list :articles="stories" />
+      <article-list :with-tag="tag" />
     </max-width-container>
   </main>
 </template>
@@ -27,25 +27,9 @@ export default {
   components: {
     ArticleList
   },
-  asyncData(context) {
-    const tag = context.route.params.tag
-
-    const storyblok = context.app.$storyblok()
-
-    return storyblok.getAll({
-      with_tag: tag,
-      is_startpage: 0,
-      sort_by: 'first_published_at:desc',
-      per_page: 12
-    })
-  },
   data() {
     return {
-      tag: this.$route.params.tag,
-      stories: {
-        total: 0,
-        stories: []
-      }
+      tag: this.$route.params.tag
     }
   }
 }
