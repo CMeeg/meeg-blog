@@ -3,7 +3,7 @@
     <field-blocks :blocks="story.content.body" />
 
     <max-width-container>
-      <article-list :starts-with="path.substr(1)" />
+      <article-list :starts-with="$route.path.substr(1)" />
     </max-width-container>
   </main>
 </template>
@@ -20,7 +20,6 @@ export default {
   },
   data() {
     return {
-      path: this.$route.path,
       story: {
         content: {}
       }

@@ -36,11 +36,7 @@
 <script>
 export default {
   asyncData(context) {
-    const path = context.route.path
-
-    const storyblok = context.app.$storyblok()
-
-    return storyblok.get(path.substr(1))
+    return context.app.$storyblok().get(context.route.path)
   },
   data() {
     return {

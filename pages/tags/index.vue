@@ -36,9 +36,7 @@
 <script>
 export default {
   asyncData(context) {
-    const storyblok = context.app.$storyblok()
-
-    return storyblok.getTags()
+    return context.app.$storyblok().getTags()
   },
   data() {
     return {
