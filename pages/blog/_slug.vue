@@ -12,17 +12,22 @@
           <time :datetime="articleDate">
             {{ articleDate }}
           </time>
-          <span class="inline-block ml-2">&#8226;</span>
-          <ul v-if="story.tag_list" class="flex items-center">
-            <li v-for="tag in story.tag_list" :key="tag" class="ml-2">
+          <template v-if="story.tag_list.length">
+            <span class="inline-block ml-2 mr-1">&#8226;</span>
+            <span
+              v-for="(tag, index) in story.tag_list"
+              :key="tag"
+              class="inline-block ml-1"
+            >
               <nuxt-link
                 :to="{ name: 'tags-tag', params: { tag: tag } }"
                 class="text-green-400 focus:underline focus:outline-none hover:underline"
               >
                 {{ tag }}
               </nuxt-link>
-            </li>
-          </ul>
+              <template v-if="index !== story.tag_list.length - 1">, </template>
+            </span>
+          </template>
         </div>
       </template>
     </page-heading>
