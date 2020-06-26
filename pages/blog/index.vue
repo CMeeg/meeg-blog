@@ -1,20 +1,16 @@
 <template>
   <main role="main">
-    <field-blocks :blocks="story.content.body" />
-
-    <max-width-container>
-      <article-list :starts-with="$route.path.substr(1)" />
-    </max-width-container>
+    <component
+      :is="story.content.component | dashify"
+      v-if="story.content.component"
+      :key="story.content._uid"
+      :blok="story.content"
+    />
   </main>
 </template>
 
 <script>
-import ArticleList from '~/components/blog/ArticleList.vue'
-
 export default {
-  components: {
-    ArticleList
-  },
   asyncData(context) {
     return context.app.$storyblok().get(context.route.path)
   },

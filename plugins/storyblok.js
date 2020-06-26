@@ -131,7 +131,7 @@ const storyblok = function(context) {
         function(res) {
           return {
             stories: {
-              total: res.headers.total,
+              total: parseInt(res.headers.total),
               stories: res.data.stories
             }
           }

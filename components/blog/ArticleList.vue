@@ -1,8 +1,5 @@
 <template>
-  <div
-    :class="$fetchState.error ? '' : 'md:grid-cols-3'"
-    class="mb-6 gap-6 grid grid-rows-none"
-  >
+  <div :class="layoutClass" class="mb-6 gap-6 grid grid-rows-none">
     <template v-if="$fetchState.pending">
       <card v-for="index in 3" :key="index">
         <template v-slot:header>
@@ -20,9 +17,14 @@
     <template v-else-if="$fetchState.error">
       <message-box type="error">
         <div class="content-block">
-          <p>
-            <em>{{ $fetchState.error.message }}</em>
-          </p>
+          <p>{{ $fetchState.error.message }}</p>
+        </div>
+      </message-box>
+    </template>
+    <template v-else-if="articles.total === 0">
+      <message-box type="info">
+        <div class="content-block">
+          <p>No articles found</p>
         </div>
       </message-box>
     </template>
@@ -77,8 +79,10 @@ export default {
 
     const articles = await this.$storyblok().getAll(articlesQuery)
 
-    if (!articles || articles.total === 0) {
-      throw new Error('No articles found. Please refresh and try again.')
+    if (!articles) {
+      throw new Error(
+        'There was a problem retrieving the articles. Please refresh and try again.'
+      )
     }
 
     this.articles = articles.stories
@@ -89,6 +93,15 @@ export default {
         total: 0,
         stories: []
       }
+    }
+  },
+  computed: {
+    layoutClass() {
+      if (this.$fetchState.pending || this.articles.total > 0) {
+        return 'md:grid-cols-3'
+      }
+
+      return null
     }
   }
 }
