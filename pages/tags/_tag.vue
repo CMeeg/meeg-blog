@@ -5,10 +5,8 @@
       <template v-slot:intro>
         <div class="content-block">
           <p>
-            <!-- eslint-disable -->
-            All articles <nuxt-link :to="{ name: 'tags' }">tagged</nuxt-link> with
-            <i>{{ tag }}</i> can be found below...
-            <!-- eslint-enable -->
+            Articles about <i>{{ tag }}</i> can be found below.<br />
+            <nuxt-link :to="{ name: 'tags' }">See all tags</nuxt-link>
           </p>
         </div>
       </template>

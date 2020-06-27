@@ -5,31 +5,28 @@
       <template v-slot:intro>
         <div class="content-block">
           <p>
-            Use these tags to find all the articles I have written related to
-            that particular topic...
+            My blog contains articles related to the following topics...
           </p>
         </div>
       </template>
     </page-heading>
 
-    <max-width-container>
-      <div class="content-block">
-        <ul v-if="tags">
-          <li v-for="tag in tags" :key="tag.name">
-            <p>
-              <nuxt-link :to="{ name: 'tags-tag', params: { tag: tag.name } }">
-                {{ tag.name }}
-              </nuxt-link>
-              ({{
-                tag.taggings_count === 1
-                  ? `${tag.taggings_count} article`
-                  : `${tag.taggings_count} articles`
-              }})
-            </p>
-          </li>
-        </ul>
-      </div>
-    </max-width-container>
+    <div class="content-block mx-auto px-6 max-w-2xl text-center">
+      <ul v-if="tags">
+        <li v-for="tag in tags" :key="tag.name" class="list-none">
+          <p>
+            <nuxt-link :to="{ name: 'tags-tag', params: { tag: tag.name } }">
+              {{ tag.name }}
+            </nuxt-link>
+            ({{
+              tag.taggings_count === 1
+                ? `${tag.taggings_count} article`
+                : `${tag.taggings_count} articles`
+            }})
+          </p>
+        </li>
+      </ul>
+    </div>
   </main>
 </template>
 
