@@ -1,3 +1,7 @@
+.app .vue-content-placeholders-heading {
+    @apply mb-3;
+}
+
 .app .vue-content-placeholders-heading__img {
     @apply bg-gray-800;
 }
@@ -20,6 +24,10 @@
 
 .app .vue-content-placeholders-is-animated .vue-content-placeholders-heading__subtitle::before {
     background: linear-gradient(to right, transparent 0%, #718096 10%, transparent 20%);
+}
+
+.app .vue-content-placeholders-text {
+    @apply mb-6;
 }
 
 .app .vue-content-placeholders-text__line {

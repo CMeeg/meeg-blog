@@ -31,16 +31,18 @@
             <div class="content-block text-sm">
               <ol v-if="articles.total > 0">
                 <li v-for="article in articles.stories" :key="article.uuid">
-                  <nuxt-link
-                    v-if="article.uuid !== currentArticleId"
-                    :to="article.full_slug | rootRelative"
-                    class="text-green-400 focus:underline focus:outline-none hover:underline"
-                  >
-                    {{ article.content.title }}
-                  </nuxt-link>
-                  <i v-else class="text-gray-300">
-                    (This article) {{ article.content.title }}
-                  </i>
+                  <p>
+                    <nuxt-link
+                      v-if="article.uuid !== currentArticleId"
+                      :to="article.full_slug | rootRelative"
+                      class="text-green-400 focus:underline focus:outline-none hover:underline"
+                    >
+                      {{ article.content.title }}
+                    </nuxt-link>
+                    <i v-else class="text-gray-300">
+                      (This article) {{ article.content.title }}
+                    </i>
+                  </p>
                 </li>
               </ol>
             </div>

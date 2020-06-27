@@ -16,9 +16,9 @@
       </h2>
     </template>
     <template v-slot:body>
-      <p class="text-gray-300 text-sm">
-        {{ article.content.summary }}
-      </p>
+      <div class="text-sm">
+        <field-rich-text :doc="article.content.summary" />
+      </div>
     </template>
   </card>
 </template>
