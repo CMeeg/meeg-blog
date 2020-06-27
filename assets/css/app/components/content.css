@@ -18,14 +18,23 @@
     @apply mb-6 leading-relaxed text-gray-300;
 }
 
-.content-block ul {
+.content-block ul,
+.content-block ol {
     @apply pb-3 ml-5 list-disc list-outside;
 }
 
-    .content-block ul p {
+.content-block ol {
+    @apply list-decimal;
+}
+
+    .content-block ul p,
+    .content-block ol p {
         @apply mb-3;
     }
 
-    .content-block ul ul {
+    .content-block ul ul,
+    .content-block ul ol,
+    .content-block ol ol,
+    .content-block ol ul {
         @apply pb-0;
     }

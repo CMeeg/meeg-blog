@@ -6,42 +6,49 @@
       </template>
 
       <template v-slot:metadata>
-        <div
-          class="inline-flex items-center justify-center px-6 py-4 border-b border-gray-700 text-gray-500 text-xs uppercase"
+        <p
+          class="content-block inline-flex items-center justify-center px-6 py-4 border-b border-gray-700 text-gray-500 text-xs"
         >
-          <time :datetime="articleDate">
+          <time :datetime="articleDate" class="uppercase">
             {{ articleDate }}
           </time>
           <template v-if="story.tag_list.length">
-            <span class="inline-block ml-2 mr-1">&#8226;</span>
-            <span
-              v-for="(tag, index) in story.tag_list"
-              :key="tag"
-              class="inline-block ml-1"
-            >
-              <nuxt-link
-                :to="{ name: 'tags-tag', params: { tag: tag } }"
-                class="text-green-400 focus:underline focus:outline-none hover:underline"
-              >
-                {{ tag }}
+            <span class="pl-2">&#8226;</span>
+            <span v-for="tag in story.tag_list" :key="tag" class="pl-2">
+              <nuxt-link :to="{ name: 'tags-tag', params: { tag: tag } }">
+                #{{ tag }}
               </nuxt-link>
-              <template v-if="index !== story.tag_list.length - 1">, </template>
             </span>
           </template>
-        </div>
+          <template v-if="story.content.series">
+            <span class="inline-block pl-2">&#8226;</span>
+            <span class="inline-block pl-2">
+              This article is part of a <a href="#series">series</a>
+            </span>
+          </template>
+        </p>
       </template>
     </page-heading>
 
     <max-width-container>
       <field-rich-text :doc="story.content.body" />
+
+      <article-series v-if="story.content.series" :story="story" class="pt-6" />
     </max-width-container>
   </main>
 </template>
 
 <script>
+import ArticleSeries from '~/components/blog/ArticleSeries.vue'
+
 export default {
+  components: {
+    ArticleSeries
+  },
   asyncData(context) {
-    return context.app.$storyblok().get(context.route.path)
+    return context.app.$storyblok().get(context.route.path, {
+      resolve_relations: 'series'
+    })
   },
   data() {
     return {

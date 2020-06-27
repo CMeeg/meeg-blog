@@ -66,7 +66,12 @@ export default {
     const articlesQuery = {
       is_startpage: 0,
       sort_by: 'first_published_at:desc',
-      per_page: this.perPage
+      per_page: this.perPage,
+      filter_query: {
+        component: {
+          in: 'article'
+        }
+      }
     }
 
     if (this.startsWith) {
