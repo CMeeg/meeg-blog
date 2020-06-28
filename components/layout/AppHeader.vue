@@ -126,18 +126,10 @@ const mainNavState = {
 
 export default {
   async fetch() {
-    const global = await this.$storyblok().get('global')
+    const global = this.$store.state.global
 
-    if (!global) {
-      throw new Error(
-        'Global settings not found. Please refresh and try again.'
-      )
-    }
-
-    const content = global.story.content
-
-    this.logo = content.logo
-    this.mainNav.items = content.main_nav
+    this.logo = global.logo
+    this.mainNav.items = global.main_nav
   },
   data() {
     return {

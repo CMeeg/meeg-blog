@@ -1,14 +1,11 @@
-const pkg = require('./package')
 require('dotenv').config()
 
 export default {
   mode: 'universal',
   head: {
-    title: pkg.name,
     meta: [
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: pkg.description }
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.png' },
@@ -32,7 +29,8 @@ export default {
     '~/plugins/sb-components',
     '~/plugins/filters',
     '~/plugins/code-highlighter',
-    '~/plugins/vue-content-placeholders'
+    '~/plugins/vue-content-placeholders',
+    '~/plugins/metadata'
   ],
   buildModules: [
     '@nuxt/typescript-build',
@@ -48,9 +46,6 @@ export default {
       }
     ]
   ],
-  router: {
-    middleware: ['setCacheVersion']
-  },
   build: {
     extend(config, ctx) {
       // Run ESLint on save

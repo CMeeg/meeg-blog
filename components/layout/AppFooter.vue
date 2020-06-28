@@ -58,20 +58,18 @@
 
 <script>
 export default {
-  async fetch() {
-    const global = await this.$storyblok().get('global')
+  fetch() {
+    const global = this.$store.state.global
 
-    if (!global) {
-      throw new Error(
-        'Global settings not found. Please refresh and try again.'
-      )
+    this.copyright = global.copyright
+
+    if (global.github_username) {
+      this.githubUrl = `https://github.com/${global.github_username}`
     }
 
-    const content = global.story.content
-
-    this.copyright = content.copyright
-    this.githubUrl = content.github_url?.cached_url
-    this.twitterUrl = content.twitter_url?.cached_url
+    if (global.twitter_username) {
+      this.twitterUrl = `https://twitter.com/${global.twitter_username}`
+    }
   },
   data() {
     return {

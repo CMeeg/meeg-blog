@@ -29,6 +29,12 @@ export default {
     return {
       tag: this.$route.params.tag
     }
+  },
+  head() {
+    return this.$metadata().getMetadata({
+      title: `Articles about ${this.tag}`,
+      description: `A list of the articles that have been written about ${this.tag} on my blog.`
+    })
   }
 }
 </script>

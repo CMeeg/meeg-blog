@@ -39,6 +39,13 @@ export default {
     return {
       tags: []
     }
+  },
+  head() {
+    return this.$metadata().getMetadata({
+      title: 'Tags',
+      description:
+        'A list of the topics that articles have been written about on my blog.'
+    })
   }
 }
 </script>

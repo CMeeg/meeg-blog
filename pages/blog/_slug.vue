@@ -66,6 +66,12 @@ export default {
   },
   mounted() {
     this.$storyblok().reloadOnChange(this.story)
+  },
+  head() {
+    const metadata = this.story.content.metadata
+    metadata.title = this.story.content.title
+
+    return this.$metadata().getMetadata(metadata)
   }
 }
 </script>

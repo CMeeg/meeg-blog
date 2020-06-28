@@ -23,6 +23,9 @@ export default {
   },
   mounted() {
     this.$storyblok().reloadOnChange(this.story)
+  },
+  head() {
+    return this.$metadata().getMetadata(this.story.content.metadata)
   }
 }
 </script>
