@@ -68,8 +68,19 @@ export default {
     this.$storyblok().reloadOnChange(this.story)
   },
   head() {
-    const metadata = this.story.content.metadata
-    metadata.title = this.story.content.title
+    const metadata = {
+      ...this.story.content.metadata,
+      article: {
+        published_time: this.$storyblok().getStoryDate(this.story),
+        author: '/about',
+        section: 'Software Development',
+        tags: this.story.tag_list
+      }
+    }
+
+    if (!metadata.title) {
+      metadata.title = this.story.content.title
+    }
 
     return this.$metadata().getMetadata(metadata)
   }

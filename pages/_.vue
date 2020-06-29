@@ -37,7 +37,16 @@ export default {
     this.$storyblok().reloadOnChange(this.story)
   },
   head() {
-    return this.$metadata().getMetadata(this.story.content.metadata)
+    const metadata = this.story.content.metadata
+
+    if (this.$route.path === '/about') {
+      metadata.profile = {
+        first_name: 'Chris',
+        last_name: 'Meagher'
+      }
+    }
+
+    return this.$metadata().getMetadata(metadata)
   }
 }
 </script>
