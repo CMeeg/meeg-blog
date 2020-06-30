@@ -16,7 +16,7 @@ export default {
 
     const page = await context.app.$storyblok().get(path)
 
-    if (page.story.content.component === 'article_series') {
+    if (page?.story?.content?.component === 'article_series') {
       // `article_series` has to be a content type, but it's not a "page"
       context.error({
         statusCode: 404,
