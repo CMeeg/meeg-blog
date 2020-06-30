@@ -44,7 +44,8 @@ export default {
         accessToken: process.env.STORYBLOK_PREVIEW_TOKEN,
         cacheProvider: 'memory'
       }
-    ]
+    ],
+    '@nuxtjs/sentry'
   ],
   build: {
     extend(config, ctx) {

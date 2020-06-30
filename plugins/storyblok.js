@@ -68,6 +68,12 @@ const defaultErrorCallback = function(context, res) {
       message: res.response.data
     })
   }
+
+  sendToSentry(context, res)
+}
+
+const sendToSentry = function(context, errorData) {
+  context.$sentry.captureException(errorData)
 }
 
 const isEditMode = function(context) {
