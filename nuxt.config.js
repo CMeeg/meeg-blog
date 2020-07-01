@@ -35,7 +35,8 @@ export default {
   buildModules: [
     '@nuxt/typescript-build',
     '@nuxtjs/dotenv',
-    '@nuxtjs/tailwindcss'
+    '@nuxtjs/tailwindcss',
+    '@nuxtjs/google-analytics'
   ],
   modules: [
     [
@@ -59,5 +60,8 @@ export default {
         })
       }
     }
+  },
+  googleAnalytics: {
+    id: process.env.GA_ID
   }
 }
