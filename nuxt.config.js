@@ -8,6 +8,11 @@ export default {
   privateRuntimeConfig: {
     storyblokPreviewToken: process.env.STORYBLOK_PREVIEW_TOKEN
   },
+  components: [
+    '~/components',
+    // StoryBlok components are mostly dynamic so can't auto-load - these are managed via `~/pluings/sb-components.js`
+    { path: '~/components/storyblok/', ignore: ['**/*'] }
+  ],
   head: {
     meta: [
       { charset: 'utf-8' },
@@ -31,7 +36,6 @@ export default {
   plugins: [
     '~/plugins/composition-api.js',
     '~/plugins/storyblok',
-    '~/plugins/app-components',
     '~/plugins/sb-components',
     '~/plugins/filters',
     '~/plugins/code-highlighter',

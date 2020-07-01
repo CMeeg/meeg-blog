@@ -39,12 +39,7 @@
 </template>
 
 <script>
-import ArticleSeries from '~/components/blog/ArticleSeries.vue'
-
 export default {
-  components: {
-    ArticleSeries
-  },
   asyncData(context) {
     return context.app.$storyblok().get(context.route.path, {
       resolve_relations: 'series'

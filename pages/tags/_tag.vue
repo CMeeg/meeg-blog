@@ -19,12 +19,7 @@
 </template>
 
 <script>
-import ArticleList from '~/components/blog/ArticleList.vue'
-
 export default {
-  components: {
-    ArticleList
-  },
   data() {
     return {
       tag: this.$route.params.tag

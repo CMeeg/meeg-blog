@@ -39,12 +39,7 @@
 </template>
 
 <script>
-import ArticleCard from '~/components/blog/ArticleCard.vue'
-
 export default {
-  components: {
-    ArticleCard
-  },
   props: {
     startsWith: {
       type: String,
