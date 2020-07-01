@@ -1,7 +1,13 @@
-require('dotenv').config()
-
 export default {
   mode: 'universal',
+  publicRuntimeConfig: {
+    baseUrl: process.env.BASE_URL || 'https://meeg.dev',
+    sentryDsn: process.env.SENTRY_DSN,
+    gaId: process.env.GA_ID
+  },
+  privateRuntimeConfig: {
+    storyblokPreviewToken: process.env.STORYBLOK_PREVIEW_TOKEN
+  },
   head: {
     meta: [
       { charset: 'utf-8' },
@@ -34,7 +40,6 @@ export default {
   ],
   buildModules: [
     '@nuxt/typescript-build',
-    '@nuxtjs/dotenv',
     '@nuxtjs/tailwindcss',
     '@nuxtjs/google-analytics'
   ],

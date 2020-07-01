@@ -31,9 +31,7 @@ const getOpenGraphType = function(metadata) {
   return 'website'
 }
 
-const getAbsoluteUrl = function(env, path) {
-  const baseUrl = env.BASE_URL
-
+const getAbsoluteUrl = function(baseUrl, path) {
   if (!path) {
     return baseUrl
   }
@@ -53,7 +51,10 @@ const mergeMetadata = function(context, globalMetadata, pageMetadata) {
   }
 
   if (!mergedMetadata.og_url) {
-    mergedMetadata.og_url = getAbsoluteUrl(context.env, context.route.path)
+    mergedMetadata.og_url = getAbsoluteUrl(
+      context.$config.baseUrl,
+      context.route.path
+    )
   }
 
   if (!mergedMetadata.lang) {
@@ -184,7 +185,7 @@ const addOpenGraphArticleMeta = function(context, meta, article) {
     {
       hid: 'article:author',
       property: 'article:author',
-      content: getAbsoluteUrl(context.env, article.author)
+      content: getAbsoluteUrl(context.$config.baseUrl, article.author)
     },
     {
       hid: 'article:section',
