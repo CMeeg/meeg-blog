@@ -19,7 +19,7 @@
     "@nuxtjs/sentry": "^4.1.2",
     "@vue/composition-api": "^0.6.4",
     "highlight.js": "9.18.1",
-    "nuxt": "2.13.0",
+    "nuxt": "^2.13.0",
     "storyblok-nuxt": "^1.2.0",
     "vue-content-placeholders": "^0.2.1",
     "vue-highlight.js": "^3.1.0"
