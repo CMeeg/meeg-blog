@@ -46,6 +46,13 @@
                 </li>
               </ol>
             </div>
+
+            <p class="mb-6 text-gray-300 text-sm">
+              <em>
+                N.B. This series is a work in progress - there are further
+                articles planned.
+              </em>
+            </p>
           </template>
         </card>
       </aside>

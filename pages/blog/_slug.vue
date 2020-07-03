@@ -31,7 +31,7 @@
     </page-heading>
 
     <max-width-container>
-      <field-rich-text :doc="story.content.body" />
+      <field-rich-text v-if="story.content.body" :doc="story.content.body" />
 
       <article-series v-if="story.content.series" :story="story" class="pt-6" />
     </max-width-container>
@@ -74,7 +74,15 @@ export default {
     }
 
     if (!metadata.title) {
-      metadata.title = this.story.content.title
+      let title = this.story.content.title
+
+      if (this.story.content.series) {
+        const seriesTitle = this.story.content.series.content.title
+
+        title = `${seriesTitle}: ${title}`
+      }
+
+      metadata.title = title
     }
 
     return this.$metadata().getMetadata(metadata)
