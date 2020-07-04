@@ -14,13 +14,13 @@ export const mutations = {
 
 export const actions = {
   async nuxtServerInit({ dispatch }) {
-    dispatch('loadCacheVersion')
+    await dispatch('loadCacheVersion')
     await dispatch('loadGlobal')
   },
-  loadCacheVersion({ commit }) {
-    return this.$storyapi.get(`cdn/spaces/me`).then(res => {
-      commit('setCacheVersion', res.data.space.version)
-    })
+  async loadCacheVersion({ commit }) {
+    const space = await this.$storyblok().getSpace()
+
+    commit('setCacheVersion', space.space.version)
   },
   async loadGlobal({ commit }) {
     const global = await this.$storyblok().get('global')

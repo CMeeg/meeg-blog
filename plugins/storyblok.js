@@ -48,6 +48,19 @@ const apiGetTags = function({ api, query, successCallback, errorCallback }) {
     })
 }
 
+const apiGetSpace = function({ api, successCallback, errorCallback }) {
+  const apiPath = 'cdn/spaces/me'
+
+  return api
+    .get(apiPath)
+    .then(res => {
+      return successCallback(res)
+    })
+    .catch(res => {
+      errorCallback(res)
+    })
+}
+
 const defaultErrorCallback = function(context, res) {
   if (!res.response) {
     if (context.isDev) {
@@ -168,6 +181,22 @@ const storyblok = function(context) {
       return apiGetTags({
         api: context.app.$storyapi,
         query: query,
+        successCallback: res => successCallback(res),
+        errorCallback: res => errorCallback(context, res)
+      })
+    },
+    getSpace: options => {
+      options = options || {}
+
+      const successCallback =
+        options.successCallback ||
+        function(res) {
+          return res.data
+        }
+      const errorCallback = options.errorCallback || defaultErrorCallback
+
+      return apiGetSpace({
+        api: context.app.$storyapi,
         successCallback: res => successCallback(res),
         errorCallback: res => errorCallback(context, res)
       })

@@ -125,7 +125,7 @@ const mainNavState = {
 }
 
 export default {
-  async fetch() {
+  fetch() {
     const global = this.$store.state.global
 
     this.logo = global.logo
