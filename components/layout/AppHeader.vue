@@ -67,9 +67,9 @@
                 <nuxt-link to="/" class="block text-center sm:inline-block">
                   <field-image-asset
                     :field="logo"
-                    options="filters:quality(70)"
+                    options="140x0/filters:quality(70)"
                     class="inline h-12 w-12 rounded-full sm:inline-block sm:h-16 sm:w-16"
-                    alt=""
+                    alt="Chris Meagher"
                   />
                 </nuxt-link>
                 <nuxt-link

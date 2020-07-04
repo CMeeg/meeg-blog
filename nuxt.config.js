@@ -18,19 +18,7 @@ export default {
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' }
     ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.png' },
-      {
-        rel: 'stylesheet',
-        href:
-          'https://fonts.googleapis.com/css?family=Pacifico&text=ChrisMeag&display=swap'
-      },
-      {
-        rel: 'stylesheet',
-        href:
-          'https://fonts.googleapis.com/css?family=Zilla+Slab|Open+Sans&display=swap'
-      }
-    ]
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.png' }]
   },
   loading: { color: '#68d391' },
   plugins: [
@@ -55,7 +43,8 @@ export default {
         cacheProvider: 'memory'
       }
     ],
-    '@nuxtjs/sentry'
+    '@nuxtjs/sentry',
+    'nuxt-webfontloader'
   ],
   build: {
     extend(config, ctx) {
@@ -72,5 +61,14 @@ export default {
   },
   googleAnalytics: {
     id: process.env.GA_ID
+  },
+  webfontloader: {
+    custom: {
+      families: ['Pacifico:n4', 'Zilla Slab:n4', 'Open Sans:n4'],
+      urls: [
+        'https://fonts.googleapis.com/css?family=Pacifico:400&text=ChrisMeag&display=swap',
+        'https://fonts.googleapis.com/css?family=Zilla+Slab:400|Open+Sans:400&display=swap'
+      ]
+    }
   }
 }
