@@ -96,6 +96,7 @@ const isEditMode = function(context) {
   if (
     context.query._storyblok ||
     context.isDev ||
+    context.$config.storyblokUseVersion === 'draft' ||
     (typeof $window !== 'undefined' &&
       $window.localStorage.getItem('_storyblok_draft_mode'))
   ) {

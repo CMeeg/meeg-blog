@@ -1,7 +1,10 @@
 export default {
   mode: 'universal',
   publicRuntimeConfig: {
-    baseUrl: process.env.BASE_URL || 'https://meeg.dev',
+    hostEnv: process.env.HOST_ENV || 'dev',
+    baseUrl:
+      process.env.BASE_URL || 'https://${VERCEL_URL}' || 'https://meeg.dev',
+    storyblokUseVersion: process.env.STORYBLOK_USE_VERSION || 'published',
     sentryDsn: process.env.SENTRY_DSN,
     gaId: process.env.GA_ID
   },
@@ -44,7 +47,8 @@ export default {
       }
     ],
     '@nuxtjs/sentry',
-    'nuxt-webfontloader'
+    'nuxt-webfontloader',
+    '@nuxtjs/robots'
   ],
   build: {
     extend(config, ctx) {
@@ -60,7 +64,10 @@ export default {
     }
   },
   googleAnalytics: {
-    id: process.env.GA_ID
+    id: process.env.GA_ID,
+    debug: {
+      sendHitTask: process.env.HOST_ENV === 'production'
+    }
   },
   webfontloader: {
     custom: {
@@ -69,6 +76,19 @@ export default {
         'https://fonts.googleapis.com/css?family=Pacifico:400&text=ChrisMeag&display=swap',
         'https://fonts.googleapis.com/css?family=Zilla+Slab:400|Open+Sans:400&display=swap'
       ]
+    }
+  },
+  robots: () => {
+    if (process.env.HOST_ENV === 'production') {
+      return {
+        UserAgent: '*',
+        Allow: '/'
+      }
+    }
+
+    return {
+      UserAgent: '*',
+      Disallow: '/'
     }
   }
 }
