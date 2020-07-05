@@ -1,14 +1,22 @@
-# Default starter for Gridsome
+# meeg-blog
 
-This is the project you get when you run `gridsome create new-project`.
+> Chris Meagher's blog
 
-### 1. Install Gridsome CLI tool if you don't have
+## Build Setup
 
-`npm install --global @gridsome/cli`
+```bash
+# install dependencies
+$ yarn install
 
-### 2. Create a Gridsome project
+# serve with hot reload at localhost:3000
+$ yarn dev
 
-1. `gridsome create my-gridsome-site` to install default starter
-2. `cd my-gridsome-site` to open the folder
-3. `gridsome develop` to start a local dev server at `http://localhost:8080`
-4. Happy coding 🎉🙌
+# build for production and launch server
+$ yarn build
+$ yarn start
+
+# generate static project
+$ yarn generate
+```
+
+For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).

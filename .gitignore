@@ -1,8 +1,13 @@
 *.log
 .cache
 .DS_Store
-src/.temp
 node_modules
-dist
+
+# dotenv environment variables file
 .env
-.env.*
+
+# nuxt.js build output
+.nuxt
+
+# Nuxt generate
+dist

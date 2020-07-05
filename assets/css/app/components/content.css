@@ -1,0 +1,60 @@
+.content-block a {
+    @apply text-green-400;
+}
+
+    .content-block a:focus {
+        @apply underline outline-none;
+    }
+
+    .content-block a:hover {
+        @apply underline;
+    }
+
+.content-block h2 {
+    @apply mb-3 font-serif leading-tight text-3xl;
+}
+
+.content-block h3 {
+    @apply mb-3 font-serif leading-tight text-2xl;
+}
+
+.content-block h4 {
+    @apply mb-3 font-serif leading-tight text-xl;
+}
+
+.content-block h5 {
+    @apply mb-3 font-serif leading-tight text-lg;
+}
+
+.content-block p {
+    @apply mb-6 leading-relaxed text-gray-300;
+}
+
+.content-block ul,
+.content-block ol {
+    @apply pb-3 ml-5 list-disc list-outside;
+}
+
+.content-block ol {
+    @apply list-decimal;
+}
+
+    .content-block ul p,
+    .content-block ol p {
+        @apply mb-3;
+    }
+
+    .content-block ul ul,
+    .content-block ul ol,
+    .content-block ol ol,
+    .content-block ol ul {
+        @apply pb-0;
+    }
+
+.content-block blockquote {
+    @apply pl-4 border-l-4 border-gray-800 italic
+}
+
+    .content-block blockquote i {
+        @apply not-italic
+    }
