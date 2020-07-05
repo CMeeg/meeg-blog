@@ -70,7 +70,7 @@ export default {
   },
   async fetch() {
     const articles = await this.$storyblok().getAll({
-      sort_by: 'first_published_at:desc',
+      sort_by: 'first_published_at:asc',
       filter_query: {
         series: {
           in: this.series.uuid
