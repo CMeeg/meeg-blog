@@ -62,7 +62,10 @@ export default {
     }
   },
   googleAnalytics: {
-    id: process.env.GA_ID
+    id: process.env.GA_ID,
+    debug: {
+      sendHitTask: process.env.NODE_ENV === 'production'
+    }
   },
   webfontloader: {
     custom: {
