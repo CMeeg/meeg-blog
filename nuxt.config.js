@@ -1,7 +1,8 @@
 export default {
   mode: 'universal',
   publicRuntimeConfig: {
-    baseUrl: process.env.BASE_URL || 'https://meeg.dev',
+    baseUrl:
+      process.env.BASE_URL || 'https://${VERCEL_URL}' || 'https://meeg.dev',
     sentryDsn: process.env.SENTRY_DSN,
     gaId: process.env.GA_ID
   },
@@ -44,7 +45,8 @@ export default {
       }
     ],
     '@nuxtjs/sentry',
-    'nuxt-webfontloader'
+    'nuxt-webfontloader',
+    '@nuxtjs/robots'
   ],
   build: {
     extend(config, ctx) {
@@ -69,6 +71,19 @@ export default {
         'https://fonts.googleapis.com/css?family=Pacifico:400&text=ChrisMeag&display=swap',
         'https://fonts.googleapis.com/css?family=Zilla+Slab:400|Open+Sans:400&display=swap'
       ]
+    }
+  },
+  robots: () => {
+    if (process.env.NODE_ENV !== 'production') {
+      return {
+        UserAgent: '*',
+        Disallow: '/'
+      }
+    }
+
+    return {
+      UserAgent: '*',
+      Allow: '/'
     }
   }
 }
