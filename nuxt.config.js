@@ -1,6 +1,7 @@
 export default {
   mode: 'universal',
   publicRuntimeConfig: {
+    hostEnv: process.env.HOST_ENV || 'dev',
     baseUrl:
       process.env.BASE_URL || 'https://${VERCEL_URL}' || 'https://meeg.dev',
     storyblokUseVersion: process.env.STORYBLOK_USE_VERSION || 'published',
@@ -65,7 +66,7 @@ export default {
   googleAnalytics: {
     id: process.env.GA_ID,
     debug: {
-      sendHitTask: process.env.NODE_ENV === 'production'
+      sendHitTask: process.env.HOST_ENV === 'production'
     }
   },
   webfontloader: {
@@ -78,16 +79,16 @@ export default {
     }
   },
   robots: () => {
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.HOST_ENV === 'production') {
       return {
         UserAgent: '*',
-        Disallow: '/'
+        Allow: '/'
       }
     }
 
     return {
       UserAgent: '*',
-      Allow: '/'
+      Disallow: '/'
     }
   }
 }
