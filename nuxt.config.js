@@ -3,6 +3,7 @@ export default {
   publicRuntimeConfig: {
     baseUrl:
       process.env.BASE_URL || 'https://${VERCEL_URL}' || 'https://meeg.dev',
+    storyblokUseVersion: process.env.STORYBLOK_USE_VERSION || 'published',
     sentryDsn: process.env.SENTRY_DSN,
     gaId: process.env.GA_ID
   },
