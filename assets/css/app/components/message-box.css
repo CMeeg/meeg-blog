@@ -1,0 +1,11 @@
+.message-box .content-block p {
+    @apply mb-3;
+}
+
+.message-box .content-block ul {
+    @apply pb-0;
+}
+
+.message-box--error .content-block p {
+    @apply text-white;
+}
