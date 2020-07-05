@@ -2,7 +2,7 @@
   <div class="content-block"><slot /></div>
 </template>
 
-<script lang="ts">
+<script>
 import { defineComponent } from '@vue/composition-api'
 
 export default defineComponent({

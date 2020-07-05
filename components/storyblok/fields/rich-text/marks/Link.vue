@@ -6,7 +6,7 @@
   <a v-else :href="href" :target="target"><slot /></a>
 </template>
 
-<script lang="ts">
+<script>
 import { defineComponent, ref } from '@vue/composition-api'
 
 export default defineComponent({
