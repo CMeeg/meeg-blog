@@ -1,3 +1,5 @@
+import sitemap from './plugins/sitemap'
+
 export default {
   mode: 'universal',
   publicRuntimeConfig: {
@@ -48,7 +50,8 @@ export default {
     ],
     '@nuxtjs/sentry',
     'nuxt-webfontloader',
-    '@nuxtjs/robots'
+    '@nuxtjs/robots',
+    '@nuxtjs/sitemap'
   ],
   build: {
     extend(config, ctx) {
@@ -82,13 +85,26 @@ export default {
     if (process.env.HOST_ENV === 'production') {
       return {
         UserAgent: '*',
-        Allow: '/'
+        Allow: '/',
+        Sitemap: `${sitemap.getHostName()}/sitemap.xml`
       }
     }
 
     return {
       UserAgent: '*',
       Disallow: '/'
+    }
+  },
+  sitemap: {
+    hostname: sitemap.getHostName(),
+    defaults: {
+      changefreq: 'monthly',
+      priority: 0.5,
+      lastmod: new Date()
+    },
+    exclude: ['/about', '/blog'],
+    routes: async () => {
+      return await sitemap.getRoutes()
     }
   }
 }
