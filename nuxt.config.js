@@ -1,17 +1,34 @@
 import sitemap from './plugins/sitemap'
 
+const appSettings = {
+  hostEnv: process.env.HOST_ENV || 'development',
+  baseUrl: process.env.BASE_URL || 'https://${VERCEL_URL}' || 'https://meeg.dev'
+}
+
+const storyblokSettings = {
+  previewToken: process.env.STORYBLOK_PREVIEW_TOKEN,
+  useVersion: process.env.STORYBLOK_USE_VERSION || 'published'
+}
+
+const gaSettings = {
+  id: process.env.GA_ID
+}
+
+const sentrySettings = {
+  dsn: process.env.SENTRY_DSN,
+  commit: process.env.VERCEL_GITHUB_COMMIT_SHA
+}
+
 export default {
   mode: 'universal',
   publicRuntimeConfig: {
-    hostEnv: process.env.HOST_ENV || 'dev',
-    baseUrl:
-      process.env.BASE_URL || 'https://${VERCEL_URL}' || 'https://meeg.dev',
-    storyblokUseVersion: process.env.STORYBLOK_USE_VERSION || 'published',
-    sentryDsn: process.env.SENTRY_DSN,
-    gaId: process.env.GA_ID
+    hostEnv: appSettings.hostEnv,
+    baseUrl: appSettings.baseUrl,
+    storyblokUseVersion: storyblokSettings.useVersion,
+    gaId: gaSettings.id
   },
   privateRuntimeConfig: {
-    storyblokPreviewToken: process.env.STORYBLOK_PREVIEW_TOKEN
+    storyblokPreviewToken: storyblokSettings.previewToken
   },
   components: [
     '~/components',
@@ -44,7 +61,7 @@ export default {
     [
       'storyblok-nuxt',
       {
-        accessToken: process.env.STORYBLOK_PREVIEW_TOKEN,
+        accessToken: storyblokSettings.previewToken,
         cacheProvider: 'memory'
       }
     ],
@@ -67,9 +84,9 @@ export default {
     }
   },
   googleAnalytics: {
-    id: process.env.GA_ID,
+    id: gaSettings.id,
     debug: {
-      sendHitTask: process.env.HOST_ENV === 'production'
+      sendHitTask: appSettings.hostEnv === 'production'
     }
   },
   webfontloader: {
@@ -82,7 +99,7 @@ export default {
     }
   },
   robots: () => {
-    if (process.env.HOST_ENV === 'production') {
+    if (appSettings.hostEnv === 'production') {
       return {
         UserAgent: '*',
         Allow: '/',
@@ -105,6 +122,20 @@ export default {
     exclude: ['/about', '/blog'],
     routes: async () => {
       return await sitemap.getRoutes()
+    }
+  },
+  sentry: {
+    dsn: sentrySettings.dsn,
+    publishRelease: true,
+    config: {
+      environment: appSettings.hostEnv
+    },
+    webpackConfig: {
+      release: sentrySettings.commit,
+      setCommits: {
+        repo: 'CMeeg/meeg-blog',
+        commit: sentrySettings.commit
+      }
     }
   }
 }
