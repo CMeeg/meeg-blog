@@ -107,17 +107,6 @@ const getStoryPriority = function(story) {
 }
 
 export default {
-  getHostName: () => {
-    if (process.env.BASE_URL) {
-      return process.env.BASE_URL
-    }
-
-    if (process.env.VERCEL_URL) {
-      return `https://${process.env.VERCEL_URL}`
-    }
-
-    return 'https://meeg.dev'
-  },
   getRoutes: async () => {
     const links = await apiGetLinks()
     const stories = await apiGetStories(links)
