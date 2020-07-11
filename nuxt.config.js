@@ -2,7 +2,11 @@ import sitemap from './plugins/sitemap'
 
 const appSettings = {
   hostEnv: process.env.HOST_ENV || 'development',
-  baseUrl: process.env.BASE_URL || 'https://${VERCEL_URL}' || 'https://meeg.dev'
+  baseUrl:
+    process.env.BASE_URL ||
+    (process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : 'https://meeg.dev')
 }
 
 const storyblokSettings = {
@@ -103,7 +107,7 @@ export default {
       return {
         UserAgent: '*',
         Allow: '/',
-        Sitemap: `${sitemap.getHostName()}/sitemap.xml`
+        Sitemap: `${appSettings.baseUrl}/sitemap.xml`
       }
     }
 
@@ -113,7 +117,7 @@ export default {
     }
   },
   sitemap: {
-    hostname: sitemap.getHostName(),
+    hostname: appSettings.baseUrl,
     defaults: {
       changefreq: 'monthly',
       priority: 0.5,
