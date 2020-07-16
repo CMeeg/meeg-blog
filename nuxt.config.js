@@ -1,4 +1,5 @@
 import sitemap from './plugins/sitemap'
+import sentry from './plugins/sentry'
 
 const appSettings = {
   hostEnv: process.env.HOST_ENV || 'development',
@@ -18,10 +19,7 @@ const gaSettings = {
   id: process.env.GA_ID
 }
 
-const sentrySettings = {
-  dsn: process.env.SENTRY_DSN,
-  commit: process.env.VERCEL_GITHUB_COMMIT_SHA
-}
+const sentrySettings = sentry.getSettings(process.env, appSettings)
 
 export default {
   mode: 'universal',
@@ -128,18 +126,5 @@ export default {
       return await sitemap.getRoutes()
     }
   },
-  sentry: {
-    dsn: sentrySettings.dsn,
-    publishRelease: true,
-    config: {
-      environment: appSettings.hostEnv
-    },
-    webpackConfig: {
-      release: sentrySettings.commit,
-      setCommits: {
-        repo: 'CMeeg/meeg-blog',
-        commit: sentrySettings.commit
-      }
-    }
-  }
+  sentry: sentrySettings
 }
