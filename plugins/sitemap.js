@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import StoryblokClient from 'storyblok-js-client'
 
 const storyapi = new StoryblokClient({
@@ -9,62 +10,63 @@ const storyapi = new StoryblokClient({
   timeout: 0
 })
 
-const isProductionEnv = process.env.HOST_ENV === 'production'
-const version = isProductionEnv ? 'published' : 'draft'
+const isProductionEnvironment = process.env.HOST_ENV === 'production'
+const version = isProductionEnvironment ? 'published' : 'draft'
 
-const apiGetLinks = function() {
+const apiGetLinks = function () {
   return storyapi
     .get('cdn/links', {
-      version: version
+      version
     })
-    .then(res => {
-      const linksObj = res.data.links
+    .then((response) => {
+      const linksObject = response.data.links
       const linksArray = []
 
-      Object.keys(linksObj).forEach(key => {
-        linksArray.push(linksObj[key])
+      Object.keys(linksObject).forEach((key) => {
+        linksArray.push(linksObject[key])
       })
 
       return {
-        total: parseInt(res.headers.total),
+        total: Number.parseInt(response.headers.total, 10),
         links: linksArray
       }
     })
-    .catch(res => {
-      if (!isProductionEnv) {
-        console.error(res)
+    .catch((error) => {
+      if (!isProductionEnvironment) {
+        console.error(error)
       }
     })
 }
 
-const apiGetStories = function(links) {
+const apiGetStories = function (links) {
   const linkIds = links.links
-    .filter(link => {
-      return !isProductionEnv || link.published
+    .filter((link) => {
+      return !isProductionEnvironment || link.published
     })
-    .map(link => {
+    .map((link) => {
       return link.uuid
     })
 
   return storyapi
     .get('cdn/stories', {
-      version: version,
+      version,
+      // eslint-disable-next-line camelcase
       by_uuids: linkIds.join(',')
     })
-    .then(res => {
+    .then((response) => {
       return {
-        total: parseInt(res.headers.total),
-        stories: res.data.stories
+        total: Number.parseInt(response.headers.total, 10),
+        stories: response.data.stories
       }
     })
-    .catch(res => {
-      if (!isProductionEnv) {
-        console.error(res)
+    .catch((error) => {
+      if (!isProductionEnvironment) {
+        console.error(error)
       }
     })
 }
 
-const getStoryUrl = function(story) {
+const getStoryUrl = function (story) {
   if (story.path) {
     return story.path
   }
@@ -72,7 +74,7 @@ const getStoryUrl = function(story) {
   return `/${story.full_slug}`
 }
 
-const getStoryLastModified = function(story) {
+const getStoryLastModified = function (story) {
   if (story.sort_by_date !== null) {
     return new Date(story.sort_by_date)
   }
@@ -90,7 +92,7 @@ const getStoryLastModified = function(story) {
   }
 }
 
-const getStoryChangeFrequency = function(story) {
+const getStoryChangeFrequency = function (story) {
   if (story.slug === 'home') {
     return 'weekly'
   }
@@ -98,9 +100,9 @@ const getStoryChangeFrequency = function(story) {
   return 'monthly'
 }
 
-const getStoryPriority = function(story) {
+const getStoryPriority = function (story) {
   if (story.content.component === 'article' || story.slug === 'home') {
-    return 1.0
+    return 1
   }
 
   return 0.5
@@ -110,13 +112,13 @@ export default {
   getRoutes: async () => {
     const links = await apiGetLinks()
     const stories = await apiGetStories(links)
-    const excludedContentTypes = ['global', 'article_series']
+    const excludedContentTypes = new Set(['global', 'article_series'])
 
     const siteMapItems = stories.stories
-      .filter(story => {
-        return !excludedContentTypes.includes(story.content.component)
+      .filter((story) => {
+        return !excludedContentTypes.has(story.content.component)
       })
-      .map(story => {
+      .map((story) => {
         return {
           url: getStoryUrl(story),
           lastmod: getStoryLastModified(story),

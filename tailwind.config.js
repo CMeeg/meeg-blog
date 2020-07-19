@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
@@ -15,7 +16,7 @@ module.exports = {
         ]
       },
       minWidth: {
-        '0': '0',
+        0: '0',
         xs: '20rem',
         full: '100%'
       }

@@ -11,9 +11,9 @@
     "export": "nuxt export",
     "serve": "nuxt serve",
     "generate": "nuxt build && nuxt export",
-    "test": "jest",
-    "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
-    "lintfix": "eslint --fix --ext .js,.vue --ignore-path .gitignore ."
+    "test": "lint && ava",
+    "lint": "xo",
+    "lintfix": "xo --fix"
   },
   "precommit": "yarn lint",
   "dependencies": {
@@ -32,24 +32,25 @@
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
+    "@nuxt/types": "^2.13.3",
     "@nuxt/typescript-build": "^1.0.0",
     "@nuxtjs/google-analytics": "^2.3.0",
     "@nuxtjs/tailwindcss": "^2.0.0",
     "@types/highlight.js": "^9.12.4",
     "@vue/test-utils": "^1.0.0-beta.27",
-    "babel-eslint": "^10.1.0",
-    "babel-jest": "^25.0.0",
-    "eslint": "^6.0.0",
-    "eslint-config-prettier": "^6.10.0",
-    "eslint-loader": "^4.0.2",
-    "eslint-plugin-prettier": "^3.1.2",
+    "ava": "^3.10.1",
+    "eslint": "^7.1.0",
+    "eslint-config-xo": "^0.29.1",
+    "eslint-config-xo-vue": "^3.1.21",
+    "eslint-import-resolver-nuxt": "^1.0.1",
+    "eslint-plugin-ava": "^10.4.0",
+    "eslint-plugin-eslint-comments": "^3.2.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-unicorn": "^21.0.0",
     "eslint-plugin-vue": "^6.2.2",
-    "jest": "^25.0.0",
-    "prettier": "^1.19.1",
-    "ts-jest": "^25.0.0",
     "typescript": "^3.0.0",
-    "vue-jest": "^4.0.0-0",
     "vue-template-compiler": "^2.0.0",
-    "webpack": "^4.0.0"
+    "webpack": "^4.0.0",
+    "xo": "^0.32.1"
   }
 }

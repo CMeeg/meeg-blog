@@ -1,0 +1,27 @@
+{
+  "space": true,
+  "semicolon": false,
+  "extends": "xo-vue",
+  "extensions": [
+    "js",
+    "vue"
+  ],
+  "prettier": true,
+  "rules": {
+    "import/no-anonymous-default-export": "off",
+    "unicorn/prevent-abbreviations": [
+      "warn",
+      {
+        "whitelist": {
+          "src": true,
+          "dest": true,
+          "env": true,
+          "props": true
+        }
+      }
+    ]
+  },
+  "settings": {
+    "import/resolver": "nuxt"
+  }
+}

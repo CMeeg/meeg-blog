@@ -4,23 +4,23 @@ export default {
     const commit = env.VERCEL_GITHUB_COMMIT_SHA
     const release = commit // TODO: Use SemVer
     const repo = 'CMeeg/meeg-blog' // TODO: Can get from Vercel env vars?
-    const isDev = appSettings.hostEnv === 'development'
+    const isDevelopment = appSettings.hostEnv === 'development'
 
     const settings = {
-      dsn: dsn,
-      publishRelease: !isDev,
+      dsn,
+      publishRelease: !isDevelopment,
       config: {
         environment: appSettings.hostEnv,
-        release: release
+        release
       }
     }
 
-    if (!isDev) {
+    if (!isDevelopment) {
       settings.webpackConfig = {
-        release: release,
+        release,
         setCommits: {
-          repo: repo,
-          commit: commit
+          repo,
+          commit
         }
       }
     }

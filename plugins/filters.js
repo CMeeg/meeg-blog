@@ -1,11 +1,11 @@
 import Vue from 'vue'
 
-Vue.filter('dashify', function(value, prefix) {
+Vue.filter('dashify', function (value, prefix) {
   if (typeof value === 'undefined') {
     return 'undefined'
   }
 
-  let dashified = value
+  const dashified = value
     .toString()
     .replace(/([A-Z])/g, ' $1')
     .trim()
@@ -19,7 +19,7 @@ Vue.filter('dashify', function(value, prefix) {
   return `${prefix}-${dashified}`
 })
 
-Vue.filter('rootRelative', function(url) {
+Vue.filter('rootRelative', function (url) {
   if (url.startsWith('/')) {
     return url
   }

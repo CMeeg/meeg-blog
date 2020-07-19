@@ -1,19 +1,20 @@
 import Vue from 'vue'
-import Blok from '~/components/storyblok/Blok.vue'
-import Page from '~/components/storyblok/bloks/Page.vue'
-import ArticleListing from '~/components/storyblok/bloks/ArticleListing.vue'
-import MessageBox from '~/components/storyblok/bloks/MessageBox.vue'
-import PageHeading from '~/components/storyblok/bloks/PageHeading.vue'
-import Blocks from '~/components/storyblok/fields/Blocks.vue'
-import ImageAsset from '~/components/storyblok/fields/ImageAsset.vue'
-import RichText from '~/components/storyblok/fields/RichText.vue'
+import Blok from '~/components/storyblok/Blok'
+import Page from '~/components/storyblok/bloks/Page'
+import ArticleListing from '~/components/storyblok/bloks/ArticleListing'
+import MessageBox from '~/components/storyblok/bloks/MessageBox'
+import PageHeading from '~/components/storyblok/bloks/PageHeading'
+import Blocks from '~/components/storyblok/fields/Blocks'
+import ImageAsset from '~/components/storyblok/fields/ImageAsset'
+import RichText from '~/components/storyblok/fields/RichText'
 import VueRichTextRenderer from '@marvr/storyblok-rich-text-vue-renderer'
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { Block, Mark } from '@marvr/storyblok-rich-text-types'
-import RichTextDocument from '~/components/storyblok/fields/rich-text/blocks/Document.vue'
-import RichTextCodeBlock from '~/components/storyblok/fields/rich-text/blocks/Code.vue'
-import RichTextCodeMark from '~/components/storyblok/fields/rich-text/marks/Code.vue'
-import RichTextLink from '~/components/storyblok/fields/rich-text/marks/Link.vue'
-import RichTextBlok from '~/components/storyblok/fields/rich-text/components/Blok.vue'
+import RichTextDocument from '~/components/storyblok/fields/rich-text/blocks/Document'
+import RichTextCodeBlock from '~/components/storyblok/fields/rich-text/blocks/Code'
+import RichTextCodeMark from '~/components/storyblok/fields/rich-text/marks/Code'
+import RichTextLink from '~/components/storyblok/fields/rich-text/marks/Link'
+import RichTextBlok from '~/components/storyblok/fields/rich-text/components/Blok'
 
 Vue.component('blok', Blok)
 
@@ -43,6 +44,7 @@ Vue.use(VueRichTextRenderer, {
       [Mark.LINK]: RichTextLink
     },
     components: {
+      // eslint-disable-next-line camelcase
       message_box: RichTextBlok
     }
   }

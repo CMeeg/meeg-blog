@@ -1,15 +1,17 @@
-const getGlobalMetadata = function(context) {
+const getGlobalMetadata = function (context) {
   const global = context.store.state.global
   const globalMetadata = trimObject(global.metadata)
 
+  /* eslint-disable camelcase */
   return {
     site_title: global.site_title,
     twitter_site: global.twitter_username,
     ...globalMetadata
   }
+  /* eslint-enable camelcase */
 }
 
-const getOpenGraphPrefix = function(metadata) {
+const getOpenGraphPrefix = function (metadata) {
   const prefixes = ['og: http://ogp.me/ns#']
 
   if (metadata.article) {
@@ -23,7 +25,7 @@ const getOpenGraphPrefix = function(metadata) {
   return prefixes.join(' ')
 }
 
-const getOpenGraphType = function(metadata) {
+const getOpenGraphType = function (metadata) {
   if (metadata.article) {
     return 'article'
   }
@@ -31,21 +33,22 @@ const getOpenGraphType = function(metadata) {
   return 'website'
 }
 
-const getAbsoluteUrl = function(baseUrl, path) {
+const getAbsoluteUrl = function (baseUrl, path) {
   if (!path) {
     return baseUrl
   }
 
   if (path.startsWith('/')) {
-    path = path.substr(1)
+    path = path.slice(1)
   }
 
   return `${baseUrl}/${path}`
 }
 
-const mergeMetadata = function(context, globalMetadata, pageMetadata) {
+const mergeMetadata = function (context, globalMetadata, pageMetadata) {
   const mergedMetadata = Object.assign({}, globalMetadata, pageMetadata)
 
+  /* eslint-disable camelcase */
   if (!mergedMetadata.og_type) {
     mergedMetadata.og_type = getOpenGraphType(mergedMetadata)
   }
@@ -88,29 +91,30 @@ const mergeMetadata = function(context, globalMetadata, pageMetadata) {
   if (!mergedMetadata.twitter_image) {
     mergedMetadata.twitter_image = mergedMetadata.og_image
   }
+  /* eslint-enable camelcase */
 
   return mergedMetadata
 }
 
-const trimObject = function(obj) {
-  const trimmedObj = Object.assign({}, obj)
+const trimObject = function (object) {
+  const trimmedObject = Object.assign({}, object)
 
   // Remove empty keys
-  Object.keys(trimmedObj).forEach(
-    key => !trimmedObj[key] && delete trimmedObj[key]
+  Object.keys(trimmedObject).forEach(
+    (key) => !trimmedObject[key] && delete trimmedObject[key]
   )
 
-  return trimmedObj
+  return trimmedObject
 }
 
-const getHtmlAttrs = function(metadata) {
+const getHtmlAttributes = function (metadata) {
   return {
     prefix: metadata.prefix,
     lang: metadata.lang.toLowerCase()
   }
 }
 
-const getMeta = function(context, metadata) {
+const getMeta = function (context, metadata) {
   const meta = [
     {
       hid: 'description',
@@ -126,7 +130,7 @@ const getMeta = function(context, metadata) {
   return meta
 }
 
-const addOpenGraphMeta = function(context, meta, metadata) {
+const addOpenGraphMeta = function (context, meta, metadata) {
   meta.push(
     {
       hid: 'og:type',
@@ -152,7 +156,7 @@ const addOpenGraphMeta = function(context, meta, metadata) {
       hid: 'og:title',
       property: 'og:title',
       content: metadata.og_title,
-      template: chunk => chunk || metadata.site_title
+      template: (chunk) => chunk || metadata.site_title
     },
     {
       hid: 'og:description',
@@ -175,7 +179,7 @@ const addOpenGraphMeta = function(context, meta, metadata) {
   }
 }
 
-const addOpenGraphArticleMeta = function(context, meta, article) {
+const addOpenGraphArticleMeta = function (context, meta, article) {
   meta.push(
     {
       hid: 'article:published_time',
@@ -194,7 +198,7 @@ const addOpenGraphArticleMeta = function(context, meta, article) {
     }
   )
 
-  if (article.tags && article.tags.length) {
+  if (article.tags && article.tags.length > 0) {
     article.tags.forEach((tag, index) => {
       meta.push({
         hid: `article:tag:${index}`,
@@ -205,7 +209,7 @@ const addOpenGraphArticleMeta = function(context, meta, article) {
   }
 }
 
-const addOpenGraphProfileMeta = function(meta, profile) {
+const addOpenGraphProfileMeta = function (meta, profile) {
   meta.push(
     {
       hid: 'profile:first_name',
@@ -220,7 +224,7 @@ const addOpenGraphProfileMeta = function(meta, profile) {
   )
 }
 
-const addTwitterMeta = function(meta, metadata) {
+const addTwitterMeta = function (meta, metadata) {
   meta.push(
     {
       hid: 'twitter:card',
@@ -241,7 +245,7 @@ const addTwitterMeta = function(meta, metadata) {
       hid: 'twitter:title',
       property: 'twitter:title',
       content: metadata.twitter_title,
-      template: chunk => chunk || metadata.site_title
+      template: (chunk) => chunk || metadata.site_title
     },
     {
       hid: 'twitter:description',
@@ -256,9 +260,9 @@ const addTwitterMeta = function(meta, metadata) {
   )
 }
 
-const metadata = function(context) {
+const metadata = function (context) {
   return {
-    getMetadata: metadata => {
+    getMetadata: (metadata) => {
       const globalMetadata = getGlobalMetadata(context)
       const pageMetadata = trimObject(metadata || {})
       const mergedMetadata = mergeMetadata(
@@ -268,9 +272,9 @@ const metadata = function(context) {
       )
 
       return {
-        htmlAttrs: getHtmlAttrs(mergedMetadata),
+        htmlAttrs: getHtmlAttributes(mergedMetadata),
         title: mergedMetadata.title,
-        titleTemplate: chunk => {
+        titleTemplate: (chunk) => {
           return chunk
             ? `${chunk} | ${mergedMetadata.site_title}`
             : mergedMetadata.site_title

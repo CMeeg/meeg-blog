@@ -1,4 +1,4 @@
-const apiGetStories = function({
+const apiGetStories = function ({
   api,
   path,
   query,
@@ -9,15 +9,15 @@ const apiGetStories = function({
 
   return api
     .get(apiPath, query)
-    .then(res => {
-      return successCallback(res)
+    .then((response) => {
+      return successCallback(response)
     })
-    .catch(res => {
-      errorCallback(res)
+    .catch((error) => {
+      errorCallback(error)
     })
 }
 
-const getFullApiStoriesPath = function(path) {
+const getFullApiStoriesPath = function (path) {
   const apiBasePath = 'cdn/stories'
 
   if (!path) {
@@ -25,7 +25,7 @@ const getFullApiStoriesPath = function(path) {
   }
 
   if (path.startsWith('/')) {
-    path = path.substr(1)
+    path = path.slice(1)
   }
 
   if (path.endsWith('/')) {
@@ -35,61 +35,61 @@ const getFullApiStoriesPath = function(path) {
   return `${apiBasePath}/${path}`
 }
 
-const apiGetTags = function({ api, query, successCallback, errorCallback }) {
+const apiGetTags = function ({ api, query, successCallback, errorCallback }) {
   const apiPath = 'cdn/tags'
 
   return api
     .get(apiPath, query)
-    .then(res => {
-      return successCallback(res)
+    .then((response) => {
+      return successCallback(response)
     })
-    .catch(res => {
-      errorCallback(res)
+    .catch((error) => {
+      errorCallback(error)
     })
 }
 
-const apiGetSpace = function({ api, successCallback, errorCallback }) {
+const apiGetSpace = function ({ api, successCallback, errorCallback }) {
   const apiPath = 'cdn/spaces/me'
 
   return api
     .get(apiPath)
-    .then(res => {
-      return successCallback(res)
+    .then((response) => {
+      return successCallback(response)
     })
-    .catch(res => {
-      errorCallback(res)
+    .catch((error) => {
+      errorCallback(error)
     })
 }
 
-const defaultErrorCallback = function(context, res) {
-  if (!res.response) {
+const defaultErrorCallback = function (context, error) {
+  if (error.response) {
     if (context.isDev) {
-      console.error(res)
+      console.error(error.response)
+    }
+
+    context.error({
+      statusCode: error.response.status,
+      message: error.response.data
+    })
+  } else {
+    if (context.isDev) {
+      console.error(error)
     }
 
     context.error({
       statusCode: 404,
       message: 'Failed to receive content from api'
     })
-  } else {
-    if (context.isDev) {
-      console.error(res.response)
-    }
-
-    context.error({
-      statusCode: res.response.status,
-      message: res.response.data
-    })
   }
 
-  sendToSentry(context, res)
+  sendToSentry(context, error)
 }
 
-const sendToSentry = function(context, errorData) {
-  context.$sentry.captureException(errorData)
+const sendToSentry = function (context, error) {
+  context.$sentry.captureException(error)
 }
 
-const isEditMode = function(context) {
+const isEditMode = function (context) {
   let editMode = false
   const $window = process.client ? window : undefined
 
@@ -102,7 +102,7 @@ const isEditMode = function(context) {
   ) {
     if (typeof $window !== 'undefined') {
       $window.localStorage.setItem('_storyblok_draft_mode', '1')
-      if ($window.location == $window.parent.location) {
+      if ($window.location === $window.parent.location) {
         $window.localStorage.removeItem('_storyblok_draft_mode')
       }
     }
@@ -113,7 +113,7 @@ const isEditMode = function(context) {
   return editMode
 }
 
-const storyblok = function(context) {
+const storyblok = function (context) {
   const version = isEditMode(context) ? 'draft' : 'published'
 
   return {
@@ -126,17 +126,18 @@ const storyblok = function(context) {
 
       const successCallback =
         options.successCallback ||
-        function(res) {
-          return res.data
+        function (response) {
+          return response.data
         }
+
       const errorCallback = options.errorCallback || defaultErrorCallback
 
       return apiGetStories({
         api: context.app.$storyapi,
-        path: path,
-        query: query,
-        successCallback: res => successCallback(res),
-        errorCallback: res => errorCallback(context, res)
+        path,
+        query,
+        successCallback: (response) => successCallback(response),
+        errorCallback: (error) => errorCallback(context, error)
       })
     },
     getAll: (query, options) => {
@@ -148,22 +149,23 @@ const storyblok = function(context) {
 
       const successCallback =
         options.successCallback ||
-        function(res) {
+        function (response) {
           return {
             stories: {
-              total: parseInt(res.headers.total),
-              stories: res.data.stories
+              total: Number.parseInt(response.headers.total, 10),
+              stories: response.data.stories
             }
           }
         }
+
       const errorCallback = options.errorCallback || defaultErrorCallback
 
       return apiGetStories({
         api: context.app.$storyapi,
         path: null,
-        query: query,
-        successCallback: res => successCallback(res),
-        errorCallback: res => errorCallback(context, res)
+        query,
+        successCallback: (response) => successCallback(response),
+        errorCallback: (error) => errorCallback(context, error)
       })
     },
     getTags: (query, options) => {
@@ -174,37 +176,39 @@ const storyblok = function(context) {
 
       const successCallback =
         options.successCallback ||
-        function(res) {
-          return res.data
+        function (response) {
+          return response.data
         }
+
       const errorCallback = options.errorCallback || defaultErrorCallback
 
       return apiGetTags({
         api: context.app.$storyapi,
-        query: query,
-        successCallback: res => successCallback(res),
-        errorCallback: res => errorCallback(context, res)
+        query,
+        successCallback: (response) => successCallback(response),
+        errorCallback: (error) => errorCallback(context, error)
       })
     },
-    getSpace: options => {
+    getSpace: (options) => {
       options = options || {}
 
       const successCallback =
         options.successCallback ||
-        function(res) {
-          return res.data
+        function (response) {
+          return response.data
         }
+
       const errorCallback = options.errorCallback || defaultErrorCallback
 
       return apiGetSpace({
         api: context.app.$storyapi,
-        successCallback: res => successCallback(res),
-        errorCallback: res => errorCallback(context, res)
+        successCallback: (response) => successCallback(response),
+        errorCallback: (error) => errorCallback(context, error)
       })
     },
-    reloadOnChange: story => {
-      context.$storybridge.on(['input', 'published', 'change'], event => {
-        if (event.action == 'input') {
+    reloadOnChange: (story) => {
+      context.$storybridge.on(['input', 'published', 'change'], (event) => {
+        if (event.action === 'input') {
           if (event.story.id === this.story.id) {
             story.content = event.story.content
           }
@@ -213,7 +217,7 @@ const storyblok = function(context) {
         }
       })
     },
-    getStoryDate: story => {
+    getStoryDate: (story) => {
       if (story.sort_by_date !== null) {
         return new Date(story.sort_by_date)
       }

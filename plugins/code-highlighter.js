@@ -38,20 +38,18 @@ const config = {
   }
 }
 
-const supportedLanguages = Object.keys(config.languages)
-  .map(key => {
-    return key.toLowerCase()
-  })
+const supportedLanguageKeys = Object.keys(config.languages)
+  .map((key) => key.toLowerCase())
   // These are for where the language code from Storyblok doesn't match up with the language name from highlight.js
   .concat(['html'])
 
+const supportedLanguages = new Set(supportedLanguageKeys)
+
 Vue.use(VueHighlightJS, config)
 
-const highlighter = function() {
+const highlighter = function () {
   return {
-    isSupportedLanguage: lang => {
-      return supportedLanguages.includes(lang.toLowerCase())
-    }
+    isSupportedLanguage: (lang) => supportedLanguages.has(lang.toLowerCase())
   }
 }
 
