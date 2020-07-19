@@ -27,7 +27,9 @@ export default {
     hostEnv: appSettings.hostEnv,
     baseUrl: appSettings.baseUrl,
     storyblokUseVersion: storyblokSettings.useVersion,
-    gaId: gaSettings.id
+    googleAnalytics: {
+      id: gaSettings.id
+    }
   },
   privateRuntimeConfig: {
     storyblokPreviewToken: storyblokSettings.previewToken
@@ -73,7 +75,6 @@ export default {
     '@nuxtjs/sitemap'
   ],
   googleAnalytics: {
-    id: gaSettings.id,
     debug: {
       sendHitTask: appSettings.hostEnv === 'production'
     }
