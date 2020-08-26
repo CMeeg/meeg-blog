@@ -1,5 +1,5 @@
-import sitemap from './plugins/sitemap'
-import sentry from './plugins/sentry'
+import sitemap from './utils/sitemap'
+import sentry from './utils/sentry'
 
 const appSettings = {
   hostEnv: process.env.HOST_ENV || 'development',
@@ -48,7 +48,7 @@ export default {
   },
   loading: { color: '#68d391' },
   plugins: [
-    '~/plugins/composition-api.js',
+    '~/plugins/composition-api',
     '~/plugins/storyblok',
     '~/plugins/sb-components',
     '~/plugins/filters',
