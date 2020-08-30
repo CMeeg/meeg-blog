@@ -3,7 +3,7 @@
     <page-heading>
       <template v-slot:title>{{ tag }}</template>
       <template v-slot:intro>
-        <div class="content-block">
+        <div class="prose">
           <p>
             Articles about <i>{{ tag }}</i> can be found below.<br />
             <nuxt-link :to="{ name: 'tags' }">See all tags</nuxt-link>

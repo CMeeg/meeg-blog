@@ -1,6 +1,2 @@
-@import './app/base.css';
-@import './app/components/header.css';
-@import './app/components/content.css';
-@import './app/components/message-box.css';
-@import './app/components/code-highlighter.css';
-@import './app/components/content-placeholders.css';
+@import './vendor/highlightjs/night-owl.css';
+@import './app/main.css';

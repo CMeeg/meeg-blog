@@ -1,6 +1,6 @@
 <template>
   <message-box :type="blok.type">
-    <field-rich-text :doc="blok.message" />
+    <field-rich-text :doc="blok.message" class="prose-sm" />
   </message-box>
 </template>
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="content-block"><slot /></div>
+  <div class="max-w-none prose"><slot /></div>
 </template>
 
 <script>

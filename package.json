@@ -36,6 +36,7 @@
     "@nuxt/typescript-build": "^2.0.0",
     "@nuxtjs/google-analytics": "^2.3.0",
     "@nuxtjs/tailwindcss": "^3.0.0",
+    "@tailwindcss/typography": "^0.2.0",
     "@types/highlight.js": "^9.12.4",
     "@vue/test-utils": "^1.0.0-beta.27",
     "ava": "^3.10.1",

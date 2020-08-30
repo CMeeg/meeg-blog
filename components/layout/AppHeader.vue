@@ -9,7 +9,7 @@
         </template>
         <template v-else-if="$fetchState.error">
           <message-box type="error">
-            <div class="content-block">
+            <div class="prose">
               <p>
                 <em>{{ $fetchState.error.message }}</em>
               </p>

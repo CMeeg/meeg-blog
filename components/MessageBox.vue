@@ -1,7 +1,7 @@
 <template>
   <div
     :class="messageTypeCssClass"
-    class="message-box flex items-start mb-6 p-6 pb-3 pl-3 text-sm rounded-lg"
+    class="message-box flex items-start mb-8 p-6 pl-3 text-sm rounded-lg"
   >
     <svg
       v-if="type === 'info'"

@@ -2,14 +2,14 @@
   <div class="mb-6">
     <template v-if="$fetchState.pending">
       <message-box type="info">
-        <div class="content-block">
+        <div class="prose">
           <p>Fetching articles in series</p>
         </div>
       </message-box>
     </template>
     <template v-else-if="$fetchState.error">
       <message-box type="error">
-        <div class="content-block">
+        <div class="prose">
           <p>{{ $fetchState.error.message }}</p>
         </div>
       </message-box>
@@ -28,7 +28,7 @@
           <template v-slot:body>
             <field-rich-text :doc="series.content.summary" />
 
-            <div class="content-block text-sm">
+            <div class="prose prose-sm">
               <ol v-if="articles.total > 0">
                 <li v-for="article in articles.stories" :key="article.uuid">
                   <p>
@@ -45,14 +45,14 @@
                   </p>
                 </li>
               </ol>
-            </div>
 
-            <p class="mb-6 text-gray-300 text-sm">
-              <em>
-                N.B. This series is a work in progress - there are further
-                articles planned.
-              </em>
-            </p>
+              <p>
+                <em>
+                  N.B. This series is a work in progress - there are further
+                  articles planned.
+                </em>
+              </p>
+            </div>
           </template>
         </card>
       </aside>

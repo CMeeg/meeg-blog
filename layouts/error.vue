@@ -5,7 +5,7 @@
         {{ title }}
       </template>
       <template v-slot:intro>
-        <div class="content-block">
+        <div class="prose">
           <p v-if="statusCode === 404">
             Please try taking a look at my
             <nuxt-link to="/blog">articles</nuxt-link>,

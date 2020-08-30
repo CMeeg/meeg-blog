@@ -36,7 +36,7 @@ export default {
   },
   components: [
     '~/components',
-    // StoryBlok components are mostly dynamic so can't auto-load - these are managed via `~/pluings/sb-components.js`
+    // StoryBlok components are mostly dynamic so can't auto-load - these are managed via `~/plugins/sb-components.js`
     { path: '~/components/storyblok/', ignore: ['**/*'] }
   ],
   head: {
@@ -44,7 +44,11 @@ export default {
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' }
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.png' }]
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.png' }],
+    bodyAttrs: {
+      class:
+        'bg-gray-900 min-w-xs min-h-screen font-sans antialiased text-white'
+    }
   },
   loading: { color: '#68d391' },
   plugins: [

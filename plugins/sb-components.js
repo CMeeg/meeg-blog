@@ -12,7 +12,6 @@ import VueRichTextRenderer from '@marvr/storyblok-rich-text-vue-renderer'
 import { Block, Mark } from '@marvr/storyblok-rich-text-types'
 import RichTextDocument from '~/components/storyblok/fields/rich-text/blocks/Document'
 import RichTextCodeBlock from '~/components/storyblok/fields/rich-text/blocks/Code'
-import RichTextCodeMark from '~/components/storyblok/fields/rich-text/marks/Code'
 import RichTextLink from '~/components/storyblok/fields/rich-text/marks/Link'
 import RichTextBlok from '~/components/storyblok/fields/rich-text/components/Blok'
 
@@ -40,7 +39,6 @@ Vue.use(VueRichTextRenderer, {
       [Block.CODE]: RichTextCodeBlock
     },
     marks: {
-      [Mark.CODE]: RichTextCodeMark,
       [Mark.LINK]: RichTextLink
     },
     components: {

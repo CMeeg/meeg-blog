@@ -16,9 +16,7 @@
       </h2>
     </template>
     <template v-slot:body>
-      <div class="text-sm">
-        <field-rich-text :doc="article.content.summary" />
-      </div>
+      <field-rich-text :doc="article.content.summary" class="prose-sm" />
     </template>
   </card>
 </template>

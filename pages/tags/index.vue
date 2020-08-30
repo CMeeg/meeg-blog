@@ -3,7 +3,7 @@
     <page-heading>
       <template v-slot:title>Tags</template>
       <template v-slot:intro>
-        <div class="content-block">
+        <div class="prose">
           <p>
             My blog contains articles related to the following topics...
           </p>
@@ -11,7 +11,7 @@
       </template>
     </page-heading>
 
-    <div class="content-block mx-auto px-6 max-w-2xl text-center">
+    <div class="prose mx-auto px-6 max-w-2xl text-center">
       <ul v-if="tags">
         <li v-for="tag in tags" :key="tag.name" class="list-none">
           <p>

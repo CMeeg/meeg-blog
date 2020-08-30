@@ -1,5 +1,5 @@
 <template>
-  <footer>
+  <footer class="mt-6">
     <max-width-container>
       <template v-if="$fetchState.pending">
         <content-placeholders class="pb-6 pt-5 border-t border-gray-800">
@@ -8,7 +8,7 @@
       </template>
       <template v-else-if="$fetchState.error">
         <message-box type="error">
-          <div class="content-block">
+          <div class="prose">
             <p>
               <em>{{ $fetchState.error.message }}</em>
             </p>

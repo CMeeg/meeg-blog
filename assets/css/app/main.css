@@ -1,3 +1,11 @@
+/* Header */
+
+.main-nav .nuxt-link-active {
+    @apply text-green-400 bg-gray-900;
+}
+
+/* Content placeholders */
+
 .app .vue-content-placeholders-heading {
     @apply mb-3;
 }

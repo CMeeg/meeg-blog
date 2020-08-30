@@ -16,14 +16,14 @@
     </template>
     <template v-else-if="$fetchState.error">
       <message-box type="error">
-        <div class="content-block">
+        <div class="prose">
           <p>{{ $fetchState.error.message }}</p>
         </div>
       </message-box>
     </template>
     <template v-else-if="articles.total === 0">
       <message-box type="info">
-        <div class="content-block">
+        <div class="prose">
           <p>No articles found</p>
         </div>
       </message-box>

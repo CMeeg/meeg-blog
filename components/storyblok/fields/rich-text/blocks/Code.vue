@@ -1,9 +1,7 @@
 <template>
-  <div class="code-block">
-    <highlight-code :lang="lang" :auto="auto">
-      <slot />
-    </highlight-code>
-  </div>
+  <highlight-code :lang="lang" :auto="auto">
+    <slot />
+  </highlight-code>
 </template>
 
 <script>

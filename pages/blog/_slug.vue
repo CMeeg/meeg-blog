@@ -6,27 +6,29 @@
       </template>
 
       <template v-slot:metadata>
-        <p
-          class="content-block inline-flex items-center justify-center px-6 py-4 border-b border-gray-700 text-gray-500 text-xs"
-        >
-          <time :datetime="articleDate" class="uppercase">
-            {{ articleDate }}
-          </time>
-          <template v-if="story.tag_list.length">
-            <span class="pl-2">&#8226;</span>
-            <span v-for="tag in story.tag_list" :key="tag" class="pl-2">
-              <nuxt-link :to="{ name: 'tags-tag', params: { tag: tag } }">
-                #{{ tag }}
-              </nuxt-link>
-            </span>
-          </template>
-          <template v-if="story.content.series">
-            <span class="inline-block pl-2">&#8226;</span>
-            <span class="inline-block pl-2">
-              This article is part of a <a href="#series">series</a>
-            </span>
-          </template>
-        </p>
+        <div class="max-w-none prose prose-sm">
+          <p
+            class="inline-flex items-center justify-center px-6 py-4 border-b border-gray-700 text-gray-500 text-xs"
+          >
+            <time :datetime="articleDate" class="uppercase">
+              {{ articleDate }}
+            </time>
+            <template v-if="story.tag_list.length">
+              <span class="pl-2">&#8226;</span>
+              <span v-for="tag in story.tag_list" :key="tag" class="pl-2">
+                <nuxt-link :to="{ name: 'tags-tag', params: { tag: tag } }">
+                  #{{ tag }}
+                </nuxt-link>
+              </span>
+            </template>
+            <template v-if="story.content.series">
+              <span class="inline-block pl-2">&#8226;</span>
+              <span class="inline-block pl-2">
+                This article is part of a <a href="#series">series</a>
+              </span>
+            </template>
+          </p>
+        </div>
       </template>
     </page-heading>
 
