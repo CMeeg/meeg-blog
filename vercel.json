@@ -7,8 +7,8 @@
       "config": {
         "serverFiles": [
           ".nuxt/dist/sitemap-routes.json",
-          "utils/sitemap.js",
-          "utils/sentry.js"
+          "src/utils/sitemap.js",
+          "src/utils/sentry.js"
         ]
       }
     }

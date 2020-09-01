@@ -1,5 +1,5 @@
-import sitemap from './utils/sitemap'
-import sentry from './utils/sentry'
+import sitemap from './src/utils/sitemap'
+import sentry from './src/utils/sentry'
 
 const appSettings = {
   hostEnv: process.env.HOST_ENV || 'development',
@@ -22,6 +22,7 @@ const gaSettings = {
 const sentrySettings = sentry.getSettings(process.env, appSettings)
 
 export default {
+  srcDir: 'src',
   mode: 'universal',
   publicRuntimeConfig: {
     hostEnv: appSettings.hostEnv,
