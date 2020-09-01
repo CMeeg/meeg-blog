@@ -61,7 +61,7 @@ export default {
     '~/plugins/metadata'
   ],
   buildModules: [
-    '@nuxt/typescript-build',
+    '@nuxtjs/eslint-module',
     '@nuxtjs/tailwindcss',
     '@nuxtjs/google-analytics'
   ],
@@ -78,6 +78,19 @@ export default {
     '@nuxtjs/robots',
     '@nuxtjs/sitemap'
   ],
+  build: {
+    extend(config, ctx) {
+      // Run ESLint on save
+      if (ctx.isDev && ctx.isClient) {
+        config.module.rules.push({
+          enforce: "pre",
+          test: /\.(js|vue)$/,
+          loader: "eslint-loader",
+          exclude: /(node_modules)/
+        })
+      }
+    }
+  },
   googleAnalytics: {
     debug: {
       sendHitTask: appSettings.hostEnv === 'production'
@@ -115,7 +128,7 @@ export default {
     },
     exclude: ['/about', '/blog'],
     routes: async () => {
-      return sitemap.getRoutes()
+      return await sitemap.getRoutes()
     }
   },
   sentry: sentrySettings

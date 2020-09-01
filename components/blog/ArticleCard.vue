@@ -31,9 +31,7 @@ export default {
   },
   computed: {
     articleDate() {
-      return this.$storyblok()
-        .getStoryDate(this.article)
-        .toDateString()
+      return this.$storyblok().getStoryDate(this.article).toDateString()
     }
   }
 }

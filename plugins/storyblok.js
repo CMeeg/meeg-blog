@@ -64,6 +64,7 @@ const apiGetSpace = function ({ api, successCallback, errorCallback }) {
 const defaultErrorCallback = function (context, error) {
   if (error.response) {
     if (context.isDev) {
+      // eslint-disable-next-line
       console.error(error.response)
     }
 
@@ -73,6 +74,7 @@ const defaultErrorCallback = function (context, error) {
     })
   } else {
     if (context.isDev) {
+      // eslint-disable-next-line
       console.error(error)
     }
 

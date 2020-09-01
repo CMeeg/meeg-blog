@@ -16,7 +16,7 @@ export default {
     }
   },
   computed: {
-    src: function() {
+    src() {
       const filename = this.field.filename
       const imageService = 'https://img2.storyblok.com'
       const path = filename.replace('https://a.storyblok.com/', '')

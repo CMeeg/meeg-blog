@@ -56,9 +56,7 @@ export default {
   },
   computed: {
     articleDate() {
-      return this.$storyblok()
-        .getStoryDate(this.story)
-        .toDateString()
+      return this.$storyblok().getStoryDate(this.story).toDateString()
     }
   },
   mounted() {

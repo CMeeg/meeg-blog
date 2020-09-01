@@ -1,4 +1,6 @@
 {
-    "bracketSpacing": true,
-    "endOfLine": "auto"
+  "endOfLine": "auto",
+  "semi": false,
+  "singleQuote": true,
+  "trailingComma": "none"
 }

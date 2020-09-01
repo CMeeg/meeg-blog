@@ -33,6 +33,7 @@ const apiGetLinks = function () {
     })
     .catch((error) => {
       if (!isProductionEnvironment) {
+        // eslint-disable-next-line
         console.error(error)
       }
     })
@@ -61,6 +62,7 @@ const apiGetStories = function (links) {
     })
     .catch((error) => {
       if (!isProductionEnvironment) {
+        // eslint-disable-next-line
         console.error(error)
       }
     })

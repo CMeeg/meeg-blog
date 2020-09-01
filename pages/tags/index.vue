@@ -4,9 +4,7 @@
       <template v-slot:title>Tags</template>
       <template v-slot:intro>
         <div class="prose">
-          <p>
-            My blog contains articles related to the following topics...
-          </p>
+          <p>My blog contains articles related to the following topics...</p>
         </div>
       </template>
     </page-heading>
