@@ -1,0 +1,55 @@
+/* Header */
+
+.main-nav .nuxt-link-active {
+    @apply text-green-400 bg-gray-900;
+}
+
+/* Content placeholders */
+
+.app .vue-content-placeholders-heading {
+    @apply mb-3;
+}
+
+.app .vue-content-placeholders-heading__img {
+    @apply bg-gray-800;
+}
+
+.app .vue-content-placeholders-is-animated .vue-content-placeholders-heading__img::before {
+    background: linear-gradient(to right, transparent 0%, #4a5568 10%, transparent 20%)
+}
+
+.app .vue-content-placeholders-heading__title {
+    @apply bg-gray-800;
+}
+
+.app .vue-content-placeholders-is-animated .vue-content-placeholders-heading__title::before {
+    background: linear-gradient(to right, transparent 0%, #4a5568 10%, transparent 20%);
+}
+
+.app .vue-content-placeholders-heading__subtitle {
+    @apply bg-gray-700;
+}
+
+.app .vue-content-placeholders-is-animated .vue-content-placeholders-heading__subtitle::before {
+    background: linear-gradient(to right, transparent 0%, #718096 10%, transparent 20%);
+}
+
+.app .vue-content-placeholders-text {
+    @apply mb-6;
+}
+
+.app .vue-content-placeholders-text__line {
+    @apply bg-gray-700;
+}
+
+.app .vue-content-placeholders-is-animated .vue-content-placeholders-text__line::before {
+    background: linear-gradient(to right, transparent 0%, #718096 10%, transparent 20%);
+}
+
+.app .vue-content-placeholders-img {
+    @apply bg-gray-700;
+}
+
+.app .vue-content-placeholders-is-animated .vue-content-placeholders-img::before {
+    background: linear-gradient(to right, transparent 0%, #718096 10%, transparent 20%);
+}
