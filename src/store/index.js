@@ -1,12 +1,8 @@
 export const state = () => ({
-  cacheVersion: '',
-  global: {}
+  global: null
 })
 
 export const mutations = {
-  setCacheVersion(state, version) {
-    state.cacheVersion = version
-  },
   setGlobal(state, global) {
     state.global = global.content
   }
@@ -14,13 +10,15 @@ export const mutations = {
 
 export const actions = {
   async nuxtServerInit({ dispatch }) {
-    await dispatch('loadCacheVersion')
-    await dispatch('loadGlobal')
+    await dispatch('storyblok/init')
+    await dispatch('init')
   },
-  async loadCacheVersion({ commit }) {
-    const space = await this.$storyblok().getSpace()
+  async init({ state, dispatch }) {
+    if (state.global) {
+      return
+    }
 
-    commit('setCacheVersion', space.space.version)
+    await dispatch('loadGlobal')
   },
   async loadGlobal({ commit }) {
     const global = await this.$storyblok().get('global')

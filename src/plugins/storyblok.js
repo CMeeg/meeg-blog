@@ -48,11 +48,11 @@ const apiGetTags = function ({ api, query, successCallback, errorCallback }) {
     })
 }
 
-const apiGetSpace = function ({ api, successCallback, errorCallback }) {
+const apiGetSpace = function ({ api, query, successCallback, errorCallback }) {
   const apiPath = 'cdn/spaces/me'
 
   return api
-    .get(apiPath)
+    .get(apiPath, query)
     .then((response) => {
       return successCallback(response)
     })
@@ -88,6 +88,10 @@ const defaultErrorCallback = function (context, error) {
 }
 
 const sendToSentry = function (context, error) {
+  if (!context.$sentry.captureException) {
+    return
+  }
+
   context.$sentry.captureException(error)
 }
 
@@ -124,7 +128,7 @@ const storyblok = function (context) {
       options = options || {}
 
       query.version = version
-      query.cacheVersion = context.store.state.cacheVersion
+      query.cv = context.store.state.storyblok.cacheVersion
 
       const successCallback =
         options.successCallback ||
@@ -147,7 +151,7 @@ const storyblok = function (context) {
       options = options || {}
 
       query.version = version
-      query.cacheVersion = context.store.state.cacheVersion
+      query.cv = context.store.state.storyblok.cacheVersion
 
       const successCallback =
         options.successCallback ||
@@ -175,6 +179,7 @@ const storyblok = function (context) {
       options = options || {}
 
       query.version = version
+      query.cv = context.store.state.storyblok.cacheVersion
 
       const successCallback =
         options.successCallback ||
@@ -194,6 +199,11 @@ const storyblok = function (context) {
     getSpace: (options) => {
       options = options || {}
 
+      const query = {}
+      if (context.store.state.storyblok.cacheVersion) {
+        query.cv = context.store.state.storyblok.cacheVersion
+      }
+
       const successCallback =
         options.successCallback ||
         function (response) {
@@ -204,6 +214,7 @@ const storyblok = function (context) {
 
       return apiGetSpace({
         api: context.app.$storyapi,
+        query,
         successCallback: (response) => successCallback(response),
         errorCallback: (error) => errorCallback(context, error)
       })
