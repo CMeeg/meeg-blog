@@ -122,7 +122,11 @@ module.exports = {
   purge: {
     mode: 'all',
     enabled: process.env.NODE_ENV === 'production',
-    content: ['src/components/**/*.vue', 'src/layouts/**/*.vue', 'src/pages/**/*.vue']
+    content: [
+      'src/components/**/*.vue',
+      'src/layouts/**/*.vue',
+      'src/pages/**/*.vue'
+    ]
   },
   future: {
     removeDeprecatedGapUtilities: true
