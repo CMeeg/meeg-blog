@@ -21,7 +21,7 @@
     "@nuxtjs/sitemap": "^2.4.0",
     "@tailwindcss/typography": "^0.2.0",
     "@vue/composition-api": "^1.0.0-beta.4",
-    "highlight.js": "9.18.1",
+    "highlight.js": "10.1.2",
     "nuxt": "^2.14.3",
     "nuxt-webfontloader": "^1.1.0",
     "storyblok-nuxt": "^1.2.0",
