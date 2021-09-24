@@ -6,6 +6,7 @@ const buildId = process.env.NEXT_PUBLIC_BUILD_ID || null
 module.exports = {
   reactStrictMode: true,
   poweredByHeader: false,
+  productionBrowserSourceMaps: true,
   compress,
   assetPrefix,
   generateBuildId: async () => buildId
