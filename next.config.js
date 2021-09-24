@@ -9,5 +9,9 @@ module.exports = {
   productionBrowserSourceMaps: true,
   compress,
   assetPrefix,
-  generateBuildId: async () => buildId
+  generateBuildId: async () => buildId,
+  i18n: {
+    locales: ['en-GB'],
+    defaultLocale: 'en-GB'
+  }
 }
