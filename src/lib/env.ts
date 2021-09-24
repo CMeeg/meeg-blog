@@ -12,7 +12,7 @@ const currentEnv =
 
 const isDevelopmentEnv = () => currentEnv === environment.development
 
-const joinUrlSegments = (segments) => {
+const joinUrlSegments = (segments: string[]) => {
   if (!segments?.length) {
     return ''
   }
@@ -33,7 +33,7 @@ const joinUrlSegments = (segments) => {
   return urlSegments.join('/')
 }
 
-const getAbsoluteUrl = (path) => {
+const getAbsoluteUrl = (path: string) => {
   if (!path) {
     return baseUrl
   }
@@ -41,7 +41,7 @@ const getAbsoluteUrl = (path) => {
   return joinUrlSegments([baseUrl, path])
 }
 
-const getCdnUrl = (path) => {
+const getCdnUrl = (path: string) => {
   if (!path || !baseCdnUrl || !nextBuildId) {
     return path
   }

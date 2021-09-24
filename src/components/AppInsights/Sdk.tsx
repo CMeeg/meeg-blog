@@ -1,11 +1,20 @@
-import { useEffect } from 'react'
-import { ApplicationInsights } from '@microsoft/applicationinsights-web'
+import { useEffect, Dispatch, SetStateAction } from 'react'
+import {
+  ApplicationInsights,
+  IApplicationInsights
+} from '@microsoft/applicationinsights-web'
+
+type AppInsightsSdkProps = {
+  instrumentationKey: string
+  instance: IApplicationInsights | null
+  setInstance: Dispatch<SetStateAction<IApplicationInsights | null>>
+}
 
 export default function AppInsightsSdk({
   instrumentationKey,
   instance,
   setInstance
-}) {
+}: AppInsightsSdkProps) {
   useEffect(() => {
     if (instance) {
       // We already have an instance
