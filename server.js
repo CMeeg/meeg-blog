@@ -14,7 +14,7 @@ const getRequestHandler = (app, config) => {
 
     const nextRequestHandler = app.getRequestHandler()
 
-    return await nextRequestHandler(req, res, parsedUrl)
+    return nextRequestHandler(req, res, parsedUrl)
   }
 }
 
