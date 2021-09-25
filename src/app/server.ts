@@ -1,10 +1,28 @@
-const next = require('next')
-const { createServer } = require('http')
-const appInsights = require('applicationinsights')
+import next from 'next'
+import { createServer, IncomingMessage, ServerResponse } from 'http'
+import { UrlWithParsedQuery } from 'url'
+import * as appInsights from 'applicationinsights'
+
+type NextServer = import('next/dist/server/next').NextServer
+
+/*
+`port` should be `number | string` but the DefinitelyTyped type definition doesn't allow `string` for port so `any` is being used.
+The reason for needing `string` is that Azure supplies a "pipe" in `process.env.PORT`.
+*/
+type ServerConfig = {
+  hostname: string
+  port: any
+  env: string
+  useAppInsights: boolean
+}
 
 // See https://github.com/vercel/next.js/blob/canary/packages/next/server/next.ts
-const getRequestHandler = (app, config) => {
-  return async (req, res, parsedUrl) => {
+function getRequestHandler(app: NextServer, config: ServerConfig) {
+  return async (
+    req: IncomingMessage,
+    res: ServerResponse,
+    parsedUrl?: UrlWithParsedQuery
+  ) => {
     if (config.useAppInsights) {
       appInsights.defaultClient.trackNodeHttpRequest({
         request: req,
@@ -19,7 +37,7 @@ const getRequestHandler = (app, config) => {
 }
 
 // See https://github.com/vercel/next.js/blob/canary/packages/next/server/lib/start-server.ts
-const startServer = async (config) => {
+const startServer = async (config: ServerConfig) => {
   const serverOptions = {
     dev: config.env === 'development',
     dir: '.',
@@ -30,7 +48,7 @@ const startServer = async (config) => {
 
   const srv = createServer(getRequestHandler(app, config))
 
-  await new Promise((resolve, reject) => {
+  await new Promise<void>((resolve, reject) => {
     // This code catches EADDRINUSE error if the port is already in use
     srv.on('error', reject)
     srv.on('listening', () => resolve())
@@ -47,7 +65,7 @@ const startServer = async (config) => {
   }
 }
 
-const initAppInsights = (instrumentationKey) => {
+const initAppInsights = (instrumentationKey?: string) => {
   if (!instrumentationKey) {
     return false
   }
@@ -61,14 +79,34 @@ const initAppInsights = (instrumentationKey) => {
   return true
 }
 
+const getPort = (defaultPort: number) => {
+  const envPort = process.env.PORT
+
+  if (typeof envPort === 'undefined') {
+    return defaultPort
+  }
+
+  const parsedPort = parseInt(envPort)
+
+  return isNaN(parsedPort) ? envPort : parsedPort
+}
+
+const getEnv = (defaultEnv: string) => {
+  const env = process.env.APP_ENV || process.env.NODE_ENV
+
+  if (typeof env !== 'undefined') {
+    return env
+  }
+
+  return defaultEnv
+}
+
 const startTime = Date.now()
 
-const developmentEnv = 'development'
-
-const serverConfig = {
+const serverConfig: ServerConfig = {
   hostname: 'localhost',
-  port: process.env.PORT || '3000',
-  env: process.env.APP_ENV || process.env.NODE_ENV || developmentEnv,
+  port: getPort(3000),
+  env: getEnv('development'),
   useAppInsights: initAppInsights(
     process.env.NEXT_PUBLIC_APPINSIGHTS_INSTRUMENTATIONKEY
   )
