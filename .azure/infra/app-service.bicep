@@ -10,6 +10,10 @@ param skuCapacity int
 
 param nodeVersion string
 
+param slotName string
+
+var isSlotDeploy = slotName != 'production'
+
 var minTlsVersion = '1.2'
 
 resource appServicePlan 'Microsoft.Web/serverfarms@2020-12-01' = {
@@ -38,12 +42,26 @@ resource appService 'Microsoft.Web/sites@2020-12-01' = {
       http20Enabled: true
       minTlsVersion: minTlsVersion
       nodeVersion: nodeVersion
-      // If your app service plan allows it then it's recommended to uncomment these settings
-      // use32BitWorkerProcess: false
-      // alwaysOn: true
+      use32BitWorkerProcess: false
+      alwaysOn: true
+    }
+  }
+
+  resource slot 'slots' = if(isSlotDeploy) {
+    name: slotName
+    location: location
+    properties: {
+      httpsOnly: true
+      siteConfig: {
+        http20Enabled: true
+        minTlsVersion: minTlsVersion
+        nodeVersion: nodeVersion
+        use32BitWorkerProcess: false
+        alwaysOn: true
+      }
     }
   }
 }
 
-output appServiceId string = appService.id
-output appServiceHostname string = appService.properties.defaultHostName
+output appServiceId string = isSlotDeploy ? appService::slot.id : appService.id
+output appServiceHostname string = isSlotDeploy ? appService::slot.properties.defaultHostName : appService.properties.defaultHostName

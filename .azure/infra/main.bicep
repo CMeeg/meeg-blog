@@ -4,14 +4,11 @@ param projectName string = 'meeg-blog'
 
 param environment string
 
+param sharedResourceGroupName string
+
 param buildId string
 
 @allowed([
-  'F1'
-  'D1'
-  'B1'
-  'B2'
-  'B3'
   'S1'
   'S2'
   'S3'
@@ -20,10 +17,12 @@ param buildId string
   'P3'
   'P4'
 ])
-param webAppSkuName string = 'F1'
+param webAppSkuName string = 'S1'
 
 @minValue(1)
 param webAppSkuCapacity int = 1
+
+param webAppSlotName string
 
 param webAppSettings object = {}
 
@@ -32,21 +31,24 @@ param webAppSettings object = {}
 // https://github.com/Azure/arm-template-whatif/issues/65
 param dryRun bool = false
 
-var resourceNameSuffix = toLower('${projectName}-${environment}')
+var envResourceNamePrefix = toLower('${projectName}-${environment}')
+var sharedResourceNamePrefix = toLower('${projectName}')
 
-var webAppName = '${resourceNameSuffix}-app'
+var webAppName = '${sharedResourceNamePrefix}-app'
 
 var nodeVersion = '12.13.0'
 
 module webApp 'app-service.bicep' = {
   name: 'web-app'
+  scope: resourceGroup(sharedResourceGroupName)
   params: {
     location: location
-    appServicePlanName: '${resourceNameSuffix}-asp'
+    appServicePlanName: '${sharedResourceNamePrefix}-asp'
     appServiceName: webAppName
     skuName: webAppSkuName
     skuCapacity: webAppSkuCapacity
     nodeVersion: nodeVersion
+    slotName: webAppSlotName
   }
 }
 
@@ -57,7 +59,7 @@ module webAppInsights 'app-insights.bicep' = {
   name: 'web-app-insights'
   params: {
     location: location
-    resourceName: '${resourceNameSuffix}-ai'
+    resourceName: '${envResourceNamePrefix}-ai'
     appServiceId: webAppServiceId
   }
 }
@@ -68,7 +70,7 @@ module cdn 'cdn.bicep' = {
   name: 'cdn'
   params: {
     location: location
-    resourceName: '${resourceNameSuffix}-cdn'
+    resourceName: '${envResourceNamePrefix}-cdn'
     originHostname: webAppServiceHostname
   }
 }
@@ -93,8 +95,10 @@ var webAppConfigSettings = union(webAppSettings, webAppDeploymentSettings)
 
 module webAppConfig 'app-service-config.bicep' = if (!dryRun) {
   name: 'web-app-config'
+  scope: resourceGroup(sharedResourceGroupName)
   params: {
     appServiceName: webAppName
+    slotName: webAppSlotName
     appSettings: webAppConfigSettings
   }
 }
