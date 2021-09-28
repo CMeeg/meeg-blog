@@ -12,6 +12,7 @@ yarn-error.log*
 .env.local
 
 # build
+.azure/infra/*.parameters.json
 dist/
 storybook/
 server.js

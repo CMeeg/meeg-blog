@@ -44,6 +44,8 @@ resource appService 'Microsoft.Web/sites@2020-12-01' = {
       nodeVersion: nodeVersion
       use32BitWorkerProcess: false
       alwaysOn: true
+      localMySqlEnabled: false
+      netFrameworkVersion: 'v4.6'
     }
   }
 
@@ -58,6 +60,8 @@ resource appService 'Microsoft.Web/sites@2020-12-01' = {
         nodeVersion: nodeVersion
         use32BitWorkerProcess: false
         alwaysOn: true
+        localMySqlEnabled: false
+        netFrameworkVersion: 'v4.6'
       }
     }
   }

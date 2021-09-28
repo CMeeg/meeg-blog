@@ -1,6 +1,6 @@
 param location string = resourceGroup().location
 
-param projectName string = 'meeg-blog'
+param projectName string
 
 param environment string
 
@@ -17,14 +17,14 @@ param buildId string
   'P3'
   'P4'
 ])
-param webAppSkuName string = 'S1'
+param webAppSkuName string
 
 @minValue(1)
-param webAppSkuCapacity int = 1
+param webAppSkuCapacity int
 
 param webAppSlotName string
 
-param webAppSettings object = {}
+param webAppSettings object
 
 // This param is currently used to prevent appsettings being updated during "what-if" runs in the build pipeline because it throws an error otherwise
 // Looks like we can remove this once this issue is resolved:
