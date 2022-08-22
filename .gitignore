@@ -7,12 +7,14 @@ dist/
 node_modules/
 pnpm-debug.log*
 
-
 # environment variables
 .env
 .env.production
 
-# macOS-specific files
+# certs
+localhost*.pem
+
+# OS-specific files
 .DS_Store
 Thumbs.db
 
