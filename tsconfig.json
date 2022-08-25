@@ -1,19 +1,36 @@
 {
+  "extends": "ts-node/node16/tsconfig.json",
   "compilerOptions": {
-    // Enable top-level await, and other modern ESM features.
+    // Import aliases
+    "baseUrl": ".",
+    "paths": {
+      "@features/*": ["src/features/*"]
+    },
+    // Enable top-level await, and other modern ESM features
     "target": "ESNext",
     "module": "ESNext",
-    // Enable node-style module resolution, for things like npm package imports.
+    // Enable node-style module resolution, for things like npm package imports
     "moduleResolution": "node",
-    // Enable JSON imports.
+    // Enable JSON imports
     "resolveJsonModule": true,
-    // Enable stricter transpilation for better output.
+    // Enable stricter transpilation for better output
     "isolatedModules": true,
-    // Astro will directly run your TypeScript code, no transpilation needed.
+    // Astro will directly run your TypeScript code, no transpilation needed
     "noEmit": true,
-    // Enable strict type checking.
+    // Enable strict type checking
     "strict": true,
-    // Error when a value import is only used as a type.
+    // Error when a value import is only used as a type
     "importsNotUsedAsValues": "error"
+  },
+  "ts-node": {
+    // It is faster to skip typechecking
+    "transpileOnly": true,
+    "files": true,
+    "esm": true,
+    "compilerOptions": {
+      "target": "ESNext",
+      "module": "ESNext",
+      "esModuleInterop": true
+    }
   }
 }

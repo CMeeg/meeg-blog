@@ -8,8 +8,7 @@ node_modules/
 pnpm-debug.log*
 
 # environment variables
-.env
-.env.production
+.env*.local
 
 # certs
 localhost*.pem

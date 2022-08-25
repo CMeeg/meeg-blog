@@ -1,0 +1,16 @@
+---
+import type { PageStory } from '@features/storyblok/types/content-types'
+import DefaultLayout from '@features/common/DefaultLayout/index.astro'
+
+export interface Props {
+  story: PageStory
+}
+
+const { story } = Astro.props as Props
+---
+
+<DefaultLayout story={story}>
+  <main>
+    <p>Hi!</p>
+  </main>
+</DefaultLayout>

@@ -1,1 +1,5 @@
+# build output
 dist/
+
+# generated files
+src/features/storyblok/types/components.d.ts

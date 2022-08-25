@@ -1,0 +1,8 @@
+{
+  "name": "@meeg/storyblok-type-generator",
+  "version": "0.1.0",
+  "description": "",
+  "author": "Chris Meagher",
+  "license": "MIT",
+  "type": "module"
+}
