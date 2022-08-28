@@ -1,0 +1,14 @@
+---
+import type { StoryblokRichText } from '@features/storyblok/rich-text'
+import Blocks from './Blocks/index.astro'
+
+export interface Props {
+  richText?: StoryblokRichText
+}
+
+const { richText } = Astro.props as Props
+
+const blocks = richText?.content ?? []
+---
+
+<Blocks blocks={blocks} />

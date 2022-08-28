@@ -1,0 +1,20 @@
+---
+import { getArticles } from '@features/blog/api'
+import type { ArticleListingStoryblok } from '@features/storyblok/types/components'
+
+export interface Props {
+  blok: ArticleListingStoryblok
+}
+
+const { blok } = Astro.props as Props
+
+const { starts_with: startsWith, with_tag: withTag, per_page: perPage } = blok
+
+const articles = await getArticles({ startsWith, withTag, perPage })
+---
+
+{
+  articles.map((article) => {
+    return <p>{article.content.title}</p>
+  })
+}

@@ -5,6 +5,11 @@
     "sourceType": "module",
     "ecmaVersion": 2020
   },
+  "env": {
+    "es2020": true,
+    "browser": true,
+    "node": true
+  },
   "plugins": ["@typescript-eslint"],
   "extends": [
     "eslint:recommended",

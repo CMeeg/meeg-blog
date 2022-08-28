@@ -1,22 +1,12 @@
 ---
-import type { StoryWithSeoMetadata } from '@features/storyblok/types/content-types'
-
-export interface Props {
-  story: StoryWithSeoMetadata<unknown>
-}
-
-const { story } = Astro.props as Props
 ---
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    <title>{story.content?.metadata?.title}</title>
-  </head>
-  <body>
-    <slot />
-  </body>
-</html>
+<header>
+  <!-- TODO: Header -->
+</header>
+<main>
+  <slot />
+</main>
+<footer>
+  <!-- TODO: Footer -->
+</footer>

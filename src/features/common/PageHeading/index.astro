@@ -1,0 +1,14 @@
+---
+import type { PageHeadingStoryblok } from '@features/storyblok/types/components'
+import RichText from '@features/storyblok/rich-text/RichText/index.astro'
+
+export interface Props {
+  blok: PageHeadingStoryblok
+}
+
+const { blok } = Astro.props as Props
+---
+
+<h1>{blok.title}</h1>
+
+<RichText richText={blok.intro} />

@@ -7,7 +7,9 @@
   "license": "MIT",
   "scripts": {
     "astro": "astro",
-    "build": "astro build",
+    "build": "pnpm check:ts && astro build",
+    "check:astro": "astro check",
+    "check:ts": "tsc --noEmit",
     "dev": "astro dev",
     "format": "prettier -w --plugin-search-dir=. .",
     "gen:types": "ts-node \"src/features/storyblok/gen/types.ts\"",
@@ -20,11 +22,14 @@
   },
   "dependencies": {
     "@storyblok/js": "^1.7.2",
-    "axios": "^0.27.2"
+    "axios": "^0.27.2",
+    "change-case": "^4.1.2",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@types/fs-extra": "^9.0.13",
     "@types/node": "^18.7.13",
+    "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.34.0",
     "@typescript-eslint/parser": "^5.33.1",
     "astro": "^1.0.6",

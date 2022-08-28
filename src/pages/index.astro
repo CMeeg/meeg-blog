@@ -1,14 +1,21 @@
 ---
-import { getStory } from '@features/storyblok/api'
-import type { PageStory } from '@features/storyblok/types/content-types'
+import { getHomeStory } from '@features/home/api'
+import HtmlDocument from '@features/common/HtmlDocument/index.astro'
+import DefaultSeoMetadata from '@features/common/DefaultSeoMetadata/index.astro'
 import HomePage from '@features/home/HomePage/index.astro'
 
-const story = await getStory<PageStory>('home')
+// TODO: Home page is just a "Page" - maybe move this stuff under `common`?
+const story = await getHomeStory()
 
 if (!story) {
-  // TODO: Deal with this - 404
-  throw Error(`'home' story not found.`)
+  return new Response(null, {
+    status: 404,
+    statusText: `'Home' story not found.`
+  })
 }
 ---
 
-<HomePage story={story} />
+<HtmlDocument>
+  <DefaultSeoMetadata slot="seo-metadata" metadata={story?.content.metadata} />
+  <HomePage story={story} />
+</HtmlDocument>

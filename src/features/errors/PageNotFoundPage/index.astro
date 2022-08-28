@@ -1,15 +1,15 @@
 ---
-import type { HomeStory } from '@features/home/api'
+import type { PageNotFoundStory } from '@features/errors/api'
 import DefaultLayout from '@features/common/DefaultLayout/index.astro'
-import Bloks from '@features/common/Bloks/index.astro'
 
 export interface Props {
-  story: HomeStory
+  story: PageNotFoundStory
 }
 
 const { story } = Astro.props as Props
 ---
 
 <DefaultLayout>
-  <Bloks bloks={story.content.body} />
+  <p>Hi!</p>
+  <!-- TODO: Content -->
 </DefaultLayout>
