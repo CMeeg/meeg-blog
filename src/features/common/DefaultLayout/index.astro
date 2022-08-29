@@ -1,13 +1,13 @@
 ---
-import { getGlobal } from '@features/common/api'
+import type { GlobalStory } from '../api'
 import Header from './Header.astro'
 import Footer from './Footer.astro'
 
-const global = await getGlobal()
-
-if (!global) {
-  throw Error(`'Global' story not found.`)
+export interface Props {
+  global: GlobalStory
 }
+
+const { global } = Astro.props as Props
 
 const { logo, main_nav, copyright, github_username, twitter_username } =
   global.content

@@ -1,6 +1,6 @@
 ---
 import type { PageStory } from '@features/common/api'
-import Page from '@features/common/Page/index.astro'
+import Bloks from '@features/common/Bloks/index.astro'
 
 export interface Props {
   story: PageStory
@@ -9,4 +9,4 @@ export interface Props {
 const { story } = Astro.props as Props
 ---
 
-<Page story={story} />
+<Bloks bloks={story.content.body} />

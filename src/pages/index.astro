@@ -1,10 +1,17 @@
 ---
+import { getGlobal } from '@features/common/api'
 import { getHomeStory } from '@features/home/api'
 import HtmlDocument from '@features/common/HtmlDocument/index.astro'
 import DefaultSeoMetadata from '@features/common/DefaultSeoMetadata/index.astro'
+import DefaultLayout from '@features/common/DefaultLayout/index.astro'
 import HomePage from '@features/home/HomePage/index.astro'
 
-// TODO: Home page is just a "Page" - maybe move this stuff under `common`?
+const global = await getGlobal()
+
+if (!global) {
+  throw Error(`'Global' story not found.`)
+}
+
 const story = await getHomeStory()
 
 if (!story) {
@@ -17,5 +24,7 @@ if (!story) {
 
 <HtmlDocument>
   <DefaultSeoMetadata slot="seo-metadata" metadata={story?.content.metadata} />
-  <HomePage story={story} />
+  <DefaultLayout global={global}>
+    <HomePage story={story} />
+  </DefaultLayout>
 </HtmlDocument>

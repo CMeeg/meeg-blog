@@ -1,6 +1,5 @@
 ---
 import type { PageNotFoundStory } from '@features/errors/api'
-import DefaultLayout from '@features/common/DefaultLayout/index.astro'
 
 export interface Props {
   story: PageNotFoundStory
@@ -9,7 +8,5 @@ export interface Props {
 const { story } = Astro.props as Props
 ---
 
-<DefaultLayout>
-  <p>Hi!</p>
-  <!-- TODO: Content -->
-</DefaultLayout>
+<!-- TODO: Content -->
+<p>Hi!</p>

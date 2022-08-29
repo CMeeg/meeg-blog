@@ -1,8 +1,16 @@
 ---
+import { getGlobal } from '@features/common/api'
 import { getPageNotFoundStory } from '@features/errors/api'
 import HtmlDocument from '@features/common/HtmlDocument/index.astro'
 import DefaultSeoMetadata from '@features/common/DefaultSeoMetadata/index.astro'
+import DefaultLayout from '@features/common/DefaultLayout/index.astro'
 import PageNotFoundPage from '@features/errors/PageNotFoundPage/index.astro'
+
+const global = await getGlobal()
+
+if (!global) {
+  throw Error(`'Global' story not found.`)
+}
 
 // TODO: Can just create metadata now instead of a whole story
 const story = getPageNotFoundStory()
@@ -10,5 +18,7 @@ const story = getPageNotFoundStory()
 
 <HtmlDocument>
   <DefaultSeoMetadata slot="seo-metadata" metadata={story?.content.metadata} />
-  <PageNotFoundPage story={story} />
+  <DefaultLayout global={global}>
+    <PageNotFoundPage story={story} />
+  </DefaultLayout>
 </HtmlDocument>
