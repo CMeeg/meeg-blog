@@ -1,0 +1,33 @@
+---
+import type {
+  AssetStoryblok,
+  NavItemStoryblok
+} from '@features/storyblok/types/components'
+import Image from '@features/storyblok/rich-text/RichText/Blocks/Image.astro'
+import Link from '@features/storyblok/rich-text/RichText/Marks/Link.astro'
+
+export interface Props {
+  logo: AssetStoryblok
+  mainNav: NavItemStoryblok[]
+}
+
+const { logo, mainNav } = Astro.props as Props
+---
+
+<header>
+  <Image asset={logo} />
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      {
+        mainNav.map((item) => {
+          return (
+            <li>
+              <Link link={item.link}>{item.name}</Link>
+            </li>
+          )
+        })
+      }
+    </ul>
+  </nav>
+</header>

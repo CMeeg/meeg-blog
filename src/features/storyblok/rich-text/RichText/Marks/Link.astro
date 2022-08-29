@@ -1,0 +1,12 @@
+---
+import type { MultilinkStoryblok } from '../../../types/components'
+import { getLinkUrl } from '../../'
+
+export interface Props {
+  link: MultilinkStoryblok
+}
+
+const { link } = Astro.props as Props
+---
+
+<a href={getLinkUrl(link)}><slot /></a>

@@ -1,0 +1,17 @@
+---
+import type { AssetStoryblok } from '@features/storyblok/types/components'
+import { getImageUrl } from '../../'
+
+export interface Props {
+  asset: AssetStoryblok
+}
+
+const { asset } = Astro.props as Props
+
+const src = getImageUrl(asset)
+
+const { alt, title } = asset
+---
+
+<!-- TODO: Use Astro Image component? -->
+<img src={src} alt={alt} title={title} />
