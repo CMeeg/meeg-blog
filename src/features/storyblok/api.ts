@@ -2,11 +2,8 @@ import { storyblokInit, apiPlugin } from '@storyblok/js'
 import type { StoryblokClient, StoriesParams } from '@storyblok/js'
 import { v4 as uuid } from 'uuid'
 import { paramCase } from 'change-case'
-import type {
-  StoryData,
-  StoryContent
-} from '@features/storyblok/types/content-types'
-import { getRandomInt } from '@features/common/number'
+import type { StoryData, StoryContent } from './types/content-types'
+import { getRandomInt } from './number'
 
 const storyblokToken = import.meta.env.STORYBLOK_TOKEN
 

@@ -1,7 +1,7 @@
-import { getPage } from '@features/common/api'
+import { getPageStory } from '@features/common/api'
 
 const getHomeStory = async () => {
-  return await getPage('home')
+  return await getPageStory('home')
 }
 
 export { getHomeStory }

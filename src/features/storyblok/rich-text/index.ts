@@ -1,5 +1,3 @@
-import type { AssetStoryblok, MultilinkStoryblok } from '../types/components'
-
 type StoryblokRichText = {
   type: 'doc'
   content: StoryblokRichTextBlock[]
@@ -69,49 +67,6 @@ const isTextBlock = (block: StoryblokRichTextBlock) => {
   return block.type === textType
 }
 
-const getLinkUrl = (link: MultilinkStoryblok): string | null => {
-  if ((link.linktype ?? '') === 'email') {
-    if (link.email) {
-      return `mailto:${link.email}`
-    } else {
-      return null
-    }
-  }
-
-  const { cached_url } = link
-
-  if (!cached_url) {
-    return null
-  }
-
-  const url = cached_url as string
-
-  if (url.startsWith('/')) {
-    return url
-  }
-
-  return `/${url}`
-}
-
-const getImageUrl = (asset: AssetStoryblok) => {
-  // TODO: Check this asset is an image
-
-  const { filename } = asset
-  const imageBaseUrl = 'https://img2.storyblok.com'
-  const filepath = filename.replace('https://a.storyblok.com/', '')
-
-  // TODO: Deal with Storyblok image options
-  // return `${imageBaseUrl}/${this.options}/${path}`
-
-  return `${imageBaseUrl}/${filepath}`
-}
-
-export {
-  isTextBlock,
-  getLinkUrl,
-  getImageUrl,
-  StoryblokRichTextBlockType,
-  StoryblokRichTextMarkType
-}
+export { isTextBlock, StoryblokRichTextBlockType, StoryblokRichTextMarkType }
 
 export type { StoryblokRichText, StoryblokRichTextBlock }

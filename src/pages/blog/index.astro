@@ -1,10 +1,10 @@
 ---
 import { getGlobalStory } from '@features/common/api'
-import { getHomeStory } from '@features/home/api'
+import { getBlogIndexStory } from '@features/blog/api'
 import HtmlDocument from '@features/common/HtmlDocument/index.astro'
 import DefaultSeoMetadata from '@features/common/DefaultSeoMetadata/index.astro'
 import DefaultLayout from '@features/common/DefaultLayout/index.astro'
-import HomePage from '@features/home/HomePage/index.astro'
+import BlogIndexPage from '@features/blog/BlogIndexPage/index.astro'
 
 const global = await getGlobalStory()
 
@@ -12,12 +12,12 @@ if (!global) {
   throw Error(`'Global' story not found.`)
 }
 
-const story = await getHomeStory()
+const story = await getBlogIndexStory()
 
 if (!story) {
   return new Response(null, {
     status: 404,
-    statusText: `'Home' story not found.`
+    statusText: `'Blog index' story not found.`
   })
 }
 ---
@@ -25,6 +25,6 @@ if (!story) {
 <HtmlDocument>
   <DefaultSeoMetadata slot="seo-metadata" metadata={story?.content.metadata} />
   <DefaultLayout global={global}>
-    <HomePage story={story} />
+    <BlogIndexPage story={story} />
   </DefaultLayout>
 </HtmlDocument>

@@ -1,6 +1,6 @@
 ---
-import type { AssetStoryblok } from '@features/storyblok/types/components'
-import { getImageUrl } from '../../'
+import type { AssetStoryblok } from '../../../types/components'
+import { getImageAssetUrl } from '../../../url'
 
 export interface Props {
   asset: AssetStoryblok
@@ -8,7 +8,7 @@ export interface Props {
 
 const { asset } = Astro.props as Props
 
-const src = getImageUrl(asset)
+const src = getImageAssetUrl(asset)
 
 const { alt, title } = asset
 ---

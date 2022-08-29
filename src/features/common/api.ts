@@ -10,7 +10,7 @@ import { getStory } from '@features/storyblok/api'
 
 type GlobalStory = StoryData<GlobalStoryblok>
 
-const getGlobal = async () => {
+const getGlobalStory = async () => {
   const story = await getStory<GlobalStory>('global')
 
   if (!story) {
@@ -23,7 +23,7 @@ const getGlobal = async () => {
 type PageStory = StoryData<PageStoryContent>
 type PageStoryContent = StoryContentWithSeoMetadata<PageStoryblok>
 
-const getPage = async (slug: string) => {
+const getPageStory = async (slug: string) => {
   const story = await getStory<PageStory>(slug)
 
   if (!story) {
@@ -33,6 +33,6 @@ const getPage = async (slug: string) => {
   return story
 }
 
-export { getGlobal, getPage }
+export { getGlobalStory, getPageStory }
 
 export type { GlobalStory, PageStory, PageStoryContent }

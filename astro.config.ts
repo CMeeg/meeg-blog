@@ -3,7 +3,6 @@ import { readFileSync } from 'fs'
 
 // https://astro.build/config
 export default defineConfig({
-  trailingSlash: 'never',
   vite: {
     server: {
       https: {

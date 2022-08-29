@@ -5,9 +5,13 @@ import type {
   StoryContentWithSeoMetadata
 } from '@features/storyblok/types/content-types'
 import type { ArticleStoryblok } from '@features/storyblok/types/components'
+import { getPageStory } from '@features/common/api'
+
+const getBlogIndexStory = async () => {
+  return await getPageStory('blog')
+}
 
 type ArticleStory = StoryData<ArticleStoryContent>
-
 type ArticleStoryContent = StoryContentWithSeoMetadata<ArticleStoryblok>
 
 type GetArticlesOptions = {
@@ -50,6 +54,6 @@ const getArticles = (options?: GetArticlesOptions) => {
   return getStories<ArticleStory>(query)
 }
 
-export { getArticles }
+export { getBlogIndexStory, getArticles }
 
 export type { ArticleStory, ArticleStoryContent }

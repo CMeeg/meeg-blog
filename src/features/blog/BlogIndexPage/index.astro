@@ -1,0 +1,12 @@
+---
+import type { PageStory } from '@features/common/api'
+import Page from '@features/common/Page/index.astro'
+
+export interface Props {
+  story: PageStory
+}
+
+const { story } = Astro.props as Props
+---
+
+<Page story={story} />
