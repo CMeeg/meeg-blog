@@ -1,3 +1,4 @@
+import { storyblokEditable } from '@storyblok/js'
 import type { ArticleListingStoryblok } from '@features/storyblok/types/components'
 import type { ArticleStory } from '@features/blog/api'
 import ArticleCard from '@features/blog/ArticleCard'
@@ -17,10 +18,10 @@ export default function ArticleListing({ blok }: Props) {
   }
 
   return (
-    <>
+    <div {...storyblokEditable(blok)}>
       {articles.map((article) => {
         return <ArticleCard article={article} key={article.id} />
       })}
-    </>
+    </div>
   )
 }

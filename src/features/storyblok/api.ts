@@ -7,11 +7,12 @@ import { getRandomInt } from './number'
 
 const storyblokToken = import.meta.env.STORYBLOK_TOKEN
 
+// TODO: Set this dynamically based on "preview mode"
+const version = 'draft' // 'draft'
+
 const createStoryblokApi = (): StoryblokClient => {
   const initResult = storyblokInit({
     accessToken: storyblokToken,
-    // TODO: Disable bridge if not in "preview mode"
-    // bridge: process.env.NODE_ENV !== "production",
     apiOptions: {
       // TODO: What does the cache actually do, and what is `clear: 'auto'`?
       // https://github.com/storyblok/storyblok-js-client#activating-request-cache
@@ -35,8 +36,7 @@ const getStory = async <TStory extends StoryData>(
 ): Promise<TStory | null> => {
   const params: StoryParams = {
     ...query,
-    // TODO: Set this based on "preview mode"
-    version: 'published' // 'draft'
+    version
     // TODO: Check other options
     // https://www.storyblok.com/docs/api/content-delivery#core-resources/stories/retrieve-one-story
   }
@@ -88,8 +88,7 @@ const getStories = async <TStory extends StoryData>(
 ): Promise<TStory[]> => {
   const params: StoriesParams = {
     ...query,
-    // TODO: Set this based on "preview mode"
-    version: 'published' //'draft'
+    version
     // TODO: Check other options
     // https://www.storyblok.com/docs/api/content-delivery#core-resources/stories/retrieve-one-story
   }
@@ -101,8 +100,7 @@ const getStories = async <TStory extends StoryData>(
 
 const getLinks = async () => {
   const { data } = await storyblokApi.get('cdn/links', {
-    // TODO: Set this based on "preview mode"
-    version: 'published' //'draft'
+    version
     // TODO: Check other options
   })
 

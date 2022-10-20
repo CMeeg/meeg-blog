@@ -5,6 +5,7 @@ import HtmlDocument from '@features/common/HtmlDocument/index.astro'
 import DefaultSeoMetadata from '@features/common/DefaultSeoMetadata/index.astro'
 import DefaultLayout from '@features/common/DefaultLayout/index.astro'
 import ArticlePage from '@features/blog/ArticlePage'
+import StoryblokBridge from '@features/storyblok/StoryblokBridge/index.astro'
 
 const global = await getGlobalStory()
 
@@ -35,7 +36,10 @@ if (!story) {
 <HtmlDocument>
   <!-- TODO: Article uses different metadata -->
   <DefaultSeoMetadata slot="seo-metadata" metadata={story?.content.metadata} />
+
   <DefaultLayout global={global}>
     <ArticlePage story={story} />
   </DefaultLayout>
+
+  <StoryblokBridge />
 </HtmlDocument>

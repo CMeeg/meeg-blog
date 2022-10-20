@@ -1,0 +1,14 @@
+<script>
+  import { loadStoryblokBridge } from '@storyblok/js'
+  // TODO: Only load this script if app is in "preview mode"
+  loadStoryblokBridge().then(() => {
+    const { StoryblokBridge, location } = window
+    const storyblokInstance = new StoryblokBridge()
+
+    storyblokInstance.on(['published', 'change'], (event) => {
+      if (!event?.slugChanged) {
+        location.reload()
+      }
+    })
+  })
+</script>
