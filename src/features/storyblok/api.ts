@@ -34,7 +34,7 @@ const getStory = async <TStory extends StoryData>(
 ): Promise<TStory | null> => {
   const { data } = await storyblokApi.getStory(slug, {
     // TODO: Set this based on "preview mode"
-    version: 'draft'
+    version: 'published' // 'draft'
     // TODO: Check other options
     // https://www.storyblok.com/docs/api/content-delivery#core-resources/stories/retrieve-one-story
   })
@@ -85,7 +85,7 @@ const getStories = async <TStory extends StoryData>(
   const params: StoriesParams = {
     ...query,
     // TODO: Set this based on "preview mode"
-    version: 'draft'
+    version: 'published' //'draft'
     // TODO: Check other options
     // https://www.storyblok.com/docs/api/content-delivery#core-resources/stories/retrieve-one-story
   }
@@ -98,7 +98,7 @@ const getStories = async <TStory extends StoryData>(
 const getLinks = async () => {
   const { data } = await storyblokApi.get('cdn/links', {
     // TODO: Set this based on "preview mode"
-    version: 'draft'
+    version: 'published' //'draft'
     // TODO: Check other options
   })
 

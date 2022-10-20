@@ -7,6 +7,7 @@ import type {
   PageStoryblok
 } from '@features/storyblok/types/components'
 import { getStory } from '@features/storyblok/api'
+import { getArticles } from '@features/blog/api'
 
 type GlobalStory = StoryData<GlobalStoryblok>
 
@@ -28,6 +29,25 @@ const getPageStory = async (slug: string) => {
 
   if (!story) {
     return null
+  }
+
+  // TODO: Make this reusable
+  if (story.content.body?.length) {
+    for (let i = 0; i < story.content.body.length; i++) {
+      const blok = story.content.body[i]
+
+      if (blok.component === 'article_listing') {
+        const {
+          starts_with: startsWith,
+          with_tag: withTag,
+          per_page: perPage
+        } = blok
+
+        const articles = await getArticles({ startsWith, withTag, perPage })
+
+        blok.articles = articles
+      }
+    }
   }
 
   return story

@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config'
 import { readFileSync } from 'fs'
+import react from '@astrojs/react'
 
 // https://astro.build/config
 export default defineConfig({
@@ -10,5 +11,6 @@ export default defineConfig({
         cert: readFileSync('./localhost.pem', 'utf8')
       }
     }
-  }
+  },
+  integrations: [react()]
 })

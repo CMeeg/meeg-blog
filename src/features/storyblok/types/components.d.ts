@@ -70,6 +70,7 @@ export interface AssetStoryblok {
   filename: string;
   name: string;
   title?: string;
+  focus?: string;
   [k: string]: any;
 }
 

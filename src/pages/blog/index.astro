@@ -4,7 +4,7 @@ import { getBlogIndexStory } from '@features/blog/api'
 import HtmlDocument from '@features/common/HtmlDocument/index.astro'
 import DefaultSeoMetadata from '@features/common/DefaultSeoMetadata/index.astro'
 import DefaultLayout from '@features/common/DefaultLayout/index.astro'
-import BlogIndexPage from '@features/blog/BlogIndexPage/index.astro'
+import Page from '@features/common/Page'
 
 const global = await getGlobalStory()
 
@@ -25,6 +25,6 @@ if (!story) {
 <HtmlDocument>
   <DefaultSeoMetadata slot="seo-metadata" metadata={story?.content.metadata} />
   <DefaultLayout global={global}>
-    <BlogIndexPage story={story} />
+    <Page story={story} />
   </DefaultLayout>
 </HtmlDocument>
