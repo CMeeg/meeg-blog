@@ -6,7 +6,11 @@ export interface Props {
 }
 
 const { story } = Astro.props as Props
+
+const { title } = story.content
 ---
 
+<h1>{title}</h1>
+
 <!-- TODO: Content -->
-<p>Hi!</p>
+<p>404</p>

@@ -1,5 +1,5 @@
 import { storyblokInit, apiPlugin } from '@storyblok/js'
-import type { StoryblokClient, StoriesParams } from '@storyblok/js'
+import type { StoryblokClient, StoryParams, StoriesParams } from '@storyblok/js'
 import { v4 as uuid } from 'uuid'
 import { paramCase } from 'change-case'
 import type { StoryData, StoryContent } from './types/content-types'
@@ -30,14 +30,18 @@ const createStoryblokApi = (): StoryblokClient => {
 const storyblokApi = createStoryblokApi()
 
 const getStory = async <TStory extends StoryData>(
-  slug: string
+  slug: string,
+  query?: StoryParams
 ): Promise<TStory | null> => {
-  const { data } = await storyblokApi.getStory(slug, {
+  const params: StoryParams = {
+    ...query,
     // TODO: Set this based on "preview mode"
     version: 'published' // 'draft'
     // TODO: Check other options
     // https://www.storyblok.com/docs/api/content-delivery#core-resources/stories/retrieve-one-story
-  })
+  }
+
+  const { data } = await storyblokApi.getStory(slug, params)
 
   if (!data) {
     return null

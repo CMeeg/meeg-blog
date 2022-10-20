@@ -7,7 +7,7 @@ import type {
   PageStoryblok
 } from '@features/storyblok/types/components'
 import { getStory } from '@features/storyblok/api'
-import { getArticles } from '@features/blog/api'
+import { getArticleStories } from '@features/blog/api'
 
 type GlobalStory = StoryData<GlobalStoryblok>
 
@@ -43,7 +43,11 @@ const getPageStory = async (slug: string) => {
           per_page: perPage
         } = blok
 
-        const articles = await getArticles({ startsWith, withTag, perPage })
+        const articles = await getArticleStories({
+          startsWith,
+          withTag,
+          perPage
+        })
 
         blok.articles = articles
       }

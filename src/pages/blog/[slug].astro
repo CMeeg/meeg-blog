@@ -1,0 +1,41 @@
+---
+import { getGlobalStory } from '@features/common/api'
+import { getArticleStory } from '@features/blog/api'
+import HtmlDocument from '@features/common/HtmlDocument/index.astro'
+import DefaultSeoMetadata from '@features/common/DefaultSeoMetadata/index.astro'
+import DefaultLayout from '@features/common/DefaultLayout/index.astro'
+import ArticlePage from '@features/blog/ArticlePage'
+
+const global = await getGlobalStory()
+
+if (!global) {
+  throw Error(`'Global' story not found.`)
+}
+
+const { slug } = Astro.params
+
+if (!slug) {
+  throw Error(`Article 'slug' param not provided.`)
+}
+
+// We check a slug has been provided (above), but we will use the current URL path to fetch the story data
+
+const { pathname } = Astro.url
+
+const story = await getArticleStory(pathname)
+
+if (!story) {
+  return new Response(null, {
+    status: 404,
+    statusText: `'Article' story with slug '${slug}' not found.`
+  })
+}
+---
+
+<HtmlDocument>
+  <!-- TODO: Article uses different metadata -->
+  <DefaultSeoMetadata slot="seo-metadata" metadata={story?.content.metadata} />
+  <DefaultLayout global={global}>
+    <ArticlePage story={story} />
+  </DefaultLayout>
+</HtmlDocument>

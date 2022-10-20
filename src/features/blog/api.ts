@@ -1,10 +1,13 @@
 import type { StoriesParams } from '@storyblok/js'
-import { getStories } from '@features/storyblok/api'
+import { getStory, getStories } from '@features/storyblok/api'
 import type {
   StoryData,
   StoryContentWithSeoMetadata
 } from '@features/storyblok/types/content-types'
-import type { ArticleStoryblok } from '@features/storyblok/types/components'
+import type {
+  ArticleSeriesStoryblok,
+  ArticleStoryblok
+} from '@features/storyblok/types/components'
 import { getPageStory } from '@features/common/api'
 
 const getBlogIndexStory = async () => {
@@ -13,6 +16,25 @@ const getBlogIndexStory = async () => {
 
 type ArticleStory = StoryData<ArticleStoryContent>
 type ArticleStoryContent = StoryContentWithSeoMetadata<ArticleStoryblok>
+
+type ArticleSeriesStory = StoryData<ArticleSeriesStoryblok>
+type ArticleStoryWithSeries = StoryData<
+  ArticleStoryContent & {
+    series?: ArticleSeriesStory
+  }
+>
+
+const getArticleStory = async (path: string) => {
+  const story = await getStory<ArticleStoryWithSeries>(path, {
+    resolve_relations: 'series'
+  })
+
+  if (!story) {
+    return null
+  }
+
+  return story
+}
 
 type GetArticlesOptions = {
   startsWith?: string
@@ -24,7 +46,7 @@ const defaultGetArticlesOptions = {
   perPage: 12
 }
 
-const getArticles = (options?: GetArticlesOptions) => {
+const getArticleStories = (options?: GetArticlesOptions) => {
   const customOptions = options ?? {}
 
   const queryOptions = {
@@ -32,6 +54,7 @@ const getArticles = (options?: GetArticlesOptions) => {
     ...customOptions
   }
 
+  // TODO: This function is only used for article listings so we don't need all article data to be returned
   const query: StoriesParams = {
     is_startpage: 0,
     sort_by: 'first_published_at:desc',
@@ -54,6 +77,6 @@ const getArticles = (options?: GetArticlesOptions) => {
   return getStories<ArticleStory>(query)
 }
 
-export { getBlogIndexStory, getArticles }
+export { getBlogIndexStory, getArticleStory, getArticleStories }
 
 export type { ArticleStory, ArticleStoryContent }
