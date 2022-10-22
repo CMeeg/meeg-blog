@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: blog
+    env: node
+    plan: free
+    region: frankfurt
+    buildCommand: pnpm i; pnpm build
+    startCommand: pnpm start
+    healthCheckPath: /
+    envVars:
+      - key: STORYBLOK_TOKEN
+        sync: false
