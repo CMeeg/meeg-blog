@@ -1,19 +1,22 @@
 ---
-import { themeCookieName } from '~/features/themes'
+import { themeCookieName, themes } from '~/features/themes'
 import './reset.scss'
 import './base.scss'
 
 const themeCookie = Astro.cookies.get(themeCookieName)
-const currentTheme = themeCookie?.value
+const themeHeader = Astro.request.headers.get('Sec-CH-Prefers-Color-Scheme')
+const currentThemeName = themeCookie?.value ?? themeHeader
+const currentTheme = currentThemeName ? themes[currentThemeName] : null
 ---
 
 <!DOCTYPE html>
-<html lang="en" data-theme={currentTheme}>
+<html lang="en" data-theme={currentTheme?.name}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/x-icon" href="/favicon.png" />
     <meta name="color-scheme" content="dark light" />
+    {currentTheme && <meta name="theme-color" content={currentTheme.color} />}
 
     <slot name="seo-metadata" />
   </head>

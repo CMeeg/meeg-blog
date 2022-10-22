@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useMedia, useCookie } from 'react-use'
-import { themes, defaultTheme, themeCookieName } from '~/features/themes'
+import { themes, defaultThemeName, themeCookieName } from '~/features/themes'
 import { Sun, Moon } from '~/svg/icons'
 import styles from './index.module.scss'
 
@@ -9,29 +9,54 @@ export default function ThemeSwitcher() {
   const prefersDarkColorScheme = useMedia('(prefers-color-scheme: dark)')
 
   const toggleTheme = (preference?: string) => {
-    const currentTheme = value ?? defaultTheme
-    const newTheme = preference
+    const currentThemeName = value ?? defaultThemeName
+    const themeName = preference
       ? preference
-      : currentTheme === themes.light
-      ? themes.dark
-      : themes.light
+      : currentThemeName === themes.light.name
+      ? themes.dark.name
+      : themes.light.name
 
-    if (newTheme === currentTheme) {
+    const theme = themes[themeName]
+
+    if (!theme) {
       return
     }
 
-    updateCookie(newTheme)
+    updateCookie(theme.name)
 
     if (typeof window !== 'undefined') {
-      document.documentElement.setAttribute('data-theme', newTheme)
+      // Set theme data attribute
+      const doc = document.documentElement
+
+      doc.setAttribute('data-theme', theme.name)
+
+      // Set theme-color meta element
+      const docHead = doc.querySelector('head')
+
+      if (!docHead) {
+        return
+      }
+
+      const themeColorName = 'theme-color'
+
+      let themeColor = docHead.querySelector(`meta[name='${themeColorName}']`)
+
+      if (!themeColor) {
+        themeColor = document.createElement('meta')
+        themeColor.setAttribute('name', themeColorName)
+
+        docHead.appendChild(themeColor)
+      }
+
+      themeColor.setAttribute('content', theme.color)
     }
   }
 
   useEffect(() => {
     if (!value) {
       const colorSchemePreference = prefersDarkColorScheme
-        ? themes.dark
-        : themes.light
+        ? themes.dark.name
+        : themes.light.name
 
       toggleTheme(colorSchemePreference)
     }
