@@ -6,15 +6,25 @@ import styles from './index.module.scss'
 
 export default function ThemeSwitcher() {
   const [value, updateCookie] = useCookie(themeCookieName)
-  const prefersDarkColorScheme = useMedia('(prefers-color-scheme: dark)', false)
+  const prefersDarkColorScheme = useMedia('(prefers-color-scheme: dark)')
 
-  const toggleTheme = () => {
+  const toggleTheme = (preference?: string) => {
     const currentTheme = value ?? defaultTheme
-    const newTheme = currentTheme === themes.light ? themes.dark : themes.light
+    const newTheme = preference
+      ? preference
+      : currentTheme === themes.light
+      ? themes.dark
+      : themes.light
+
+    if (newTheme === currentTheme) {
+      return
+    }
 
     updateCookie(newTheme)
 
-    document.documentElement.setAttribute('data-theme', newTheme)
+    if (typeof window !== 'undefined') {
+      document.documentElement.setAttribute('data-theme', newTheme)
+    }
   }
 
   useEffect(() => {
@@ -23,7 +33,7 @@ export default function ThemeSwitcher() {
         ? themes.dark
         : themes.light
 
-      updateCookie(colorSchemePreference)
+      toggleTheme(colorSchemePreference)
     }
   }, [])
 
@@ -33,7 +43,7 @@ export default function ThemeSwitcher() {
         type="checkbox"
         id="theme-toggle"
         className={styles['toggle-input']}
-        onChange={toggleTheme}
+        onChange={() => toggleTheme()}
       />
       <label htmlFor="theme-toggle" className={styles['toggle-label']}>
         <Sun className={styles.sun} />

@@ -1,27 +1,54 @@
 @import "open-props/colors";
 
-html {
-  /* light */
+:root {
+  /* light theme vars */
   --color-canvas-light: var(--gray-0);
   --color-text-1-light: var(--gray-8);
 
-  /* dark */
+  /* dark theme vars*/
   --color-canvas-dark: var(--gray-9);
   --color-text-1-dark: var(--gray-1);
 }
 
-:root {
+@mixin light-theme {
+  // light theme as a mixin so it can be reused without duplication below
   color-scheme: light;
 
   --color-canvas: var(--color-canvas-light);
   --color-text-1: var(--color-text-1-light);
 }
 
-[data-theme='dark'] {
+%light-theme {
+  @include light-theme;
+}
+
+@mixin dark-theme {
+  // dark theme as a mixin so it can be reused without duplication below
   color-scheme: dark;
 
   --color-canvas: var(--color-canvas-dark);
   --color-text-1: var(--color-text-1-dark);
+}
+
+%dark-theme {
+  @include dark-theme;
+}
+
+html, [data-theme='light'] {
+  // apply light theme by default and based on selection
+  @extend %light-theme;
+}
+
+[data-theme='dark'] {
+  // apply dark theme based on selection
+  @extend %dark-theme;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    // apply dark theme based on preference
+    @include dark-theme;
+  }
 }
 
 body {
