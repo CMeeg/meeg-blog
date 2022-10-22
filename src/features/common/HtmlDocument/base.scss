@@ -1,13 +1,16 @@
 @import "open-props/colors";
+@import "open-props/media";
 
 :root {
   /* light theme vars */
   --color-canvas-light: var(--gray-0);
   --color-text-1-light: var(--gray-8);
+  --color-accent-light: var(--grape-8);
 
   /* dark theme vars*/
   --color-canvas-dark: var(--gray-9);
   --color-text-1-dark: var(--gray-1);
+  --color-accent-dark: var(--grape-5);
 }
 
 @mixin light-theme {
@@ -16,6 +19,7 @@
 
   --color-canvas: var(--color-canvas-light);
   --color-text-1: var(--color-text-1-light);
+  --color-accent: var(--color-accent-light);
 }
 
 %light-theme {
@@ -28,6 +32,7 @@
 
   --color-canvas: var(--color-canvas-dark);
   --color-text-1: var(--color-text-1-dark);
+  --color-accent: var(--color-accent-dark);
 }
 
 %dark-theme {
@@ -42,9 +47,13 @@ html, [data-theme='light'] {
 [data-theme='dark'] {
   // apply dark theme based on selection
   @extend %dark-theme;
+
+  img {
+    filter: brightness(.8) contrast(1.2);
+  }
 }
 
-@media (prefers-color-scheme: dark) {
+@media (--OSdark) {
   html {
     // apply dark theme based on preference
     @include dark-theme;
@@ -54,4 +63,5 @@ html, [data-theme='light'] {
 body {
   background: var(--color-canvas);
   color: var(--color-canvas-text-1);
+  accent-color: var(--color-accent);
 }

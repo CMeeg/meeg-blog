@@ -5,14 +5,15 @@ interface Themes {
   }
 }
 
+// TODO: Update colors after settling on themes
 const themes: Themes = {
   dark: {
     name: 'dark',
-    color: 'rgb(33, 37, 41)'
+    color: '#212529'
   },
   light: {
     name: 'light',
-    color: 'rgb(248, 249, 250)'
+    color: '#f8f9fa'
   }
 }
 

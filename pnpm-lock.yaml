@@ -25,6 +25,7 @@ specifiers:
   open-props: ^1.4.16
   pkg-dir: ^7.0.0
   postcss: ^8.4.18
+  postcss-custom-media: ^8.0.2
   postcss-flexbugs-fixes: ^5.0.2
   postcss-preset-env: ^7.8.2
   prettier: ^2.7.1
@@ -76,6 +77,7 @@ devDependencies:
   fs-extra: 10.1.0
   pkg-dir: 7.0.0
   postcss: 8.4.18
+  postcss-custom-media: 8.0.2_postcss@8.4.18
   postcss-flexbugs-fixes: 5.0.2_postcss@8.4.18
   postcss-preset-env: 7.8.2_postcss@8.4.18
   prettier: 2.7.1
