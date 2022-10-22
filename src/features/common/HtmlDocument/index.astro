@@ -1,5 +1,14 @@
+---
+import { themeCookieName } from '~/features/themes'
+import './reset.scss'
+import './base.scss'
+
+const themeCookie = Astro.cookies.get(themeCookieName)
+const currentTheme = themeCookie?.value
+---
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme={currentTheme}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />

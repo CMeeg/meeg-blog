@@ -1,0 +1,30 @@
+@import "open-props/colors";
+
+html {
+  /* light */
+  --color-canvas-light: var(--gray-0);
+  --color-text-1-light: var(--gray-8);
+
+  /* dark */
+  --color-canvas-dark: var(--gray-9);
+  --color-text-1-dark: var(--gray-1);
+}
+
+:root {
+  color-scheme: light;
+
+  --color-canvas: var(--color-canvas-light);
+  --color-text-1: var(--color-text-1-light);
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --color-canvas: var(--color-canvas-dark);
+  --color-text-1: var(--color-text-1-dark);
+}
+
+body {
+  background: var(--color-canvas);
+  color: var(--color-canvas-text-1);
+}

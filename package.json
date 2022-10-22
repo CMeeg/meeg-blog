@@ -20,6 +20,7 @@
     "sb:gen": "ts-node \"src/features/storyblok/gen/types.ts\"",
     "sb:login": "storyblok login",
     "sb:logout": "storyblok logout",
+    "svg:gen": "svgr --icon --typescript --jsx-runtime automatic --out-dir src/svg -- src/svg",
     "start": "astro dev"
   },
   "dependencies": {
@@ -27,12 +28,15 @@
     "@storyblok/js": "^1.8.6",
     "axios": "^0.27.2",
     "change-case": "^4.1.2",
+    "open-props": "^1.4.16",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
+    "react-use": "^17.4.0",
     "storyblok-rich-text-react-renderer": "^2.6.1",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "@svgr/cli": "^6.5.0",
     "@types/fs-extra": "^9.0.13",
     "@types/node": "^18.11.3",
     "@types/react": "^18.0.21",
@@ -41,6 +45,7 @@
     "@typescript-eslint/eslint-plugin": "^5.40.1",
     "@typescript-eslint/parser": "^5.40.1",
     "astro": "^1.5.2",
+    "autoprefixer": "^10.4.12",
     "dotenv": "^16.0.3",
     "eslint": "^8.25.0",
     "eslint-config-prettier": "^8.5.0",
@@ -50,8 +55,11 @@
     "fs-extra": "^10.1.0",
     "pkg-dir": "^7.0.0",
     "postcss": "^8.4.18",
+    "postcss-flexbugs-fixes": "^5.0.2",
+    "postcss-preset-env": "^7.8.2",
     "prettier": "^2.7.1",
     "prettier-plugin-astro": "^0.6.0",
+    "sass": "^1.55.0",
     "storyblok": "^3.12.0",
     "storyblok-generate-ts": "^1.7.0",
     "stylelint": "^14.14.0",

@@ -6,6 +6,9 @@ import react from '@astrojs/react'
 export default defineConfig({
   output: 'server',
   vite: {
+    ssr: {
+      noExternal: ['open-props']
+    },
     server: {
       https: {
         key: readFileSync('./localhost-key.pem', 'utf8'),
