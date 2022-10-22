@@ -1,11 +1,11 @@
 ---
-import { getGlobalStory } from '@features/common/api'
-import { getArticleStory } from '@features/blog/api'
-import HtmlDocument from '@features/common/HtmlDocument/index.astro'
-import DefaultSeoMetadata from '@features/common/DefaultSeoMetadata/index.astro'
-import DefaultLayout from '@features/common/DefaultLayout/index.astro'
-import ArticlePage from '@features/blog/ArticlePage'
-import StoryblokBridge from '@features/storyblok/StoryblokBridge/index.astro'
+import { getGlobalStory } from '~/features/common/api'
+import { getArticleStory } from '~/features/blog/api'
+import HtmlDocument from '~/features/common/HtmlDocument/index.astro'
+import DefaultSeoMetadata from '~/features/common/DefaultSeoMetadata/index.astro'
+import DefaultLayout from '~/features/common/DefaultLayout/index.astro'
+import ArticlePage from '~/features/blog/ArticlePage'
+import StoryblokBridge from '~/features/storyblok/StoryblokBridge/index.astro'
 
 const global = await getGlobalStory()
 

@@ -1,4 +1,4 @@
-import type { Image } from '@features/common/media'
+import type { Image } from '~/features/common/media'
 
 export interface Props {
   image: Image

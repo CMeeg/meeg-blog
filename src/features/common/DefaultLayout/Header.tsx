@@ -1,9 +1,9 @@
 import type {
   AssetStoryblok,
   NavItemStoryblok
-} from '@features/storyblok/types/components'
-import Image from '@features/common/Image'
-import Link from '@features/common/Link'
+} from '~/features/storyblok/types/components'
+import Image from '~/features/common/Image'
+import Link from '~/features/common/Link'
 import { getImageFromAsset } from '../media'
 
 export interface Props {

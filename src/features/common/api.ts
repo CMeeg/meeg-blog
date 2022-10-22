@@ -1,13 +1,13 @@
 import type {
   StoryData,
   StoryContentWithSeoMetadata
-} from '@features/storyblok/types/content-types'
+} from '~/features/storyblok/types/content-types'
 import type {
   GlobalStoryblok,
   PageStoryblok
-} from '@features/storyblok/types/components'
-import { getStory } from '@features/storyblok/api'
-import { getArticleStories } from '@features/blog/api'
+} from '~/features/storyblok/types/components'
+import { getStory } from '~/features/storyblok/api'
+import { getArticleStories } from '~/features/blog/api'
 
 type GlobalStory = StoryData<GlobalStoryblok>
 

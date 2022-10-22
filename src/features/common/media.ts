@@ -1,4 +1,4 @@
-import type { AssetStoryblok } from '@features/storyblok/types/components'
+import type { AssetStoryblok } from '~/features/storyblok/types/components'
 
 interface Image {
   src: string

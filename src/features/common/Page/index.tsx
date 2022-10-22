@@ -1,5 +1,5 @@
-import type { PageStory } from '@features/common/api'
-import Blocks from '@features/common/Blocks'
+import type { PageStory } from '~/features/common/api'
+import Blocks from '~/features/common/Blocks'
 
 export interface Props {
   story: PageStory

@@ -1,5 +1,5 @@
-import type { MessageBoxStoryblok } from '@features/storyblok/types/components'
-import RichText from '@features/common/RichText'
+import type { MessageBoxStoryblok } from '~/features/storyblok/types/components'
+import RichText from '~/features/common/RichText'
 
 export interface Props {
   blok: MessageBoxStoryblok

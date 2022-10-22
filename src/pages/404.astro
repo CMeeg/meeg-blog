@@ -1,10 +1,10 @@
 ---
-import { getGlobalStory } from '@features/common/api'
-import { getPageNotFoundStory } from '@features/errors/api'
-import HtmlDocument from '@features/common/HtmlDocument/index.astro'
-import DefaultSeoMetadata from '@features/common/DefaultSeoMetadata/index.astro'
-import DefaultLayout from '@features/common/DefaultLayout/index.astro'
-import PageNotFoundPage from '@features/errors/PageNotFoundPage/index.astro'
+import { getGlobalStory } from '~/features/common/api'
+import { getPageNotFoundStory } from '~/features/errors/api'
+import HtmlDocument from '~/features/common/HtmlDocument/index.astro'
+import DefaultSeoMetadata from '~/features/common/DefaultSeoMetadata/index.astro'
+import DefaultLayout from '~/features/common/DefaultLayout/index.astro'
+import PageNotFoundPage from '~/features/errors/PageNotFoundPage/index.astro'
 
 const global = await getGlobalStory()
 

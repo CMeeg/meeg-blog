@@ -1,5 +1,5 @@
-import type { MultilinkStoryblok } from '@features/storyblok/types/components'
-import { getLinkUrl } from '@features/storyblok/url'
+import type { MultilinkStoryblok } from '~/features/storyblok/types/components'
+import { getLinkUrl } from '~/features/storyblok/url'
 
 export interface Props {
   link: MultilinkStoryblok

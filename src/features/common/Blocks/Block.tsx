@@ -2,10 +2,10 @@ import type {
   ArticleListingStoryblok,
   MessageBoxStoryblok,
   PageHeadingStoryblok
-} from '@features/storyblok/types/components'
-import ArticleListing from '@features/blog/ArticleListing'
-import MessageBox from '@features/common/MessageBox'
-import PageHeading from '@features/common/PageHeading'
+} from '~/features/storyblok/types/components'
+import ArticleListing from '~/features/blog/ArticleListing'
+import MessageBox from '~/features/common/MessageBox'
+import PageHeading from '~/features/common/PageHeading'
 
 interface ComponentsMap {
   [key: string]: React.ElementType

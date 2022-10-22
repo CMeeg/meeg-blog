@@ -1,7 +1,7 @@
 import type { ArticleStory } from '../api'
-import { getStoryUrl } from '@features/storyblok/url'
-import RichText from '@features/common/RichText'
-import { getStoryDate } from '@features/storyblok/date'
+import { getStoryUrl } from '~/features/storyblok/url'
+import RichText from '~/features/common/RichText'
+import { getStoryDate } from '~/features/storyblok/date'
 
 export interface Props {
   article: ArticleStory

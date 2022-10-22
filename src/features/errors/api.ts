@@ -1,9 +1,9 @@
 import type {
   StoryData,
   StoryContentWithSeoMetadata
-} from '@features/storyblok/types/content-types'
-import { uuid } from '@features/common/uuid'
-import { createStory } from '@features/storyblok/api'
+} from '~/features/storyblok/types/content-types'
+import { uuid } from '~/features/common/uuid'
+import { createStory } from '~/features/storyblok/api'
 
 const pageNotFoundComponent = 'page_not_found'
 

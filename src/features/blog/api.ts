@@ -1,14 +1,14 @@
 import type { StoriesParams } from '@storyblok/js'
-import { getStory, getStories } from '@features/storyblok/api'
+import { getStory, getStories } from '~/features/storyblok/api'
 import type {
   StoryData,
   StoryContentWithSeoMetadata
-} from '@features/storyblok/types/content-types'
+} from '~/features/storyblok/types/content-types'
 import type {
   ArticleSeriesStoryblok,
   ArticleStoryblok
-} from '@features/storyblok/types/components'
-import { getPageStory } from '@features/common/api'
+} from '~/features/storyblok/types/components'
+import { getPageStory } from '~/features/common/api'
 
 const getBlogIndexStory = async () => {
   return await getPageStory('blog')

@@ -1,7 +1,7 @@
 import type { StoryblokRichtext } from 'storyblok-rich-text-react-renderer'
 import { render } from 'storyblok-rich-text-react-renderer'
-import type { BlockComponent } from '@features/common/Blocks/Block'
-import Block from '@features/common/Blocks/Block'
+import type { BlockComponent } from '~/features/common/Blocks/Block'
+import Block from '~/features/common/Blocks/Block'
 
 export interface Props {
   document: StoryblokRichtext

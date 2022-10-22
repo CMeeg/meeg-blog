@@ -1,7 +1,7 @@
 import { storyblokEditable } from '@storyblok/js'
-import type { ArticleListingStoryblok } from '@features/storyblok/types/components'
-import type { ArticleStory } from '@features/blog/api'
-import ArticleCard from '@features/blog/ArticleCard'
+import type { ArticleListingStoryblok } from '~/features/storyblok/types/components'
+import type { ArticleStory } from '~/features/blog/api'
+import ArticleCard from '~/features/blog/ArticleCard'
 
 export interface Props {
   blok: ArticleListingStoryblok
