@@ -4,6 +4,7 @@ import type {
 } from '@features/storyblok/types/components'
 import Image from '@features/common/Image'
 import Link from '@features/common/Link'
+import { getImageFromAsset } from '../media'
 
 export interface Props {
   logo: AssetStoryblok
@@ -11,9 +12,11 @@ export interface Props {
 }
 
 export default function Header({ logo, mainNav }: Props) {
+  const image = getImageFromAsset(logo, { resize: { width: 100 }, quality: 80 })
+
   return (
     <header>
-      <Image asset={logo} />
+      <Image image={image} />
 
       <nav>
         <ul>
