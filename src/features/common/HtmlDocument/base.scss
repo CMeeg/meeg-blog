@@ -1,16 +1,34 @@
-@import "open-props/colors";
+@import "./reset.scss";
+@import "open-props/gray";
+@import "open-props/grape";
+@import "open-props/teal";
 @import "open-props/media";
+@import "open-props/sizes";
+@import "open-props/aspects";
+@import "open-props/borders";
+@import "open-props/gradients";
+@import "open-props/easings";
+
+// Themes
 
 :root {
+  --font-sans: "Poppins", Verdana, sans-serif;
+
   /* light theme vars */
   --color-canvas-light: var(--gray-0);
+  --color-surface-1-light: var(--gray-2);
+  --color-accent-1-light: var(--teal-8);
+  --color-accent-2-light: var(--grape-6);
+  --color-gradient-1-light: var(--gradient-21);
   --color-text-1-light: var(--gray-8);
-  --color-accent-light: var(--grape-8);
 
   /* dark theme vars*/
   --color-canvas-dark: var(--gray-9);
+  --color-surface-1-dark: var(--gray-7);
+  --color-accent-1-dark: var(--grape-5);
+  --color-accent-2-dark: var(--teal-3);
+  --color-gradient-1-dark: var(--gradient-4);
   --color-text-1-dark: var(--gray-1);
-  --color-accent-dark: var(--grape-5);
 }
 
 @mixin light-theme {
@@ -18,8 +36,11 @@
   color-scheme: light;
 
   --color-canvas: var(--color-canvas-light);
+  --color-surface-1: var(--color-surface-1-light);
+  --color-accent-1: var(--color-accent-1-light);
+  --color-accent-2: var(--color-accent-2-light);
+  --color-gradient-1: var(--color-gradient-1-light);
   --color-text-1: var(--color-text-1-light);
-  --color-accent: var(--color-accent-light);
 }
 
 %light-theme {
@@ -31,8 +52,11 @@
   color-scheme: dark;
 
   --color-canvas: var(--color-canvas-dark);
+  --color-surface-1: var(--color-surface-1-dark);
+  --color-accent-1: var(--color-accent-1-dark);
+  --color-accent-2: var(--color-accent-2-dark);
+  --color-gradient-1: var(--color-gradient-1-dark);
   --color-text-1: var(--color-text-1-dark);
-  --color-accent: var(--color-accent-dark);
 }
 
 %dark-theme {
@@ -60,8 +84,24 @@ html, [data-theme='light'] {
   }
 }
 
+// Base
+
 body {
+  min-width: 300px;
+  font-family: var(--font-sans);
   background: var(--color-canvas);
   color: var(--color-canvas-text-1);
-  accent-color: var(--color-accent);
+  accent-color: var(--color-accent-1);
+}
+
+// Utilities
+
+.sr-only {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
 }

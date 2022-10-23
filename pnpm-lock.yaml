@@ -3,6 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@astrojs/node': ^2.0.1
   '@astrojs/react': ^1.2.1
+  '@fontsource/poppins': ^4.5.10
   '@storyblok/js': ^1.8.6
   '@svgr/cli': ^6.5.0
   '@types/fs-extra': ^9.0.13
@@ -13,7 +14,6 @@ specifiers:
   '@typescript-eslint/eslint-plugin': ^5.40.1
   '@typescript-eslint/parser': ^5.40.1
   astro: ^1.5.2
-  autoprefixer: ^10.4.12
   axios: ^0.27.2
   change-case: ^4.1.2
   dotenv: ^16.0.3
@@ -28,7 +28,6 @@ specifiers:
   open-props: ^1.4.16
   pkg-dir: ^7.0.0
   postcss: ^8.4.18
-  postcss-custom-media: ^8.0.2
   postcss-flexbugs-fixes: ^5.0.2
   postcss-preset-env: ^7.8.2
   prettier: ^2.7.1
@@ -51,6 +50,7 @@ specifiers:
 dependencies:
   '@astrojs/node': 2.0.1
   '@astrojs/react': 1.2.1_5uumaiclxbdbzaqafclbf6maf4
+  '@fontsource/poppins': 4.5.10
   '@storyblok/js': 1.8.6_axios@0.27.2
   axios: 0.27.2
   change-case: 4.1.2
@@ -73,7 +73,6 @@ devDependencies:
   '@typescript-eslint/eslint-plugin': 5.40.1_ukgdydjtebaxmxfqp5v5ulh64y
   '@typescript-eslint/parser': 5.40.1_z4bbprzjrhnsfa24uvmcbu7f5q
   astro: 1.5.2_sass@1.55.0+ts-node@10.9.1
-  autoprefixer: 10.4.12_postcss@8.4.18
   dotenv: 16.0.3
   eslint: 8.25.0
   eslint-config-prettier: 8.5.0_eslint@8.25.0
@@ -83,7 +82,6 @@ devDependencies:
   fs-extra: 10.1.0
   pkg-dir: 7.0.0
   postcss: 8.4.18
-  postcss-custom-media: 8.0.2_postcss@8.4.18
   postcss-flexbugs-fixes: 5.0.2_postcss@8.4.18
   postcss-preset-env: 7.8.2_postcss@8.4.18
   prettier: 2.7.1
@@ -710,6 +708,10 @@ packages:
       lodash.isundefined: 3.0.1
       lodash.uniq: 4.5.0
     dev: true
+
+  /@fontsource/poppins/4.5.10:
+    resolution: {integrity: sha512-oYZVHsnlwV3VWM1SE/m6SUxVh0QLk5+2wB+lBiXcI7N/0KVQWmV9YykaPqfJHBLvmdya+MAOnv+BQHeLU1vOOw==}
+    dev: false
 
   /@humanwhocodes/config-array/0.10.7:
     resolution: {integrity: sha512-MDl6D6sBsaV452/QSdX+4CXIjZhIcI0PELsxUjk4U828yd58vk3bTIvk/6w5FY+4hIy9sLW0sfrV7K7Kc++j/w==}

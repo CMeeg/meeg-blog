@@ -1,6 +1,6 @@
 ---
 import { themeCookieName, themes } from '~/features/themes'
-import './reset.scss'
+import '@fontsource/poppins'
 import './base.scss'
 
 const themeCookie = Astro.cookies.get(themeCookieName)
@@ -10,7 +10,7 @@ const currentTheme = currentThemeName ? themes[currentThemeName] : null
 ---
 
 <!DOCTYPE html>
-<html lang="en" data-theme={currentTheme?.name}>
+<html lang="en" dir="ltr" data-theme={currentTheme?.name}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />

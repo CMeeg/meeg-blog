@@ -1,0 +1,46 @@
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+$logoSize: 70px;
+$logoBorderSize: 3px;
+
+.logo-img-border {
+
+  width: calc($logoSize + ($logoBorderSize * 2));
+  position: relative;
+  background-clip: padding-box;
+  border: solid $logoBorderSize transparent;
+  border-radius: var(--radius-round);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    margin: -$logoBorderSize;
+    border-radius: inherit;
+    background: var(--color-gradient-1);
+  }
+}
+
+.logo-img {
+  width: $logoSize;
+  height: $logoSize;
+  aspect-ratio: var(--ratio-square);
+  border-radius: var(--radius-round);
+  background-color: var(--canvas);
+}
+
+.logo-text {
+  width: 190px;
+  height: 60px;
+  padding-block-start: 6px;
+  margin-inline-start: 12px;
+  fill: var(--color-accent-2);
+  transition: fill .5s var(--ease-3);
+}

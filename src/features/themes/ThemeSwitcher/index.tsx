@@ -73,7 +73,9 @@ export default function ThemeSwitcher() {
       <label htmlFor="theme-toggle" className={styles['toggle-label']}>
         <Sun className={styles.sun} />
         <Moon className={styles.moon} />
-        <div className={styles.toggle}></div>
+        <div className={styles.toggle}>
+          <span className="sr-only">Toggle</span>
+        </div>
       </label>
     </div>
   )
