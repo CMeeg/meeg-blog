@@ -24,6 +24,7 @@ specifiers:
   eslint-plugin-prettier: ^4.2.1
   express: ^4.18.2
   fs-extra: ^10.1.0
+  helmet: ^6.0.0
   open-props: ^1.4.16
   pkg-dir: ^7.0.0
   postcss: ^8.4.18
@@ -54,6 +55,7 @@ dependencies:
   axios: 0.27.2
   change-case: 4.1.2
   express: 4.18.2
+  helmet: 6.0.0
   open-props: 1.4.16
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
@@ -3973,6 +3975,11 @@ packages:
     dependencies:
       capital-case: 1.0.4
       tslib: 2.4.0
+    dev: false
+
+  /helmet/6.0.0:
+    resolution: {integrity: sha512-FO9RpR1wNJepH/GbLPQVtkE2eESglXL641p7SdyoT4LngHFJcZheHMoyUcjCZF4qpuMMO1u5q6RK0l9Ux8JBcg==}
+    engines: {node: '>=14.0.0'}
     dev: false
 
   /hosted-git-info/2.8.9:
