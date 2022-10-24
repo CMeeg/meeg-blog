@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 // This react-use import is done like this to workaround some incompatibility between the library and Astro - if you import react-use as "normal" then you get a runtime error on a production build
 // https://github.com/withastro/astro/issues/3174
 import * as reactUse from 'react-use'
-const { useMedia, useCookie } =
+const { useCookie } =
   (reactUse as unknown as { default: typeof reactUse }).default || reactUse
 import { themes, defaultThemeName, themeCookieName } from '~/features/themes'
 import { Sun, Moon } from '~/svg/icons'
@@ -10,8 +10,6 @@ import styles from './index.module.scss'
 
 export default function ThemeSwitcher() {
   const [value, updateCookie] = useCookie(themeCookieName)
-  // In dev `useMedia` will complain about not having a `defaultState`, but we don't want to set a default state because we can't assume the value of `prefers-color-scheme` - instead we handle it in `useEffect`
-  const prefersDarkColorScheme = useMedia('(prefers-color-scheme: dark)')
 
   const toggleTheme = (preference?: string) => {
     const currentThemeName = value ?? defaultThemeName
@@ -58,14 +56,37 @@ export default function ThemeSwitcher() {
   }
 
   useEffect(() => {
-    if (typeof prefersDarkColorScheme !== 'undefined') {
-      const colorSchemePreference = prefersDarkColorScheme
-        ? themes.dark.name
-        : themes.light.name
-
-      toggleTheme(colorSchemePreference)
+    const getThemeName = (prefersDark: boolean) => {
+      return prefersDark ? themes.dark.name : themes.light.name
     }
-  }, [prefersDarkColorScheme])
+
+    const mq = window.matchMedia('(prefers-color-scheme: dark)')
+
+    if (!value) {
+      // If no cookie is set then we will set the value based on the media query
+
+      toggleTheme(getThemeName(mq.matches))
+    }
+
+    // Set up a change event listener so that if the perference is toggled the scheme will update accordingly
+
+    let mounted = true
+
+    const onChange = function (e: MediaQueryListEvent) {
+      if (!mounted) {
+        return
+      }
+
+      toggleTheme(getThemeName(e.matches))
+    }
+
+    mq.addEventListener('change', onChange)
+
+    return function () {
+      mounted = false
+      mq.removeEventListener('change', onChange)
+    }
+  }, [])
 
   return (
     <div className={styles['theme-switcher']}>
