@@ -8,11 +8,14 @@
 @import "open-props/borders";
 @import "open-props/gradients";
 @import "open-props/easings";
+@import "open-props/zindex";
 
 // Themes
 
 :root {
   --font-sans: "Poppins", Verdana, sans-serif;
+  --layer-00: -1;
+  --layer-0: 0;
 
   /* light theme vars */
   --color-canvas-light: var(--gray-0);
@@ -24,7 +27,7 @@
 
   /* dark theme vars*/
   --color-canvas-dark: var(--gray-9);
-  --color-surface-1-dark: var(--gray-7);
+  --color-surface-1-dark: var(--gray-8);
   --color-accent-1-dark: var(--grape-5);
   --color-accent-2-dark: var(--teal-3);
   --color-gradient-1-dark: var(--gradient-4);
@@ -87,7 +90,7 @@ html, [data-theme='light'] {
 // Base
 
 body {
-  min-width: 300px;
+  min-width: var(--size-xs);
   font-family: var(--font-sans);
   background: var(--color-canvas);
   color: var(--color-canvas-text-1);

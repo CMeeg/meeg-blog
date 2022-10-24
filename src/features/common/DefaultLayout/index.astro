@@ -1,7 +1,6 @@
 ---
 import type { GlobalStory } from '~/features/common/api'
 import Header from './Header'
-import ThemeSwitcher from '~/features/themes/ThemeSwitcher'
 import Footer from './Footer.astro'
 
 export interface Props {
@@ -14,10 +13,8 @@ const { logo, main_nav, copyright, github_username, twitter_username } =
   global.content
 ---
 
-<Header logo={logo} mainNav={main_nav} />
+<Header logo={logo} mainNav={main_nav} client:load />
 <main>
-  <ThemeSwitcher client:only="react" />
-
   <slot />
 </main>
 <Footer
