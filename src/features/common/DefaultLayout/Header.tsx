@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import type {
   AssetStoryblok,
   NavItemStoryblok
@@ -17,6 +18,39 @@ export interface Props {
 export default function Header({ logo, mainNav }: Props) {
   const image = getImageFromAsset(logo, { resize: { width: 140 }, quality: 80 })
 
+  useEffect(() => {
+    let mounted = true
+
+    const element = document.querySelector('#menu-primary-toggle')
+
+    if (element) {
+      const menuOpenClassName = 'js-menu-open'
+
+      const onChange = function (e: Event) {
+        if (!mounted) {
+          return
+        }
+
+        const doc = document.documentElement
+        const target = e.target as HTMLInputElement
+
+        if (target.checked) {
+          doc.classList.add(menuOpenClassName)
+        } else {
+          doc.classList.remove(menuOpenClassName)
+        }
+      }
+
+      const menuToggle = element as HTMLInputElement
+      menuToggle.addEventListener('change', onChange)
+
+      return function () {
+        mounted = false
+        menuToggle.removeEventListener('change', onChange)
+      }
+    }
+  }, [])
+
   return (
     <header className={styles.header}>
       <a href="/" className={styles['logo']}>
@@ -31,38 +65,42 @@ export default function Header({ logo, mainNav }: Props) {
         <ChrisMeagher className={styles['logo-text']} />
       </a>
 
-      <nav role="navigation" className={styles.nav}>
-        <div className={styles['nav-container']}>
+      <div className={styles.menu}>
+        <div className={styles['menu-container']}>
           <input
             type="checkbox"
-            className={styles['nav-toggle']}
-            id="nav-primary-toggle"
+            className={styles['menu-toggle']}
+            id="menu-primary-toggle"
           />
-          <label htmlFor="nav-primary-toggle" className="sr-only">
+          <label htmlFor="menu-primary-toggle" className="sr-only">
             Menu
           </label>
 
-          <span className={styles['nav-icon']} />
+          <span className={styles['menu-icon']} />
 
-          <div className={styles['nav-content']}>
-            <ul className={styles['nav-primary']}>
-              <li>
-                <a href="/">Home</a>
-              </li>
-
-              {mainNav.map((item) => {
-                return (
-                  <li key={item._uid}>
-                    <Link link={item.link}>{item.name}</Link>
+          <div className={styles['menu-content-container']}>
+            <div className={styles['menu-content']}>
+              <nav role="navigation" className={styles['nav-primary']}>
+                <ul>
+                  <li>
+                    <a href="/">Home</a>
                   </li>
-                )
-              })}
-            </ul>
 
-            <ThemeSwitcher />
+                  {mainNav.map((item) => {
+                    return (
+                      <li key={item._uid}>
+                        <Link link={item.link}>{item.name}</Link>
+                      </li>
+                    )
+                  })}
+                </ul>
+              </nav>
+
+              <ThemeSwitcher />
+            </div>
           </div>
         </div>
-      </nav>
+      </div>
     </header>
   )
 }

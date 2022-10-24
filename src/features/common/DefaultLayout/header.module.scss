@@ -52,49 +52,31 @@ $logoBorderSize: 3px;
   height: 40px;
   padding-block-start: 6px;
   margin-inline-start: 12px;
-  fill: var(--color-accent-2);
+  fill: var(--color-accent-1);
   transition: fill .5s var(--ease-3), width .5s var(--ease-3), height .5s var(--ease-3);
 }
 
-@media (--sm-n-above) {
-  $logoSizeLg: 64px;
-
-  .logo-img-border {
-    width: calc($logoSizeLg + ($logoBorderSize * 2));
-  }
-
-  .logo-img {
-    width: $logoSizeLg;
-    height: $logoSizeLg;
-  }
-
-  .logo-text {
-    width: 170px;
-    height: 50px;
-  }
-}
-
-.nav {
+.menu {
   align-self: center;
   margin-inline-start: auto;
   padding-block-start: 6px;
 }
 
 // element is middle line, ::before is top, ::after is bottom
-.nav-icon,
-.nav-icon::before,
-.nav-icon::after {
+.menu-icon,
+.menu-icon::before,
+.menu-icon::after {
   display: block;
   width: 40px;
   height: 4px;
   position: absolute;
   top: 50%;
-  background: var(--color-accent-2);
+  background: var(--color-accent-1);
   border-radius: var(--radius-3);
   z-index: var(--layer-3);
 }
 
-.nav-container {
+.menu-container {
   display: inline-block;
   position: relative;
   z-index: var(--layer-1);
@@ -102,14 +84,14 @@ $logoBorderSize: 3px;
   height: 24px;
 }
 
-.nav-icon::before
+.menu-icon::before
 {
   content: '';
   top: -10px;
   transition: top 75ms var(--ease-3), opacity 75ms var(--ease-3);
 }
 
-.nav-icon::after
+.menu-icon::after
 {
   content: '';
   top: auto;
@@ -117,7 +99,7 @@ $logoBorderSize: 3px;
   transition: bottom 75ms var(--ease-3), transform 75ms cubic-bezier(.55,.055,.675,.19);
 }
 
-.nav-toggle {
+.menu-toggle {
   display: block;
   width: 40px;
   height: 24px;
@@ -131,7 +113,7 @@ $logoBorderSize: 3px;
   cursor: pointer;
 }
 
-.nav-toggle:checked ~ .nav-icon
+.menu-toggle:checked ~ .menu-icon
 {
   transform: rotate(45deg);
 
@@ -150,7 +132,7 @@ $logoBorderSize: 3px;
   }
 }
 
-.nav-content {
+.menu-content-container {
   position: fixed;
   z-index: var(--layer-2);
   width: 100%;
@@ -159,18 +141,73 @@ $logoBorderSize: 3px;
   right: 0;
   bottom: 0;
   padding: var(--size-4);
-  padding-top: var(--size-12);
+  padding-top: 82px;
   background: var(--color-surface-1);
   transform: translate3d(100%, 0, 0);
   transition: transform 0.5s var(--ease-out-5);
 }
 
-.nav-toggle:checked ~ .nav-content
+.menu-content {
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.5s var(--ease-out-5);
+  overflow-y: auto;
+}
+
+.menu-toggle:checked ~ .menu-content-container
 {
   transform: none;
+
+  .menu-content {
+    opacity: 1;
+    transition: opacity 0.5s var(--ease-in-5);
+  }
 }
 
 .nav-primary {
-  padding: 0;
-  list-style-type: none;
+  ul {
+    padding: var(--size-8) 0;
+    list-style-type: none;
+  }
+
+  li {
+    font-size: var(--font-size-h2);
+    font-weight: var(--font-weight-6);
+  }
+
+  a,
+  a:hover,
+  a:active {
+    text-decoration: none;
+  }
+}
+
+@media (--sm-n-above) {
+  $logoSizeLg: 64px;
+
+  .logo-img-border {
+    width: calc($logoSizeLg + ($logoBorderSize * 2));
+  }
+
+  .logo-img {
+    width: $logoSizeLg;
+    height: $logoSizeLg;
+  }
+
+  .logo-text {
+    width: 170px;
+    height: 50px;
+  }
+
+  .menu-content-container {
+    padding-top: 102px;
+  }
+}
+
+@media (--landscape) {
+  .nav-primary {
+    ul {
+      padding: var(--size-3) 0;
+    }
+  }
 }

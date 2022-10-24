@@ -1,35 +1,46 @@
 @import "./reset.scss";
-@import "open-props/gray";
-@import "open-props/grape";
-@import "open-props/teal";
-@import "open-props/media";
-@import "open-props/sizes";
 @import "open-props/aspects";
 @import "open-props/borders";
-@import "open-props/gradients";
 @import "open-props/easings";
+@import "open-props/fonts";
+@import "open-props/gradients";
+@import "open-props/grape";
+@import "open-props/gray";
+@import "open-props/media";
+@import "open-props/sizes";
+@import "open-props/shadows";
+@import "open-props/teal";
 @import "open-props/zindex";
 
 // Themes
 
 :root {
   --font-sans: "Poppins", Verdana, sans-serif;
+  --font-size-h1: var(--font-size-6);
+  --font-size-h2: var(--font-size-5);
+  --font-size-h3: var(--font-size-4);
+  --font-size-h4: var(--font-size-3);
+  --font-size-normal: var(--font-size-1);
   --layer-00: -1;
   --layer-0: 0;
 
   /* light theme vars */
   --color-canvas-light: var(--gray-0);
   --color-surface-1-light: var(--gray-2);
-  --color-accent-1-light: var(--teal-8);
-  --color-accent-2-light: var(--grape-6);
+  --color-surface-2-light: var(--gray-3);
+  --color-surface-3-light: var(--gray-4);
+  --color-accent-1-light: var(--grape-6);
+  --color-accent-2-light: var(--teal-6);
   --color-gradient-1-light: var(--gradient-21);
   --color-text-1-light: var(--gray-8);
 
   /* dark theme vars*/
   --color-canvas-dark: var(--gray-9);
   --color-surface-1-dark: var(--gray-8);
-  --color-accent-1-dark: var(--grape-5);
-  --color-accent-2-dark: var(--teal-3);
+  --color-surface-2-dark: var(--gray-7);
+  --color-surface-3-dark: var(--gray-6);
+  --color-accent-1-dark: var(--teal-3);
+  --color-accent-2-dark: var(--grape-3);
   --color-gradient-1-dark: var(--gradient-4);
   --color-text-1-dark: var(--gray-1);
 }
@@ -40,6 +51,8 @@
 
   --color-canvas: var(--color-canvas-light);
   --color-surface-1: var(--color-surface-1-light);
+  --color-surface-2: var(--color-surface-2-light);
+  --color-surface-3: var(--color-surface-3-light);
   --color-accent-1: var(--color-accent-1-light);
   --color-accent-2: var(--color-accent-2-light);
   --color-gradient-1: var(--color-gradient-1-light);
@@ -56,6 +69,8 @@
 
   --color-canvas: var(--color-canvas-dark);
   --color-surface-1: var(--color-surface-1-dark);
+  --color-surface-2: var(--color-surface-2-dark);
+  --color-surface-3: var(--color-surface-3-dark);
   --color-accent-1: var(--color-accent-1-dark);
   --color-accent-2: var(--color-accent-2-dark);
   --color-gradient-1: var(--color-gradient-1-dark);
@@ -89,12 +104,40 @@ html, [data-theme='light'] {
 
 // Base
 
+html {
+  font-size: 16px;
+  overflow-y: scroll;
+}
+
+.js-menu-open {
+  overflow-y: hidden;
+}
+
 body {
   min-width: var(--size-xs);
   font-family: var(--font-sans);
   background: var(--color-canvas);
   color: var(--color-canvas-text-1);
   accent-color: var(--color-accent-1);
+}
+
+a,
+a:link,
+a:visited,
+a:hover,
+a:focus,
+a:active {
+  color: var(--color-accent-1);
+  text-decoration: underline var(--color-accent-2) solid 1px;
+  text-underline-offset: 4px;
+  transition: color 0.25s var(--ease-out-1);
+}
+
+a:hover,
+a:active {
+  color: var(--color-accent-2);
+  text-underline-offset: 5px;
+  transition: color 0.25s var(--ease-in-1);
 }
 
 // Utilities
