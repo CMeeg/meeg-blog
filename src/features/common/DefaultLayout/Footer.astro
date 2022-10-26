@@ -19,8 +19,8 @@ const twitterUrl = twitterUsername
 const hasLinks = githubUrl || twitterUrl
 ---
 
-<footer>
-  <p set:html={copyrightDated}></p>
+<footer class="footer">
+  <p set:html={copyrightDated} />
   {
     hasLinks && (
       <ul>
@@ -40,3 +40,9 @@ const hasLinks = githubUrl || twitterUrl
     )
   }
 </footer>
+
+<style lang="scss">
+  .footer {
+    padding: var(--size-3) var(--size-4);
+  }
+</style>

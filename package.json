@@ -25,6 +25,7 @@
     "start:dev": "node ./server/development.mjs"
   },
   "dependencies": {
+    "@acab/reset.css": "^0.5.3",
     "@astrojs/node": "^2.0.1",
     "@astrojs/react": "^1.2.1",
     "@fontsource/poppins": "^4.5.10",

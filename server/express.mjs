@@ -31,6 +31,7 @@ const createExpressApp = () => {
         'default-src': [`'self'`, '*.storyblok.com'],
         'script-src': [`'self'`, `'unsafe-inline'`, '*.storyblok.com'],
         'style-src': [`'self'`, `'unsafe-inline'`],
+        'img-src': [`'self'`, 'data:', '*.storyblok.com'],
         'object-src': [`'none'`],
         'frame-ancestors': [`'none'`],
         'upgrade-insecure-requests': []

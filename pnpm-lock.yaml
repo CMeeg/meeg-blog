@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@acab/reset.css': ^0.5.3
   '@astrojs/node': ^2.0.1
   '@astrojs/react': ^1.2.1
   '@fontsource/poppins': ^4.5.10
@@ -48,6 +49,7 @@ specifiers:
   uuid: ^9.0.0
 
 dependencies:
+  '@acab/reset.css': 0.5.3
   '@astrojs/node': 2.0.1
   '@astrojs/react': 1.2.1_5uumaiclxbdbzaqafclbf6maf4
   '@fontsource/poppins': 4.5.10
@@ -97,6 +99,10 @@ devDependencies:
   typescript: 4.8.4
 
 packages:
+
+  /@acab/reset.css/0.5.3:
+    resolution: {integrity: sha512-pICfxGIMPgPCEm3lCpA16c00IKnpLeZmt7VtNoNfQX38jx7GuP0uEaUkU/QSxbWJaLmvAFpUJHwCLYZrMt2K7w==}
+    dev: false
 
   /@ampproject/remapping/2.2.0:
     resolution: {integrity: sha512-qRmjj8nj9qmLTQXXmaR1cck3UXSRMPrbsLJAasZpF+t3riI71BXed5ebIOYwQntykeZuhjsdweEc9BxH5Jc26w==}

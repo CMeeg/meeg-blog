@@ -17,6 +17,9 @@ export interface Props {
 
 export default function Header({ logo, mainNav }: Props) {
   const image = getImageFromAsset(logo, { resize: { width: 140 }, quality: 80 })
+  if (!image.alt) {
+    image.alt = 'Chris Meagher'
+  }
 
   useEffect(() => {
     let mounted = true
@@ -72,8 +75,8 @@ export default function Header({ logo, mainNav }: Props) {
             className={styles['menu-toggle']}
             id="menu-primary-toggle"
           />
-          <label htmlFor="menu-primary-toggle" className="sr-only">
-            Menu
+          <label htmlFor="menu-primary-toggle" className="visually-hidden">
+            Show menu
           </label>
 
           <span className={styles['menu-icon']} />

@@ -100,7 +100,7 @@ export default function ThemeSwitcher() {
         <Sun className={styles.sun} />
         <Moon className={styles.moon} />
         <div className={styles.toggle}>
-          <span className="sr-only">Toggle</span>
+          <span className="visually-hidden">Change color scheme</span>
         </div>
       </label>
     </div>

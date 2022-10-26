@@ -14,7 +14,7 @@ const { logo, main_nav, copyright, github_username, twitter_username } =
 ---
 
 <Header logo={logo} mainNav={main_nav} client:load />
-<main>
+<main class="main">
   <slot />
 </main>
 <Footer
@@ -22,3 +22,9 @@ const { logo, main_nav, copyright, github_username, twitter_username } =
   gitHubUsername={github_username}
   twitterUsername={twitter_username}
 />
+
+<style lang="scss">
+  .main {
+    padding: var(--size-3) var(--size-4);
+  }
+</style>

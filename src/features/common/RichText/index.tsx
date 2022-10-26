@@ -5,11 +5,18 @@ import Block from '~/features/common/Blocks/Block'
 
 export interface Props {
   document: StoryblokRichtext
+  className?: string
 }
 
-export default function RichText({ document }: Props) {
+const defaultClassName = 'prose'
+
+export default function RichText({ document, className }: Props) {
+  const cssClass = className
+    ? `${className} ${defaultClassName}`
+    : defaultClassName
+
   return (
-    <>
+    <div className={cssClass}>
       {render(document, {
         defaultBlokResolver: (name, props) => {
           const blok = {
@@ -20,6 +27,6 @@ export default function RichText({ document }: Props) {
           return <Block blok={blok} />
         }
       })}
-    </>
+    </div>
   )
 }

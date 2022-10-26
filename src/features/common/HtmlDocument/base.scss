@@ -1,4 +1,4 @@
-@import "./reset.scss";
+@import '@acab/reset.css';
 @import "open-props/aspects";
 @import "open-props/borders";
 @import "open-props/easings";
@@ -16,11 +16,14 @@
 
 :root {
   --font-sans: "Poppins", Verdana, sans-serif;
-  --font-size-h1: var(--font-size-6);
+  --font-size-h1: var(--font-size-7);
   --font-size-h2: var(--font-size-5);
   --font-size-h3: var(--font-size-4);
   --font-size-h4: var(--font-size-3);
-  --font-size-normal: var(--font-size-1);
+  --font-size-md: var(--font-size-1);
+  --font-size-sm: var(--font-size-0);
+  --font-size-xs: var(--font-size-00);
+
   --layer-00: -1;
   --layer-0: 0;
 
@@ -30,9 +33,13 @@
   --color-surface-2-light: var(--gray-3);
   --color-surface-3-light: var(--gray-4);
   --color-accent-1-light: var(--grape-6);
-  --color-accent-2-light: var(--teal-6);
+  --color-accent-2-hsl-light: 312, 100%, 50%;
+  --color-accent-2-light: hsl(var(--color-accent-2-hsl-light));
   --color-gradient-1-light: var(--gradient-21);
   --color-text-1-light: var(--gray-8);
+  --color-text-2-light: var(--gray-7);
+  --color-text-3-light: var(--gray-6);
+  --shadow-surface-light: var(--shadow-2);
 
   /* dark theme vars*/
   --color-canvas-dark: var(--gray-9);
@@ -40,9 +47,13 @@
   --color-surface-2-dark: var(--gray-7);
   --color-surface-3-dark: var(--gray-6);
   --color-accent-1-dark: var(--teal-3);
-  --color-accent-2-dark: var(--grape-3);
+  --color-accent-2-hsl-dark: 187, 100%, 48%;
+  --color-accent-2-dark: hsl(var(--color-accent-2-hsl-dark));
   --color-gradient-1-dark: var(--gradient-4);
   --color-text-1-dark: var(--gray-1);
+  --color-text-2-dark: var(--gray-2);
+  --color-text-3-dark: var(--gray-3);
+  --shadow-surface-dark: var(--shadow-2);
 }
 
 @mixin light-theme {
@@ -54,9 +65,13 @@
   --color-surface-2: var(--color-surface-2-light);
   --color-surface-3: var(--color-surface-3-light);
   --color-accent-1: var(--color-accent-1-light);
+  --color-accent-2-hsl: var(--color-accent-2-hsl-light);
   --color-accent-2: var(--color-accent-2-light);
   --color-gradient-1: var(--color-gradient-1-light);
   --color-text-1: var(--color-text-1-light);
+  --color-text-2: var(--color-text-2-light);
+  --color-text-3: var(--color-text-3-light);
+  --shadow-surface: var(--shadow-surface-light);
 }
 
 %light-theme {
@@ -72,9 +87,13 @@
   --color-surface-2: var(--color-surface-2-dark);
   --color-surface-3: var(--color-surface-3-dark);
   --color-accent-1: var(--color-accent-1-dark);
+  --color-accent-2-hsl: var(--color-accent-2-hsl-dark);
   --color-accent-2: var(--color-accent-2-dark);
   --color-gradient-1: var(--color-gradient-1-dark);
   --color-text-1: var(--color-text-1-dark);
+  --color-text-2: var(--color-text-2-dark);
+  --color-text-3: var(--color-text-3-dark);
+  --shadow-surface: var(--shadow-surface-dark);
 }
 
 %dark-theme {
@@ -105,6 +124,8 @@ html, [data-theme='light'] {
 // Base
 
 html {
+  --focus-color: var(--color-accent-1);
+
   font-size: 16px;
   overflow-y: scroll;
 }
@@ -120,6 +141,26 @@ body {
   color: var(--color-canvas-text-1);
   accent-color: var(--color-accent-1);
 }
+
+// Blocks
+
+h1 {
+  font-size: var(--font-size-h1);
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+}
+
+h3 {
+  font-size: var(--font-size-h3);
+}
+
+h4 {
+  font-size: var(--font-size-h4);
+}
+
+// Marks
 
 a,
 a:link,
@@ -140,14 +181,19 @@ a:active {
   transition: color 0.25s var(--ease-in-1);
 }
 
-// Utilities
+// Prose
 
-.sr-only {
-  clip: rect(0 0 0 0);
-  clip-path: inset(50%);
-  height: 1px;
-  overflow: hidden;
-  position: absolute;
-  white-space: nowrap;
-  width: 1px;
+:where(.prose) {
+  p {
+    margin-block-end: var(--size-6);
+  }
+
+  code {
+    padding: var(--size-1);
+    border: 1px solid hsla(var(--color-accent-2-hsl), 0.4);
+    border-radius: var(--radius-2);
+    font-family: var(--font-mono);
+    color: var(--color-accent-2);
+    background-color: hsla(var(--color-accent-2-hsl), 0.1);
+  }
 }
