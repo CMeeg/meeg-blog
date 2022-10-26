@@ -1,8 +1,8 @@
 services:
   - type: web
-    name: blog
+    name: meeg-blog-app
     env: node
-    plan: free
+    plan: starter
     region: frankfurt
     buildCommand: pnpm i; pnpm build
     startCommand: pnpm start
