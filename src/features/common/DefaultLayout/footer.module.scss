@@ -1,0 +1,28 @@
+.footer {
+  display: flex;
+  align-items: center;
+  margin-block-start: var(--size-6);
+  padding: var(--size-8) var(--size-4) var(--size-3);
+  background-color: var(--color-surface-2);
+  mask: var(--mask-edge-zig-zag-top);
+}
+
+.copyright {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-2);
+}
+
+.icon-links {
+  display: flex;
+  list-style: none;
+  margin-inline-start: auto;
+
+  li {
+    margin-inline-start: var(--size-3);
+  }
+
+  .icon {
+    width: 26px;
+    height: 26px;
+  }
+}
