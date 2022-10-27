@@ -17,16 +17,21 @@
 
 :root {
   --font-sans: "Poppins", Verdana, sans-serif;
-  --font-size-h1: var(--font-size-7);
+  --font-size-h0: var(--font-size-7);
+  --font-size-h1: var(--font-size-6);
   --font-size-h2: var(--font-size-5);
   --font-size-h3: var(--font-size-4);
   --font-size-h4: var(--font-size-3);
+  --font-size-h5: var(--font-size-2);
   --font-size-md: var(--font-size-1);
   --font-size-sm: var(--font-size-0);
   --font-size-xs: var(--font-size-00);
+  --font-weight-bold: var(--font-weight-6);
 
   --layer-00: -1;
   --layer-0: 0;
+
+  --size-0: 0.125rem;
 
   /* light theme vars */
   --color-canvas-light: var(--gray-0);
@@ -131,10 +136,6 @@ html {
   overflow-y: scroll;
 }
 
-.js-menu-open {
-  overflow-y: hidden;
-}
-
 body {
   min-width: var(--size-xs);
   font-family: var(--font-sans);
@@ -142,8 +143,6 @@ body {
   color: var(--color-canvas-text-1);
   accent-color: var(--color-accent-1);
 }
-
-// Blocks
 
 h1 {
   font-size: var(--font-size-h1);
@@ -161,7 +160,9 @@ h4 {
   font-size: var(--font-size-h4);
 }
 
-// Marks
+h5 {
+  font-size: var(--font-size-h5);
+}
 
 a,
 a:link,
@@ -182,18 +183,79 @@ a:active {
   transition: color 0.25s var(--ease-in-1);
 }
 
+// Modifiers
+
+.js-menu-open {
+  overflow-y: hidden;
+}
+
 // Prose
 
 :where(.prose) {
+  h1, h2, h3, h4, h5 {
+    padding-block-start: var(--size-3);
+    margin-block-end: var(--size-3);
+  }
+
   p {
+    margin-block-end: var(--size-6);
+    line-height: 1.6;
+  }
+
+  ul, ol {
+    list-style-position: outside;
+    padding-inline-start: var(--size-4);
     margin-block-end: var(--size-6);
   }
 
+  ul {
+    list-style-type: disc;
+  }
+
+  ol {
+    list-style-type: decimal;
+  }
+
+  pre {
+    margin-block-end: var(--size-6);
+  }
+
+  blockquote {
+    padding: var(--size-1) var(--size-2);
+    border-inline-start: var(--size-1) solid var(--color-surface-3);
+    color: var(--color-text-2);
+    background-color: var(--color-surface-2);
+
+    p {
+      font-style: italic;
+    }
+  }
+
+  b {
+    font-weight: var(--font-weight-bold);
+  }
+
+  i {
+    font-style: italic;
+  }
+
+  s {
+    text-decoration: line-through;
+  }
+
+  u {
+    text-decoration: underline var(--color-accent-2) solid 1px;
+    text-underline-offset: 4px;
+  }
+
   code {
-    padding: var(--size-1);
+    font-family: var(--font-mono);
+  }
+
+  code:not(pre code) {
+    padding: var(--size-0);
     border: 1px solid hsla(var(--color-accent-2-hsl), 0.4);
     border-radius: var(--radius-2);
-    font-family: var(--font-mono);
     color: var(--color-accent-2);
     background-color: hsla(var(--color-accent-2-hsl), 0.1);
   }
