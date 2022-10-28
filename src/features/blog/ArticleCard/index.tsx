@@ -2,7 +2,7 @@ import type { ArticleStory } from '../api'
 import { getStoryUrl } from '~/features/storyblok/url'
 import RichText from '~/features/common/RichText'
 import { getStoryDate } from '~/features/storyblok/date'
-import { Calendar } from '~/svg/icons'
+import { CalendarIcon } from '~/svg/icons'
 import styles from './index.module.scss'
 
 export interface Props {
@@ -24,7 +24,7 @@ export default function ArticleCard({ article }: Props) {
 
       <p className={styles['card-meta']}>
         <time className={styles['card-meta-date']} dateTime={articleDate}>
-          <Calendar className={styles['card-meta-date-icon']} />
+          <CalendarIcon className={styles['card-meta-date-icon']} />
           <span>{articleDate}</span>
         </time>
       </p>

@@ -5,7 +5,7 @@ import * as reactUse from 'react-use'
 const { useCookie } =
   (reactUse as unknown as { default: typeof reactUse }).default || reactUse
 import { themes, defaultThemeName, themeCookieName } from '~/features/themes'
-import { Sun, Moon } from '~/svg/icons'
+import { SunIcon, MoonIcon } from '~/svg/icons'
 import styles from './index.module.scss'
 
 export default function ThemeSwitcher() {
@@ -97,8 +97,8 @@ export default function ThemeSwitcher() {
         onChange={() => toggleTheme()}
       />
       <label htmlFor="theme-toggle" className={styles['toggle-label']}>
-        <Sun className={styles.sun} />
-        <Moon className={styles.moon} />
+        <SunIcon className={styles.sun} />
+        <MoonIcon className={styles.moon} />
         <div className={styles.toggle}>
           <span className="visually-hidden">Change color scheme</span>
         </div>

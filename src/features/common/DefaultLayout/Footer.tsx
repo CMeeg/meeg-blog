@@ -1,4 +1,4 @@
-import { Github, Twitter } from '~/svg/icons'
+import { GithubIcon, TwitterIcon } from '~/svg/icons'
 import styles from './footer.module.scss'
 
 export interface Props {
@@ -34,7 +34,7 @@ export default function Footer({
           {githubUrl && (
             <li>
               <a href={githubUrl}>
-                <Github className={styles.icon} />{' '}
+                <GithubIcon className={styles.icon} />{' '}
                 <span className="visually-hidden">GitHub</span>
               </a>
             </li>
@@ -42,7 +42,7 @@ export default function Footer({
           {twitterUrl && (
             <li>
               <a href={twitterUrl}>
-                <Twitter className={styles.icon} />{' '}
+                <TwitterIcon className={styles.icon} />{' '}
                 <span className="visually-hidden">Twitter</span>
               </a>
             </li>

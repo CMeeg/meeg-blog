@@ -1,6 +1,6 @@
 import type { SVGProps } from 'react'
 
-const SvgCalendar = (props: SVGProps<SVGSVGElement>) => (
+const SvgTwitterIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="1em"
@@ -14,9 +14,8 @@ const SvgCalendar = (props: SVGProps<SVGSVGElement>) => (
     role="img"
     {...props}
   >
-    <rect x={3} y={4} width={18} height={18} rx={2} ry={2} />
-    <path d="M16 2v4M8 2v4M3 10h18" />
+    <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
   </svg>
 )
 
-export default SvgCalendar
+export default SvgTwitterIcon

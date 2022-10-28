@@ -1,6 +1,6 @@
 import type { SVGProps } from 'react'
 
-const SvgSun = (props: SVGProps<SVGSVGElement>) => (
+const SvgCalendarIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="1em"
@@ -14,9 +14,9 @@ const SvgSun = (props: SVGProps<SVGSVGElement>) => (
     role="img"
     {...props}
   >
-    <circle cx={12} cy={12} r={4} />
-    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+    <rect x={3} y={4} width={18} height={18} rx={2} ry={2} />
+    <path d="M16 2v4M8 2v4M3 10h18" />
   </svg>
 )
 
-export default SvgSun
+export default SvgCalendarIcon
