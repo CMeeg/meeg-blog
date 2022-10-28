@@ -1,0 +1,26 @@
+.codeblock {
+  margin-block-end: var(--size-6);
+
+  pre {
+    padding: var(--size-4);
+    border-radius: var(--radius-2);
+    overflow-x: scroll;
+  }
+
+  // https://github.com/shikijs/shiki/issues/3
+  code {
+    counter-reset: step;
+    counter-increment: step 0;
+  }
+
+  :global(.line)::before {
+    content: counter(step);
+    counter-increment: step;
+    width: var(--size-5);
+    margin-inline-end: var(--size-4);
+    display: inline-block;
+    text-align: end;
+    color: var(--color-text-2);
+    opacity: 0.5;
+  }
+}

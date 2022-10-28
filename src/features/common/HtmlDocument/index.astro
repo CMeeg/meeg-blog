@@ -1,12 +1,10 @@
 ---
-import { themeCookieName, themes } from '~/features/themes'
+import { getCurrentTheme } from '~/features/themes'
 import '@fontsource/poppins'
 import './base.scss'
 
-const themeCookie = Astro.cookies.get(themeCookieName)
-const themeHeader = Astro.request.headers.get('Sec-CH-Prefers-Color-Scheme')
-const currentThemeName = themeCookie?.value ?? themeHeader
-const currentTheme = currentThemeName ? themes[currentThemeName] : null
+// TODO: Lift this up to the page routes?
+const currentTheme = getCurrentTheme(Astro.cookies)
 ---
 
 <!DOCTYPE html>

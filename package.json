@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@acab/reset.css": "^0.5.3",
-    "@astrojs/node": "^2.0.1",
+    "@astrojs/node": "^2.0.2",
     "@astrojs/react": "^1.2.1",
     "@fontsource/poppins": "^4.5.10",
     "@storyblok/js": "^1.8.6",
@@ -38,6 +38,7 @@
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-use": "^17.4.0",
+    "shiki": "^0.11.1",
     "storyblok-rich-text-react-renderer": "^2.6.1",
     "uuid": "^9.0.0"
   },
@@ -50,7 +51,7 @@
     "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.40.1",
     "@typescript-eslint/parser": "^5.40.1",
-    "astro": "^1.5.2",
+    "astro": "^1.6.0",
     "dotenv": "^16.0.3",
     "eslint": "^8.25.0",
     "eslint-config-prettier": "^8.5.0",

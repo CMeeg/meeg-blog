@@ -1,6 +1,8 @@
 ---
 import { getGlobalStory } from '~/features/common/api'
 import { getArticleStory } from '~/features/blog/api'
+import { getCurrentTheme } from '~/features/themes'
+import { createCodeHighlighter } from '~/features/shiki'
 import HtmlDocument from '~/features/common/HtmlDocument/index.astro'
 import DefaultSeoMetadata from '~/features/common/DefaultSeoMetadata/index.astro'
 import DefaultLayout from '~/features/common/DefaultLayout/index.astro'
@@ -31,6 +33,10 @@ if (!story) {
     statusText: `'Article' story with slug '${slug}' not found.`
   })
 }
+
+const currentTheme = getCurrentTheme(Astro.cookies, true)
+
+const codeHighlighter = await createCodeHighlighter(currentTheme)
 ---
 
 <HtmlDocument>
@@ -38,7 +44,7 @@ if (!story) {
   <DefaultSeoMetadata slot="seo-metadata" metadata={story?.content.metadata} />
 
   <DefaultLayout global={global}>
-    <ArticlePage story={story} />
+    <ArticlePage story={story} codeHighlighter={codeHighlighter} />
   </DefaultLayout>
 
   <StoryblokBridge />
