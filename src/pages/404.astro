@@ -1,6 +1,7 @@
 ---
 import { getGlobalStory } from '~/features/common/api'
 import { getPageNotFoundStory } from '~/features/errors/api'
+import { getCurrentTheme } from '~/features/themes'
 import HtmlDocument from '~/features/common/HtmlDocument/index.astro'
 import DefaultSeoMetadata from '~/features/common/DefaultSeoMetadata/index.astro'
 import DefaultLayout from '~/features/common/DefaultLayout/index.astro'
@@ -14,9 +15,11 @@ if (!global) {
 
 // TODO: Can just create metadata now instead of a whole story
 const story = getPageNotFoundStory()
+
+const currentTheme = getCurrentTheme(Astro.cookies, true)
 ---
 
-<HtmlDocument>
+<HtmlDocument theme={currentTheme}>
   <DefaultSeoMetadata slot="seo-metadata" metadata={story?.content.metadata} />
   <DefaultLayout global={global}>
     <PageNotFoundPage story={story} />

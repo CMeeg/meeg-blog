@@ -141,7 +141,10 @@ html {
 }
 
 body {
+  display: flex;
+  flex-direction: column;
   min-width: var(--size-xs);
+  min-height: 100vh;
   font-family: var(--font-sans);
   background: var(--color-canvas);
   color: var(--color-canvas-text-1);

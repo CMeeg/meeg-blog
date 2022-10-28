@@ -1,6 +1,7 @@
 ---
 import { getGlobalStory } from '~/features/common/api'
 import { getBlogIndexStory } from '~/features/blog/api'
+import { getCurrentTheme } from '~/features/themes'
 import HtmlDocument from '~/features/common/HtmlDocument/index.astro'
 import DefaultSeoMetadata from '~/features/common/DefaultSeoMetadata/index.astro'
 import DefaultLayout from '~/features/common/DefaultLayout/index.astro'
@@ -21,9 +22,11 @@ if (!story) {
     statusText: `'Blog index' story not found.`
   })
 }
+
+const currentTheme = getCurrentTheme(Astro.cookies, true)
 ---
 
-<HtmlDocument>
+<HtmlDocument theme={currentTheme}>
   <DefaultSeoMetadata slot="seo-metadata" metadata={story?.content.metadata} />
 
   <DefaultLayout global={global}>

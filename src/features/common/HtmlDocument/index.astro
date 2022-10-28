@@ -1,20 +1,23 @@
 ---
-import { getCurrentTheme } from '~/features/themes'
+import type { Theme } from '~/features/themes'
 import '@fontsource/poppins'
 import './base.scss'
 
-// TODO: Lift this up to the page routes?
-const currentTheme = getCurrentTheme(Astro.cookies)
+export interface Props {
+  theme: Theme | null
+}
+
+const { theme } = Astro.props as Props
 ---
 
 <!DOCTYPE html>
-<html lang="en" dir="ltr" data-theme={currentTheme?.name}>
+<html lang="en" dir="ltr" data-theme={theme?.name}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/x-icon" href="/favicon.png" />
     <meta name="color-scheme" content="dark light" />
-    {currentTheme && <meta name="theme-color" content={currentTheme.color} />}
+    {theme && <meta name="theme-color" content={theme.color} />}
 
     <slot name="seo-metadata" />
   </head>

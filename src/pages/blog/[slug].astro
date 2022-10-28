@@ -39,7 +39,7 @@ const currentTheme = getCurrentTheme(Astro.cookies, true)
 const codeHighlighter = await createCodeHighlighter(currentTheme)
 ---
 
-<HtmlDocument>
+<HtmlDocument theme={currentTheme}>
   <!-- TODO: Article uses different metadata -->
   <DefaultSeoMetadata slot="seo-metadata" metadata={story?.content.metadata} />
 
