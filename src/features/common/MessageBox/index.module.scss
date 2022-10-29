@@ -1,0 +1,19 @@
+.message-box {
+  padding: var(--size-4);
+  border: 1px solid var(--color-surface-2);
+  border-radius: var(--radius-2);
+  margin-block-end: var(--size-6);
+  background-color: hsla(var(--color-surface-2-hsl), 0.5);
+
+  :last-child {
+    margin-block-end: 0;
+  }
+}
+
+.info {
+  --message-box-color-info: 206, 96%, 72%;
+
+  color: var(--color-text-2);
+  border-color: hsl(var(--message-box-color-info));
+  background-color: hsla(var(--message-box-color-info), 0.2);
+}

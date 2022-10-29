@@ -19,10 +19,10 @@ export default function ArticlePage({ story, codeHighlighter }: Props) {
   const articleDate = getStoryDate(story).toDateString()
 
   return (
-    <>
+    <article>
       <h1 className={styles['article-title']}>{title}</h1>
 
-      <div className={styles['article-meta']}>
+      <aside className={styles['article-meta']}>
         <p className={styles['article-date']}>
           <time className={styles['article-date-time']} dateTime={articleDate}>
             <CalendarIcon className={styles['article-date-icon']} />
@@ -51,11 +51,11 @@ export default function ArticlePage({ story, codeHighlighter }: Props) {
             </span>
           </p>
         )}
-      </div>
+      </aside>
 
       <RichText document={body} codeHighlighter={codeHighlighter} />
 
       {/* TODO: Article series component */}
-    </>
+    </article>
   )
 }
