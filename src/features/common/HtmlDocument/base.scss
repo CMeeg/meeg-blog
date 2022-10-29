@@ -16,7 +16,8 @@
 // Themes
 
 :root {
-  --font-sans: "Poppins", Verdana, sans-serif;
+  // typography
+  --font-sans: "Poppins", verdana, sans-serif;
   --font-size-h0: var(--font-size-7);
   --font-size-h1: var(--font-size-6);
   --font-size-h2: var(--font-size-5);
@@ -28,19 +29,21 @@
   --font-size-xs: var(--font-size-00);
   --font-weight-bold: var(--font-weight-6);
 
+  // z-index
   --layer-00: -1;
   --layer-0: 0;
 
+  // size
   --size-0: 0.125rem;
 
-  /* light theme vars */
+  // light theme vars
   --color-canvas-light: var(--gray-0);
   --color-surface-1-light: var(--gray-2);
-  --color-surface-2-hsl-light: 210, 14%, 89%;
+  --color-surface-2-hsl-light: 210 14% 89%;
   --color-surface-2-light: hsl(var(--color-surface-2-hsl-light));
   --color-surface-3-light: var(--gray-4);
   --color-accent-1-light: var(--grape-6);
-  --color-accent-2-hsl-light: 312, 100%, 50%;
+  --color-accent-2-hsl-light: 312 100% 50%;
   --color-accent-2-light: hsl(var(--color-accent-2-hsl-light));
   --color-gradient-1-light: var(--gradient-21);
   --color-text-1-light: var(--gray-8);
@@ -48,14 +51,14 @@
   --color-text-3-light: var(--gray-6);
   --shadow-surface-light: var(--shadow-2);
 
-  /* dark theme vars*/
+  // dark theme vars
   --color-canvas-dark: var(--gray-9);
   --color-surface-1-dark: var(--gray-8);
-  --color-surface-2-hsl-dark: 210, 9%, 31%;
+  --color-surface-2-hsl-dark: 210 9% 31%;
   --color-surface-2-dark: hsl(var(--color-surface-2-hsl-dark));
   --color-surface-3-dark: var(--gray-6);
   --color-accent-1-dark: var(--teal-3);
-  --color-accent-2-hsl-dark: 187, 100%, 48%;
+  --color-accent-2-hsl-dark: 187 100% 48%;
   --color-accent-2-dark: hsl(var(--color-accent-2-hsl-dark));
   --color-gradient-1-dark: var(--gradient-4);
   --color-text-1-dark: var(--gray-1);
@@ -232,7 +235,7 @@ a:active {
     border-inline-start: var(--size-1) solid var(--color-surface-3);
     margin-block-end: var(--size-6);
     color: var(--color-text-2);
-    background-color: hsla(var(--color-surface-2-hsl), 0.3);
+    background-color: hsl(var(--color-surface-2-hsl) / 30%);
 
     p {
       font-style: italic;
@@ -266,9 +269,9 @@ a:active {
 
   code:not(pre code) {
     padding: var(--size-0);
-    border: 1px solid hsla(var(--color-accent-2-hsl), 0.4);
+    border: 1px solid hsl(var(--color-accent-2-hsl) / 40%);
     border-radius: var(--radius-2);
     color: var(--color-accent-2);
-    background-color: hsla(var(--color-accent-2-hsl), 0.1);
+    background-color: hsl(var(--color-accent-2-hsl) / 10%);
   }
 }

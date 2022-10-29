@@ -35,10 +35,8 @@
 
 .article-tags-links {
   display: flex;
-  flex-basis: var(--size-8);
+  flex: 1 0 var(--size-8);
   flex-wrap: wrap;
-  flex-grow: 1;
-  flex-shrink: 0;
   column-gap: var(--size-2);
 }
 
