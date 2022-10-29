@@ -6,13 +6,13 @@ import type {
   GlobalStoryblok,
   PageStoryblok
 } from '~/features/storyblok/types/components'
-import { getStory } from '~/features/storyblok/api'
-import { getArticleStories } from '~/features/blog/api'
+import type { StoryblokApiClient } from '~/features/storyblok/api'
+import { createBlogApiClient } from '~/features/blog/api'
 
 type GlobalStory = StoryData<GlobalStoryblok>
 
-const getGlobalStory = async () => {
-  const story = await getStory<GlobalStory>('global')
+const getGlobalStory = async (apiClient: StoryblokApiClient) => {
+  const story = await apiClient.getStory<GlobalStory>({ slug: 'global' })
 
   if (!story) {
     return null
@@ -24,8 +24,15 @@ const getGlobalStory = async () => {
 type PageStory = StoryData<PageStoryContent>
 type PageStoryContent = StoryContentWithSeoMetadata<PageStoryblok>
 
-const getPageStory = async (slug: string) => {
-  const story = await getStory<PageStory>(slug)
+interface GetPageStoryOptions {
+  slug: string
+}
+
+const getPageStory = async (
+  apiClient: StoryblokApiClient,
+  options: GetPageStoryOptions
+) => {
+  const story = await apiClient.getStory<PageStory>(options)
 
   if (!story) {
     return null
@@ -43,7 +50,9 @@ const getPageStory = async (slug: string) => {
           per_page: perPage
         } = blok
 
-        const articles = await getArticleStories({
+        const blogApiClient = createBlogApiClient(apiClient)
+
+        const articles = await blogApiClient.getArticleStories({
           startsWith,
           withTag,
           perPage
@@ -57,6 +66,14 @@ const getPageStory = async (slug: string) => {
   return story
 }
 
-export { getGlobalStory, getPageStory }
+const createCommonApiClient = (apiClient: StoryblokApiClient) => {
+  return {
+    getGlobalStory: async () => await getGlobalStory(apiClient),
+    getPageStory: async (options: GetPageStoryOptions) =>
+      await getPageStory(apiClient, options)
+  }
+}
+
+export { createCommonApiClient }
 
 export type { GlobalStory, PageStory, PageStoryContent }

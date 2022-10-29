@@ -3,7 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@acab/reset.css': ^0.5.3
   '@astrojs/node': ^2.0.2
-  '@astrojs/react': ^1.2.1
+  '@astrojs/react': ^1.2.2
   '@fontsource/poppins': ^4.5.10
   '@storyblok/js': ^1.8.6
   '@svgr/cli': ^6.5.0
@@ -14,7 +14,7 @@ specifiers:
   '@types/uuid': ^8.3.4
   '@typescript-eslint/eslint-plugin': ^5.40.1
   '@typescript-eslint/parser': ^5.40.1
-  astro: ^1.6.0
+  astro: ^1.6.1
   axios: ^0.27.2
   change-case: ^4.1.2
   dotenv: ^16.0.3
@@ -32,7 +32,7 @@ specifiers:
   postcss-flexbugs-fixes: ^5.0.2
   postcss-preset-env: ^7.8.2
   prettier: ^2.7.1
-  prettier-plugin-astro: ^0.6.0
+  prettier-plugin-astro: ^0.7.0
   react: ^18.0.0
   react-dom: ^18.0.0
   react-use: ^17.4.0
@@ -52,7 +52,7 @@ specifiers:
 dependencies:
   '@acab/reset.css': 0.5.3
   '@astrojs/node': 2.0.2
-  '@astrojs/react': 1.2.1_5uumaiclxbdbzaqafclbf6maf4
+  '@astrojs/react': 1.2.2_5uumaiclxbdbzaqafclbf6maf4
   '@fontsource/poppins': 4.5.10
   '@storyblok/js': 1.8.6_axios@0.27.2
   axios: 0.27.2
@@ -76,7 +76,7 @@ devDependencies:
   '@types/uuid': 8.3.4
   '@typescript-eslint/eslint-plugin': 5.40.1_ukgdydjtebaxmxfqp5v5ulh64y
   '@typescript-eslint/parser': 5.40.1_z4bbprzjrhnsfa24uvmcbu7f5q
-  astro: 1.6.0_sass@1.55.0+ts-node@10.9.1
+  astro: 1.6.1_sass@1.55.0+ts-node@10.9.1
   dotenv: 16.0.3
   eslint: 8.25.0
   eslint-config-prettier: 8.5.0_eslint@8.25.0
@@ -89,7 +89,7 @@ devDependencies:
   postcss-flexbugs-fixes: 5.0.2_postcss@8.4.18
   postcss-preset-env: 7.8.2_postcss@8.4.18
   prettier: 2.7.1
-  prettier-plugin-astro: 0.6.0
+  prettier-plugin-astro: 0.7.0
   sass: 1.55.0
   storyblok: 3.12.0
   storyblok-generate-ts: 1.7.0
@@ -121,12 +121,12 @@ packages:
     resolution: {integrity: sha512-jdbnULQkafKuSBa9yL7amQ5Ee7WIiQSAkCCGSgWhpt7t1HvtlbviNYuNIw5ob9Ax+rA08jNQ896rHqaPB31XjA==}
     dev: true
 
-  /@astrojs/compiler/0.27.2:
-    resolution: {integrity: sha512-VG4X87cUkcmT40HqEwShQzUgl0VSnVTszobbmnhAOkHzdoWMxhwAm61A2o5fEsv6eEK8M0lW/fGwkSofYM5GcQ==}
-    dev: true
-
   /@astrojs/compiler/0.28.1:
     resolution: {integrity: sha512-rcuQs5kcT6OshfJxXkZ2Tn61V4/5UAmvZKma/qmNhpAdBkGk6J/1gJ/Gxa2sAS6WNUjUyVo5BRrdsNGW36qkoQ==}
+    dev: true
+
+  /@astrojs/compiler/0.29.5:
+    resolution: {integrity: sha512-XpSJyBO6ha5mGqsD71ie83SOcv3p7zKq6qzngyeLKhccCXtf9Zn/4tGbi/Iq4YmkRBNCjLEkF0wZMYWY+eJYAA==}
     dev: true
 
   /@astrojs/language-server/0.26.2:
@@ -208,8 +208,8 @@ packages:
       prismjs: 1.28.0
     dev: true
 
-  /@astrojs/react/1.2.1_5uumaiclxbdbzaqafclbf6maf4:
-    resolution: {integrity: sha512-EoW7coV/35ak1fPoVNrL1OyYGOnJSnRJsgIc8WtkLv5aDrMpviS6+9vmqOHEiJwab8wNh+zSphx8a9nC2Q3zAg==}
+  /@astrojs/react/1.2.2_5uumaiclxbdbzaqafclbf6maf4:
+    resolution: {integrity: sha512-ab9fYvzkC74J7N+M3DWQuZgwu7sYjW0aLO3sEAdCX/jZZz+0BhrqS8m9QjtGJyQK/niF4tgJjpPfadopxKc56g==}
     engines: {node: ^14.18.0 || >=16.12.0}
     peerDependencies:
       '@types/react': ^17.0.50 || ^18.0.21
@@ -1582,8 +1582,8 @@ packages:
       - supports-color
     dev: true
 
-  /astro/1.6.0_sass@1.55.0+ts-node@10.9.1:
-    resolution: {integrity: sha512-e3UVJkhMiCQPd16w9aCxfMVEj/vs07qcLOWgWsA27BepiiYHvYebn+mfnJc8C7WeZyuTm9IcmwBtsZPoIJyFLA==}
+  /astro/1.6.1_sass@1.55.0+ts-node@10.9.1:
+    resolution: {integrity: sha512-fECZFVxoSI0Yt76M57m6jf6jJ14I8IHfy0hR+WuahpWsbshijDBrK8RQ6pNwhaE1JzIbBQtYa34+BY0RSkwKNg==}
     engines: {node: ^14.18.0 || >=16.12.0, npm: '>=6.14.0'}
     hasBin: true
     dependencies:
@@ -1633,7 +1633,7 @@ packages:
       recast: 0.20.5
       rehype: 12.0.1
       resolve: 1.22.1
-      rollup: 2.78.1
+      rollup: 2.79.1
       semver: 7.3.7
       shiki: 0.11.1
       sirv: 2.0.2
@@ -1645,14 +1645,15 @@ packages:
       typescript: 4.8.4
       unist-util-visit: 4.1.0
       vfile: 5.3.4
-      vite: 3.1.8_sass@1.55.0
-      vitefu: 0.1.0_vite@3.1.8
+      vite: 3.2.1_sass@1.55.0
+      vitefu: 0.1.0_vite@3.2.1
       yargs-parser: 21.1.1
       zod: 3.18.0
     transitivePeerDependencies:
       - less
       - sass
       - stylus
+      - sugarss
       - supports-color
       - terser
       - ts-node
@@ -6235,11 +6236,11 @@ packages:
       synckit: 0.7.3
     dev: true
 
-  /prettier-plugin-astro/0.6.0:
-    resolution: {integrity: sha512-xU67TzyGi1u/pwVbEh55AwoOfcOpsh9BtD2MpUAEVrViAcdrBDcmA9VN0edLgla7f2NYu8ntGakxTSrSNFv1mQ==}
+  /prettier-plugin-astro/0.7.0:
+    resolution: {integrity: sha512-ehCUx7MqHWvkHwUmxxAWLsL35pFaCTM5YXQ8xjG/1W6dY2yBhvEks+2aCfjeI5zmMrZNCXkiMQtpznSlLSLrxw==}
     engines: {node: ^14.15.0 || >=16.0.0, npm: '>=6.14.0'}
     dependencies:
-      '@astrojs/compiler': 0.27.2
+      '@astrojs/compiler': 0.29.5
       prettier: 2.7.1
       sass-formatter: 0.7.5
       synckit: 0.8.4
@@ -6657,8 +6658,8 @@ packages:
       semver-compare: 1.0.0
       sprintf-js: 1.1.2
 
-  /rollup/2.78.1:
-    resolution: {integrity: sha512-VeeCgtGi4P+o9hIg+xz4qQpRl6R401LWEXBmxYKOV4zlF82lyhgh2hTZnheFUbANE8l2A41F458iwj2vEYaXJg==}
+  /rollup/2.79.1:
+    resolution: {integrity: sha512-uKxbd0IhMZOhjAiD5oAFp7BqvkA4Dv47qpOCtaNvng4HBwdbWtdOh8f5nZNuk2rp51PMGk3bzfWu5oayNEuYnw==}
     engines: {node: '>=10.0.0'}
     hasBin: true
     optionalDependencies:
@@ -7859,14 +7860,15 @@ packages:
       vfile-message: 3.1.2
     dev: true
 
-  /vite/3.1.8_sass@1.55.0:
-    resolution: {integrity: sha512-m7jJe3nufUbuOfotkntGFupinL/fmuTNuQmiVE7cH2IZMuf4UbfbGYMUT3jVWgGYuRVLY9j8NnrRqgw5rr5QTg==}
+  /vite/3.2.1_sass@1.55.0:
+    resolution: {integrity: sha512-ADtMkfHuWq4tskJsri2n2FZkORO8ZyhI+zIz7zTrDAgDEtct1jdxOg3YsZBfHhKjmMoWLOSCr+64qrEDGo/DbQ==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
     peerDependencies:
       less: '*'
       sass: '*'
       stylus: '*'
+      sugarss: '*'
       terser: ^5.4.0
     peerDependenciesMeta:
       less:
@@ -7875,19 +7877,21 @@ packages:
         optional: true
       stylus:
         optional: true
+      sugarss:
+        optional: true
       terser:
         optional: true
     dependencies:
       esbuild: 0.15.10
       postcss: 8.4.18
       resolve: 1.22.1
-      rollup: 2.78.1
+      rollup: 2.79.1
       sass: 1.55.0
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
 
-  /vitefu/0.1.0_vite@3.1.8:
+  /vitefu/0.1.0_vite@3.2.1:
     resolution: {integrity: sha512-5MQSHP9yr0HIve8q4XNb7QXfO1P4tzZDZP99qH0FM5ClcwYddeGXRDQ4TQYRUeXLjZ+vLecirHtGNpwFFUF7sw==}
     peerDependencies:
       vite: ^3.0.0
@@ -7896,7 +7900,7 @@ packages:
         optional: true
     dependencies:
       import-meta-resolve: 2.1.0
-      vite: 3.1.8_sass@1.55.0
+      vite: 3.2.1_sass@1.55.0
     dev: true
 
   /vscode-css-languageservice/6.0.1:

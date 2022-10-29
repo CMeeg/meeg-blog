@@ -1,6 +1,7 @@
 ---
-import { getGlobalStory } from '~/features/common/api'
-import { getBlogIndexStory } from '~/features/blog/api'
+import { createStoryblokApiClient } from '~/features/storyblok/api'
+import { createCommonApiClient } from '~/features/common/api'
+import { createBlogApiClient } from '~/features/blog/api'
 import { getCurrentTheme } from '~/features/themes'
 import HtmlDocument from '~/features/common/HtmlDocument/index.astro'
 import DefaultSeoMetadata from '~/features/common/DefaultSeoMetadata/index.astro'
@@ -8,13 +9,19 @@ import DefaultLayout from '~/features/common/DefaultLayout/index.astro'
 import Page from '~/features/common/Page'
 import StoryblokBridge from '~/features/storyblok/StoryblokBridge/index.astro'
 
-const global = await getGlobalStory()
+const apiClient = createStoryblokApiClient(Astro.request)
+
+const commonApiClient = createCommonApiClient(apiClient)
+
+const global = await commonApiClient.getGlobalStory()
 
 if (!global) {
   throw Error(`'Global' story not found.`)
 }
 
-const story = await getBlogIndexStory()
+const blogApiClient = createBlogApiClient(apiClient)
+
+const story = await blogApiClient.getBlogIndexStory()
 
 if (!story) {
   return new Response(null, {
@@ -33,5 +40,5 @@ const currentTheme = getCurrentTheme(Astro.cookies, true)
     <Page story={story} />
   </DefaultLayout>
 
-  <StoryblokBridge />
+  {apiClient.isEditMode && <StoryblokBridge />}
 </HtmlDocument>

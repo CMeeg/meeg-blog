@@ -1,5 +1,5 @@
 import type { StoriesParams } from '@storyblok/js'
-import { getStory, getStories } from '~/features/storyblok/api'
+import type { StoryblokApiClient } from '~/features/storyblok/api'
 import type {
   StoryData,
   StoryContentWithSeoMetadata
@@ -8,10 +8,12 @@ import type {
   ArticleSeriesStoryblok,
   ArticleStoryblok
 } from '~/features/storyblok/types/components'
-import { getPageStory } from '~/features/common/api'
+import { createCommonApiClient } from '~/features/common/api'
 
-const getBlogIndexStory = async () => {
-  return await getPageStory('blog')
+const getBlogIndexStory = async (apiClient: StoryblokApiClient) => {
+  const commonApiClient = createCommonApiClient(apiClient)
+
+  return await commonApiClient.getPageStory({ slug: 'blog' })
 }
 
 type ArticleStory = StoryData<ArticleStoryContent>
@@ -24,9 +26,19 @@ type ArticleStoryWithSeries = StoryData<
   }
 >
 
-const getArticleStory = async (path: string) => {
-  const story = await getStory<ArticleStoryWithSeries>(path, {
-    resolve_relations: 'series'
+interface GetArticleStoryOptions {
+  path: string
+}
+
+const getArticleStory = async (
+  apiClient: StoryblokApiClient,
+  options: GetArticleStoryOptions
+) => {
+  const story = await apiClient.getStory<ArticleStoryWithSeries>({
+    slug: options.path,
+    query: {
+      resolve_relations: 'series'
+    }
   })
 
   if (!story) {
@@ -36,7 +48,7 @@ const getArticleStory = async (path: string) => {
   return story
 }
 
-type GetArticlesOptions = {
+interface GetArticleStoriesOptions {
   startsWith?: string
   withTag?: string
   perPage?: number
@@ -46,7 +58,10 @@ const defaultGetArticlesOptions = {
   perPage: 12
 }
 
-const getArticleStories = (options?: GetArticlesOptions) => {
+const getArticleStories = (
+  apiClient: StoryblokApiClient,
+  options?: GetArticleStoriesOptions
+) => {
   const customOptions = options ?? {}
 
   const queryOptions = {
@@ -74,9 +89,19 @@ const getArticleStories = (options?: GetArticlesOptions) => {
     query.with_tag = queryOptions.withTag
   }
 
-  return getStories<ArticleStory>(query)
+  return apiClient.getStories<ArticleStory>({ query })
 }
 
-export { getBlogIndexStory, getArticleStory, getArticleStories }
+const createBlogApiClient = (apiClient: StoryblokApiClient) => {
+  return {
+    getBlogIndexStory: async () => await getBlogIndexStory(apiClient),
+    getArticleStory: async (options: GetArticleStoryOptions) =>
+      await getArticleStory(apiClient, options),
+    getArticleStories: async (options: GetArticleStoriesOptions) =>
+      await getArticleStories(apiClient, options)
+  }
+}
+
+export { createBlogApiClient }
 
 export type { ArticleStory, ArticleStoryContent }

@@ -1,6 +1,7 @@
 ---
-import { getGlobalStory } from '~/features/common/api'
-import { getArticleStory } from '~/features/blog/api'
+import { createStoryblokApiClient } from '~/features/storyblok/api'
+import { createCommonApiClient } from '~/features/common/api'
+import { createBlogApiClient } from '~/features/blog/api'
 import { getCurrentTheme } from '~/features/themes'
 import { createCodeHighlighter } from '~/features/shiki'
 import HtmlDocument from '~/features/common/HtmlDocument/index.astro'
@@ -9,7 +10,11 @@ import DefaultLayout from '~/features/common/DefaultLayout/index.astro'
 import ArticlePage from '~/features/blog/ArticlePage'
 import StoryblokBridge from '~/features/storyblok/StoryblokBridge/index.astro'
 
-const global = await getGlobalStory()
+const apiClient = createStoryblokApiClient(Astro.request)
+
+const commonApiClient = createCommonApiClient(apiClient)
+
+const global = await commonApiClient.getGlobalStory()
 
 if (!global) {
   throw Error(`'Global' story not found.`)
@@ -25,7 +30,9 @@ if (!slug) {
 
 const { pathname } = Astro.url
 
-const story = await getArticleStory(pathname)
+const blogApiClient = createBlogApiClient(apiClient)
+
+const story = await blogApiClient.getArticleStory({ path: pathname })
 
 if (!story) {
   return new Response(null, {
@@ -47,5 +54,5 @@ const codeHighlighter = await createCodeHighlighter(currentTheme)
     <ArticlePage story={story} codeHighlighter={codeHighlighter} />
   </DefaultLayout>
 
-  <StoryblokBridge />
+  {apiClient.isEditMode && <StoryblokBridge />}
 </HtmlDocument>

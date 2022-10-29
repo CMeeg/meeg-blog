@@ -1,5 +1,6 @@
 ---
-import { getGlobalStory } from '~/features/common/api'
+import { createStoryblokApiClient } from '~/features/storyblok/api'
+import { createCommonApiClient } from '~/features/common/api'
 import { getPageNotFoundStory } from '~/features/errors/api'
 import { getCurrentTheme } from '~/features/themes'
 import HtmlDocument from '~/features/common/HtmlDocument/index.astro'
@@ -7,7 +8,11 @@ import DefaultSeoMetadata from '~/features/common/DefaultSeoMetadata/index.astro
 import DefaultLayout from '~/features/common/DefaultLayout/index.astro'
 import PageNotFoundPage from '~/features/errors/PageNotFoundPage/index.astro'
 
-const global = await getGlobalStory()
+const apiClient = createStoryblokApiClient(Astro.request)
+
+const commonApiClient = createCommonApiClient(apiClient)
+
+const global = await commonApiClient.getGlobalStory()
 
 if (!global) {
   throw Error(`'Global' story not found.`)

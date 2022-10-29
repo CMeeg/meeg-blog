@@ -9,7 +9,6 @@ interface Themes {
   [name: string]: Theme
 }
 
-// TODO: Update colors after settling on themes
 const themes: Themes = {
   dark: {
     name: 'dark',

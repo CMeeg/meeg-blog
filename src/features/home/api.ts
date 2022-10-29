@@ -1,7 +1,16 @@
-import { getPageStory } from '~/features/common/api'
+import type { StoryblokApiClient } from '~/features/storyblok/api'
+import { createCommonApiClient } from '~/features/common/api'
 
-const getHomeStory = async () => {
-  return await getPageStory('home')
+const getHomeStory = async (apiClient: StoryblokApiClient) => {
+  const commonApiClient = createCommonApiClient(apiClient)
+
+  return await commonApiClient.getPageStory({ slug: 'home' })
 }
 
-export { getHomeStory }
+const createHomeApiClient = (apiClient: StoryblokApiClient) => {
+  return {
+    getHomeStory: async () => await getHomeStory(apiClient)
+  }
+}
+
+export { createHomeApiClient }
