@@ -17,16 +17,18 @@ const storyblokVersion: { [key: string]: StoryblokVersion } = {
 }
 
 const createStoryblokApi = (version: StoryblokVersion): StoryblokClient => {
-  const accessToken =
-    version === storyblokVersion.draft ? storyblokPreviewToken : storyblokToken
+  const isEditMode = version === storyblokVersion.draft
+
+  const accessToken = isEditMode ? storyblokPreviewToken : storyblokToken
 
   const initResult = storyblokInit({
     accessToken,
+    bridge: isEditMode,
     apiOptions: {
       // TODO: What does the cache actually do, and what is `clear: 'auto'`?
       // https://github.com/storyblok/storyblok-js-client#activating-request-cache
       // https://www.storyblok.com/docs/api/content-delivery#topics/cache-invalidation
-      cache: { type: 'memory' }
+      cache: { type: 'memory', clear: 'auto' }
     },
     use: [apiPlugin]
   })
@@ -48,14 +50,46 @@ const getStory = async <TStory extends StoryData>(
   version: StoryblokVersion,
   options: GetStoryOptions
 ): Promise<TStory | null> => {
+  const query = options.query ?? {}
+
   const params: StoryParams = {
-    ...options.query,
+    ...query,
     version
     // TODO: Check other options
     // https://www.storyblok.com/docs/api/content-delivery#core-resources/stories/retrieve-one-story
   }
 
   const { data } = await api.getStory(options.slug, params)
+
+  if (!data) {
+    return null
+  }
+
+  // TODO: Really, we have no idea if the shape of `data.story` matches the shape of `TStory` (particularly the `content`) so we are casting the type, but maybe there's a way to validate?
+  return data.story as TStory
+}
+
+interface GetStoryByUuidOptions {
+  uuid: string
+  query?: StoryParams
+}
+
+const getStoryByUuid = async <TStory extends StoryData>(
+  api: StoryblokClient,
+  version: StoryblokVersion,
+  options: GetStoryByUuidOptions
+): Promise<TStory | null> => {
+  const query = options.query ?? {}
+
+  const params: StoryParams = {
+    ...query,
+    find_by: 'uuid',
+    version
+    // TODO: Check other options
+    // https://www.storyblok.com/docs/api/content-delivery#core-resources/stories/retrieve-one-story
+  }
+
+  const { data } = await api.getStory(options.uuid, params)
 
   if (!data) {
     return null
@@ -197,6 +231,9 @@ interface StoryblokApiClient {
   getStory: <TStory extends StoryData>(
     options: GetStoryOptions
   ) => Promise<TStory | null>
+  getStoryByUuid: <TStory extends StoryData>(
+    options: GetStoryByUuidOptions
+  ) => Promise<TStory | null>
   getStories: <TStory extends StoryData>(
     options: GetStoriesOptions
   ) => Promise<TStory[]>
@@ -217,6 +254,11 @@ const createStoryblokApiClient = (request: Request) => {
     getStory: async <TStory extends StoryData>(options: GetStoryOptions) => {
       return await getStory<TStory>(api, version, options)
     },
+    getStoryByUuid: async <TStory extends StoryData>(
+      options: GetStoryByUuidOptions
+    ) => {
+      return await getStoryByUuid<TStory>(api, version, options)
+    },
     getStories: async <TStory extends StoryData>(
       options: GetStoriesOptions
     ) => {
@@ -232,4 +274,4 @@ const createStoryblokApiClient = (request: Request) => {
 
 export { createStory, createStoryblokApiClient }
 
-export type { StoryblokApiClient }
+export type { StoryblokApiClient, GetStoryOptions, GetStoriesOptions }

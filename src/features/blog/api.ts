@@ -1,5 +1,8 @@
-import type { StoriesParams } from '@storyblok/js'
-import type { StoryblokApiClient } from '~/features/storyblok/api'
+import type {
+  StoryblokApiClient,
+  GetStoryOptions,
+  GetStoriesOptions
+} from '~/features/storyblok/api'
 import type {
   StoryData,
   StoryContentWithSeoMetadata
@@ -9,12 +12,6 @@ import type {
   ArticleStoryblok
 } from '~/features/storyblok/types/components'
 import { createCommonApiClient } from '~/features/common/api'
-
-const getBlogIndexStory = async (apiClient: StoryblokApiClient) => {
-  const commonApiClient = createCommonApiClient(apiClient)
-
-  return await commonApiClient.getPageStory({ slug: 'blog' })
-}
 
 type ArticleStory = StoryData<ArticleStoryContent>
 type ArticleStoryContent = StoryContentWithSeoMetadata<ArticleStoryblok>
@@ -26,26 +23,16 @@ type ArticleStoryWithSeries = StoryData<
   }
 >
 
-interface GetArticleStoryOptions {
-  path: string
-}
-
-const getArticleStory = async (
-  apiClient: StoryblokApiClient,
-  options: GetArticleStoryOptions
-) => {
-  const story = await apiClient.getStory<ArticleStoryWithSeries>({
-    slug: options.path,
-    query: {
-      resolve_relations: 'series'
-    }
-  })
-
-  if (!story) {
-    return null
+const createArticleOptions = (path: string) => {
+  const options: GetStoryOptions = {
+    slug: path //,
+    // TODO: Including this results in an error when making the request `TypeError: Converting circular structure to JSON`
+    // query: {
+    //   resolve_relations: 'article.series'
+    // }
   }
 
-  return story
+  return options
 }
 
 interface GetArticleStoriesOptions {
@@ -54,54 +41,78 @@ interface GetArticleStoriesOptions {
   perPage?: number
 }
 
-const defaultGetArticlesOptions = {
-  perPage: 12
-}
-
-const getArticleStories = (
-  apiClient: StoryblokApiClient,
-  options?: GetArticleStoriesOptions
-) => {
-  const customOptions = options ?? {}
-
-  const queryOptions = {
-    ...defaultGetArticlesOptions,
-    ...customOptions
-  }
-
-  // TODO: This function is only used for article listings so we don't need all article data to be returned
-  const query: StoriesParams = {
-    is_startpage: 0,
-    sort_by: 'first_published_at:desc',
-    per_page: queryOptions.perPage,
-    filter_query: {
-      component: {
-        in: 'article'
+const createArticlesOptions = (options?: GetArticleStoriesOptions) => {
+  const articlesOptions: GetStoriesOptions = {
+    query: {
+      is_startpage: 0,
+      sort_by: 'first_published_at:desc',
+      filter_query: {
+        component: {
+          in: 'article'
+        }
       }
     }
   }
 
-  if (queryOptions.startsWith) {
-    query.starts_with = queryOptions.startsWith
+  if (options?.startsWith) {
+    articlesOptions.query.starts_with = options.startsWith
   }
 
-  if (queryOptions.withTag) {
-    query.with_tag = queryOptions.withTag
+  if (options?.withTag) {
+    articlesOptions.query.with_tag = options.withTag
   }
 
-  return apiClient.getStories<ArticleStory>({ query })
+  if (options?.perPage) {
+    articlesOptions.query.per_page = options.perPage
+  }
+
+  return articlesOptions
 }
 
+const createArticlesInSeriesOptions = (seriesUUid: string) => {
+  const options = createArticlesOptions()
+
+  options.query.sort_by = 'first_published_at:asc'
+
+  const filter = options.query.filter_query ?? {}
+
+  filter.series = {
+    in: seriesUUid
+  }
+
+  options.query.filter_query = filter
+
+  return options
+}
+
+const blogIndexSlug = 'blog'
+
 const createBlogApiClient = (apiClient: StoryblokApiClient) => {
+  const commonApiClient = createCommonApiClient(apiClient)
+
   return {
-    getBlogIndexStory: async () => await getBlogIndexStory(apiClient),
-    getArticleStory: async (options: GetArticleStoryOptions) =>
-      await getArticleStory(apiClient, options),
-    getArticleStories: async (options: GetArticleStoriesOptions) =>
-      await getArticleStories(apiClient, options)
+    getBlogIndexStory: async () =>
+      await commonApiClient.getPageStory(blogIndexSlug),
+    getArticleStory: async (path: string) =>
+      await apiClient.getStory<ArticleStoryWithSeries>(
+        createArticleOptions(path)
+      ),
+    getArticleStories: async (options?: GetArticleStoriesOptions) =>
+      await apiClient.getStories<ArticleStory>(createArticlesOptions(options)),
+    getArticleSeriesStory: async (seriesUuid: string) =>
+      await apiClient.getStoryByUuid<ArticleSeriesStory>({ uuid: seriesUuid }),
+    getArticleStoriesInSeries: async (seriesUuid: string) =>
+      await apiClient.getStories<ArticleStory>(
+        createArticlesInSeriesOptions(seriesUuid)
+      )
   }
 }
 
 export { createBlogApiClient }
 
-export type { ArticleStory, ArticleStoryContent }
+export type {
+  ArticleStory,
+  ArticleStoryContent,
+  ArticleStoryWithSeries,
+  ArticleSeriesStory
+}

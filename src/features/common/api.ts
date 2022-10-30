@@ -6,39 +6,28 @@ import type {
   GlobalStoryblok,
   PageStoryblok
 } from '~/features/storyblok/types/components'
-import type { StoryblokApiClient } from '~/features/storyblok/api'
+import type {
+  StoryblokApiClient,
+  GetStoryOptions
+} from '~/features/storyblok/api'
 import { createBlogApiClient } from '~/features/blog/api'
 
 type GlobalStory = StoryData<GlobalStoryblok>
 
-const getGlobalStory = async (apiClient: StoryblokApiClient) => {
-  const story = await apiClient.getStory<GlobalStory>({ slug: 'global' })
-
-  if (!story) {
-    return null
-  }
-
-  return story
-}
-
 type PageStory = StoryData<PageStoryContent>
 type PageStoryContent = StoryContentWithSeoMetadata<PageStoryblok>
 
-interface GetPageStoryOptions {
-  slug: string
-}
-
 const getPageStory = async (
   apiClient: StoryblokApiClient,
-  options: GetPageStoryOptions
+  options: GetStoryOptions
 ) => {
   const story = await apiClient.getStory<PageStory>(options)
 
   if (!story) {
-    return null
+    return story
   }
 
-  // TODO: Make this reusable
+  // TODO: Make this concept of fetching additional data for child components reusable
   if (story.content.body?.length) {
     for (let i = 0; i < story.content.body.length; i++) {
       const blok = story.content.body[i]
@@ -66,11 +55,14 @@ const getPageStory = async (
   return story
 }
 
+const globalSlug = 'global'
+
 const createCommonApiClient = (apiClient: StoryblokApiClient) => {
   return {
-    getGlobalStory: async () => await getGlobalStory(apiClient),
-    getPageStory: async (options: GetPageStoryOptions) =>
-      await getPageStory(apiClient, options)
+    getGlobalStory: async () =>
+      await apiClient.getStory<GlobalStory>({ slug: globalSlug }),
+    getPageStory: async (slug: string) =>
+      await getPageStory(apiClient, { slug })
   }
 }
 

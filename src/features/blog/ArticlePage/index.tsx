@@ -1,5 +1,9 @@
 import type { Highlighter } from 'shiki'
-import type { ArticleStory } from '../api'
+import type {
+  ArticleStoryWithSeries,
+  ArticleStory,
+  ArticleSeriesStory
+} from '../api'
 import { getStoryDate } from '~/features/storyblok/date'
 import { getTagUrl } from '~/features/blog'
 import { CalendarIcon, TagsIcon, FilesIcon } from '~/svg/icons'
@@ -7,14 +11,23 @@ import RichText from '~/features/common/RichText'
 import styles from './index.module.scss'
 
 export interface Props {
-  story: ArticleStory
+  story: ArticleStoryWithSeries
+  series: ArticleSeriesStory | null
+  articlesInSeries: ArticleStory[]
   codeHighlighter: Highlighter
 }
 
-export default function ArticlePage({ story, codeHighlighter }: Props) {
+export default function ArticlePage({
+  story,
+  series,
+  articlesInSeries,
+  codeHighlighter
+}: Props) {
   const { tag_list: tags } = story
 
-  const { title, body, series } = story.content
+  const { title, body } = story.content
+
+  const isInSeries = series && articlesInSeries.length > 1
 
   const articleDate = getStoryDate(story).toDateString()
 
@@ -43,7 +56,7 @@ export default function ArticlePage({ story, codeHighlighter }: Props) {
             </ul>
           </div>
         )}
-        {series && (
+        {isInSeries && (
           <p className={styles['article-series']}>
             <FilesIcon className={styles['article-series-icon']} />
             <span className={styles['article-series-text']}>
@@ -55,7 +68,52 @@ export default function ArticlePage({ story, codeHighlighter }: Props) {
 
       <RichText document={body} codeHighlighter={codeHighlighter} />
 
-      {/* TODO: Article series component */}
+      {isInSeries && (
+        <aside id="series" className={styles['series']}>
+          <p className={styles['article-series']}>
+            <FilesIcon className={styles['article-series-icon']} />
+            <span className={styles['article-series-text']}>
+              This article is part of a series
+            </span>
+          </p>
+          <h2>{series.content.title}</h2>
+          <RichText document={series.content.summary} />
+          <div className="prose">
+            <ol>
+              {articlesInSeries.map((seriesArticle) => {
+                const isCurrentArticle = seriesArticle.uuid === story.uuid
+
+                if (isCurrentArticle) {
+                  return (
+                    <li key={seriesArticle.uuid}>
+                      <p>{`(This article) ${seriesArticle.content.title}`}</p>
+                    </li>
+                  )
+                }
+
+                return (
+                  <li key={seriesArticle.uuid}>
+                    <p>
+                      {/* TODO: Maybe I do need a link component to make sure there is a leading `/`! */}
+                      <a href={`/${seriesArticle.full_slug}`}>
+                        {seriesArticle.content.title}
+                      </a>
+                    </p>
+                  </li>
+                )
+              })}
+            </ol>
+          </div>
+          {(series.content.wip ?? true) && (
+            <p>
+              <em>
+                N.B. This series is a work in progress - there are further
+                articles planned.
+              </em>
+            </p>
+          )}
+        </aside>
+      )}
     </article>
   )
 }

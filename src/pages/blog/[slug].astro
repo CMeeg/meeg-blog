@@ -1,6 +1,7 @@
 ---
 import { createStoryblokApiClient } from '~/features/storyblok/api'
 import { createCommonApiClient } from '~/features/common/api'
+import type { ArticleSeriesStory, ArticleStory } from '~/features/blog/api'
 import { createBlogApiClient } from '~/features/blog/api'
 import { getCurrentTheme } from '~/features/themes'
 import { createCodeHighlighter } from '~/features/shiki'
@@ -32,13 +33,24 @@ const { pathname } = Astro.url
 
 const blogApiClient = createBlogApiClient(apiClient)
 
-const story = await blogApiClient.getArticleStory({ path: pathname })
+const story = await blogApiClient.getArticleStory(pathname)
 
 if (!story) {
   return new Response(null, {
     status: 404,
     statusText: `'Article' story with slug '${slug}' not found.`
   })
+}
+
+let series: ArticleSeriesStory | null = null
+let articlesInSeries: ArticleStory[] = []
+
+if (story.content.series) {
+  const seriesUuid = story.content.series
+
+  series = await blogApiClient.getArticleSeriesStory(seriesUuid)
+
+  articlesInSeries = await blogApiClient.getArticleStoriesInSeries(seriesUuid)
 }
 
 const currentTheme = getCurrentTheme(Astro.cookies, true)
@@ -51,7 +63,12 @@ const codeHighlighter = await createCodeHighlighter(currentTheme)
   <DefaultSeoMetadata slot="seo-metadata" metadata={story?.content.metadata} />
 
   <DefaultLayout global={global}>
-    <ArticlePage story={story} codeHighlighter={codeHighlighter} />
+    <ArticlePage
+      story={story}
+      series={series}
+      articlesInSeries={articlesInSeries}
+      codeHighlighter={codeHighlighter}
+    />
   </DefaultLayout>
 
   {apiClient.isEditMode && <StoryblokBridge />}
