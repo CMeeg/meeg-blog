@@ -4,7 +4,7 @@ import styles from './index.module.scss'
 
 export interface Props {
   blok: PageHeadingStoryblok
-  children: React.ReactNode
+  children?: React.ReactNode
 }
 
 export default function PageHeading({ blok, children }: Props) {

@@ -40,8 +40,8 @@ export default function Block({ blok }: Props) {
   const Component = getComponent(blok.component)
 
   if (!Component) {
-    return <p key={blok._uid}>Unknown component: {blok.component}</p>
+    return <p>Unknown component: {blok.component}</p>
   }
 
-  return <Component blok={blok} key={blok._uid} />
+  return <Component blok={blok} />
 }

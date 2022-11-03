@@ -1,0 +1,45 @@
+---
+import { createStoryblokApiClient } from '~/features/storyblok/api'
+import { createCommonApiClient } from '~/features/common/api'
+import { createAboutApiClient } from '~/features/about/api'
+import { getCurrentTheme } from '~/features/themes'
+import HtmlDocument from '~/features/common/HtmlDocument/index.astro'
+import DefaultSeoMetadata from '~/features/common/DefaultSeoMetadata/index.astro'
+import DefaultLayout from '~/features/common/DefaultLayout/index.astro'
+import AboutPage from '~/features/about/AboutPage'
+import StoryblokBridge from '~/features/storyblok/StoryblokBridge/index.astro'
+
+const apiClient = createStoryblokApiClient(Astro.request)
+
+const commonApiClient = createCommonApiClient(apiClient)
+
+const global = await commonApiClient.getGlobalStory()
+
+if (!global) {
+  throw Error(`'Global' story not found.`)
+}
+
+const aboutApiClient = createAboutApiClient(apiClient)
+
+const story = await aboutApiClient.getAboutStory()
+
+if (!story) {
+  return new Response(null, {
+    status: 404,
+    statusText: `'About' story not found.`
+  })
+}
+
+const currentTheme = getCurrentTheme(Astro.cookies, true)
+---
+
+<HtmlDocument theme={currentTheme}>
+  <!-- TODO: About uses different metadata -->
+  <DefaultSeoMetadata slot="seo-metadata" metadata={story?.content.metadata} />
+
+  <DefaultLayout global={global}>
+    <AboutPage story={story} />
+  </DefaultLayout>
+
+  {apiClient.isEditMode && <StoryblokBridge />}
+</HtmlDocument>
