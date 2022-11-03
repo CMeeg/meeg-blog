@@ -25,11 +25,10 @@ type ArticleStoryWithSeries = StoryData<
 
 const createArticleOptions = (path: string) => {
   const options: GetStoryOptions = {
-    slug: path //,
-    // TODO: Including this results in an error when making the request `TypeError: Converting circular structure to JSON`
-    // query: {
-    //   resolve_relations: 'article.series'
-    // }
+    slug: path,
+    query: {
+      resolve_relations: 'article.series'
+    }
   }
 
   return options

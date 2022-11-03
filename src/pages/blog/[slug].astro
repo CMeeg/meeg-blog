@@ -46,11 +46,9 @@ let series: ArticleSeriesStory | null = null
 let articlesInSeries: ArticleStory[] = []
 
 if (story.content.series) {
-  const seriesUuid = story.content.series
+  series = story.content.series
 
-  series = await blogApiClient.getArticleSeriesStory(seriesUuid)
-
-  articlesInSeries = await blogApiClient.getArticleStoriesInSeries(seriesUuid)
+  articlesInSeries = await blogApiClient.getArticleStoriesInSeries(series.uuid)
 }
 
 const currentTheme = getCurrentTheme(Astro.cookies, true)
