@@ -1,3 +1,4 @@
+import { storyblokEditable } from '@storyblok/js'
 import type { MessageBoxStoryblok } from '~/features/storyblok/types/components'
 import RichText from '~/features/common/RichText'
 import styles from './index.module.scss'
@@ -8,7 +9,10 @@ export interface Props {
 
 export default function MessageBox({ blok }: Props) {
   return (
-    <div className={`${styles['message-box']} ${styles[blok.type]}`}>
+    <div
+      {...storyblokEditable(blok)}
+      className={`${styles['message-box']} ${styles[blok.type]}`}
+    >
       <RichText document={blok.message} />
     </div>
   )

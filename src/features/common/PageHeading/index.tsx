@@ -1,4 +1,5 @@
 import type { ComponentChildren } from 'preact'
+import { storyblokEditable } from '@storyblok/js'
 import type { PageHeadingStoryblok } from '~/features/storyblok/types/components'
 import RichText from '~/features/common/RichText'
 import styles from './index.module.scss'
@@ -10,7 +11,7 @@ export interface Props {
 
 export default function PageHeading({ blok, children }: Props) {
   return (
-    <div className={styles['page-heading']}>
+    <div {...storyblokEditable(blok)} className={styles['page-heading']}>
       <h1 className={styles['page-heading-title']}>{blok.title}</h1>
 
       {blok.intro && (

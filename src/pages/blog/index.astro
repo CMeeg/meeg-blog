@@ -7,7 +7,7 @@ import HtmlDocument from '~/features/common/HtmlDocument/index.astro'
 import DefaultSeoMetadata from '~/features/common/DefaultSeoMetadata/index.astro'
 import DefaultLayout from '~/features/common/DefaultLayout/index.astro'
 import Page from '~/features/common/Page'
-import StoryblokBridge from '~/features/storyblok/StoryblokBridge/index.astro'
+import StoryblokBridge from '~/features/storyblok/StoryblokBridge'
 
 const apiClient = createStoryblokApiClient(Astro.request)
 
@@ -40,5 +40,5 @@ const currentTheme = getCurrentTheme(Astro.cookies)
     <Page story={story} />
   </DefaultLayout>
 
-  {apiClient.isEditMode && <StoryblokBridge />}
+  {apiClient.isEditMode && <StoryblokBridge client:only="preact" />}
 </HtmlDocument>

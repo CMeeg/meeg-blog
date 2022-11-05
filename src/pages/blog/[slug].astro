@@ -9,7 +9,7 @@ import HtmlDocument from '~/features/common/HtmlDocument/index.astro'
 import DefaultSeoMetadata from '~/features/common/DefaultSeoMetadata/index.astro'
 import DefaultLayout from '~/features/common/DefaultLayout/index.astro'
 import ArticlePage from '~/features/blog/ArticlePage'
-import StoryblokBridge from '~/features/storyblok/StoryblokBridge/index.astro'
+import StoryblokBridge from '~/features/storyblok/StoryblokBridge'
 
 const apiClient = createStoryblokApiClient(Astro.request)
 
@@ -69,5 +69,5 @@ const codeHighlighter = await createCodeHighlighter(currentTheme)
     />
   </DefaultLayout>
 
-  {apiClient.isEditMode && <StoryblokBridge />}
+  {apiClient.isEditMode && <StoryblokBridge client:only="preact" />}
 </HtmlDocument>
