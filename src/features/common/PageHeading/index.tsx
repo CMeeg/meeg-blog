@@ -1,10 +1,11 @@
+import type { ComponentChildren } from 'preact'
 import type { PageHeadingStoryblok } from '~/features/storyblok/types/components'
 import RichText from '~/features/common/RichText'
 import styles from './index.module.scss'
 
 export interface Props {
   blok: PageHeadingStoryblok
-  children?: React.ReactNode
+  children?: ComponentChildren
 }
 
 export default function PageHeading({ blok, children }: Props) {

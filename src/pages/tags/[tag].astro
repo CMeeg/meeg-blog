@@ -44,7 +44,7 @@ const metadata: SeoMetadata = {
   description: `A list of the articles that have been written about ${tag} on my blog.`
 }
 
-const currentTheme = getCurrentTheme(Astro.cookies, true)
+const currentTheme = getCurrentTheme(Astro.cookies)
 ---
 
 <HtmlDocument theme={currentTheme}>

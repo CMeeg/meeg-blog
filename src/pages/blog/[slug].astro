@@ -51,7 +51,7 @@ if (story.content.series) {
   articlesInSeries = await blogApiClient.getArticleStoriesInSeries(series.uuid)
 }
 
-const currentTheme = getCurrentTheme(Astro.cookies, true)
+const currentTheme = getCurrentTheme(Astro.cookies)
 
 const codeHighlighter = await createCodeHighlighter(currentTheme)
 ---

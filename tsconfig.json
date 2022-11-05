@@ -6,7 +6,9 @@
     "baseUrl": ".",
     "paths": {
       "~/features/*": ["src/features/*"],
-      "~/svg/*": ["src/svg/*"]
+      "~/svg/*": ["src/svg/*"],
+      "react": ["./node_modules/preact/compat/"],
+      "react-dom": ["./node_modules/preact/compat/"]
     },
     // Enable top-level await, and other modern ESM features
     "target": "ESNext",
@@ -23,13 +25,14 @@
     "strict": true,
     // Error when a value import is only used as a type
     "importsNotUsedAsValues": "error",
-    // React integration
+    // Preact integration
     "lib": ["es2021", "dom"],
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "react-jsx",
-    "jsxImportSource": "react"
+    "jsxImportSource": "preact",
+    "types": ["preact"]
   },
   "ts-node": {
     // It is faster to skip typechecking

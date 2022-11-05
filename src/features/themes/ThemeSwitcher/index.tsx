@@ -1,18 +1,17 @@
-import { useEffect } from 'react'
-// This react-use import is done like this to workaround some incompatibility between the library and Astro - if you import react-use as "normal" then you get a runtime error on a production build
-// https://github.com/withastro/astro/issues/3174
-import * as reactUse from 'react-use'
-const { useCookie } =
-  (reactUse as unknown as { default: typeof reactUse }).default || reactUse
+import { useEffect } from 'preact/hooks'
+import Cookies from 'js-cookie'
 import { themes, defaultThemeName, themeCookieName } from '~/features/themes'
 import { SunIcon, MoonIcon } from '~/svg/icons'
 import styles from './index.module.scss'
 
 export default function ThemeSwitcher() {
-  const [value, updateCookie] = useCookie(themeCookieName)
-
   const toggleTheme = (preference?: string) => {
-    const currentThemeName = value ?? defaultThemeName
+    if (typeof window === 'undefined') {
+      return
+    }
+
+    const currentThemeName = Cookies.get(themeCookieName) ?? defaultThemeName
+
     const themeName = preference
       ? preference
       : currentThemeName === themes.light.name
@@ -25,34 +24,32 @@ export default function ThemeSwitcher() {
       return
     }
 
-    updateCookie(theme.name)
+    Cookies.set(themeCookieName, theme.name)
 
-    if (typeof window !== 'undefined') {
-      // Set theme data attribute
-      const doc = document.documentElement
+    // Set theme data attribute
+    const doc = document.documentElement
 
-      doc.setAttribute('data-theme', theme.name)
+    doc.setAttribute('data-theme', theme.name)
 
-      // Set theme-color meta element
-      const docHead = doc.querySelector('head')
+    // Set theme-color meta element
+    const docHead = doc.querySelector('head')
 
-      if (!docHead) {
-        return
-      }
-
-      const themeColorName = 'theme-color'
-
-      let themeColor = docHead.querySelector(`meta[name='${themeColorName}']`)
-
-      if (!themeColor) {
-        themeColor = document.createElement('meta')
-        themeColor.setAttribute('name', themeColorName)
-
-        docHead.appendChild(themeColor)
-      }
-
-      themeColor.setAttribute('content', theme.color)
+    if (!docHead) {
+      return
     }
+
+    const themeColorName = 'theme-color'
+
+    let themeColor = docHead.querySelector(`meta[name='${themeColorName}']`)
+
+    if (!themeColor) {
+      themeColor = document.createElement('meta')
+      themeColor.setAttribute('name', themeColorName)
+
+      docHead.appendChild(themeColor)
+    }
+
+    themeColor.setAttribute('content', theme.color)
   }
 
   useEffect(() => {
@@ -62,7 +59,9 @@ export default function ThemeSwitcher() {
 
     const mq = window.matchMedia('(prefers-color-scheme: dark)')
 
-    if (!value) {
+    const currentThemeName = Cookies.get(themeCookieName)
+
+    if (!currentThemeName) {
       // If no cookie is set then we will set the value based on the media query
 
       toggleTheme(getThemeName(mq.matches))

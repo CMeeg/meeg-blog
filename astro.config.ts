@@ -1,7 +1,7 @@
 import { defineConfig, getViteConfig } from 'astro/config'
 import { readFileSync } from 'fs'
 import node from '@astrojs/node'
-import react from '@astrojs/react'
+import preact from '@astrojs/preact'
 
 const isDev = process.env.NODE_ENV === 'development'
 
@@ -27,5 +27,5 @@ export default defineConfig({
     mode: 'middleware'
   }),
   vite,
-  integrations: [react()]
+  integrations: [preact({ compat: true })]
 })

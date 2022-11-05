@@ -1,11 +1,11 @@
 import type { Highlighter, Lang } from 'shiki'
-import type { ReactNode } from 'react'
+import type { ComponentChildren } from 'preact'
 import styles from './index.module.scss'
 
 export interface Props {
   languageClass: string
   highlighter?: Highlighter
-  children: ReactNode
+  children: ComponentChildren
 }
 
 const defaultLanguage = 'markdown'

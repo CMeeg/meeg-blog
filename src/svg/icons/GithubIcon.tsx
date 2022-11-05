@@ -1,4 +1,4 @@
-import type { SVGProps } from 'react'
+import type { SVGProps } from '../svg'
 
 const SvgGithubIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg

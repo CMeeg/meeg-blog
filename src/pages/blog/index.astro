@@ -30,7 +30,7 @@ if (!story) {
   })
 }
 
-const currentTheme = getCurrentTheme(Astro.cookies, true)
+const currentTheme = getCurrentTheme(Astro.cookies)
 ---
 
 <HtmlDocument theme={currentTheme}>

@@ -1,3 +1,4 @@
+import type { ComponentType } from 'preact'
 import type {
   ArticleListingStoryblok,
   MessageBoxStoryblok,
@@ -7,27 +8,35 @@ import ArticleListing from '~/features/blog/ArticleListing'
 import MessageBox from '~/features/common/MessageBox'
 import PageHeading from '~/features/common/PageHeading'
 
+type BlockComponent = ComponentType<Props>
+
 interface ComponentsMap {
-  [key: string]: React.ElementType
+  [key: string]: BlockComponent
 }
 
 const components: ComponentsMap = {
-  article_listing: ArticleListing,
-  message_box: MessageBox,
-  page_heading: PageHeading
+  article_listing: ArticleListing as BlockComponent,
+  message_box: MessageBox as BlockComponent,
+  page_heading: PageHeading as BlockComponent
 }
 
 const getComponent = (name: string) => {
-  return components[name]
+  const component = components[name]
+
+  if (!component) {
+    return null
+  }
+
+  return component
 }
 
-export type BlockComponent =
+export type BlockComponentProps =
   | ArticleListingStoryblok
   | MessageBoxStoryblok
   | PageHeadingStoryblok
 
 export interface Props {
-  blok?: BlockComponent
+  blok?: BlockComponentProps
 }
 
 export default function Block({ blok }: Props) {

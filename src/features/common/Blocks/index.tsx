@@ -1,8 +1,8 @@
-import type { BlockComponent } from './Block'
+import type { BlockComponentProps } from './Block'
 import Block from './Block'
 
 export interface Props {
-  bloks?: BlockComponent[]
+  bloks?: BlockComponentProps[]
 }
 
 export default function Blocks({ bloks }: Props) {

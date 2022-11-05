@@ -1,4 +1,4 @@
-import type { SVGProps } from 'react'
+import type { SVGProps } from '../svg'
 
 const SvgSunIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg

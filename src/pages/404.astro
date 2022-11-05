@@ -21,7 +21,7 @@ if (!global) {
 // TODO: Can just create metadata now instead of a whole story
 const story = getPageNotFoundStory()
 
-const currentTheme = getCurrentTheme(Astro.cookies, true)
+const currentTheme = getCurrentTheme(Astro.cookies)
 ---
 
 <HtmlDocument theme={currentTheme}>

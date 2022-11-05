@@ -13,7 +13,7 @@ const { logo, main_nav, copyright, github_username, twitter_username } =
   global.content
 ---
 
-<Header logo={logo} mainNav={main_nav} client:load />
+<Header client:idle logo={logo} mainNav={main_nav} />
 <main class="main">
   <slot />
 </main>

@@ -1,7 +1,7 @@
 import type { Highlighter } from 'shiki'
 import type { StoryblokRichtext } from 'storyblok-rich-text-react-renderer'
 import { render, NODE_CODEBLOCK } from 'storyblok-rich-text-react-renderer'
-import type { BlockComponent } from '~/features/common/Blocks/Block'
+import type { BlockComponentProps } from '~/features/common/Blocks/Block'
 import Block from '~/features/common/Blocks/Block'
 import Codeblock from './nodes/Codeblock'
 
@@ -29,7 +29,7 @@ export default function RichText({
           const blok = {
             ...props,
             component: name
-          } as BlockComponent
+          } as BlockComponentProps
 
           return <Block blok={blok} />
         },
