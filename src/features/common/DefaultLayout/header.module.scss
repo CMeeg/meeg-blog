@@ -62,6 +62,10 @@ $logo-border-size: 3px;
   padding-block-start: 6px;
 }
 
+:global(.js-menu-open) {
+  overflow-y: hidden;
+}
+
 // element is middle line, ::before is top, ::after is bottom
 .menu-icon,
 .menu-icon::before,

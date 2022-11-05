@@ -177,8 +177,8 @@ h5 {
 a,
 a:link,
 a:visited,
-a:hover,
 a:focus,
+a:hover,
 a:active {
   color: var(--color-accent-1);
   text-decoration: underline var(--color-accent-2) solid 1px;
@@ -186,17 +186,23 @@ a:active {
   transition: color 0.25s var(--ease-out-1);
 }
 
+a:focus-visible {
+  background-color: hsl(var(--color-accent-2-hsl) / 10%);
+  outline: 1px solid hsl(var(--color-accent-2-hsl) / 30%);
+}
+
+@supports not selector(:focus-visible) {
+  a:focus {
+    background-color: hsl(var(--color-accent-2-hsl) / 10%);
+    outline: 1px solid hsl(var(--color-accent-2-hsl) / 30%);
+  }
+}
+
 a:hover,
 a:active {
   color: var(--color-accent-2);
   text-underline-offset: 5px;
   transition: color 0.25s var(--ease-in-1);
-}
-
-// Modifiers
-
-.js-menu-open {
-  overflow-y: hidden;
 }
 
 // Prose
@@ -274,4 +280,8 @@ a:active {
     color: var(--color-accent-2);
     background-color: hsl(var(--color-accent-2-hsl) / 10%);
   }
+}
+
+::selection {
+  background-color: hsl(var(--color-accent-2-hsl) / 30%);
 }
