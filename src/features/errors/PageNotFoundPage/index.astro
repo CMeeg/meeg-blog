@@ -10,9 +10,11 @@ const { story } = Astro.props as Props
 const { title } = story.content
 ---
 
-<div class="content">
+<div class="content prose">
   <h1>{title}</h1>
 
-  <!-- TODO: Content -->
-  <p>404</p>
+  <p>
+    Try taking a look at my <a href="/blog">blog articles</a> instead, or go to the
+    <a href="/">home page</a>.
+  </p>
 </div>
