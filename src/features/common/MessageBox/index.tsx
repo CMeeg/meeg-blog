@@ -11,7 +11,7 @@ export default function MessageBox({ blok }: Props) {
   return (
     <div
       {...storyblokEditable(blok)}
-      className={`${styles['message-box']} ${styles[blok.type]}`}
+      className={`popout ${styles['message-box']} ${styles[blok.type]}`}
     >
       <RichText document={blok.message} />
     </div>

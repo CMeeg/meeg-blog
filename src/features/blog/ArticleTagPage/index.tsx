@@ -26,7 +26,7 @@ export default function ArticleTagPage({ tag, articles }: Props) {
   }
 
   return (
-    <>
+    <div className="content">
       <PageHeading blok={headingBlok}>
         <p>
           Articles about <i>{tag}</i> can be found below.
@@ -34,6 +34,6 @@ export default function ArticleTagPage({ tag, articles }: Props) {
       </PageHeading>
 
       <ArticleListing blok={articlesBlok} />
-    </>
+    </div>
   )
 }

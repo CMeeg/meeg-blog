@@ -19,14 +19,16 @@ export default function ArticleListing({ blok }: Props) {
   }
 
   return (
-    <ul {...storyblokEditable(blok)}>
-      {articles.map((article) => {
-        return (
-          <li className={styles.item} key={article.id}>
-            <ArticleCard article={article} />
-          </li>
-        )
-      })}
-    </ul>
+    <div className="popout">
+      <ul {...storyblokEditable(blok)}>
+        {articles.map((article) => {
+          return (
+            <li className={styles.item} key={article.id}>
+              <ArticleCard article={article} />
+            </li>
+          )
+        })}
+      </ul>
+    </div>
   )
 }

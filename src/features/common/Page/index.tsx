@@ -6,5 +6,9 @@ export interface Props {
 }
 
 export default function Page({ story }: Props) {
-  return <Blocks bloks={story.content.body} />
+  return (
+    <div class="content">
+      <Blocks bloks={story.content.body} />
+    </div>
+  )
 }

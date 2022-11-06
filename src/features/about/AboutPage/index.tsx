@@ -16,10 +16,10 @@ export default function AboutPage({ story }: Props) {
   }
 
   return (
-    <>
+    <div className="content">
       <PageHeading blok={headingBlok} />
 
       <RichText document={story.content.bio} />
-    </>
+    </div>
   )
 }

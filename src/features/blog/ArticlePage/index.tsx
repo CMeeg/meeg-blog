@@ -33,43 +33,52 @@ export default function ArticlePage({
 
   return (
     <article>
-      <h1 className={styles['article-title']}>{title}</h1>
+      <div className="content">
+        <h1 className={styles['article-title']}>{title}</h1>
 
-      <aside className={styles['article-meta']}>
-        <p className={styles['article-date']}>
-          <time className={styles['article-date-time']} dateTime={articleDate}>
-            <CalendarIcon className={styles['article-date-icon']} />
-            <span>{articleDate}</span>
-          </time>
-        </p>
-        {tags.length && (
-          <div className={styles['article-tags']}>
-            <TagsIcon className={styles['article-tags-icon']} />
-            <ul className={styles['article-tags-links']}>
-              {tags.map((tag) => {
-                return (
-                  <li key={tag}>
-                    <a href={getTagUrl(tag)}>{tag}</a>
-                  </li>
-                )
-              })}
-            </ul>
-          </div>
-        )}
-        {isInSeries && (
-          <p className={styles['article-series']}>
-            <FilesIcon className={styles['article-series-icon']} />
-            <span className={styles['article-series-text']}>
-              This article is part of a <a href="#series">series</a>
-            </span>
+        <aside className={styles['article-meta']}>
+          <p className={styles['article-date']}>
+            <time
+              className={styles['article-date-time']}
+              dateTime={articleDate}
+            >
+              <CalendarIcon className={styles['article-date-icon']} />
+              <span>{articleDate}</span>
+            </time>
           </p>
-        )}
-      </aside>
+          {tags.length && (
+            <div className={styles['article-tags']}>
+              <TagsIcon className={styles['article-tags-icon']} />
+              <ul className={styles['article-tags-links']}>
+                {tags.map((tag) => {
+                  return (
+                    <li key={tag}>
+                      <a href={getTagUrl(tag)}>{tag}</a>
+                    </li>
+                  )
+                })}
+              </ul>
+            </div>
+          )}
+          {isInSeries && (
+            <p className={styles['article-series']}>
+              <FilesIcon className={styles['article-series-icon']} />
+              <span className={styles['article-series-text']}>
+                This article is part of a <a href="#series">series</a>
+              </span>
+            </p>
+          )}
+        </aside>
+      </div>
 
-      <RichText document={body} codeHighlighter={codeHighlighter} />
+      <RichText
+        document={body}
+        codeHighlighter={codeHighlighter}
+        className="content"
+      />
 
       {isInSeries && (
-        <aside id="series" className={styles['series']}>
+        <aside id="series" className={`content ${styles['series']}`}>
           <p className={styles['article-series']}>
             <FilesIcon className={styles['article-series-icon']} />
             <span className={styles['article-series-text']}>

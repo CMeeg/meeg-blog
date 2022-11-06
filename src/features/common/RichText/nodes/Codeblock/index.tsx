@@ -73,7 +73,7 @@ export default function Codeblock({
 
   return (
     <div
-      className={styles.codeblock}
+      className={`feature ${styles.codeblock}`}
       dangerouslySetInnerHTML={{ __html: highlightedCode }}
     />
   )
