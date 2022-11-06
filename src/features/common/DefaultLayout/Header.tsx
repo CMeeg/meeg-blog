@@ -7,18 +7,42 @@ import Image from '~/features/common/Image'
 import Link from '~/features/common/Link'
 import { ChrisMeagher } from '~/svg/index'
 import { getImageFromAsset } from '../media'
+import type { MultilinkStoryblok } from '~/features/storyblok/types/components'
+import { getLinkUrl } from '~/features/storyblok/url'
 import ThemeSwitcher from '~/features/themes/ThemeSwitcher'
 import styles from './header.module.scss'
 
 export interface Props {
   logo: AssetStoryblok
   mainNav: NavItemStoryblok[]
+  currentUrl?: URL
 }
 
-export default function Header({ logo, mainNav }: Props) {
+export default function Header({ logo, mainNav, currentUrl }: Props) {
   const image = getImageFromAsset(logo, { resize: { width: 140 }, quality: 80 })
   if (!image.alt) {
     image.alt = 'Chris Meagher'
+  }
+
+  const isCurrentUrl = (link: MultilinkStoryblok) => {
+    if (!currentUrl) {
+      return false
+    }
+
+    const url = getLinkUrl(link)
+
+    if (!url) {
+      return false
+    }
+
+    const urlLower = url.toLowerCase()
+    const pathnameLower = currentUrl.pathname.toLowerCase()
+
+    if (urlLower === pathnameLower) {
+      return true
+    }
+
+    return pathnameLower.startsWith(`${urlLower}/`)
   }
 
   useEffect(() => {
@@ -75,7 +99,10 @@ export default function Header({ logo, mainNav }: Props) {
             className={styles['menu-toggle']}
             id="menu-primary-toggle"
           />
-          <label htmlFor="menu-primary-toggle" className="visually-hidden">
+          <label
+            htmlFor="menu-primary-toggle"
+            className={`visually-hidden ${styles['menu-toggle-label']}`}
+          >
             Show menu
           </label>
 
@@ -91,7 +118,12 @@ export default function Header({ logo, mainNav }: Props) {
 
                   {mainNav.map((item) => {
                     return (
-                      <li key={item._uid}>
+                      <li
+                        key={item._uid}
+                        className={
+                          isCurrentUrl(item.link) ? styles.active : undefined
+                        }
+                      >
                         <Link link={item.link}>{item.name}</Link>
                       </li>
                     )

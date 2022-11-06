@@ -45,12 +45,13 @@ const metadata: SeoMetadata = {
 }
 
 const currentTheme = getCurrentTheme(Astro.cookies)
+const currentUrl = Astro.url
 ---
 
 <HtmlDocument theme={currentTheme}>
   <DefaultSeoMetadata slot="seo-metadata" metadata={metadata} />
 
-  <DefaultLayout global={global}>
+  <DefaultLayout global={global} currentUrl={currentUrl}>
     <ArticleTagPage tag={tag} articles={articles} />
   </DefaultLayout>
 

@@ -6,11 +6,17 @@ const getRelativeUrl = (url: string | null, basePath = '/'): string | null => {
     return null
   }
 
-  if (url.startsWith(basePath)) {
+  if (url === basePath) {
     return url
   }
 
-  return `${basePath}${url}`
+  const path = url.endsWith('/') ? url.slice(0, -1) : url
+
+  if (path.startsWith(basePath)) {
+    return path
+  }
+
+  return `${basePath}${path}`
 }
 
 const getStoryUrl = (story: StoryData, basePath = '/') => {

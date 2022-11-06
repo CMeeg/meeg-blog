@@ -31,12 +31,13 @@ if (!story) {
 }
 
 const currentTheme = getCurrentTheme(Astro.cookies)
+const currentUrl = Astro.url
 ---
 
 <HtmlDocument theme={currentTheme}>
   <DefaultSeoMetadata slot="seo-metadata" metadata={story?.content.metadata} />
 
-  <DefaultLayout global={global}>
+  <DefaultLayout global={global} currentUrl={currentUrl}>
     <Page story={story} />
   </DefaultLayout>
 

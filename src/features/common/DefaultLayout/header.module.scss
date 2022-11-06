@@ -179,17 +179,50 @@ $logo-border-size: 3px;
 
 .nav-primary {
   ul {
+    display: flex;
+    flex-direction: column;
     padding: var(--size-8) 0;
     list-style-type: none;
   }
 
   li {
+    position: relative;
+    max-width: fit-content;
     font-size: var(--font-size-h2);
     font-weight: var(--font-weight-bold);
   }
 
+  li:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    display: block;
+    width: 100%;
+    height: 2px;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: all 0.25s var(--ease-out-1);
+    white-space: nowrap;
+    background-color: var(--color-accent-1);
+  }
+
+  .active:after,
+  li:hover:after {
+    background-color: var(--color-accent-2);
+    transform: scaleX(1);
+  }
+
+  ul:has(li:not(.active):hover) .active:after {
+    background-color: var(--color-accent-1);
+    transform: scaleX(0);
+  }
+
   a,
+  a:link,
+  a:visited,
   a:hover,
+  a:focus,
   a:active {
     text-decoration: none;
   }
@@ -217,10 +250,69 @@ $logo-border-size: 3px;
   }
 }
 
-@media (--landscape) {
+@media (--md-n-above) {
+  :global(.js-menu-open) {
+    overflow-y: scroll;
+  }
+
+  .menu {
+    padding: 0;
+  }
+
+  .menu-toggle,
+  .menu-toggle-label,
+  .menu-icon {
+    display: none;
+  }
+
+  .menu-container {
+    position: static;
+    display: block;
+    width: auto;
+    height: auto;
+  }
+
+  .menu-content-container {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: 0;
+    transform: none;
+    transition: none;
+    background: none;
+    background-image: none;
+  }
+
+  [data-theme='dark'] {
+    .menu-content-container {
+      background: none;
+      background-image: none;
+    }
+  }
+
+  .menu-content {
+    display: flex;
+    gap: var(--size-4);
+    align-items: center;
+    height: auto;
+    opacity: 1;
+    transition: none;
+  }
+
   .nav-primary {
     ul {
-      padding: var(--size-3) 0;
+      flex-direction: row;
+      padding: 0;
+      gap: var(--size-4);
+    }
+
+    li:first-child {
+      display: none;
+    }
+
+    li {
+      font-size: var(--font-size-h4);
+      font-weight: var(--font-weight-normal);
     }
   }
 }

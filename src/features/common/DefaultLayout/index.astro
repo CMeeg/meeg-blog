@@ -5,15 +5,16 @@ import Footer from './Footer'
 
 export interface Props {
   global: GlobalStory
+  currentUrl?: URL
 }
 
-const { global } = Astro.props as Props
+const { global, currentUrl } = Astro.props as Props
 
 const { logo, main_nav, copyright, github_username, twitter_username } =
   global.content
 ---
 
-<Header client:idle logo={logo} mainNav={main_nav} />
+<Header client:idle logo={logo} mainNav={main_nav} currentUrl={currentUrl} />
 <main class="main">
   <slot />
 </main>
