@@ -8,6 +8,7 @@ import { getStoryDate } from '~/features/storyblok/date'
 import { getTagUrl } from '~/features/blog'
 import { CalendarIcon, TagsIcon, FilesIcon } from '~/svg/icons'
 import RichText from '~/features/common/RichText'
+import { getStoryUrl } from '~/features/storyblok/url'
 import styles from './index.module.scss'
 
 export interface Props {
@@ -104,8 +105,7 @@ export default function ArticlePage({
                   return (
                     <li key={seriesArticle.uuid}>
                       <p>
-                        {/* TODO: Maybe I do need a link component to make sure there is a leading `/`! */}
-                        <a href={`/${seriesArticle.full_slug}`}>
+                        <a href={getStoryUrl(seriesArticle)}>
                           {seriesArticle.content.title}
                         </a>
                       </p>

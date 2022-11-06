@@ -1,9 +1,14 @@
 import type { Highlighter } from 'shiki'
 import type { StoryblokRichtext } from 'storyblok-rich-text-react-renderer'
-import { render, NODE_CODEBLOCK } from 'storyblok-rich-text-react-renderer'
+import {
+  render,
+  NODE_CODEBLOCK,
+  MARK_LINK
+} from 'storyblok-rich-text-react-renderer'
 import type { BlockComponentProps } from '~/features/common/Blocks/Block'
 import Block from '~/features/common/Blocks/Block'
 import Codeblock from './nodes/Codeblock'
+import Link from './marks/Link'
 
 export interface Props {
   document: StoryblokRichtext
@@ -41,6 +46,19 @@ export default function RichText({
             >
               {children}
             </Codeblock>
+          )
+        },
+        markResolvers: {
+          [MARK_LINK]: (children, { linktype, href, target, anchor, uuid }) => (
+            <Link
+              linktype={linktype}
+              href={href}
+              target={target}
+              anchor={anchor}
+              uuid={uuid}
+            >
+              {children}
+            </Link>
           )
         }
       })}

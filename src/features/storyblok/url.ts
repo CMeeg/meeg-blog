@@ -1,9 +1,17 @@
 import type { StoryData } from '@storyblok/js'
 import type { MultilinkStoryblok } from './types/components'
+import isAbsoluteUrl from 'is-absolute-url'
 
-const getRelativeUrl = (url: string | null, basePath = '/'): string | null => {
+const getRelativeUrl = (
+  url: string | null,
+  basePath = '/'
+): string | undefined => {
   if (!url) {
-    return null
+    return undefined
+  }
+
+  if (isAbsoluteUrl(url)) {
+    return url
   }
 
   if (url === basePath) {
@@ -28,20 +36,24 @@ const getStoryUrl = (story: StoryData, basePath = '/') => {
 const getLinkUrl = (
   link: MultilinkStoryblok,
   basePath = '/'
-): string | null => {
+): string | undefined => {
   if ((link.linktype ?? '') === 'email') {
-    return link.email ? `mailto:${link.email}` : null
+    return link.email ? `mailto:${link.email}` : undefined
   }
 
-  const { cached_url } = link
+  const { cached_url, anchor } = link
 
   if (!cached_url) {
-    return null
+    return undefined
   }
 
-  const url = cached_url as string
+  const url = getRelativeUrl(cached_url as string, basePath)
 
-  return getRelativeUrl(url, basePath)
+  if (anchor) {
+    return `${url}#${anchor}`
+  }
+
+  return url
 }
 
 export { getRelativeUrl, getStoryUrl, getLinkUrl }

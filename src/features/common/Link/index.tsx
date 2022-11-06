@@ -14,5 +14,14 @@ export default function Link({ link, children }: Props) {
     return null
   }
 
-  return <a href={url}>{children}</a>
+  let target: string | undefined
+  if (link.target) {
+    target = link.target as string
+  }
+
+  return (
+    <a href={url} target={target}>
+      {children}
+    </a>
+  )
 }

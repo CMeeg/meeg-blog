@@ -35,11 +35,12 @@
     "change-case": "^4.1.2",
     "express": "^4.18.2",
     "helmet": "^6.0.0",
+    "is-absolute-url": "^4.0.1",
     "js-cookie": "^3.0.1",
     "open-props": "^1.4.21",
+    "preact": "^10.6.5",
     "react": "npm:@preact/compat",
     "react-dom": "npm:@preact/compat",
-    "preact": "^10.6.5",
     "shiki": "^0.11.1",
     "storyblok-rich-text-react-renderer": "^2.6.1",
     "uuid": "^9.0.0"
