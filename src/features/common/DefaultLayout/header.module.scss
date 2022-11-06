@@ -1,9 +1,14 @@
 .header {
-  display: flex;
-  position: relative;
   padding: var(--size-3) var(--size-4);
-  z-index: var(--layer-1);
   background: linear-gradient(180deg, var(--color-surface-1) 0%, var(--color-canvas) 100%);
+}
+
+.header-container {
+  display: flex;
+  max-width: var(--size-xl);
+  margin: 0 auto;
+  position: relative;
+  z-index: var(--layer-1);
 }
 
 $logo-size: 50px;

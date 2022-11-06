@@ -26,29 +26,31 @@ export default function Footer({
 
   return (
     <footer className={styles.footer}>
-      <p className={styles.copyright}>
-        {copyright ?? 'Chris Meagher'} &copy; {currentYear}
-      </p>
-      {hasLinks && (
-        <ul className={styles['icon-links']}>
-          {githubUrl && (
-            <li>
-              <a href={githubUrl}>
-                <GithubIcon className={styles.icon} />{' '}
-                <span className="visually-hidden">GitHub</span>
-              </a>
-            </li>
-          )}
-          {twitterUrl && (
-            <li>
-              <a href={twitterUrl}>
-                <TwitterIcon className={styles.icon} />{' '}
-                <span className="visually-hidden">Twitter</span>
-              </a>
-            </li>
-          )}
-        </ul>
-      )}
+      <div className={styles['footer-container']}>
+        <p className={styles.copyright}>
+          {copyright ?? 'Chris Meagher'} &copy; {currentYear}
+        </p>
+        {hasLinks && (
+          <ul className={styles['icon-links']}>
+            {githubUrl && (
+              <li>
+                <a href={githubUrl}>
+                  <GithubIcon className={styles.icon} />{' '}
+                  <span className="visually-hidden">GitHub</span>
+                </a>
+              </li>
+            )}
+            {twitterUrl && (
+              <li>
+                <a href={twitterUrl}>
+                  <TwitterIcon className={styles.icon} />{' '}
+                  <span className="visually-hidden">Twitter</span>
+                </a>
+              </li>
+            )}
+          </ul>
+        )}
+      </div>
     </footer>
   )
 }

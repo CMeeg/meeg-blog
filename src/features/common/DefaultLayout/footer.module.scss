@@ -1,10 +1,15 @@
 .footer {
-  display: flex;
-  align-items: center;
   margin-block-start: var(--size-6);
   padding: var(--size-8) var(--size-4) var(--size-3);
   background-color: var(--color-surface-2);
   mask: var(--mask-edge-zig-zag-top);
+}
+
+.footer-container {
+  display: flex;
+  align-items: center;
+  max-width: var(--size-xl);
+  margin: 0 auto;
 }
 
 .copyright {

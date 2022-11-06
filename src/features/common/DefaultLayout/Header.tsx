@@ -80,58 +80,60 @@ export default function Header({ logo, mainNav, currentUrl }: Props) {
 
   return (
     <header className={styles.header}>
-      <a href="/" className={styles['logo']}>
-        <span className={styles['logo-img-border']}>
-          <Image
-            className={styles['logo-img']}
-            image={image}
-            width={70}
-            height={70}
-          />
-        </span>
-        <ChrisMeagher className={styles['logo-text']} />
-      </a>
+      <div className={styles['header-container']}>
+        <a href="/" className={styles['logo']}>
+          <span className={styles['logo-img-border']}>
+            <Image
+              className={styles['logo-img']}
+              image={image}
+              width={70}
+              height={70}
+            />
+          </span>
+          <ChrisMeagher className={styles['logo-text']} />
+        </a>
 
-      <div className={styles.menu}>
-        <div className={styles['menu-container']}>
-          <input
-            type="checkbox"
-            className={styles['menu-toggle']}
-            id="menu-primary-toggle"
-          />
-          <label
-            htmlFor="menu-primary-toggle"
-            className={`visually-hidden ${styles['menu-toggle-label']}`}
-          >
-            Show menu
-          </label>
+        <div className={styles.menu}>
+          <div className={styles['menu-container']}>
+            <input
+              type="checkbox"
+              className={styles['menu-toggle']}
+              id="menu-primary-toggle"
+            />
+            <label
+              htmlFor="menu-primary-toggle"
+              className={`visually-hidden ${styles['menu-toggle-label']}`}
+            >
+              Show menu
+            </label>
 
-          <span className={styles['menu-icon']} />
+            <span className={styles['menu-icon']} />
 
-          <div className={styles['menu-content-container']}>
-            <div className={styles['menu-content']}>
-              <nav role="navigation" className={styles['nav-primary']}>
-                <ul>
-                  <li>
-                    <a href="/">Home</a>
-                  </li>
+            <div className={styles['menu-content-container']}>
+              <div className={styles['menu-content']}>
+                <nav role="navigation" className={styles['nav-primary']}>
+                  <ul>
+                    <li>
+                      <a href="/">Home</a>
+                    </li>
 
-                  {mainNav.map((item) => {
-                    return (
-                      <li
-                        key={item._uid}
-                        className={
-                          isCurrentUrl(item.link) ? styles.active : undefined
-                        }
-                      >
-                        <Link link={item.link}>{item.name}</Link>
-                      </li>
-                    )
-                  })}
-                </ul>
-              </nav>
+                    {mainNav.map((item) => {
+                      return (
+                        <li
+                          key={item._uid}
+                          className={
+                            isCurrentUrl(item.link) ? styles.active : undefined
+                          }
+                        >
+                          <Link link={item.link}>{item.name}</Link>
+                        </li>
+                      )
+                    })}
+                  </ul>
+                </nav>
 
-              <ThemeSwitcher />
+                <ThemeSwitcher />
+              </div>
             </div>
           </div>
         </div>
