@@ -78,49 +78,51 @@ export default function ArticlePage({
       />
 
       {isInSeries && (
-        <aside id="series" className={`content ${styles['series']}`}>
-          <p className={styles['article-series']}>
-            <FilesIcon className={styles['article-series-icon']} />
-            <span className={styles['article-series-text']}>
-              This article is part of a series
-            </span>
-          </p>
-          <h2>{series.content.title}</h2>
-          <RichText document={series.content.summary} />
-          <div className="prose">
-            <ol>
-              {articlesInSeries.map((seriesArticle) => {
-                const isCurrentArticle = seriesArticle.uuid === story.uuid
+        <aside id="series" className={`full ${styles['series']}`}>
+          <div className={`content ${styles['series-content']}`}>
+            <p className={styles['article-series']}>
+              <FilesIcon className={styles['article-series-icon']} />
+              <span className={styles['article-series-text']}>
+                This article is part of a series
+              </span>
+            </p>
+            <h2>{series.content.title}</h2>
+            <RichText document={series.content.summary} />
+            <div className="prose">
+              <ol>
+                {articlesInSeries.map((seriesArticle) => {
+                  const isCurrentArticle = seriesArticle.uuid === story.uuid
 
-                if (isCurrentArticle) {
+                  if (isCurrentArticle) {
+                    return (
+                      <li key={seriesArticle.uuid}>
+                        <p>{`(This article) ${seriesArticle.content.title}`}</p>
+                      </li>
+                    )
+                  }
+
                   return (
                     <li key={seriesArticle.uuid}>
-                      <p>{`(This article) ${seriesArticle.content.title}`}</p>
+                      <p>
+                        {/* TODO: Maybe I do need a link component to make sure there is a leading `/`! */}
+                        <a href={`/${seriesArticle.full_slug}`}>
+                          {seriesArticle.content.title}
+                        </a>
+                      </p>
                     </li>
                   )
-                }
-
-                return (
-                  <li key={seriesArticle.uuid}>
-                    <p>
-                      {/* TODO: Maybe I do need a link component to make sure there is a leading `/`! */}
-                      <a href={`/${seriesArticle.full_slug}`}>
-                        {seriesArticle.content.title}
-                      </a>
-                    </p>
-                  </li>
-                )
-              })}
-            </ol>
+                })}
+              </ol>
+            </div>
+            {(series.content.wip ?? true) && (
+              <p>
+                <em>
+                  N.B. This series is a work in progress - there are further
+                  articles planned.
+                </em>
+              </p>
+            )}
           </div>
-          {(series.content.wip ?? true) && (
-            <p>
-              <em>
-                N.B. This series is a work in progress - there are further
-                articles planned.
-              </em>
-            </p>
-          )}
         </aside>
       )}
     </article>
