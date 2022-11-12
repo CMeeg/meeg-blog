@@ -1,6 +1,17 @@
-export async function get() {
+import type { APIContext } from 'astro'
+
+export async function get(context: APIContext) {
+  if (import.meta.env.DEV || import.meta.env.PREVIEW) {
+    return {
+      body: `User-agent: *
+Disallow: /`
+    }
+  }
+
   return {
     body: `User-agent: *
-Disallow: /`
+Disallow:
+
+Sitemap: ${context.site ?? ''}/sitemap.xml`
   }
 }

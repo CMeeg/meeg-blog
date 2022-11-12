@@ -1,8 +1,11 @@
+previewsEnabled: true
+previewsExpireAfterDays: 1
 services:
   - type: web
     name: meeg-blog-app
     env: node
     plan: starter
+    previewPlan: starter
     region: frankfurt
     buildCommand: pnpm i; pnpm build
     startCommand: pnpm start
@@ -10,3 +13,9 @@ services:
     envVars:
       - key: STORYBLOK_TOKEN
         sync: false
+      - key: STORYBLOK_PREVIEW_TOKEN
+        sync: false
+      - key: PREVIEW
+        value: 'true'
+        previewValue: 'true'
+      - fromGroup: meeg-blog-app-preview-settings

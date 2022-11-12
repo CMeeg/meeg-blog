@@ -1,5 +1,6 @@
 import { defineConfig, getViteConfig } from 'astro/config'
-import { readFileSync } from 'fs'
+import type { AstroUserConfig } from 'astro/config'
+import { readFileSync } from 'node:fs'
 import node from '@astrojs/node'
 import preact from '@astrojs/preact'
 
@@ -21,11 +22,20 @@ if (isDev) {
 }
 
 // https://astro.build/config
-export default defineConfig({
+const astro: AstroUserConfig = {
   output: 'server',
   adapter: node({
     mode: 'middleware'
   }),
   vite,
   integrations: [preact({ compat: true })]
-})
+}
+
+if (process.env.RENDER_EXTERNAL_URL) {
+  const renderUrl = process.env.RENDER_EXTERNAL_URL
+
+  // Remove trailing slash
+  astro.site = renderUrl.replace(/\/$/, '')
+}
+
+export default defineConfig(astro)
