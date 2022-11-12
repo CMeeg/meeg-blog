@@ -1,4 +1,5 @@
 import type { StoryData, StoryblokComponentType } from '@storyblok/js'
+import type { ArticleSeoMetadata, ProfileSeoMetadata } from '~/features/seo/api'
 
 export type { StoryData }
 
@@ -18,6 +19,8 @@ export type SeoMetadata = {
   twitter_title?: string
   og_description?: string
   twitter_description?: string
+  article?: ArticleSeoMetadata
+  profile?: ProfileSeoMetadata
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [k: string]: any
 }

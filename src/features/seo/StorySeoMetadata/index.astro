@@ -1,0 +1,38 @@
+---
+import type { GlobalStory } from '~/features/common/api'
+import type {
+  StoryWithSeoMetadata,
+  StoryContent
+} from '~/features/storyblok/types/content-types'
+import { trimObject } from '~/features/common/object'
+import DefaultSeoMetadata from '~/features/seo/DefaultSeoMetadata/index.astro'
+
+export interface Props {
+  global: GlobalStory
+  story: StoryWithSeoMetadata<StoryContent>
+  currentUrl?: URL
+}
+
+const { global, story, currentUrl } = Astro.props as Props
+
+const siteName = global.content.site_title
+
+const twSite = global.content.twitter_username
+  ? `@${global.content.twitter_username}`
+  : undefined
+
+const globalMetadata = trimObject(global.content.metadata || {})
+const storyMetadata = trimObject(story.content.metadata || {})
+
+const metadata = {
+  ...globalMetadata,
+  ...storyMetadata,
+  twitter_site: twSite
+}
+---
+
+<DefaultSeoMetadata
+  siteName={siteName}
+  metadata={metadata}
+  currentUrl={currentUrl}
+/>

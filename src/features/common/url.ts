@@ -25,4 +25,12 @@ const getRelativeUrl = (
   return `${basePath}${path}`
 }
 
-export { getRelativeUrl }
+const getAbsoluteUrl = (url: string, baseUrl: string) => {
+  if (isAbsoluteUrl(url)) {
+    return url
+  }
+
+  return new URL(url, baseUrl).toString()
+}
+
+export { getRelativeUrl, getAbsoluteUrl }

@@ -5,12 +5,11 @@ import TwitterCard from './TwitterCard.astro'
 
 export interface Props {
   siteName?: string
-  twitterUsername?: string
   metadata?: SeoMetadata
   currentUrl?: URL
 }
 
-const { siteName, twitterUsername, metadata, currentUrl } = Astro.props as Props
+const { siteName, metadata, currentUrl } = Astro.props as Props
 
 const titleSuffix = siteName ?? `Chris Meagher's blog`
 
@@ -23,10 +22,13 @@ const description = metadata?.description
 const url = currentUrl ? currentUrl?.toString() : undefined
 const canonicalUrl = url ? url.split('?')[0] : undefined
 
-// TODO: Need to deal with additional article and profile metadata (and any others...)
-const ogType = metadata?.article ? 'article' : 'website'
+let ogType = metadata?.og_type ?? 'website'
 
-const ogLocale = 'en_gb'
+if (metadata?.article) {
+  ogType = 'article'
+}
+
+const ogLocale = metadata?.og_locale ?? 'en_gb'
 
 const ogTitle = metadata?.og_title
   ? metadata.og_title
@@ -38,16 +40,13 @@ const ogDescription = metadata?.og_description
   ? metadata.og_description
   : description
 
-// TODO: Default OG image
 const ogImage = metadata?.og_image ? metadata.og_image : undefined
-
-// TODO: OG Article and Profile metadata
 
 const renderOpenGraph = ogTitle && canonicalUrl
 
-const twCard = 'summary'
+const twCard = metadata?.twitter_card ?? 'summary'
 
-const twSite = twitterUsername ? `@${twitterUsername}` : undefined
+const twSite = metadata?.twitter_site
 
 const twTitle = metadata?.twitter_title ? metadata.twitter_title : ogTitle
 
@@ -74,6 +73,8 @@ const renderTwitterCard = twTitle && twSite && canonicalUrl
       title={ogTitle}
       description={ogDescription}
       image={ogImage}
+      article={metadata?.article}
+      profile={metadata?.profile}
     />
   )
 }
