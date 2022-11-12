@@ -34,7 +34,7 @@ const currentTheme = getCurrentTheme(Astro.cookies)
 const currentUrl = Astro.url
 ---
 
-<HtmlDocument theme={currentTheme}>
+<HtmlDocument theme={currentTheme} metadata={story.content.metadata}>
   <StorySeoMetadata
     slot="seo-metadata"
     global={global}

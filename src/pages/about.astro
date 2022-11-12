@@ -44,7 +44,7 @@ const metadata = {
 story.content.metadata = metadata
 ---
 
-<HtmlDocument theme={currentTheme}>
+<HtmlDocument theme={currentTheme} metadata={story.content.metadata}>
   <StorySeoMetadata
     slot="seo-metadata"
     global={global}

@@ -71,7 +71,7 @@ story.content.metadata = metadata
 const codeHighlighter = await createCodeHighlighter(currentTheme)
 ---
 
-<HtmlDocument theme={currentTheme}>
+<HtmlDocument theme={currentTheme} metadata={story.content.metadata}>
   <StorySeoMetadata
     slot="seo-metadata"
     global={global}
