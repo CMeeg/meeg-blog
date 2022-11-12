@@ -1,0 +1,22 @@
+---
+export interface Props {
+  type: string
+  siteName?: string
+  locale: string
+  url: string
+  title: string
+  description?: string
+  image?: string
+}
+
+const { type, siteName, locale, url, title, description, image } =
+  Astro.props as Props
+---
+
+<meta property="og:type" content={type} />
+{siteName && <meta property="og:site_name" content={siteName} />}
+<meta property="og:locale" content={locale} />
+<meta property="og:url" content={url} />
+<meta property="og:title" content={title} />
+{description && <meta property="og:description" content={description} />}
+{image && <meta property="og:image" content={image} />}

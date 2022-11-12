@@ -1,0 +1,92 @@
+---
+import type { SeoMetadata } from '~/features/storyblok/types/content-types'
+import OpenGraph from './OpenGraph.astro'
+import TwitterCard from './TwitterCard.astro'
+
+export interface Props {
+  siteName?: string
+  twitterUsername?: string
+  metadata?: SeoMetadata
+  currentUrl?: URL
+}
+
+const { siteName, twitterUsername, metadata, currentUrl } = Astro.props as Props
+
+const titleSuffix = siteName ?? `Chris Meagher's blog`
+
+const title = metadata?.title
+  ? `${metadata.title} | ${titleSuffix}`
+  : titleSuffix
+
+const description = metadata?.description
+
+const url = currentUrl ? currentUrl?.toString() : undefined
+const canonicalUrl = url ? url.split('?')[0] : undefined
+
+// TODO: Need to deal with additional article and profile metadata (and any others...)
+const ogType = metadata?.article ? 'article' : 'website'
+
+const ogLocale = 'en_gb'
+
+const ogTitle = metadata?.og_title
+  ? metadata.og_title
+  : metadata?.title
+  ? metadata.title
+  : siteName
+
+const ogDescription = metadata?.og_description
+  ? metadata.og_description
+  : description
+
+// TODO: Default OG image
+const ogImage = metadata?.og_image ? metadata.og_image : undefined
+
+// TODO: OG Article and Profile metadata
+
+const renderOpenGraph = ogTitle && canonicalUrl
+
+const twCard = 'summary'
+
+const twSite = twitterUsername ? `@${twitterUsername}` : undefined
+
+const twTitle = metadata?.twitter_title ? metadata.twitter_title : ogTitle
+
+const twDescription = metadata?.twitter_description
+  ? metadata.twitter_description
+  : ogDescription
+
+const twImage = metadata?.twitter_image ? metadata.twitter_image : ogImage
+
+const renderTwitterCard = twTitle && twSite && canonicalUrl
+---
+
+<title>{title}</title>
+{description && <meta name="description" content={description} />}
+{canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+
+{
+  renderOpenGraph && (
+    <OpenGraph
+      type={ogType}
+      siteName={siteName}
+      locale={ogLocale}
+      url={canonicalUrl}
+      title={ogTitle}
+      description={ogDescription}
+      image={ogImage}
+    />
+  )
+}
+
+{
+  renderTwitterCard && (
+    <TwitterCard
+      card={twCard}
+      site={twSite}
+      url={canonicalUrl}
+      title={twTitle}
+      description={twDescription}
+      image={twImage}
+    />
+  )
+}

@@ -4,7 +4,7 @@ import { createCommonApiClient } from '~/features/common/api'
 import { createHomeApiClient } from '~/features/home/api'
 import { getCurrentTheme } from '~/features/themes'
 import HtmlDocument from '~/features/common/HtmlDocument/index.astro'
-import DefaultSeoMetadata from '~/features/common/DefaultSeoMetadata/index.astro'
+import DefaultSeoMetadata from '~/features/seo/DefaultSeoMetadata/index.astro'
 import DefaultLayout from '~/features/common/DefaultLayout/index.astro'
 import Page from '~/features/common/Page'
 import StoryblokBridge from '~/features/storyblok/StoryblokBridge'
@@ -35,7 +35,13 @@ const currentUrl = Astro.url
 ---
 
 <HtmlDocument theme={currentTheme}>
-  <DefaultSeoMetadata slot="seo-metadata" metadata={story?.content.metadata} />
+  <DefaultSeoMetadata
+    slot="seo-metadata"
+    siteName={global.content.site_title}
+    twitterUsername={global.content.twitter_username}
+    metadata={story.content.metadata}
+    currentUrl={currentUrl}
+  />
 
   <DefaultLayout global={global} currentUrl={currentUrl}>
     <Page story={story} />

@@ -1,13 +1,14 @@
 import express from 'express'
 import helmet from 'helmet'
-import { handler as ssrHandler } from '../dist/server/entry.mjs'
+import { handler as ssrHandler } from '../../dist/server/entry.mjs'
+import { forceLowercasePaths } from './middleware/force-lowercase-paths.mjs'
 
 const isDev = process.env.NODE_ENV === 'development'
 
 const createExpressApp = () => {
   const app = express()
 
-  // Set security headers
+  // Set security headers middleware
   // helmet https://helmetjs.github.io/
   // https://owasp.org/www-project-secure-headers/#div-bestpractices
 
@@ -44,7 +45,12 @@ const createExpressApp = () => {
     app.use(helmet.hsts())
   }
 
+  // Middelware
+
+  app.use(forceLowercasePaths)
+
   // Astro
+
   app.use(express.static('dist/client/'))
   app.use(ssrHandler)
 

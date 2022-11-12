@@ -1,17 +1,5 @@
----
-import type { PageNotFoundStory } from '~/features/errors/api'
-
-export interface Props {
-  story: PageNotFoundStory
-}
-
-const { story } = Astro.props as Props
-
-const { title } = story.content
----
-
 <div class="content prose">
-  <h1>{title}</h1>
+  <h1>Page not found</h1>
 
   <p>
     Try taking a look at my <a href="/blog">blog articles</a> instead, or go to the

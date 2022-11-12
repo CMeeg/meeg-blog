@@ -1,10 +1,10 @@
 ---
 import { createStoryblokApiClient } from '~/features/storyblok/api'
 import { createCommonApiClient } from '~/features/common/api'
-import { getPageNotFoundStory } from '~/features/errors/api'
+import type { SeoMetadata } from '~/features/storyblok/types/content-types'
 import { getCurrentTheme } from '~/features/themes'
 import HtmlDocument from '~/features/common/HtmlDocument/index.astro'
-import DefaultSeoMetadata from '~/features/common/DefaultSeoMetadata/index.astro'
+import DefaultSeoMetadata from '~/features/seo/DefaultSeoMetadata/index.astro'
 import DefaultLayout from '~/features/common/DefaultLayout/index.astro'
 import PageNotFoundPage from '~/features/errors/PageNotFoundPage/index.astro'
 
@@ -18,15 +18,21 @@ if (!global) {
   throw Error(`'Global' story not found.`)
 }
 
-// TODO: Can just create metadata now instead of a whole story
-const story = getPageNotFoundStory()
+const metadata: SeoMetadata = {
+  title: 'Page not found'
+}
 
 const currentTheme = getCurrentTheme(Astro.cookies)
 ---
 
 <HtmlDocument theme={currentTheme}>
-  <DefaultSeoMetadata slot="seo-metadata" metadata={story?.content.metadata} />
+  <DefaultSeoMetadata
+    slot="seo-metadata"
+    siteName={global.content.site_title}
+    metadata={metadata}
+  />
+
   <DefaultLayout global={global}>
-    <PageNotFoundPage story={story} />
+    <PageNotFoundPage />
   </DefaultLayout>
 </HtmlDocument>

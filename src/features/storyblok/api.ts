@@ -1,10 +1,7 @@
 import { storyblokInit, apiPlugin } from '@storyblok/js'
 import type { StoryblokClient, StoryParams, StoriesParams } from '@storyblok/js'
-import { v4 as uuid } from 'uuid'
-import { paramCase } from 'change-case'
 import crypto from 'crypto'
-import type { StoryData, StoryContent } from './types/content-types'
-import { getRandomInt } from './number'
+import type { StoryData } from './types/content-types'
 
 const storyblokToken = import.meta.env.STORYBLOK_TOKEN
 const storyblokPreviewToken = import.meta.env.STORYBLOK_PREVIEW_TOKEN
@@ -97,37 +94,6 @@ const getStoryByUuid = async <TStory extends StoryData>(
 
   // TODO: Really, we have no idea if the shape of `data.story` matches the shape of `TStory` (particularly the `content`) so we are casting the type, but maybe there's a way to validate?
   return data.story as TStory
-}
-
-const createStory = <TStoryContent extends StoryContent>(
-  name: string,
-  content: TStoryContent
-): StoryData<TStoryContent> => {
-  const now = new Date().toISOString()
-  const slug = paramCase(name)
-
-  const story: StoryData<TStoryContent> = {
-    name,
-    created_at: now,
-    published_at: now,
-    id: getRandomInt(99999),
-    uuid: uuid(),
-    content,
-    slug,
-    full_slug: slug,
-    position: 0,
-    tag_list: [],
-    is_startpage: false,
-    parent_id: 0,
-    group_id: uuid(),
-    first_published_at: now,
-    lang: 'default',
-    alternates: [],
-    sort_by_date: null,
-    meta_data: null
-  }
-
-  return story
 }
 
 interface GetStoriesOptions {
@@ -272,6 +238,6 @@ const createStoryblokApiClient = (request: Request) => {
   return apiClient
 }
 
-export { createStory, createStoryblokApiClient }
+export { createStoryblokApiClient }
 
 export type { StoryblokApiClient, GetStoryOptions, GetStoriesOptions }

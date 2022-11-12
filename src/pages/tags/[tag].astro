@@ -5,7 +5,7 @@ import { createBlogApiClient } from '~/features/blog/api'
 import type { SeoMetadata } from '~/features/storyblok/types/content-types'
 import { getCurrentTheme } from '~/features/themes'
 import HtmlDocument from '~/features/common/HtmlDocument/index.astro'
-import DefaultSeoMetadata from '~/features/common/DefaultSeoMetadata/index.astro'
+import DefaultSeoMetadata from '~/features/seo/DefaultSeoMetadata/index.astro'
 import DefaultLayout from '~/features/common/DefaultLayout/index.astro'
 import ArticleTagPage from '~/features/blog/ArticleTagPage'
 import StoryblokBridge from '~/features/storyblok/StoryblokBridge'
@@ -49,7 +49,13 @@ const currentUrl = Astro.url
 ---
 
 <HtmlDocument theme={currentTheme}>
-  <DefaultSeoMetadata slot="seo-metadata" metadata={metadata} />
+  <DefaultSeoMetadata
+    slot="seo-metadata"
+    siteName={global.content.site_title}
+    twitterUsername={global.content.twitter_username}
+    metadata={metadata}
+    currentUrl={currentUrl}
+  />
 
   <DefaultLayout global={global} currentUrl={currentUrl}>
     <ArticleTagPage tag={tag} articles={articles} />

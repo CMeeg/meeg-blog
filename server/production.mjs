@@ -1,4 +1,4 @@
-import { createExpressApp } from './express.mjs'
+import { createExpressApp } from './express/app.mjs'
 
 // Create Express app
 

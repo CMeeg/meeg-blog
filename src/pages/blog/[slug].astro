@@ -6,7 +6,7 @@ import { createBlogApiClient } from '~/features/blog/api'
 import { getCurrentTheme } from '~/features/themes'
 import { createCodeHighlighter } from '~/features/shiki'
 import HtmlDocument from '~/features/common/HtmlDocument/index.astro'
-import DefaultSeoMetadata from '~/features/common/DefaultSeoMetadata/index.astro'
+import DefaultSeoMetadata from '~/features/seo/DefaultSeoMetadata/index.astro'
 import DefaultLayout from '~/features/common/DefaultLayout/index.astro'
 import ArticlePage from '~/features/blog/ArticlePage'
 import StoryblokBridge from '~/features/storyblok/StoryblokBridge'
@@ -59,7 +59,13 @@ const codeHighlighter = await createCodeHighlighter(currentTheme)
 
 <HtmlDocument theme={currentTheme}>
   <!-- TODO: Article uses different metadata -->
-  <DefaultSeoMetadata slot="seo-metadata" metadata={story?.content.metadata} />
+  <DefaultSeoMetadata
+    slot="seo-metadata"
+    siteName={global.content.site_title}
+    twitterUsername={global.content.twitter_username}
+    metadata={story.content.metadata}
+    currentUrl={currentUrl}
+  />
 
   <DefaultLayout global={global} currentUrl={currentUrl}>
     <ArticlePage
