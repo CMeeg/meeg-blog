@@ -5,6 +5,11 @@ import { getRelativeUrl } from '~/features/common/url'
 const getStoryUrl = (story: StoryData, basePath = '/') => {
   const { full_slug } = story
 
+  // TODO: StoryData is missing a `path` field so we have to check the slug instead
+  if (full_slug === 'home') {
+    return '/'
+  }
+
   return getRelativeUrl(full_slug, basePath)
 }
 

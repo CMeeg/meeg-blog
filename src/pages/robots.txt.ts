@@ -8,10 +8,12 @@ Disallow: /`
     }
   }
 
+  const siteUrl = context.site ?? context.url.origin
+
   return {
     body: `User-agent: *
 Disallow:
 
-Sitemap: ${context.site ?? ''}/sitemap.xml`
+Sitemap: ${siteUrl}/sitemap.xml`
   }
 }

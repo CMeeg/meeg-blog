@@ -1,5 +1,8 @@
 import type { StoryData, StoryblokComponentType } from '@storyblok/js'
-import type { ArticleSeoMetadata, ProfileSeoMetadata } from '~/features/seo/open-graph'
+import type {
+  ArticleSeoMetadata,
+  ProfileSeoMetadata
+} from '~/features/seo/open-graph'
 
 export type { StoryData }
 

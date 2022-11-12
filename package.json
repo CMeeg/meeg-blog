@@ -41,6 +41,7 @@
     "react": "npm:@preact/compat",
     "react-dom": "npm:@preact/compat",
     "shiki": "^0.11.1",
+    "sitemap": "^7.1.1",
     "storyblok-rich-text-react-renderer": "^2.6.1"
   },
   "devDependencies": {
