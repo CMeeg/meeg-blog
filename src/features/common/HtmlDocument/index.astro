@@ -1,5 +1,6 @@
 ---
 import type { Theme } from '~/features/themes'
+import { defaultThemeName, themes } from '~/features/themes'
 import '@fontsource/poppins'
 import type { SeoMetadata } from '~/features/storyblok/types/content-types'
 import { getOpenGraphPrefix } from '~/features/seo/open-graph'
@@ -13,6 +14,8 @@ export interface Props {
 const { theme, metadata } = Astro.props as Props
 
 const ogPrefix = getOpenGraphPrefix(metadata)
+
+const { favicon } = theme || themes[defaultThemeName]
 ---
 
 <!DOCTYPE html>
@@ -20,8 +23,8 @@ const ogPrefix = getOpenGraphPrefix(metadata)
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/x-icon" href="/favicon.png" />
-    <meta name="color-scheme" content="dark light" />
+    <link rel="icon" type="image/x-icon" href={favicon} />
+    <meta name="color-scheme" content="light dark" />
     {theme && <meta name="theme-color" content={theme.color} />}
 
     <slot name="seo-metadata" />

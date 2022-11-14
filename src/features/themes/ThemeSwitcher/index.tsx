@@ -50,6 +50,14 @@ export default function ThemeSwitcher() {
     }
 
     themeColor.setAttribute('content', theme.color)
+
+    // Set favicon
+
+    const favicon = docHead.querySelector(`link[rel='icon']`)
+
+    if (favicon) {
+      favicon.setAttribute('href', theme.favicon)
+    }
   }
 
   useEffect(() => {
@@ -99,7 +107,7 @@ export default function ThemeSwitcher() {
         <SunIcon className={styles.sun} />
         <MoonIcon className={styles.moon} />
         <div className={styles.toggle}>
-          <span className="visually-hidden">Change color scheme</span>
+          <span className="visually-hidden">Switch to dark mode</span>
         </div>
       </label>
     </div>

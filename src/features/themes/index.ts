@@ -3,6 +3,7 @@ import type { AstroCookies } from 'astro/dist/core/cookies'
 interface Theme {
   name: string
   color: string
+  favicon: string
 }
 
 interface Themes {
@@ -12,11 +13,13 @@ interface Themes {
 const themes: Themes = {
   dark: {
     name: 'dark',
-    color: '#212529'
+    color: '#212529',
+    favicon: '/favicon-dark.png'
   },
   light: {
     name: 'light',
-    color: '#f8f9fa'
+    color: '#f8f9fa',
+    favicon: '/favicon.png'
   }
 }
 
