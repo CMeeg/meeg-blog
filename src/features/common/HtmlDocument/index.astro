@@ -1,7 +1,6 @@
 ---
 import type { Theme } from '~/features/themes'
 import { defaultThemeName, themes } from '~/features/themes'
-import '@fontsource/poppins'
 import type { SeoMetadata } from '~/features/storyblok/types/content-types'
 import { getOpenGraphPrefix } from '~/features/seo/open-graph'
 import './base.scss'
@@ -26,6 +25,13 @@ const { favicon } = theme || themes[defaultThemeName]
     <link rel="icon" type="image/x-icon" href={favicon} />
     <meta name="color-scheme" content="light dark" />
     {theme && <meta name="theme-color" content={theme.color} />}
+
+    <link
+      rel="preload"
+      href="/fonts/poppins/poppins-latin-400-normal.woff2"
+      as="font"
+      type="font/woff2"
+    />
 
     <slot name="seo-metadata" />
   </head>
