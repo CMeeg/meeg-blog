@@ -4,6 +4,7 @@ import * as Sentry from '@sentry/node'
 import * as Tracing from '@sentry/tracing'
 import { handler as ssrHandler } from '../../dist/server/entry.mjs'
 import { forceLowercasePaths } from './middleware/force-lowercase-paths.mjs'
+import { setCacheHeaders } from './middleware/cache-control.mjs'
 
 const isDev = process.env.NODE_ENV === 'development'
 const sentryDsn = process.env.SENTRY_DSN
@@ -72,6 +73,10 @@ const createExpressApp = () => {
   // Middleware
 
   app.use(forceLowercasePaths)
+
+  if (!isDev) {
+    app.use(setCacheHeaders)
+  }
 
   // Astro
 
