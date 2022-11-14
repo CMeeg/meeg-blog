@@ -1,5 +1,6 @@
 import type { Highlighter, Lang } from 'shiki'
 import type { ComponentChildren } from 'preact'
+import { logger } from '~/features/infra/logger'
 import styles from './index.module.scss'
 
 export interface Props {
@@ -41,10 +42,9 @@ const getLanguage = (languageClass: string, highlighter: Highlighter) => {
     return language
   }
 
-  // TODO: Log this properly
-  console.log(
-    `Could not map codeblock language '${languageClass}' to highlighter language.`
-  )
+  logger().warn({
+    msg: `Could not map codeblock language '${languageClass}' to highlighter language.`
+  })
 
   return defaultLanguage
 }
