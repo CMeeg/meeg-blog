@@ -1,12 +1,36 @@
 import express from 'express'
 import helmet from 'helmet'
+import * as Sentry from '@sentry/node'
+import * as Tracing from '@sentry/tracing'
 import { handler as ssrHandler } from '../../dist/server/entry.mjs'
 import { forceLowercasePaths } from './middleware/force-lowercase-paths.mjs'
 
 const isDev = process.env.NODE_ENV === 'development'
+const sentryDsn = process.env.SENTRY_DSN
 
 const createExpressApp = () => {
   const app = express()
+
+  if (sentryDsn) {
+    // https://docs.sentry.io/platforms/node/guides/express/
+    // Init Sentry
+    Sentry.init({
+      dsn: sentryDsn,
+      integrations: [
+        new Sentry.Integrations.Http({ tracing: true }),
+        new Tracing.Integrations.Express({
+          app
+        })
+      ],
+      tracesSampleRate: 0.2
+    })
+
+    // The request handler must be the first middleware on the app
+    app.use(Sentry.Handlers.requestHandler())
+
+    // TracingHandler creates a trace for every incoming request
+    app.use(Sentry.Handlers.tracingHandler())
+  }
 
   // Set security headers middleware
   // helmet https://helmetjs.github.io/
@@ -45,7 +69,7 @@ const createExpressApp = () => {
     app.use(helmet.hsts())
   }
 
-  // Middelware
+  // Middleware
 
   app.use(forceLowercasePaths)
 
@@ -53,6 +77,21 @@ const createExpressApp = () => {
 
   app.use(express.static('dist/client/'))
   app.use(ssrHandler)
+
+  if (sentryDsn) {
+    // The error handler must be before any other error middleware and after all controllers
+    app.use(
+      Sentry.Handlers.errorHandler({
+        shouldHandleError(error) {
+          // Capture all 404 and 5xx errors
+          if (error.status === 404 || error.status >= 500) {
+            return true
+          }
+          return false
+        }
+      })
+    )
+  }
 
   return app
 }

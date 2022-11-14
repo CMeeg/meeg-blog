@@ -30,6 +30,8 @@
     "@astrojs/node": "^3.0.0",
     "@astrojs/preact": "^1.2.0",
     "@fontsource/poppins": "^4.5.10",
+    "@sentry/node": "^7.19.0",
+    "@sentry/tracing": "^7.19.0",
     "@storyblok/js": "^1.8.6",
     "axios": "^0.27.2",
     "express": "^4.18.2",
