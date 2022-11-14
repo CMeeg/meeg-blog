@@ -26,21 +26,12 @@ const forceLowercasePaths = (req, res, next) => {
 
     next()
   } else {
-    try {
-      const requestUrl = url.parse(req.originalUrl)
+    const requestUrl = url.parse(req.originalUrl)
 
-      const lowerPathname = requestUrl.pathname?.toLowerCase()
-      requestUrl.pathname = lowerPathname
+    const lowerPathname = requestUrl.pathname?.toLowerCase()
+    requestUrl.pathname = lowerPathname
 
-      res.redirect(301, url.format(requestUrl))
-    } catch (err) {
-      // TODO: Log error?
-      console.error(err)
-    }
-
-    // If we haven't redirected, call next
-
-    next()
+    res.redirect(301, url.format(requestUrl))
   }
 }
 
