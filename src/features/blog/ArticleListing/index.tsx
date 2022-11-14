@@ -1,6 +1,10 @@
 import { storyblokEditable } from '@storyblok/js'
-import type { ArticleListingStoryblok } from '~/features/storyblok/types/components'
+import type {
+  ArticleListingStoryblok,
+  MessageBoxStoryblok
+} from '~/features/storyblok/types/components'
 import type { ArticleStory } from '~/features/blog/api'
+import MessageBox from '~/features/common/MessageBox'
 import ArticleCard from '~/features/blog/ArticleCard'
 import styles from './index.module.scss'
 
@@ -14,8 +18,14 @@ export default function ArticleListing({ blok }: Props) {
   const hasArticles = Array.isArray(articles) && articles.length
 
   if (!hasArticles) {
-    // TODO: Render as MessageBox
-    return <p>No articles found</p>
+    const messageBlok: MessageBoxStoryblok = {
+      type: 'info',
+      message: 'No articles found',
+      component: 'message_box',
+      _uid: ''
+    }
+
+    return <MessageBox blok={messageBlok} />
   }
 
   return (
