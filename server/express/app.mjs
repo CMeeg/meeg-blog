@@ -55,7 +55,12 @@ const createExpressApp = () => {
       useDefaults: false,
       directives: {
         'default-src': [`'self'`, '*.storyblok.com'],
-        'script-src': [`'self'`, `'unsafe-inline'`, '*.storyblok.com'],
+        'script-src': [
+          `'self'`,
+          `'unsafe-inline'`,
+          '*.storyblok.com',
+          '*.plausible.io'
+        ],
         'style-src': [`'self'`, `'unsafe-inline'`],
         'img-src': [`'self'`, 'data:', '*.storyblok.com'],
         'object-src': [`'none'`],
