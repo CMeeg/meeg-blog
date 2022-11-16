@@ -27,7 +27,7 @@ const setCacheHeaders = async (req, res, next) => {
   switch (true) {
     // Files with cache-busting names
     case !!req.url.match(
-      /^\/.*\.[a-z0-9]+\.(css|js|svg|css\.map|js\.map|woff|woff2)$/g
+      /^\/.*\.v?[a-z0-9]+\.(css|css\.map|gif|jpg|js|js\.map|png|svg|woff|woff2)$/g
     ):
       return cacheIndefinitely()
   }

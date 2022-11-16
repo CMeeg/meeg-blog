@@ -2,6 +2,7 @@ import express from 'express'
 import helmet from 'helmet'
 import * as Sentry from '@sentry/node'
 import * as Tracing from '@sentry/tracing'
+import rewrite from 'express-urlrewrite'
 import { handler as ssrHandler } from '../../dist/server/entry.mjs'
 import { forceLowercasePaths } from './middleware/force-lowercase-paths.mjs'
 import { setCacheHeaders } from './middleware/cache-control.mjs'
@@ -82,6 +83,10 @@ const createExpressApp = () => {
   if (!isDev) {
     app.use(setCacheHeaders)
   }
+
+  // Rewrites
+
+  app.use(rewrite(/^\/(.*)\.v[a-z0-9]+\.(.*)/, '/$1.$2'))
 
   // Astro
 
