@@ -60,6 +60,7 @@ const createExpressApp = () => {
           `'self'`,
           `'unsafe-inline'`,
           '*.storyblok.com',
+          'plausible.io',
           '*.plausible.io'
         ],
         'style-src': [`'self'`, `'unsafe-inline'`],
