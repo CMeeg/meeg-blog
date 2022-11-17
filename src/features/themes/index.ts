@@ -1,4 +1,5 @@
 import type { AstroCookies } from 'astro/dist/core/cookies'
+import { fingerprintUrl } from '~/features/common/url'
 
 interface Theme {
   name: string
@@ -14,12 +15,12 @@ const themes: Themes = {
   dark: {
     name: 'dark',
     color: '#212529',
-    favicon: '/favicon-dark.png'
+    favicon: fingerprintUrl('/favicon-dark.png')
   },
   light: {
     name: 'light',
     color: '#f8f9fa',
-    favicon: '/favicon.png'
+    favicon: fingerprintUrl('/favicon.png')
   }
 }
 

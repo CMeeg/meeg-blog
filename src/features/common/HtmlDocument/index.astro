@@ -3,7 +3,6 @@ import type { Theme } from '~/features/themes'
 import { defaultThemeName, themes } from '~/features/themes'
 import type { SeoMetadata } from '~/features/storyblok/types/content-types'
 import { getOpenGraphPrefix } from '~/features/seo/open-graph'
-import { fingerprint } from '~/features/common/file'
 import './base.scss'
 
 export interface Props {
@@ -23,7 +22,7 @@ const { favicon } = theme || themes[defaultThemeName]
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/x-icon" href={fingerprint(favicon)} />
+    <link rel="icon" type="image/x-icon" href={favicon} />
     <meta name="color-scheme" content="light dark" />
     {theme && <meta name="theme-color" content={theme.color} />}
 

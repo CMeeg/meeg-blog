@@ -3,6 +3,7 @@ import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 import crypto from 'node:crypto'
 import fs from 'node:fs'
+import { addFingerprintToUrl } from './url'
 
 const serverDir = './dist/server'
 const clientDir = './dist/client'
@@ -51,24 +52,15 @@ const createHash = (filePath: string) => {
   return sum.digest('hex')
 }
 
-const addFingerprintToUrl = (fingerprint: string, url: string) => {
-  const urlMatch = url.match(/^\/(.*)\.(.*)/)
-
-  if (!urlMatch || urlMatch.length !== 3) {
-    return url
-  }
-
-  const path = urlMatch[1]
-  const ext = urlMatch[2]
-
-  return `/${path}.v${fingerprint}.${ext}`
-}
-
-const fingerprint = (fileUrl: string) => {
+const fingerprint = (fileUrl: string, fingerprint?: string) => {
   if (import.meta.env.DEV) {
     // Don't fingerprint in dev mode
 
     return fileUrl
+  }
+
+  if (fingerprint) {
+    return addFingerprintToUrl(fingerprint, fileUrl)
   }
 
   const filePath = getClientFilePath(fileUrl)
@@ -79,9 +71,8 @@ const fingerprint = (fileUrl: string) => {
 
   try {
     const fileHash = createHash(filePath)
-    const fingerprint = fileHash.substring(0, 8)
 
-    return addFingerprintToUrl(fingerprint, fileUrl)
+    return addFingerprintToUrl(fileHash.substring(0, 8), fileUrl)
   } catch (err) {
     // TODO: Maybe log this
     console.error(err)

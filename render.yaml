@@ -7,7 +7,7 @@ services:
     plan: starter
     previewPlan: starter
     region: frankfurt
-    buildCommand: pnpm i; pnpm build
+    buildCommand: export PUBLIC_BUILD_ID=$RENDER_GIT_COMMIT; pnpm i; pnpm build
     startCommand: pnpm start
     healthCheckPath: /
     envVars:
