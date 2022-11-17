@@ -63,6 +63,7 @@ const createExpressApp = () => {
           'plausible.io',
           '*.plausible.io'
         ],
+        'connect-src': ['plausible.io', '*.plausible.io'],
         'style-src': [`'self'`, `'unsafe-inline'`],
         'img-src': [`'self'`, 'data:', '*.storyblok.com'],
         'object-src': [`'none'`],
