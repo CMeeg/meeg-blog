@@ -16,7 +16,7 @@
   :global(.line)::before {
     content: counter(step);
     counter-increment: step;
-    width: var(--size-5);
+    width: var(--size-6);
     margin-inline-end: var(--size-4);
     display: inline-block;
     text-align: end;
