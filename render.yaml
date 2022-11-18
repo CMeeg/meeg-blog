@@ -7,10 +7,12 @@ services:
     plan: starter
     previewPlan: starter
     region: frankfurt
-    buildCommand: export PUBLIC_BUILD_ID=$RENDER_GIT_COMMIT; pnpm i; pnpm build
+    buildCommand: export PUBLIC_BUILD_ID=$RENDER_GIT_COMMIT; pnpm i && pnpm build
     startCommand: pnpm start
     healthCheckPath: /
     envVars:
+      - key: NODE_ENV
+        value: 'production'
       - key: STORYBLOK_TOKEN
         sync: false
       - key: STORYBLOK_PREVIEW_TOKEN
@@ -18,6 +20,6 @@ services:
       - key: SENTRY_DSN
         sync: false
       - key: PREVIEW
-        value: 'true'
-        previewValue: 'true'
+        value: true
+        previewValue: true
       - fromGroup: meeg-blog-app-preview-settings

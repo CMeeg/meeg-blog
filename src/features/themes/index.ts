@@ -1,5 +1,5 @@
 import type { AstroCookies } from 'astro/dist/core/cookies'
-import { fingerprintUrl } from '~/features/common/url'
+import { fingerprintUrl } from '~/features/infra/fingerprint.mjs'
 
 interface Theme {
   name: string

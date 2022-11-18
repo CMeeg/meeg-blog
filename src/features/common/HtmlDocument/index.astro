@@ -3,6 +3,7 @@ import type { Theme } from '~/features/themes'
 import { defaultThemeName, themes } from '~/features/themes'
 import type { SeoMetadata } from '~/features/storyblok/types/content-types'
 import { getOpenGraphPrefix } from '~/features/seo/open-graph'
+import { fingerprintUrl } from '~/features/infra/fingerprint.mjs'
 import './base.scss'
 
 export interface Props {
@@ -15,6 +16,10 @@ const { theme, metadata } = Astro.props as Props
 const ogPrefix = getOpenGraphPrefix(metadata)
 
 const { favicon } = theme || themes[defaultThemeName]
+
+const fontPreloadUrl = fingerprintUrl(
+  '/assets/fonts/poppins/poppins-latin-400-normal.woff2'
+)
 ---
 
 <!DOCTYPE html>
@@ -28,7 +33,7 @@ const { favicon } = theme || themes[defaultThemeName]
 
     <link
       rel="preload"
-      href="/fonts/poppins/poppins-latin-400-normal.00000001.woff2"
+      href={fontPreloadUrl}
       as="font"
       type="font/woff2"
       crossorigin="anonymous"
