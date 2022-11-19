@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const url = require('postcss-url')
-const postCssPresetEnv = require('postcss-preset-env')
-const postCssFlexbugsFixes = require('postcss-flexbugs-fixes')
-const { fingerprintUrl } = require('./src/features/infra/fingerprint.mjs')
-const { getServerEnv } = require('./src/features/infra/env.mjs')
+import url from 'postcss-url'
+import postCssPresetEnv from 'postcss-preset-env'
+import postCssFlexbugsFixes from 'postcss-flexbugs-fixes'
+import { fingerprintUrl } from './src/features/infra/fingerprint.mjs'
+import { getServerEnv } from './src/features/infra/env.mjs'
 
 const { environment, build } = getServerEnv()
 
@@ -27,7 +26,7 @@ const fingerprintAsset = (asset) => {
   return fingerprintUrl(url, build.hash)
 }
 
-module.exports = {
+export default {
   plugins: [
     url({
       url: (asset) => fingerprintAsset(asset)
