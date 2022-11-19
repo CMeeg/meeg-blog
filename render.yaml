@@ -9,7 +9,7 @@ services:
     region: frankfurt
     envVars:
       - key: APP_ENV
-        value: 'preview' # TODO: 'production'
+        value: 'production'
         previewValue: 'preview'
       - key: STORYBLOK_TOKEN
         sync: false
