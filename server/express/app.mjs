@@ -6,18 +6,18 @@ import rewrite from 'express-urlrewrite'
 import { handler as ssrHandler } from '../../dist/server/entry.mjs'
 import { forceLowercasePaths } from './middleware/force-lowercase-paths.mjs'
 import { setCacheHeaders } from './middleware/cache-control.mjs'
+import { getServerEnv } from '../../src/features/infra/env.mjs'
 
-const isDev = process.env.NODE_ENV === 'development'
-const sentryDsn = process.env.SENTRY_DSN
+const { sentry, environment } = getServerEnv()
 
 const createExpressApp = () => {
   const app = express()
 
-  if (sentryDsn) {
+  if (sentry.dsn) {
     // https://docs.sentry.io/platforms/node/guides/express/
     // Init Sentry
     Sentry.init({
-      dsn: sentryDsn,
+      dsn: sentry.dsn,
       integrations: [
         new Sentry.Integrations.Http({ tracing: true }),
         new Tracing.Integrations.Express({
@@ -73,17 +73,15 @@ const createExpressApp = () => {
     })
   )
 
-  if (!isDev) {
-    // Don't set HSTS in dev
+  if (environment.isProd) {
+    // Only set HSTS in prod
     app.use(helmet.hsts())
   }
 
   // Middleware
 
   app.use(forceLowercasePaths)
-
-  if (!isDev) {
-    app.use(setCacheHeaders)
+  app.use(setCacheHeaders)
 
   // Redirects
 
@@ -100,7 +98,7 @@ const createExpressApp = () => {
   app.use(express.static('dist/client/'))
   app.use(ssrHandler)
 
-  if (sentryDsn) {
+  if (sentry.dsn) {
     // The error handler must be before any other error middleware and after all controllers
     app.use(
       Sentry.Handlers.errorHandler({

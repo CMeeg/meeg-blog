@@ -1,7 +1,10 @@
 import type { APIContext } from 'astro'
+import { getAppEnv } from '~/features/infra/env.mjs'
 
 export async function get(context: APIContext) {
-  if (import.meta.env.DEV || import.meta.env.PREVIEW) {
+  const { environment } = getAppEnv()
+
+  if (!environment.isProd) {
     return {
       body: `User-agent: *
 Disallow: /`

@@ -1,4 +1,5 @@
 import { createExpressApp } from './express/app.mjs'
+import { getServerEnv } from '../src/features/infra/env.mjs'
 
 // Create Express app
 
@@ -6,8 +7,10 @@ const app = createExpressApp()
 
 // Create server
 
-const host = process.env.HOST || '0.0.0.0'
-const port = process.env.PORT
+const serverEnv = getServerEnv()
+
+const host = serverEnv.host || '0.0.0.0'
+const port = serverEnv.port
 
 if (!port) {
   throw Error('> Could not start server: no `PORT` env var found.')

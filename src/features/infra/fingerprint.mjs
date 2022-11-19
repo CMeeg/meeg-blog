@@ -1,3 +1,5 @@
+import { getAppEnv } from './env.mjs'
+
 const addFingerprintToUrl = (fingerprint, url) => {
   if (import.meta?.env?.NODE_ENV === 'development') {
     return url
@@ -16,13 +18,13 @@ const addFingerprintToUrl = (fingerprint, url) => {
 }
 
 const fingerprintUrl = (url, hash) => {
-  const buildHash = hash ?? import.meta.env.PUBLIC_BUILD_ID
+  const fingerprintHash = hash ? hash : getAppEnv().build.hash
 
-  if (!buildHash) {
+  if (!fingerprintHash) {
     return url
   }
 
-  return addFingerprintToUrl(buildHash.substring(0, 8), url)
+  return addFingerprintToUrl(fingerprintHash, url)
 }
 
 export { fingerprintUrl, addFingerprintToUrl }

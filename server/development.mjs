@@ -1,6 +1,7 @@
 import { createExpressApp } from './express/app.mjs'
 import { createServer } from 'https'
 import { readFileSync } from 'fs'
+import { getServerEnv } from '../src/features/infra/env.mjs'
 
 // Create Express app
 
@@ -17,7 +18,9 @@ app.listen(8000)
 
 const server = createServer(options, app)
 
-const port = process.env.PORT ?? 3001
+const serverEnv = getServerEnv()
+
+const port = serverEnv.port ?? 3001
 
 server.listen(port)
 

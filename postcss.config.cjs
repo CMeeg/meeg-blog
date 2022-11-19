@@ -3,13 +3,16 @@ const url = require('postcss-url')
 const postCssPresetEnv = require('postcss-preset-env')
 const postCssFlexbugsFixes = require('postcss-flexbugs-fixes')
 const { fingerprintUrl } = require('./src/features/infra/fingerprint.mjs')
+const { getServerEnv } = require('./src/features/infra/env.mjs')
+
+const { environment, build } = getServerEnv()
 
 const assetsPath = '/assets/'
 
 const fingerprintAsset = (asset) => {
   const { url } = asset
 
-  if (process.env.NODE_ENV === 'development') {
+  if (environment.isDev) {
     return url
   }
 
@@ -17,13 +20,11 @@ const fingerprintAsset = (asset) => {
     return url
   }
 
-  const buildId = process.env.PUBLIC_BUILD_ID
-
-  if (!buildId) {
+  if (!build.hash) {
     return url
   }
 
-  return fingerprintUrl(url, buildId)
+  return fingerprintUrl(url, build.hash)
 }
 
 module.exports = {

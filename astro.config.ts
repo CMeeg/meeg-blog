@@ -3,8 +3,9 @@ import type { AstroUserConfig } from 'astro/config'
 import { readFileSync } from 'node:fs'
 import node from '@astrojs/node'
 import preact from '@astrojs/preact'
+import { getServerEnv } from './src/features/infra/env.mjs'
 
-const isDev = process.env.NODE_ENV === 'development'
+const { environment, baseUrl } = getServerEnv()
 
 const vite = getViteConfig({
   ssr: {
@@ -12,7 +13,7 @@ const vite = getViteConfig({
   }
 })
 
-if (isDev) {
+if (environment.isDev) {
   vite.server = {
     https: {
       key: readFileSync('./localhost-key.pem', 'utf8'),
@@ -31,11 +32,9 @@ const astro: AstroUserConfig = {
   integrations: [preact({ compat: true })]
 }
 
-if (process.env.RENDER_EXTERNAL_URL) {
-  const renderUrl = process.env.RENDER_EXTERNAL_URL
-
+if (baseUrl) {
   // Remove trailing slash
-  astro.site = renderUrl.replace(/\/$/, '')
+  astro.site = baseUrl.replace(/\/$/, '')
 }
 
 export default defineConfig(astro)

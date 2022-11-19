@@ -1,6 +1,7 @@
 import type { Logger } from 'pino'
 import pino from 'pino'
 import { createWriteStream } from 'pino-sentry'
+import { getAppEnv } from '~/features/infra/env.mjs'
 
 const name = 'meeg-blog'
 
@@ -15,15 +16,17 @@ const createPinoSentry = (dsn: string) => {
 }
 
 const createLogger = () => {
-  if (import.meta.env.DEV) {
+  const { environment, sentry } = getAppEnv()
+
+  if (environment.isDev) {
     return pino({
       name,
       transport: {
         target: 'pino-pretty'
       }
     })
-  } else if (import.meta.env.SENTRY_DSN) {
-    return createPinoSentry(import.meta.env.SENTRY_DSN)
+  } else if (sentry.dsn) {
+    return createPinoSentry(sentry.dsn)
   }
 
   return pino({ name })

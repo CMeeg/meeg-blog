@@ -2,9 +2,9 @@ import { storyblokInit, apiPlugin } from '@storyblok/js'
 import type { StoryblokClient, StoryParams, StoriesParams } from '@storyblok/js'
 import crypto from 'crypto'
 import type { StoryData } from './types/content-types'
+import { getAppEnv } from '~/features/infra/env.mjs'
 
-const storyblokToken = import.meta.env.STORYBLOK_TOKEN
-const storyblokPreviewToken = import.meta.env.STORYBLOK_PREVIEW_TOKEN
+const { storyblok } = getAppEnv()
 
 type StoryblokVersion = 'draft' | 'published' | undefined
 
@@ -16,7 +16,7 @@ const storyblokVersion: { [key: string]: StoryblokVersion } = {
 const createStoryblokApi = (version: StoryblokVersion): StoryblokClient => {
   const isEditMode = version === storyblokVersion.draft
 
-  const accessToken = isEditMode ? storyblokPreviewToken : storyblokToken
+  const accessToken = isEditMode ? storyblok.previewToken : storyblok.token
 
   const initResult = storyblokInit({
     accessToken,
@@ -132,7 +132,7 @@ const getLinks = async (api: StoryblokClient, version: StoryblokVersion) => {
 const isStoryblokEditorRequest = (request: Request) => {
   // Based on process described here: https://www.storyblok.com/docs/Guides/storyblok-latest-js#checking-if-you-are-inside-of-storyblok
 
-  if (!storyblokPreviewToken) {
+  if (!storyblok.previewToken) {
     // Can't validate without a token
 
     return false
@@ -175,7 +175,7 @@ const isStoryblokEditorRequest = (request: Request) => {
 
   // Validate the token
 
-  const validationString = `${spaceIdParam}:${storyblokPreviewToken}:${timestampParam}`
+  const validationString = `${spaceIdParam}:${storyblok.previewToken}:${timestampParam}`
   const validationToken = crypto
     .createHash('sha1')
     .update(validationString)
