@@ -7,8 +7,9 @@
   "license": "MIT",
   "scripts": {
     "astro": "astro",
-    "build": "pnpm check:ts && pnpm build:astro",
-    "build:astro": "astro build",
+    "build": "pnpm check && astro build",
+    "build:dev": "pnpm check && astro build --mode 'build'",
+    "check": "pnpm check:ts && pnpm check:astro",
     "check:astro": "astro check",
     "check:ts": "tsc --noEmit",
     "dev": "astro dev",

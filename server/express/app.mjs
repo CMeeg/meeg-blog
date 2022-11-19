@@ -84,7 +84,12 @@ const createExpressApp = () => {
 
   if (!isDev) {
     app.use(setCacheHeaders)
-  }
+
+  // Redirects
+
+  app.get('/tags', (req, res) => {
+    res.redirect(301, '/blog')
+  })
 
   // Rewrites
 
