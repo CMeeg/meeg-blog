@@ -1,13 +1,21 @@
-*.log
-.cache
+# build output
+.output/
+dist/
+
+# dependencies
+.pnpm-store/
+node_modules/
+pnpm-debug.log*
+
+# environment variables
+.env*.local
+
+# certs
+localhost*.pem
+
+# OS-specific files
 .DS_Store
-node_modules
+Thumbs.db
 
-# dotenv environment variables file
-.env
-
-# nuxt.js build output
-.nuxt
-
-# Nuxt generate
-dist
+# misc
+TODO.md

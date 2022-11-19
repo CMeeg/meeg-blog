@@ -1,0 +1,67 @@
+---
+import type { GlobalStory } from '~/features/common/api'
+import Header from './Header'
+import Footer from './Footer'
+
+export interface Props {
+  global: GlobalStory
+  currentUrl?: URL
+}
+
+const { global, currentUrl } = Astro.props as Props
+
+const { logo, main_nav, copyright, github_username, twitter_username } =
+  global.content
+---
+
+<Header client:idle logo={logo} mainNav={main_nav} currentUrl={currentUrl} />
+<main>
+  <slot />
+</main>
+<Footer
+  copyright={copyright}
+  gitHubUsername={github_username}
+  twitterUsername={twitter_username}
+/>
+
+<style lang="scss" is:global>
+  main {
+    flex-grow: 1;
+    padding-block: var(--size-4);
+  }
+
+  // Credit: https://codepen.io/hexagoncircle/pen/dyejrpE
+  .content {
+    --gap: clamp(var(--size-4), 4vw, var(--size-8));
+    --full: minmax(var(--gap), 1fr);
+    --content: min(var(--size-content-4), 100% - var(--gap) * 2);
+    --popout: minmax(0, var(--size-4));
+    --feature: minmax(0, var(--size-8));
+
+    display: grid;
+    grid-template-columns:
+      [full-start] var(--full)
+      [feature-start] var(--feature)
+      [popout-start] var(--popout)
+      [content-start] var(--content) [content-end]
+      var(--popout) [popout-end]
+      var(--feature) [feature-end]
+      var(--full) [full-end];
+  }
+
+  .content > * {
+    grid-column: content;
+  }
+
+  .popout {
+    grid-column: popout;
+  }
+
+  .feature {
+    grid-column: feature;
+  }
+
+  .full {
+    grid-column: full;
+  }
+</style>

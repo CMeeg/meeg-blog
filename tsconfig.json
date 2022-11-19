@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "ts-node/node16/tsconfig.json",
+  "compilerOptions": {
+    // Import aliases
+    "baseUrl": ".",
+    "paths": {
+      "~/features/*": ["src/features/*"],
+      "~/svg/*": ["src/svg/*"],
+      "react": ["./node_modules/preact/compat/"],
+      "react-dom": ["./node_modules/preact/compat/"]
+    },
+    // Enable top-level await, and other modern ESM features
+    "target": "ESNext",
+    "module": "ESNext",
+    // Enable node-style module resolution, for things like npm package imports
+    "moduleResolution": "node",
+    // Enable JSON imports
+    "resolveJsonModule": true,
+    // Enable stricter transpilation for better output
+    "isolatedModules": true,
+    // Astro will directly run your TypeScript code, no transpilation needed
+    "noEmit": true,
+    // Enable strict type checking
+    "strict": true,
+    // Error when a value import is only used as a type
+    "importsNotUsedAsValues": "error",
+    // Preact integration
+    "lib": ["es2021", "dom"],
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact",
+    "types": ["preact"]
+  },
+  "ts-node": {
+    // It is faster to skip typechecking
+    "transpileOnly": true,
+    "files": true,
+    "esm": true,
+    "compilerOptions": {
+      "target": "ESNext",
+      "module": "ESNext",
+      "esModuleInterop": true
+    }
+  }
+}

@@ -1,0 +1,50 @@
+---
+import type { Theme } from '~/features/themes'
+import { defaultThemeName, themes } from '~/features/themes'
+import type { SeoMetadata } from '~/features/storyblok/types/content-types'
+import { getOpenGraphPrefix } from '~/features/seo/open-graph'
+import { fingerprintUrl } from '~/features/infra/fingerprint.mjs'
+import './base.scss'
+
+export interface Props {
+  theme: Theme | null
+  metadata?: SeoMetadata
+}
+
+const { theme, metadata } = Astro.props as Props
+
+const ogPrefix = getOpenGraphPrefix(metadata)
+
+const { favicon } = theme || themes[defaultThemeName]
+
+const fontPreloadUrl = fingerprintUrl(
+  '/assets/fonts/poppins/poppins-latin-400-normal.woff2'
+)
+---
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr" prefix={ogPrefix} data-theme={theme?.name}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href={favicon} />
+    <meta name="color-scheme" content="light dark" />
+    {theme && <meta name="theme-color" content={theme.color} />}
+
+    <link
+      rel="preload"
+      href={fontPreloadUrl}
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+
+    <script defer data-domain="meeg.dev" src="https://plausible.io/js/script.js"
+    ></script>
+
+    <slot name="seo-metadata" />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

@@ -1,0 +1,50 @@
+---
+import { createStoryblokApiClient } from '~/features/storyblok/api'
+import { createCommonApiClient } from '~/features/common/api'
+import { createHomeApiClient } from '~/features/home/api'
+import { getCurrentTheme } from '~/features/themes'
+import HtmlDocument from '~/features/common/HtmlDocument/index.astro'
+import StorySeoMetadata from '~/features/seo/StorySeoMetadata/index.astro'
+import DefaultLayout from '~/features/common/DefaultLayout/index.astro'
+import Page from '~/features/common/Page'
+import StoryblokBridge from '~/features/storyblok/StoryblokBridge'
+
+const apiClient = createStoryblokApiClient(Astro.request)
+
+const commonApiClient = createCommonApiClient(apiClient)
+
+const global = await commonApiClient.getGlobalStory()
+
+if (!global) {
+  throw Error(`'Global' story not found.`)
+}
+
+const homeApiClient = createHomeApiClient(apiClient)
+
+const story = await homeApiClient.getHomeStory()
+
+if (!story) {
+  return new Response(null, {
+    status: 404,
+    statusText: `'Home' story not found.`
+  })
+}
+
+const currentTheme = getCurrentTheme(Astro.cookies)
+const currentUrl = Astro.url
+---
+
+<HtmlDocument theme={currentTheme} metadata={story.content.metadata}>
+  <StorySeoMetadata
+    slot="seo-metadata"
+    global={global}
+    story={story}
+    currentUrl={currentUrl}
+  />
+
+  <DefaultLayout global={global} currentUrl={currentUrl}>
+    <Page story={story} />
+  </DefaultLayout>
+
+  {apiClient.isEditMode && <StoryblokBridge client:only="preact" />}
+</HtmlDocument>

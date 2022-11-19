@@ -1,0 +1,7 @@
+export { default as CalendarIcon } from './CalendarIcon'
+export { default as FilesIcon } from './FilesIcon'
+export { default as GithubIcon } from './GithubIcon'
+export { default as MoonIcon } from './MoonIcon'
+export { default as SunIcon } from './SunIcon'
+export { default as TagsIcon } from './TagsIcon'
+export { default as TwitterIcon } from './TwitterIcon'

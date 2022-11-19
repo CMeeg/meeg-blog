@@ -1,0 +1,23 @@
+previewsEnabled: true
+previewsExpireAfterDays: 1
+services:
+  - type: web
+    name: meeg-blog-app
+    env: node
+    plan: starter
+    previewPlan: starter
+    region: frankfurt
+    envVars:
+      - key: APP_ENV
+        value: 'preview' # TODO: 'production'
+        previewValue: 'preview'
+      - key: STORYBLOK_TOKEN
+        sync: false
+      - key: STORYBLOK_PREVIEW_TOKEN
+        sync: false
+      - key: SENTRY_DSN
+        sync: false
+      - fromGroup: meeg-blog-app-preview-settings
+    buildCommand: export PUBLIC_BUILD_ID=$RENDER_GIT_COMMIT; pnpm i && pnpm build --mode $APP_ENV
+    startCommand: pnpm start
+    healthCheckPath: /

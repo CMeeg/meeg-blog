@@ -1,0 +1,321 @@
+@import '@acab/reset.css';
+@import "open-props/aspects";
+@import "open-props/borders";
+@import "open-props/easings";
+@import "open-props/fonts";
+@import "open-props/gradients";
+@import "open-props/grape";
+@import "open-props/gray";
+@import "open-props/masks/edges";
+@import "open-props/media";
+@import "open-props/sizes";
+@import "open-props/shadows";
+@import "open-props/teal";
+@import "open-props/zindex";
+
+// Fonts
+
+/* poppins-devanagari-400-normal*/
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url('/assets/fonts/poppins/poppins-devanagari-400-normal.woff2') format('woff2'), url('/assets/fonts/poppins/poppins-all-400-normal.woff') format('woff');
+  unicode-range: U+0900-097F,U+1CD0-1CF6,U+1CF8-1CF9,U+200C-200D,U+20A8,U+20B9,U+25CC,U+A830-A839,U+A8E0-A8FB;
+}
+
+/* poppins-latin-ext-400-normal*/
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url('/assets/fonts/poppins/poppins-latin-ext-400-normal.woff2') format('woff2'), url('/assets/fonts/poppins/poppins-all-400-normal.woff') format('woff');
+  unicode-range: U+0100-024F,U+0259,U+1E00-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+
+/* poppins-latin-400-normal*/
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url('/assets/fonts/poppins/poppins-latin-400-normal.woff2') format('woff2'), url('/assets/fonts/poppins/poppins-all-400-normal.woff') format('woff');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+// Themes
+
+:root {
+  // typography
+  --font-sans: "Poppins", verdana, sans-serif;
+  --font-size-h0: var(--font-size-7);
+  --font-size-h1: var(--font-size-6);
+  --font-size-h2: var(--font-size-5);
+  --font-size-h3: var(--font-size-4);
+  --font-size-h4: var(--font-size-3);
+  --font-size-h5: var(--font-size-2);
+  --font-size-md: var(--font-size-1);
+  --font-size-sm: 0.9rem;
+  --font-size-xs: var(--font-size-0);
+  --font-weight-bold: var(--font-weight-6);
+  --font-weight-normal: var(--font-weight-1);
+
+  // z-index
+  --layer-00: -1;
+  --layer-0: 0;
+
+  // size
+  --size-0: 0.125rem;
+  --size-content-4: 80ch;
+
+  // light theme vars
+  --color-canvas-light: var(--gray-0);
+  --color-surface-1-light: var(--gray-2);
+  --color-surface-2-hsl-light: 210 14% 89%;
+  --color-surface-2-light: hsl(var(--color-surface-2-hsl-light));
+  --color-surface-3-light: var(--gray-4);
+  --color-accent-1-light: var(--grape-6);
+  --color-accent-2-hsl-light: 312 100% 50%;
+  --color-accent-2-light: hsl(var(--color-accent-2-hsl-light));
+  --color-gradient-1-light: var(--gradient-21);
+  --color-text-1-light: var(--gray-8);
+  --color-text-2-light: var(--gray-7);
+  --color-text-3-light: var(--gray-6);
+  --shadow-surface-light: var(--shadow-2);
+
+  // dark theme vars
+  --color-canvas-dark: var(--gray-9);
+  --color-surface-1-dark: var(--gray-8);
+  --color-surface-2-hsl-dark: 210 9% 31%;
+  --color-surface-2-dark: hsl(var(--color-surface-2-hsl-dark));
+  --color-surface-3-dark: var(--gray-6);
+  --color-accent-1-dark: var(--teal-3);
+  --color-accent-2-hsl-dark: 187 100% 48%;
+  --color-accent-2-dark: hsl(var(--color-accent-2-hsl-dark));
+  --color-gradient-1-dark: var(--gradient-4);
+  --color-text-1-dark: var(--gray-1);
+  --color-text-2-dark: var(--gray-2);
+  --color-text-3-dark: var(--gray-3);
+  --shadow-surface-dark: var(--shadow-2);
+}
+
+@mixin light-theme {
+  // light theme as a mixin so it can be reused without duplication below
+  color-scheme: light;
+
+  --color-canvas: var(--color-canvas-light);
+  --color-surface-1: var(--color-surface-1-light);
+  --color-surface-2-hsl: var(--color-surface-2-hsl-light);
+  --color-surface-2: var(--color-surface-2-light);
+  --color-surface-3: var(--color-surface-3-light);
+  --color-accent-1: var(--color-accent-1-light);
+  --color-accent-2-hsl: var(--color-accent-2-hsl-light);
+  --color-accent-2: var(--color-accent-2-light);
+  --color-gradient-1: var(--color-gradient-1-light);
+  --color-text-1: var(--color-text-1-light);
+  --color-text-2: var(--color-text-2-light);
+  --color-text-3: var(--color-text-3-light);
+  --shadow-surface: var(--shadow-surface-light);
+}
+
+%light-theme {
+  @include light-theme;
+}
+
+@mixin dark-theme {
+  // dark theme as a mixin so it can be reused without duplication below
+  color-scheme: dark;
+
+  --color-canvas: var(--color-canvas-dark);
+  --color-surface-1: var(--color-surface-1-dark);
+  --color-surface-2-hsl: var(--color-surface-2-hsl-dark);
+  --color-surface-2: var(--color-surface-2-dark);
+  --color-surface-3: var(--color-surface-3-dark);
+  --color-accent-1: var(--color-accent-1-dark);
+  --color-accent-2-hsl: var(--color-accent-2-hsl-dark);
+  --color-accent-2: var(--color-accent-2-dark);
+  --color-gradient-1: var(--color-gradient-1-dark);
+  --color-text-1: var(--color-text-1-dark);
+  --color-text-2: var(--color-text-2-dark);
+  --color-text-3: var(--color-text-3-dark);
+  --shadow-surface: var(--shadow-surface-dark);
+}
+
+%dark-theme {
+  @include dark-theme;
+}
+
+html, [data-theme='light'] {
+  // apply light theme by default and based on selection
+  @extend %light-theme;
+}
+
+[data-theme='dark'] {
+  // apply dark theme based on selection
+  @extend %dark-theme;
+
+  img {
+    filter: brightness(.8) contrast(1.2);
+  }
+}
+
+@media (--OSdark) {
+  html {
+    // apply dark theme based on preference
+    @include dark-theme;
+  }
+}
+
+// Base
+
+html {
+  --focus-color: var(--color-accent-1);
+
+  font-size: 16px;
+  overflow-y: scroll;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-width: var(--size-xs);
+  min-height: 100vh;
+  font-family: var(--font-sans);
+  background: var(--color-canvas);
+  color: var(--color-canvas-text-1);
+  accent-color: var(--color-accent-1);
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+}
+
+h3 {
+  font-size: var(--font-size-h3);
+}
+
+h4 {
+  font-size: var(--font-size-h4);
+}
+
+h5 {
+  font-size: var(--font-size-h5);
+}
+
+a,
+a:link,
+a:visited,
+a:focus,
+a:hover,
+a:active {
+  color: var(--color-accent-1);
+  text-decoration: underline var(--color-accent-2) solid 1px;
+  text-underline-offset: 4px;
+  transition: color 0.25s var(--ease-out-1);
+}
+
+a:focus-visible {
+  background-color: hsl(var(--color-accent-2-hsl) / 10%);
+  outline: 1px solid hsl(var(--color-accent-2-hsl) / 30%);
+}
+
+@supports not selector(:focus-visible) {
+  a:focus {
+    background-color: hsl(var(--color-accent-2-hsl) / 10%);
+    outline: 1px solid hsl(var(--color-accent-2-hsl) / 30%);
+  }
+}
+
+a:hover,
+a:active {
+  color: var(--color-accent-2);
+  text-underline-offset: 5px;
+  transition: color 0.25s var(--ease-in-1);
+}
+
+// Prose
+
+:where(.prose) {
+  h1, h2, h3, h4, h5 {
+    padding-block-start: var(--size-3);
+    margin-block-end: var(--size-3);
+  }
+
+  p {
+    margin-block-end: var(--size-6);
+    line-height: 1.6;
+  }
+
+  ul, ol {
+    list-style-position: outside;
+    padding-inline-start: var(--size-4);
+    margin-block-end: var(--size-6);
+
+    p {
+      margin-block-end: var(--size-3);
+    }
+  }
+
+  ul {
+    list-style-type: disc;
+  }
+
+  ol {
+    list-style-type: decimal;
+  }
+
+  blockquote {
+    padding: var(--size-6) var(--size-2);
+    border-inline-start: var(--size-1) solid var(--color-surface-3);
+    margin-block-end: var(--size-6);
+    color: var(--color-text-2);
+    background-color: hsl(var(--color-surface-2-hsl) / 30%);
+
+    p {
+      font-style: italic;
+    }
+
+    :last-child {
+      margin-block-end: 0;
+    }
+  }
+
+  b {
+    font-weight: var(--font-weight-bold);
+  }
+
+  i {
+    font-style: italic;
+  }
+
+  s {
+    text-decoration: line-through;
+  }
+
+  u {
+    text-decoration: underline var(--color-accent-2) solid 1px;
+    text-underline-offset: 4px;
+  }
+
+  code {
+    font-family: var(--font-mono);
+  }
+
+  code:not(pre code) {
+    padding: var(--size-0);
+    border: 1px solid hsl(var(--color-accent-2-hsl) / 40%);
+    border-radius: var(--radius-2);
+    color: var(--color-accent-2);
+    background-color: hsl(var(--color-accent-2-hsl) / 10%);
+  }
+}
+
+::selection {
+  background-color: hsl(var(--color-accent-2-hsl) / 30%);
+}

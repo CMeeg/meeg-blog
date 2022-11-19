@@ -1,0 +1,13 @@
+.page-heading {
+  padding-block-end: var(--size-2);
+}
+
+.page-heading-title {
+  font-size: var(--font-size-h0);
+}
+
+.page-heading-description {
+  p {
+    margin-block: var(--size-1) 0 0;
+  }
+}

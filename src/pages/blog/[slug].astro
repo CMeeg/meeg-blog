@@ -1,0 +1,92 @@
+---
+import { createStoryblokApiClient } from '~/features/storyblok/api'
+import { createCommonApiClient } from '~/features/common/api'
+import type { ArticleSeriesStory, ArticleStory } from '~/features/blog/api'
+import { createBlogApiClient } from '~/features/blog/api'
+import { getCurrentTheme } from '~/features/themes'
+import { getStoryDate } from '~/features/storyblok/date'
+import { getAbsoluteUrl } from '~/features/common/url'
+import { createCodeHighlighter } from '~/features/shiki'
+import HtmlDocument from '~/features/common/HtmlDocument/index.astro'
+import StorySeoMetadata from '~/features/seo/StorySeoMetadata/index.astro'
+import DefaultLayout from '~/features/common/DefaultLayout/index.astro'
+import ArticlePage from '~/features/blog/ArticlePage'
+import StoryblokBridge from '~/features/storyblok/StoryblokBridge'
+
+const apiClient = createStoryblokApiClient(Astro.request)
+
+const commonApiClient = createCommonApiClient(apiClient)
+
+const global = await commonApiClient.getGlobalStory()
+
+if (!global) {
+  throw Error(`'Global' story not found.`)
+}
+
+const { slug } = Astro.params
+
+if (!slug) {
+  throw Error(`Article 'slug' param not provided.`)
+}
+
+// We check a slug has been provided (above), but we will use the current URL path to fetch the story data
+
+const { pathname } = Astro.url
+
+const blogApiClient = createBlogApiClient(apiClient)
+
+const story = await blogApiClient.getArticleStory(pathname)
+
+if (!story) {
+  return new Response(null, {
+    status: 404,
+    statusText: `'Article' story with slug '${slug}' not found.`
+  })
+}
+
+let series: ArticleSeriesStory | null = null
+let articlesInSeries: ArticleStory[] = []
+
+if (story.content.series) {
+  series = story.content.series
+
+  articlesInSeries = await blogApiClient.getArticleStoriesInSeries(series.uuid)
+}
+
+const currentTheme = getCurrentTheme(Astro.cookies)
+const currentUrl = Astro.url
+
+const metadata = {
+  ...(story.content.metadata ?? {}),
+  article: {
+    published_time: getStoryDate(story).toISOString(),
+    author: getAbsoluteUrl('/about', currentUrl.origin),
+    section: 'Software Development',
+    tags: story.tag_list
+  }
+}
+
+story.content.metadata = metadata
+
+const codeHighlighter = await createCodeHighlighter(currentTheme)
+---
+
+<HtmlDocument theme={currentTheme} metadata={story.content.metadata}>
+  <StorySeoMetadata
+    slot="seo-metadata"
+    global={global}
+    story={story}
+    currentUrl={currentUrl}
+  />
+
+  <DefaultLayout global={global} currentUrl={currentUrl}>
+    <ArticlePage
+      story={story}
+      series={series}
+      articlesInSeries={articlesInSeries}
+      codeHighlighter={codeHighlighter}
+    />
+  </DefaultLayout>
+
+  {apiClient.isEditMode && <StoryblokBridge client:only="preact" />}
+</HtmlDocument>
