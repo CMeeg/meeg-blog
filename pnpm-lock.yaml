@@ -12,7 +12,7 @@ specifiers:
   '@fontsource/poppins': ^4.5.10
   '@sentry/node': ^7.20.0
   '@sentry/tracing': ^7.20.0
-  '@storyblok/js': ^1.8.6
+  '@storyblok/js': ^2.0.0
   '@svgr/cli': ^6.5.1
   '@types/fs-extra': ^9.0.13
   '@types/js-cookie': ^3.0.2
@@ -21,7 +21,6 @@ specifiers:
   '@typescript-eslint/eslint-plugin': ^5.43.0
   '@typescript-eslint/parser': ^5.43.0
   astro: ^1.6.10
-  axios: ^0.27.2
   cross-env: ^7.0.3
   dotenv: ^16.0.3
   eslint: ^8.28.0
@@ -53,8 +52,8 @@ specifiers:
   sass: ^1.56.1
   shiki: ^0.11.1
   sitemap: ^7.1.1
-  storyblok: ^3.12.1
-  storyblok-generate-ts: ^1.10.0
+  storyblok: ^3.15.0
+  storyblok-generate-ts: ^1.10.2
   storyblok-rich-text-react-renderer: ^2.6.1
   stylelint: ^14.15.0
   stylelint-config-prettier: ^9.0.4
@@ -70,8 +69,7 @@ dependencies:
   '@fontsource/poppins': 4.5.10
   '@sentry/node': 7.20.0
   '@sentry/tracing': 7.20.0
-  '@storyblok/js': 1.8.6_axios@0.27.2
-  axios: 0.27.2
+  '@storyblok/js': 2.0.0
   express: 4.18.2
   express-urlrewrite: 2.0.0
   helmet: 6.0.0
@@ -114,8 +112,8 @@ devDependencies:
   prettier: 2.7.1
   prettier-plugin-astro: 0.7.0
   sass: 1.56.1
-  storyblok: 3.12.1
-  storyblok-generate-ts: 1.10.0_qhqp3claq4jdzhq2rse653fowe
+  storyblok: 3.15.0
+  storyblok-generate-ts: 1.10.2_qhqp3claq4jdzhq2rse653fowe
   stylelint: 14.15.0
   stylelint-config-prettier: 9.0.4_stylelint@14.15.0
   stylelint-config-standard: 29.0.0_stylelint@14.15.0
@@ -920,12 +918,10 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
-  /@storyblok/js/1.8.6_axios@0.27.2:
-    resolution: {integrity: sha512-MpDhwfs+TBrnfQqr9z+z7SCLnvX6/jZKCasexEvVt0Qp+MvWD7IsQtBu6WnKboTjaR4VLFb69YTk+xUG/Roqgw==}
+  /@storyblok/js/2.0.0:
+    resolution: {integrity: sha512-zxC1Jn84x49596Wiujoq/kAnBLZTEgiG18OtCLgfBQa000DnSMreXE2Htq6lW4uiSzgnMIDo9ly1O1YwD2+Vag==}
     dependencies:
-      storyblok-js-client: 4.5.8_axios@0.27.2
-    transitivePeerDependencies:
-      - axios
+      storyblok-js-client: 5.1.2
     dev: false
 
   /@svgr/babel-plugin-add-jsx-attribute/6.5.1_@babel+core@7.19.6:
@@ -1724,6 +1720,7 @@ packages:
 
   /asynckit/0.4.0:
     resolution: {integrity: sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==}
+    dev: true
 
   /at-least-node/1.0.0:
     resolution: {integrity: sha512-+q/t7Ekv1EDY2l6Gda6LLiX14rU9TV20Wa3ofeQmwPFZbOMo9DXrLbOjFaaclkXKWidIaopwAObQDqwWtGUjqg==}
@@ -1763,15 +1760,6 @@ packages:
     transitivePeerDependencies:
       - debug
     dev: true
-
-  /axios/0.27.2:
-    resolution: {integrity: sha512-t+yRIyySRTp/wua5xEr+z1q60QmLq8ABsS5O9Me1AsE5dfKqgnCFzwiCZZ/cGNd1lq4/7akDWMxdhVlucjmnOQ==}
-    dependencies:
-      follow-redirects: 1.15.1
-      form-data: 4.0.0
-    transitivePeerDependencies:
-      - debug
-    dev: false
 
   /axobject-query/2.2.0:
     resolution: {integrity: sha512-Td525n+iPOOyUQIeBfcASuG6uJsDOITl7Mds5gFyerkWiX7qhUTdYUBlSgNMyVqtSJqwpt1kXGLdUt6SykLMRA==}
@@ -2117,6 +2105,7 @@ packages:
     engines: {node: '>= 0.8'}
     dependencies:
       delayed-stream: 1.0.0
+    dev: true
 
   /comma-separated-tokens/2.0.2:
     resolution: {integrity: sha512-G5yTt3KQN4Yn7Yk4ed73hlZ1evrFKXeUW3086p3PRFNp7m2vIjI6Pg+Kgb+oyzhd9F2qdcoj67+y3SdxL5XWsg==}
@@ -2456,6 +2445,7 @@ packages:
   /delayed-stream/1.0.0:
     resolution: {integrity: sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ==}
     engines: {node: '>=0.4.0'}
+    dev: true
 
   /depd/2.0.0:
     resolution: {integrity: sha512-g7nH6P6dyDioJogAAGprGpCtVImJhpPk/roCzdb3fIh61/s/nPsfR6onyMwkCAR/OlC3yBC0lESvUoQEAssIrw==}
@@ -3579,6 +3569,7 @@ packages:
     peerDependenciesMeta:
       debug:
         optional: true
+    dev: true
 
   /form-data/3.0.1:
     resolution: {integrity: sha512-RHkBKtLWUVwd7SqRIvCZMEvAMoGUp0XU+seQiZejj0COz3RI3hWP4sCv3gZWWLjJTd7rGwcsF5eKZGii0r/hbg==}
@@ -3588,15 +3579,6 @@ packages:
       combined-stream: 1.0.8
       mime-types: 2.1.35
     dev: true
-
-  /form-data/4.0.0:
-    resolution: {integrity: sha512-ETEklSGi5t0QMZuiXoA/Q6vcnxcLQP5vdugSpuAyi6SVGi2clPPp+xgEhuMaHC+zGgn31Kd235W35f7Hykkaww==}
-    engines: {node: '>= 6'}
-    dependencies:
-      asynckit: 0.4.0
-      combined-stream: 1.0.8
-      mime-types: 2.1.35
-    dev: false
 
   /formdata-polyfill/4.0.10:
     resolution: {integrity: sha512-buewHzMvYL29jdeQTVILecSaZKnt/RJWjoZCF5OW60Z67/GmSLBkOFM7qh1PI3zFNtJbaZL5eQu1vLfazOwj4g==}
@@ -6807,6 +6789,10 @@ packages:
   /signal-exit/3.0.7:
     resolution: {integrity: sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==}
 
+  /simple-uuid/0.0.1:
+    resolution: {integrity: sha512-ntM3nHmSaNrSfRL1M9xhnjS5dj9897VsNu4tIzrIk5+ESXPS9SIbwu20zcK+SrMllpcXW4qR4KhX0LXggox1AQ==}
+    dev: true
+
   /sirv/2.0.2:
     resolution: {integrity: sha512-4Qog6aE29nIjAOKe/wowFTxOdmbEZKb+3tsLljaBRzJwtqto0BChD2zzH0LhgCSXiI+V7X+Y45v14wBZQ1TK3w==}
     engines: {node: '>= 10'}
@@ -6927,8 +6913,8 @@ packages:
     engines: {node: '>= 0.8'}
     dev: false
 
-  /storyblok-generate-ts/1.10.0_qhqp3claq4jdzhq2rse653fowe:
-    resolution: {integrity: sha512-XTvHyRd7C8MFyjvAlZQ1QLfR+Ma9iU84sxFKgKsjf6NV4FRBO6jVeDOMQ0W94ct9IDddtiQ8LIae4mdYEiJAfQ==}
+  /storyblok-generate-ts/1.10.2_qhqp3claq4jdzhq2rse653fowe:
+    resolution: {integrity: sha512-n1lJU4krdKXCCVbTqH/m9yB+dEaJdzhR1VHHWK4+60Y32A7z/XcRNbiHOSGq/8Yl3BGmENYX0UCF6+sc1vouIw==}
     hasBin: true
     dependencies:
       camelcase: 6.3.0
@@ -6951,12 +6937,8 @@ packages:
       axios: 0.21.4
     dev: true
 
-  /storyblok-js-client/4.5.8_axios@0.27.2:
-    resolution: {integrity: sha512-0Wp7Kn4RdKaKRgMmNDu8c6OC81x1mgeri4ziKDY9BsUZEIGLTNw8KFIWlHYACgMnJQn/6qZaV9kGo8IY4hv6GA==}
-    peerDependencies:
-      axios: ^0.27.2
-    dependencies:
-      axios: 0.27.2
+  /storyblok-js-client/5.1.2:
+    resolution: {integrity: sha512-c7tmQEHbrUakIiqrysYcoUbYEgqOJRXRaE7xfXxtkXsC30CRoKbGL7FNrUklBly/AJujSMnNosrukOWhg21AGg==}
     dev: false
 
   /storyblok-rich-text-react-renderer/2.6.1_@preact+compat@17.1.2:
@@ -6967,8 +6949,8 @@ packages:
       react: /@preact/compat/17.1.2_preact@10.11.3
     dev: false
 
-  /storyblok/3.12.1:
-    resolution: {integrity: sha512-xgjZc1G2Hxmcw5Lot+nrol5X6mYWaOXfWE/xjvoLUgrpR9PbXw7sy2F1jgudCk4EurlhjcIHIaYBaqay7xiW1g==}
+  /storyblok/3.15.0:
+    resolution: {integrity: sha512-48MwPo8Cb/R+s4a31wMuXE6V3JhqqU4NguttB/YMMl5Cme/c4mkG9l5ONhe4cFBHT8BgFik4XGn3o/gv1n7gWQ==}
     engines: {node: '>=10.0.0'}
     hasBin: true
     dependencies:
@@ -6988,6 +6970,7 @@ packages:
       open: 6.4.0
       p-series: 2.1.0
       path: 0.12.7
+      simple-uuid: 0.0.1
       storyblok-js-client: 4.5.8_axios@0.21.4
       update-notifier: 5.1.0
       xml-js: 1.6.11
