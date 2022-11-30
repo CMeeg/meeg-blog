@@ -1,6 +1,6 @@
-import type { StoryData } from '@storyblok/js'
+import type { ISbStoryData } from '@storyblok/js'
 
-const getStoryDate = (story: StoryData) => {
+const getStoryDate = (story: ISbStoryData) => {
   if (story.sort_by_date !== null) {
     return new Date(story.sort_by_date)
   }

@@ -4,7 +4,7 @@ import type {
   GetStoriesOptions
 } from '~/features/storyblok/api'
 import type {
-  StoryData,
+  ISbStoryData,
   StoryContentWithSeoMetadata
 } from '~/features/storyblok/types/content-types'
 import type {
@@ -13,11 +13,11 @@ import type {
 } from '~/features/storyblok/types/components'
 import { createCommonApiClient } from '~/features/common/api'
 
-type ArticleStory = StoryData<ArticleStoryContent>
+type ArticleStory = ISbStoryData<ArticleStoryContent>
 type ArticleStoryContent = StoryContentWithSeoMetadata<ArticleStoryblok>
 
-type ArticleSeriesStory = StoryData<ArticleSeriesStoryblok>
-type ArticleStoryWithSeries = StoryData<
+type ArticleSeriesStory = ISbStoryData<ArticleSeriesStoryblok>
+type ArticleStoryWithSeries = ISbStoryData<
   ArticleStoryContent & {
     series?: ArticleSeriesStory
   }

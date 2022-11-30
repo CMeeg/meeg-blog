@@ -1,11 +1,11 @@
-import type { StoryData } from '@storyblok/js'
+import type { ISbStoryData } from '@storyblok/js'
 import type { MultilinkStoryblok } from './types/components'
 import { getRelativeUrl } from '~/features/common/url'
 
-const getStoryUrl = (story: StoryData, basePath = '/') => {
+const getStoryUrl = (story: ISbStoryData, basePath = '/') => {
   const { full_slug } = story
 
-  // TODO: StoryData is missing a `path` field so we have to check the slug instead
+  // TODO: ISbStoryData is missing a `path` field so we have to check the slug instead
   if (full_slug === 'home') {
     return '/'
   }

@@ -1,5 +1,5 @@
 import type {
-  StoryData,
+  ISbStoryData,
   StoryContentWithSeoMetadata
 } from '~/features/storyblok/types/content-types'
 import type {
@@ -12,9 +12,9 @@ import type {
 } from '~/features/storyblok/api'
 import { createBlogApiClient } from '~/features/blog/api'
 
-type GlobalStory = StoryData<GlobalStoryblok>
+type GlobalStory = ISbStoryData<GlobalStoryblok>
 
-type PageStory = StoryData<PageStoryContent>
+type PageStory = ISbStoryData<PageStoryContent>
 type PageStoryContent = StoryContentWithSeoMetadata<PageStoryblok>
 
 const getPageStory = async (
