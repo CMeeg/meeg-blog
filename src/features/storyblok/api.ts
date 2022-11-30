@@ -29,7 +29,7 @@ const createStoryblokApi = (version: StoryblokVersion): StoryblokClient => {
       // TODO: What does the cache actually do, and what is `clear: 'auto'`?
       // https://github.com/storyblok/storyblok-js-client#activating-request-cache
       // https://www.storyblok.com/docs/api/content-delivery#topics/cache-invalidation
-      cache: { type: 'memory', clear: 'auto' },
+      cache: { type: 'none' },
       timeout: 30
     },
     use: [apiPlugin]
