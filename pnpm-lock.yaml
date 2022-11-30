@@ -11,7 +11,6 @@ specifiers:
   '@astrojs/preact': ^1.2.0
   '@fontsource/poppins': ^4.5.10
   '@sentry/node': ^7.22.0
-  '@sentry/tracing': ^7.22.0
   '@storyblok/js': ^2.0.0
   '@svgr/cli': ^6.5.1
   '@types/fs-extra': ^9.0.13
@@ -67,7 +66,6 @@ dependencies:
   '@astrojs/preact': 1.2.0_preact@10.11.3
   '@fontsource/poppins': 4.5.10
   '@sentry/node': 7.22.0
-  '@sentry/tracing': 7.22.0
   '@storyblok/js': 2.0.0
   express: 4.18.2
   express-urlrewrite: 2.0.0
@@ -881,16 +879,6 @@ packages:
       tslib: 1.14.1
     transitivePeerDependencies:
       - supports-color
-    dev: false
-
-  /@sentry/tracing/7.22.0:
-    resolution: {integrity: sha512-s68aSnrRaWQ+Z5oG9ozIegUkofZy9PwicuXYEPA8K/R30F1CVpHvDZ/3KlFnByl+aXTbAyLBQzN2sAObB5g4pQ==}
-    engines: {node: '>=8'}
-    dependencies:
-      '@sentry/core': 7.22.0
-      '@sentry/types': 7.22.0
-      '@sentry/utils': 7.22.0
-      tslib: 1.14.1
     dev: false
 
   /@sentry/types/7.22.0:
