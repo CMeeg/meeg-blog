@@ -1,10 +1,10 @@
-import type { StoryData, StoryblokComponentType } from '@storyblok/js'
+import type { ISbStoryData, StoryblokComponentType } from '@storyblok/js'
 import type {
   ArticleSeoMetadata,
   ProfileSeoMetadata
 } from '~/features/seo/open-graph'
 
-export type { StoryData }
+export type { ISbStoryData }
 
 export type StoryContent = StoryblokComponentType<string> & {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -33,6 +33,6 @@ export type StoryContentWithSeoMetadata<TContent extends StoryContent> =
     metadata?: SeoMetadata
   }
 
-export type StoryWithSeoMetadata<TContent extends StoryContent> = StoryData<
+export type StoryWithSeoMetadata<TContent extends StoryContent> = ISbStoryData<
   StoryContentWithSeoMetadata<TContent>
 >

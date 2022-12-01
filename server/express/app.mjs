@@ -1,7 +1,6 @@
 import express from 'express'
 import helmet from 'helmet'
 import * as Sentry from '@sentry/node'
-import * as Tracing from '@sentry/tracing'
 import rewrite from 'express-urlrewrite'
 import { handler as ssrHandler } from '../../dist/server/entry.mjs'
 import { forceLowercasePaths } from './middleware/force-lowercase-paths.mjs'
@@ -18,20 +17,11 @@ const createExpressApp = () => {
     // Init Sentry
     Sentry.init({
       dsn: sentry.dsn,
-      integrations: [
-        new Sentry.Integrations.Http({ tracing: true }),
-        new Tracing.Integrations.Express({
-          app
-        })
-      ],
-      tracesSampleRate: 0.2
+      sampleRate: 0.5
     })
 
     // The request handler must be the first middleware on the app
     app.use(Sentry.Handlers.requestHandler())
-
-    // TracingHandler creates a trace for every incoming request
-    app.use(Sentry.Handlers.tracingHandler())
   }
 
   // Set security headers middleware

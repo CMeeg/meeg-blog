@@ -1,7 +1,11 @@
 import { storyblokInit, apiPlugin } from '@storyblok/js'
-import type { StoryblokClient, StoryParams, StoriesParams } from '@storyblok/js'
+import type {
+  StoryblokClient,
+  ISbStoryParams,
+  ISbStoriesParams
+} from '@storyblok/js'
 import crypto from 'crypto'
-import type { StoryData } from './types/content-types'
+import type { ISbStoryData } from './types/content-types'
 import { getAppEnv } from '~/features/infra/env.mjs'
 
 const { storyblok } = getAppEnv()
@@ -25,7 +29,8 @@ const createStoryblokApi = (version: StoryblokVersion): StoryblokClient => {
       // TODO: What does the cache actually do, and what is `clear: 'auto'`?
       // https://github.com/storyblok/storyblok-js-client#activating-request-cache
       // https://www.storyblok.com/docs/api/content-delivery#topics/cache-invalidation
-      cache: { type: 'memory', clear: 'auto' }
+      cache: { type: 'none' },
+      timeout: 30
     },
     use: [apiPlugin]
   })
@@ -39,17 +44,17 @@ const createStoryblokApi = (version: StoryblokVersion): StoryblokClient => {
 
 interface GetStoryOptions {
   slug: string
-  query?: StoryParams
+  query?: ISbStoryParams
 }
 
-const getStory = async <TStory extends StoryData>(
+const getStory = async <TStory extends ISbStoryData>(
   api: StoryblokClient,
   version: StoryblokVersion,
   options: GetStoryOptions
 ): Promise<TStory | null> => {
   const query = options.query ?? {}
 
-  const params: StoryParams = {
+  const params: ISbStoryParams = {
     ...query,
     version
     // TODO: Check other options
@@ -68,17 +73,17 @@ const getStory = async <TStory extends StoryData>(
 
 interface GetStoryByUuidOptions {
   uuid: string
-  query?: StoryParams
+  query?: ISbStoryParams
 }
 
-const getStoryByUuid = async <TStory extends StoryData>(
+const getStoryByUuid = async <TStory extends ISbStoryData>(
   api: StoryblokClient,
   version: StoryblokVersion,
   options: GetStoryByUuidOptions
 ): Promise<TStory | null> => {
   const query = options.query ?? {}
 
-  const params: StoryParams = {
+  const params: ISbStoryParams = {
     ...query,
     find_by: 'uuid',
     version
@@ -97,16 +102,16 @@ const getStoryByUuid = async <TStory extends StoryData>(
 }
 
 interface GetStoriesOptions {
-  query: StoriesParams
+  query: ISbStoriesParams
 }
 
 // TODO: Use Pick or something to narrow `StoriesParams` to only query-related fields
-const getStories = async <TStory extends StoryData>(
+const getStories = async <TStory extends ISbStoryData>(
   api: StoryblokClient,
   version: StoryblokVersion,
   options: GetStoriesOptions
 ): Promise<TStory[]> => {
-  const params: StoriesParams = {
+  const params: ISbStoriesParams = {
     ...options.query,
     version
     // TODO: Check other options
@@ -194,13 +199,13 @@ const isStoryblokEditorRequest = (request: Request) => {
 
 interface StoryblokApiClient {
   isEditMode: boolean
-  getStory: <TStory extends StoryData>(
+  getStory: <TStory extends ISbStoryData>(
     options: GetStoryOptions
   ) => Promise<TStory | null>
-  getStoryByUuid: <TStory extends StoryData>(
+  getStoryByUuid: <TStory extends ISbStoryData>(
     options: GetStoryByUuidOptions
   ) => Promise<TStory | null>
-  getStories: <TStory extends StoryData>(
+  getStories: <TStory extends ISbStoryData>(
     options: GetStoriesOptions
   ) => Promise<TStory[]>
   getLinks: () => ReturnType<typeof getLinks>
@@ -217,15 +222,15 @@ const createStoryblokApiClient = (request: Request) => {
 
   const apiClient: StoryblokApiClient = {
     isEditMode: isEditorRequest,
-    getStory: async <TStory extends StoryData>(options: GetStoryOptions) => {
+    getStory: async <TStory extends ISbStoryData>(options: GetStoryOptions) => {
       return await getStory<TStory>(api, version, options)
     },
-    getStoryByUuid: async <TStory extends StoryData>(
+    getStoryByUuid: async <TStory extends ISbStoryData>(
       options: GetStoryByUuidOptions
     ) => {
       return await getStoryByUuid<TStory>(api, version, options)
     },
-    getStories: async <TStory extends StoryData>(
+    getStories: async <TStory extends ISbStoryData>(
       options: GetStoriesOptions
     ) => {
       return await getStories<TStory>(api, version, options)

@@ -1,6 +1,6 @@
 import { createStoryblokApiClient } from '~/features/storyblok/api'
 import type { APIContext } from 'astro'
-import type { StoryData } from '@storyblok/js'
+import type { ISbStoryData } from '@storyblok/js'
 import { EnumChangefreq, SitemapStream, streamToPromise } from 'sitemap'
 import type { StoryContent } from '~/features/storyblok/types/content-types'
 import { getStoryUrl } from '~/features/storyblok/url'
@@ -22,7 +22,7 @@ const getStories = async (req: Request) => {
   return stories
 }
 
-const getTags = function (stories: StoryData<StoryContent>[]) {
+const getTags = function (stories: ISbStoryData<StoryContent>[]) {
   // We only want tags of articles
   const tags = stories
     .filter((story) => story.content.component === 'article')
@@ -31,7 +31,7 @@ const getTags = function (stories: StoryData<StoryContent>[]) {
   return new Set(tags)
 }
 
-const getStoryPriority = function (story: StoryData<StoryContent>) {
+const getStoryPriority = function (story: ISbStoryData<StoryContent>) {
   if (story.content.component === 'article' || story.slug === 'home') {
     return 1
   }

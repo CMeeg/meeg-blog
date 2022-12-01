@@ -1,11 +1,11 @@
 import type {
-  StoryData,
+  ISbStoryData,
   StoryContentWithSeoMetadata
 } from '~/features/storyblok/types/content-types'
 import type { AuthorStoryblok } from '~/features/storyblok/types/components'
 import type { StoryblokApiClient } from '~/features/storyblok/api'
 
-type AboutStory = StoryData<AboutStoryContent>
+type AboutStory = ISbStoryData<AboutStoryContent>
 type AboutStoryContent = StoryContentWithSeoMetadata<AuthorStoryblok>
 
 const aboutSlug = 'about'
