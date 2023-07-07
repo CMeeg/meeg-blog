@@ -76,7 +76,7 @@
     "sass": "^1.56.1",
     "storyblok": "^3.15.0",
     "storyblok-generate-ts": "^1.10.2",
-    "stylelint": "^14.15.0",
+    "stylelint": "^15.10.1",
     "stylelint-config-prettier": "^9.0.4",
     "stylelint-config-standard": "^29.0.0",
     "stylelint-config-standard-scss": "^6.1.0",
