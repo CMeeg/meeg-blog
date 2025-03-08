@@ -1,0 +1,26 @@
+{
+  "targetDefaults": {
+    "build": {
+      "cache": true,
+      "dependsOn": ["^build"]
+    },
+    "build:islands": {
+      "cache": true,
+      "dependsOn": ["^build:islands"]
+    },
+    "check": {
+      "cache": true,
+      "dependsOn": ["^build"]
+    },
+    "dev": {
+      "cache": false
+    },
+    "lint": {
+      "cache": true
+    },
+    "preview": {
+      "cache": true,
+      "dependsOn": ["build"]
+    }
+  }
+}

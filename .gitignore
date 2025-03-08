@@ -1,21 +1,12 @@
-# build output
-.output/
+.nx/cache
+.nx/workspace-data
+bin/
 dist/
-
-# dependencies
-.pnpm-store/
 node_modules/
-pnpm-debug.log*
+obj/
 
-# environment variables
-.env*.local
-
-# certs
-localhost*.pem
-
-# OS-specific files
-.DS_Store
-Thumbs.db
-
-# misc
+*.tmp
+*.tsbuildinfo
+lerna-debug.log
 TODO.md
+vite.config.ts.*

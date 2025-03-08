@@ -1,0 +1,45 @@
+{
+  "name": "@phoriaexamples/webapp",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "run-p build:* -c",
+    "build:islands": "vite build --app",
+    "build:webapp": "dotnet build --configuration Release",
+    "build:server": "vite build --config vite.server.config.ts",
+    "check": "tsc",
+    "dev": "tsx ./ui/src/server.ts",
+    "lint": "biome check",
+    "preview": "run-p preview:* -c",
+    "preview:webapp": "cross-env DOTNET_ENVIRONMENT=Preview dotnet run --project ./WebApp.csproj -c Release --launch-profile Preview",
+    "preview:server": "cross-env NODE_ENV=production DOTNET_ENVIRONMENT=Preview node ./ui/dist/server/server.js"
+  },
+  "files": [
+    "ui/dist"
+  ],
+  "dependencies": {
+    "@phoria/phoria": "^0.4.2",
+    "@phoria/phoria-react": "^0.4.2",
+    "@phoriaexamples/ui": "workspace:*",
+    "h3": "^1.15.1",
+    "listhen": "^1.9.0",
+    "react": "catalog:",
+    "react-dom": "catalog:"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@phoria/vite-plugin-dotnet-dev-certs": "^0.2.1",
+    "@types/node": "^22.13.5",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "catalog:",
+    "cross-env": "^7.0.3",
+    "npm-run-all": "^4.1.5",
+    "postcss-preset-env": "^10.1.4",
+    "tsx": "^4.19.3",
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vite-tsconfig-paths": "catalog:"
+  }
+}
