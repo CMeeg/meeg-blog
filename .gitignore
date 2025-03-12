@@ -7,6 +7,7 @@ obj/
 
 *.tmp
 *.tsbuildinfo
+.env
 lerna-debug.log
 TODO.md
 vite.config.ts.*

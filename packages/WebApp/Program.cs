@@ -1,38 +1,60 @@
+using Adliance.Storyblok.Extensions;
+using DotNetEnv.Configuration;
 using Microsoft.AspNetCore.ResponseCompression;
 using Phoria;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add .env file support
 
-builder.Services.AddResponseCompression(options =>
+builder.Configuration.AddDotNetEnv();
+
+// Add services to the container
+
+if (!builder.Environment.IsDevelopment())
 {
-    options.EnableForHttps = true;
-    options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(["image/svg+xml"]);
+    builder.Services.AddResponseCompression(options =>
+    {
+        options.EnableForHttps = true;
+        options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(["image/svg+xml"]);
+    });
+}
+
+string[] supportedCultures = ["en-GB"];
+
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    options.AddSupportedCultures(supportedCultures)
+        .AddSupportedUICultures(supportedCultures)
+        .SetDefaultCulture(supportedCultures[0]);
 });
 
-IMvcBuilder mvcBuilder = builder.Services.AddRazorPages();
-
-if (builder.Environment.IsDevelopment())
+builder.Services.AddStoryblok(options =>
 {
-    mvcBuilder.AddRazorRuntimeCompilation();
-}
+    options.ApiKeyPublic = builder.Configuration["STORYBLOK_PUBLIC_TOKEN"];
+    options.ApiKeyPreview = builder.Configuration["STORYBLOK_PREVIEW_TOKEN"];
+    options.SupportedCultures = supportedCultures;
+});
+
+builder.Services.AddRazorPages();
 
 builder.Services.AddPhoria();
 
 WebApplication app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configure the HTTP request pipeline
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts
     app.UseHsts();
+
+    app.UseResponseCompression();
 }
 
 app.UseHttpsRedirection();
-
-app.UseResponseCompression();
 
 app.UseRouting();
 

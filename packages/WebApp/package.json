@@ -1,5 +1,5 @@
 {
-  "name": "@phoriaexamples/webapp",
+  "name": "@meeg-blog/webapp",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -9,10 +9,12 @@
     "build:webapp": "dotnet build --configuration Release",
     "build:server": "vite build --config vite.server.config.ts",
     "check": "tsc",
-    "dev": "tsx ./ui/src/server.ts",
+    "dev": "run-p dev:* -c",
+    "dev:webapp": "dotnet watch run --launch-profile Development",
+    "dev:server": "tsx ./ui/src/server.ts",
     "lint": "biome check",
     "preview": "run-p preview:* -c",
-    "preview:webapp": "cross-env DOTNET_ENVIRONMENT=Preview dotnet run --project ./WebApp.csproj -c Release --launch-profile Preview",
+    "preview:webapp": "dotnet run -c Release --launch-profile Preview",
     "preview:server": "cross-env NODE_ENV=production DOTNET_ENVIRONMENT=Preview node ./ui/dist/server/server.js"
   },
   "files": [
@@ -21,14 +23,14 @@
   "dependencies": {
     "@phoria/phoria": "^0.4.2",
     "@phoria/phoria-react": "^0.4.2",
-    "@phoriaexamples/ui": "workspace:*",
+    "@storyblok/react": "^4.4.2",
     "h3": "^1.15.1",
     "listhen": "^1.9.0",
     "react": "catalog:",
     "react-dom": "catalog:"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.9.4",
+    "@biomejs/biome": "catalog:",
     "@phoria/vite-plugin-dotnet-dev-certs": "^0.2.1",
     "@types/node": "^22.13.5",
     "@types/react": "catalog:",

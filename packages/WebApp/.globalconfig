@@ -1,0 +1,3 @@
+# CA1848: Use the LoggerMessage delegates
+# We are not in a high-performance logging scenario here
+dotnet_diagnostic.CA1848.severity = none

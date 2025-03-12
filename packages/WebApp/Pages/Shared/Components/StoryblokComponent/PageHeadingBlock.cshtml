@@ -1,0 +1,8 @@
+@model PageHeadingBlock
+
+<h1>@Model.Title</h1>
+
+@if (Model.Intro != null)
+{
+    <phoria-island component="RichTextField" client="Client.Load" props="new { Doc = Model.Intro }"></phoria-island>
+}

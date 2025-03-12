@@ -1,4 +1,12 @@
 {
+  "cSpell.words": [
+    "Adliance",
+    "blok",
+    "extern",
+    "hsts",
+    "Phoria",
+    "Storyblok"
+  ],
   "editor.defaultFormatter": "biomejs.biome",
   "html.format.extraLiners": "",
   "[aspnetcorerazor]": {

@@ -5,7 +5,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" />
+        <PackageReference Include="Adliance.Storyblok" />
+        <PackageReference Include="DotNetEnv" />
         <PackageReference Include="Phoria" />
     </ItemGroup>
 

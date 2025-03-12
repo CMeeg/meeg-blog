@@ -1,10 +1,10 @@
 import { registerComponents } from "@phoria/phoria"
 
 registerComponents({
-  Counter: {
+  RichTextField: {
     loader: {
-      module: () => import("./Counter/Counter.tsx"),
-      component: (module) => module.Counter
+      module: () => import("./storyblok/fields/RichTextField.tsx"),
+      component: (module) => module.RichTextField
     },
     framework: "react"
   }
