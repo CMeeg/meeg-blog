@@ -5,9 +5,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Adliance.Storyblok" />
         <PackageReference Include="DotNetEnv" />
         <PackageReference Include="Phoria" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\StoryblokDotNet\StoryblokDotNet.csproj" />
     </ItemGroup>
 
     <PropertyGroup>

@@ -1,6 +1,6 @@
-@model ArticleBlock[]
+@model Story<ArticleBlock>[]
 
-@foreach (var article in Model)
+@foreach (var story in Model)
 {
-    <h2>@article.Title</h2>
+    <h2><a href="@story.Url()">@story.Content.Title</a></h2>
 }

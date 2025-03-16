@@ -1,11 +1,13 @@
 {
   "cSpell.words": [
-    "Adliance",
+    "appsettings",
     "blok",
     "extern",
     "hsts",
     "Phoria",
-    "Storyblok"
+    "rels",
+    "startpage",
+    "storyblok"
   ],
   "editor.defaultFormatter": "biomejs.biome",
   "html.format.extraLiners": "",

@@ -1,13 +1,14 @@
 using System.Text.Json.Serialization;
-using Adliance.Storyblok;
-using Adliance.Storyblok.Attributes;
+using StoryblokDotNet.ContentDelivery;
 
 namespace WebApp.Storyblok.Blocks;
 
-[StoryblokComponent("article")]
+[StoryBlockType(TechnicalName)]
 public class ArticleBlock
-    : StoryblokComponent
+    : StoryBlock
 {
+    public const string TechnicalName = "article";
+
     [JsonPropertyName("title")]
     public required string Title { get; set; }
 }

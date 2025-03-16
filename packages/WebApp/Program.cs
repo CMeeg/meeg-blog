@@ -1,7 +1,7 @@
-using Adliance.Storyblok.Extensions;
 using DotNetEnv.Configuration;
 using Microsoft.AspNetCore.ResponseCompression;
 using Phoria;
+using StoryblokDotNet.ContentDelivery;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -29,11 +29,9 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
         .SetDefaultCulture(supportedCultures[0]);
 });
 
-builder.Services.AddStoryblok(options =>
-{
-    options.ApiKeyPublic = builder.Configuration["STORYBLOK_PUBLIC_TOKEN"];
-    options.ApiKeyPreview = builder.Configuration["STORYBLOK_PREVIEW_TOKEN"];
-    options.SupportedCultures = supportedCultures;
+builder.Services.AddStoryblokContentDelivery(options => {
+    // TODO: Just use appsettings?
+    options.Token = builder.Configuration["STORYBLOK_PREVIEW_TOKEN"];
 });
 
 builder.Services.AddRazorPages();

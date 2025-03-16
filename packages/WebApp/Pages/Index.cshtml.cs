@@ -1,8 +1,6 @@
-using System.Globalization;
-using Adliance.Storyblok;
-using Adliance.Storyblok.Clients;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using StoryblokDotNet.ContentDelivery;
 using WebApp.Storyblok.Blocks;
 
 namespace WebApp.Pages;
@@ -12,32 +10,36 @@ public class IndexModel
 {
     private const string Slug = "home";
 
-    private readonly StoryblokStoryClient storyClient;
+    private readonly StoryblokContentDeliveryApiClient storyblokApiClient;
     private readonly ILogger<IndexModel> logger;
 
-    public StoryblokStory<PageBlock>? Story { get; private set; }
+    public Story<PageBlock>? Story { get; private set; }
 
     public IndexModel(
-        StoryblokStoryClient storyClient,
+        StoryblokContentDeliveryApiClient storyblokApiClient,
         ILogger<IndexModel> logger)
     {
-        this.storyClient = storyClient;
+        this.storyblokApiClient = storyblokApiClient;
         this.logger = logger;
     }
 
     public async Task<IActionResult> OnGetAsync()
     {
-        Story = await storyClient.Story()
-            .WithCulture(CultureInfo.CurrentUICulture)
-            .WithSlug(Slug)
-            .Load<PageBlock>();
+        var response = await storyblokApiClient.StoryAsync<PageBlock>(Slug);
 
-        if (Story == null)
+        if (response.Data == null)
         {
-            logger.LogError("Story with '{Slug}' not found.", Slug);
+            logger.LogError(
+                response.Error?.Exception,
+                "Request to fetch story with slug '{Slug}' failed with status code {StatusCode}. Error: {ErrorMessage}",
+                Slug,
+                response.Error?.StatusCode,
+                response.Error?.ErrorMessage ?? response.Error?.StatusDescription ?? "Unknown.");
 
             return NotFound();
         }
+
+        Story = response.Data.Story;
 
         return Page();
     }

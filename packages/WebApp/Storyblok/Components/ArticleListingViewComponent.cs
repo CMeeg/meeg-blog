@@ -1,6 +1,5 @@
-using System.Globalization;
-using Adliance.Storyblok.Clients;
 using Microsoft.AspNetCore.Mvc;
+using StoryblokDotNet.ContentDelivery;
 using WebApp.Storyblok.Blocks;
 
 namespace WebApp.Storyblok.Components;
@@ -8,45 +7,49 @@ namespace WebApp.Storyblok.Components;
 public class ArticleListingViewComponent
     : ViewComponent
 {
-    private readonly StoryblokStoriesClient storyblokStoriesClient;
+    private readonly StoryblokContentDeliveryApiClient storyblokApiClient;
     private readonly ILogger<ArticleListingViewComponent> logger;
 
     public ArticleListingViewComponent(
-        StoryblokStoriesClient storyblokStoriesClient,
+        StoryblokContentDeliveryApiClient storyblokApiClient,
         ILogger<ArticleListingViewComponent> logger)
     {
-        this.storyblokStoriesClient = storyblokStoriesClient;
+        this.storyblokApiClient = storyblokApiClient;
         this.logger = logger;
     }
 
     public async Task<IViewComponentResult> InvokeAsync(string? startsWith, string? withTag, int perPage)
     {
-        var articlesQuery = storyblokStoriesClient.Stories()
-            .ForCulture(CultureInfo.CurrentUICulture);
+        var response = await storyblokApiClient.StoriesAsync<ArticleBlock>(request => request
+            .Query(query =>
+            {
+                query.IsStartPage(false)
+                    .SortBy($"{StoryField.FirstPublishedAt}:desc")
+                    .FilterBy(FilterQuery.In(StoryBlockField.Component, ArticleBlock.TechnicalName))
+                    .PerPage(perPage);
 
-        // TODO: `sort_by` is not supported
+                if (!string.IsNullOrEmpty(startsWith))
+                {
+                    query.StartsWith(startsWith);
+                }
 
-        if (perPage > 0)
+                if (!string.IsNullOrEmpty(withTag))
+                {
+                    query.Tag(withTag);
+                }
+            }));
+
+        if (response.Data == null)
         {
-            // TODO: It feels "weird" to set the per page on the client, but it's the only way
-            storyblokStoriesClient.PerPage = perPage;
+            logger.LogError(
+                response.Error?.Exception,
+                "Request to fetch articles failed with status code {StatusCode}. Error: {ErrorMessage}",
+                response.Error?.StatusCode,
+                response.Error?.ErrorMessage ?? response.Error?.StatusDescription ?? "Unknown.");
+
+            return Content("Failed to load articles.");
         }
 
-        if (!string.IsNullOrEmpty(startsWith))
-        {
-            articlesQuery = articlesQuery.StartingWith(startsWith);
-        }
-
-        // TODO: `with_tag` is not supported
-        // if (!string.IsNullOrEmpty(withTag))
-        // {
-        //     articlesQuery = articlesQuery.Having()
-        // }
-
-        var articles = (await articlesQuery.Load<ArticleBlock>())
-            .Select(story => story.Content)
-            .ToArray();
-
-        return View(articles);
+        return View(response.Data.Stories);
     }
 }

@@ -1,5 +1,5 @@
-using Adliance.Storyblok;
 using Microsoft.AspNetCore.Mvc;
+using StoryblokDotNet.ContentDelivery;
 
 namespace WebApp.Storyblok.Components;
 
@@ -14,26 +14,26 @@ public class StoryblokComponentViewComponent
         this.logger = logger;
     }
 
-    public IViewComponentResult Invoke(StoryblokComponent component)
+    public IViewComponentResult Invoke(StoryBlock block)
     {
-        ArgumentNullException.ThrowIfNull(component);
+        ArgumentNullException.ThrowIfNull(block, nameof(block));
 
         // TODO: Support a fallback component?
         // TODO: Suppress error content in production?
 
-        if (!StoryblokMappings.Mappings.TryGetValue(component.Component, out var componentMapping))
+        if (!StoryBlockTypeRegister.Types.TryGetValue(block.Component, out var blockType))
         {
-            logger.LogError("Component mapping for '{Component}' not found.", component.Component);
+            logger.LogError("Component block type not found: {Component}", block.Component);
 
-            return Content($"Component mapping for '{component.Component}' not found.");
+            return Content($"Component block type not found: {block.Component}");
         }
 
-        string viewName = string.IsNullOrEmpty(componentMapping.View)
-            ? componentMapping.Type.Name
-            : componentMapping.View;
+        string viewName = string.IsNullOrEmpty(blockType.View)
+            ? blockType.Type.Name
+            : blockType.View;
 
-        logger.LogTrace("Rendering component '{Component}' with view '{View}'.", componentMapping.ComponentName, viewName);
+        logger.LogTrace("Rendering component for block type '{Component}' with view '{View}'.", blockType.Name, viewName);
 
-        return View(viewName, component);
+        return View(viewName, block);
     }
 }
