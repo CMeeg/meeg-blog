@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace StoryblokDotNet.ContentDelivery;
@@ -51,6 +52,15 @@ public static class ServiceCollectionExtensions
         services.AddSingleton(Options.Create(apiClientOptions));
 
         services.AddSingleton<StoryblokContentDeliveryApiClient>();
+
+        services.AddSingleton(
+            options.StoryBlockTypeRegistryFactory ?? new Func<IServiceProvider, IStoryBlockTypeRegistry>(sp =>
+            {
+                ILogger<AssemblyScanningStoryBlockTypeRegistry> logger = sp.GetRequiredService<ILogger<AssemblyScanningStoryBlockTypeRegistry>>();
+
+                return new AssemblyScanningStoryBlockTypeRegistry(AppDomain.CurrentDomain.GetAssemblies(), logger);
+            })
+        );
 
         return services;
     }

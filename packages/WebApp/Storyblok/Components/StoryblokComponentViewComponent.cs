@@ -6,11 +6,14 @@ namespace WebApp.Storyblok.Components;
 public class StoryblokComponentViewComponent
     : ViewComponent
 {
+    private readonly IStoryBlockTypeRegistry storyBlockTypeRegistry;
     private readonly ILogger<StoryblokComponentViewComponent> logger;
 
     public StoryblokComponentViewComponent(
+        IStoryBlockTypeRegistry storyBlockTypeRegistry,
         ILogger<StoryblokComponentViewComponent> logger)
     {
+        this.storyBlockTypeRegistry = storyBlockTypeRegistry;
         this.logger = logger;
     }
 
@@ -21,7 +24,7 @@ public class StoryblokComponentViewComponent
         // TODO: Support a fallback component?
         // TODO: Suppress error content in production?
 
-        if (!StoryBlockTypeRegister.Types.TryGetValue(block.Component, out var blockType))
+        if (!storyBlockTypeRegistry.TryGetBlockType(block.Component, out StoryBlockType? blockType))
         {
             logger.LogError("Component block type not found: {Component}", block.Component);
 

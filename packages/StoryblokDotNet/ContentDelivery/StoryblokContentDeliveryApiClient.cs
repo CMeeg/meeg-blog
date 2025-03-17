@@ -21,6 +21,7 @@ public class StoryblokContentDeliveryApiClient
     private readonly RestClient client;
 
     public StoryblokContentDeliveryApiClient(
+        IStoryBlockTypeRegistry storyBlockTypeRegistry,
         IOptions<StoryblokContentDeliveryApiClientOptions> options)
     {
         var clientOptions = new RestClientOptions(regionBaseUrl[options.Value.Region]);
@@ -30,10 +31,9 @@ public class StoryblokContentDeliveryApiClient
             PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
         };
 
-        // TODO: Inject StoryBlockTypeRegister into the client via DI and pass it to the converter so it doesn't need to be static?
-        jsonOptions.Converters.Add(new StoryBlockJsonConverter());
-        jsonOptions.Converters.Add(new StoryblokIntJsonConverter());
-        jsonOptions.Converters.Add(new StoryblokNullableIntJsonConverter());
+        jsonOptions.Converters.Add(new StoryBlockFieldJsonConverter(storyBlockTypeRegistry));
+        jsonOptions.Converters.Add(new StoryIntFieldJsonConverter());
+        jsonOptions.Converters.Add(new StoryNullableIntFieldJsonConverter());
 
         client = new RestClient(
             clientOptions,

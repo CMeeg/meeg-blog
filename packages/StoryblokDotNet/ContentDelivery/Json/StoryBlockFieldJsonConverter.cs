@@ -3,16 +3,23 @@ using System.Text.Json.Serialization;
 
 namespace StoryblokDotNet.ContentDelivery.Json;
 
-public class StoryBlockJsonConverter
+public class StoryBlockFieldJsonConverter
     : JsonConverter<StoryBlock>
 {
+    private readonly IStoryBlockTypeRegistry storyBlockTypeRegistry;
+
+    public StoryBlockFieldJsonConverter(IStoryBlockTypeRegistry storyBlockTypeRegistry)
+    {
+        this.storyBlockTypeRegistry = storyBlockTypeRegistry;
+    }
+
     public override StoryBlock Read(
         ref Utf8JsonReader reader,
         Type typeToConvert,
         JsonSerializerOptions options)
     {
         // TODO: Look into if there are better ways to do this
-        // performance is probably abysmal, but System.Text.Json does not support polymorphic deserialization very well
+        // System.Text.Json does not support polymorphic deserialization very well
         // https://github.com/dotnet/corefx/issues/38650
 
         using var doc = JsonDocument.ParseValue(ref reader);
@@ -23,9 +30,7 @@ public class StoryBlockJsonConverter
 
             if (!string.IsNullOrWhiteSpace(blockName))
             {
-                IDictionary<string, StoryBlockType> blockTypes = StoryBlockTypeRegister.Types;
-
-                if (blockTypes.TryGetValue(blockName, out StoryBlockType? blockType))
+                if (storyBlockTypeRegistry.TryGetBlockType(blockName, out StoryBlockType? blockType))
                 {
                     string rawText = doc.RootElement.GetRawText();
 
@@ -33,18 +38,8 @@ public class StoryBlockJsonConverter
                     {
                         if (!(JsonSerializer.Deserialize(rawText, blockType.Type, options) is StoryBlock block))
                         {
-                            throw new JsonException("Failed to deserialize json to type StoryBlock.");
+                            throw new JsonException($"Type '{blockType.Type.FullName}' registered for block type '{blockName}' must derive from {typeof(StoryBlock).FullName}.");
                         }
-
-                        // TODO: Do this or remove it?
-                        // we don't want the "editable" property set at all, when we're not in editor
-                        // this makes it easier for the client, so he does not have to check if in the editor on each component, he just has to render the "editable" stuff into it
-                        // if (!StoryblokBaseClient.IsInEditor)
-                        // {
-                        //     component.Editable = null;
-                        // }
-
-                        // component.IsInEditor = StoryblokBaseClient.IsInEditor;
 
                         return block;
                     }
@@ -56,7 +51,8 @@ public class StoryBlockJsonConverter
             }
         }
 
-        // Don't call JsonSerializer.Deserialize, because we'll get a stack overflow
+        // TODO: Add an option to throw an exception if the block type is not registered
+        // Don't call JsonSerializer.Deserialize, because it will recurse and we'll get a stack overflow
         return new StoryBlock
         {
             Uid = doc.RootElement.GetProperty(StoryBlockField.Uid).GetGuid(),

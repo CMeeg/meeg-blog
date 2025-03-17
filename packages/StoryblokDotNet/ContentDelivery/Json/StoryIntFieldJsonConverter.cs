@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace StoryblokDotNet.ContentDelivery.Json;
 
-public class StoryblokIntJsonConverter
+public class StoryIntFieldJsonConverter
     : JsonConverter<int>
 {
     public override int Read(
@@ -36,7 +36,7 @@ public class StoryblokIntJsonConverter
     }
 }
 
-public class StoryblokNullableIntJsonConverter
+public class StoryNullableIntFieldJsonConverter
     : JsonConverter<int?>
 {
     public override int? Read(
