@@ -7,7 +7,5 @@ public class StoriesRequest
     public StoriesRequest(StoriesQuery query)
     {
         Query = query;
-
-        // TODO: If the Story Content is strongly typed, set a FilterQuery to the block type name?
     }
 }

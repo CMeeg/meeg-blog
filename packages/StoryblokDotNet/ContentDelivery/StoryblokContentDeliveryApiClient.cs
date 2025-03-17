@@ -18,12 +18,15 @@ public class StoryblokContentDeliveryApiClient
         { StoryblokRegion.China, "https://app.storyblokchina.cn" }
     };
 
+    private readonly StoryblokContentDeliveryApiClientOptions options;
     private readonly RestClient client;
 
     public StoryblokContentDeliveryApiClient(
         IStoryBlockTypeRegistry storyBlockTypeRegistry,
         IOptions<StoryblokContentDeliveryApiClientOptions> options)
     {
+        this.options = options.Value;
+
         var clientOptions = new RestClientOptions(regionBaseUrl[options.Value.Region]);
 
         var jsonOptions = new JsonSerializerOptions
@@ -40,9 +43,6 @@ public class StoryblokContentDeliveryApiClient
         client = new RestClient(
             clientOptions,
             configureSerialization: s => s.UseSystemTextJson(jsonOptions));
-
-        // TODO: Allow setting token on the request query to override the default token?
-        client.AddDefaultQueryParameter("token", options.Value.Token);
     }
 
     public async Task<StoryblokContentDeliveryApiResponse<StoriesResponse<StoryBlock>>> StoriesAsync(
@@ -79,7 +79,18 @@ public class StoryblokContentDeliveryApiClient
     {
         var restRequest = new RestRequest("stories", Method.Get);
 
-        // TODO: Allow for request query not to set version, and set it here if not set on query?
+        if (request.Query.Token == null)
+        {
+            // Use the default token if not set on the request
+            restRequest.AddQueryParameter(StoriesQueryParam.Token, options.Token);
+        }
+
+        if (request.Query.Version == null)
+        {
+            // TODO: Inject some request context to default to draft version if in Visual Editor mode?
+            // Default to published version if not set on the request
+            restRequest.AddQueryParameter(StoriesQueryParam.Version, StoryVersion.Published.Value);
+        }
 
         // TODO: Deal with [Cache invalidation](https://www.storyblok.com/docs/api/content-delivery/v2/getting-started/cache-invalidation) - continue to allow for setting on the request query, but set here if not set
 
@@ -108,6 +119,7 @@ public class StoryblokContentDeliveryApiClient
             request.Query.FilterQuery = filterQuery;
         }
 
+        // TODO: Can deserialization be prevented if the response is not successful?
         RestResponse<StoriesResponse<T>> restResponse = await client.ExecuteGetAsync<StoriesResponse<T>>(
             restRequest,
             cancellationToken);
@@ -118,21 +130,21 @@ public class StoryblokContentDeliveryApiClient
         {
             return new StoryblokContentDeliveryApiResponse<StoriesResponse<T>>
             {
-                Data = restResponse.Data
+                Data = restResponse.Data,
+                ResponseUri = restResponse.ResponseUri
             };
         }
 
-        var error = new StoryblokContentDeliveryApiError
-        {
-            StatusCode = restResponse.StatusCode,
-            StatusDescription = restResponse.StatusDescription,
-            ErrorMessage = restResponse.ErrorMessage,
-            Exception = restResponse.ErrorException
-        };
-
         return new StoryblokContentDeliveryApiResponse<StoriesResponse<T>>
         {
-            Error = error
+            Error = new StoryblokContentDeliveryApiError
+            {
+                StatusCode = restResponse.StatusCode,
+                StatusDescription = restResponse.StatusDescription,
+                ErrorMessage = restResponse.ErrorMessage,
+                Exception = restResponse.ErrorException
+            },
+            ResponseUri = restResponse.ResponseUri
         };
     }
 
@@ -186,10 +198,22 @@ public class StoryblokContentDeliveryApiClient
         var restRequest = new RestRequest("stories/{identifier}", Method.Get)
             .AddUrlSegment("identifier", request.Identifier.ToString());
 
-        // TODO: Allow for request query not to set version, and set it here if not set on query?
+        if (request.Query.Token == null)
+        {
+            // Use the default token if not set on the request
+            restRequest.AddQueryParameter(StoryQueryParam.Token, options.Token);
+        }
+
+        if (request.Query.Version == null)
+        {
+            // TODO: Inject some request context to default to draft version if in Visual Editor mode?
+            // Default to published version if not set on the request
+            restRequest.AddQueryParameter(StoryQueryParam.Version, StoryVersion.Published.Value);
+        }
 
         // TODO: Deal with [Cache invalidation](https://www.storyblok.com/docs/api/content-delivery/v2/getting-started/cache-invalidation) - continue to allow for setting on the request query, but set here if not set
 
+        // TODO: Can deserialization be prevented if the response is not successful?
         RestResponse<StoryResponse<T>> restResponse = await client.ExecuteGetAsync<StoryResponse<T>>(
             restRequest,
             cancellationToken);
@@ -200,21 +224,21 @@ public class StoryblokContentDeliveryApiClient
         {
             return new StoryblokContentDeliveryApiResponse<StoryResponse<T>>
             {
-                Data = restResponse.Data
+                Data = restResponse.Data,
+                ResponseUri = restResponse.ResponseUri
             };
         }
 
-        var error = new StoryblokContentDeliveryApiError
-        {
-            StatusCode = restResponse.StatusCode,
-            StatusDescription = restResponse.StatusDescription,
-            ErrorMessage = restResponse.ErrorMessage,
-            Exception = restResponse.ErrorException
-        };
-
         return new StoryblokContentDeliveryApiResponse<StoryResponse<T>>
         {
-            Error = error
+            Error = new StoryblokContentDeliveryApiError
+            {
+                StatusCode = restResponse.StatusCode,
+                StatusDescription = restResponse.StatusDescription,
+                ErrorMessage = restResponse.ErrorMessage,
+                Exception = restResponse.ErrorException
+            },
+            ResponseUri = restResponse.ResponseUri
         };
     }
 

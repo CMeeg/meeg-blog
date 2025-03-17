@@ -2,6 +2,8 @@ namespace StoryblokDotNet.ContentDelivery;
 
 public static class StoriesQueryParam
 {
+    public const string Token = "token";
+    public const string CacheVersion = "cv";
     public const string Version = "version";
     public const string StartsWith = "starts_with";
     public const string SearchTerm = "search_term";

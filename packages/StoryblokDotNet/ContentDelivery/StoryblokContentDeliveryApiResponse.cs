@@ -6,6 +6,7 @@ public class StoryblokContentDeliveryApiResponse<T>
 {
     public T? Data { get; init; }
     public StoryblokContentDeliveryApiError? Error { get; init; }
+    public Uri? ResponseUri { get; init; }
 }
 
 public class StoryblokContentDeliveryApiError

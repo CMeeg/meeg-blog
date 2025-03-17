@@ -2,8 +2,24 @@ namespace StoryblokDotNet.ContentDelivery;
 
 public class StoriesQueryBuilder
 {
-    private StoryVersion version = StoryVersion.Published;
-    public StoriesQueryBuilder Version(StoryVersion version)
+    private string? token;
+    public StoriesQueryBuilder Token(string? token)
+    {
+        this.token = token;
+
+        return this;
+    }
+
+    private int? cacheVersion;
+    public StoriesQueryBuilder CacheVersion(int? cacheVersion)
+    {
+        this.cacheVersion = cacheVersion;
+
+        return this;
+    }
+
+    private StoryVersion? version;
+    public StoriesQueryBuilder Version(StoryVersion? version)
     {
         this.version = version;
 
@@ -52,31 +68,17 @@ public class StoriesQueryBuilder
     }
 
     private string[]? bySlugs;
-    public StoriesQueryBuilder BySlugs(IEnumerable<string> bySlugs)
+    public StoriesQueryBuilder BySlugs(params string[]? bySlugs)
     {
-        if (bySlugs == null)
-        {
-            this.bySlugs = null;
-
-            return this;
-        }
-
-        this.bySlugs = [.. bySlugs];
+        this.bySlugs = bySlugs;
 
         return this;
     }
 
     private string[]? excludingSlugs;
-    public StoriesQueryBuilder ExcludingSlugs(IEnumerable<string> excludingSlugs)
+    public StoriesQueryBuilder ExcludingSlugs(params string[]? excludingSlugs)
     {
-        if (excludingSlugs == null)
-        {
-            this.excludingSlugs = null;
-
-            return this;
-        }
-
-        this.excludingSlugs = [.. excludingSlugs];
+        this.excludingSlugs = excludingSlugs;
 
         return this;
     }
@@ -84,45 +86,24 @@ public class StoriesQueryBuilder
     // TODO: Other filters...
 
     private string[]? tags;
-    public StoriesQueryBuilder Tag(string? tag)
+    public StoriesQueryBuilder Tags(params string[]? tags)
     {
-        if (string.IsNullOrEmpty(tag))
-        {
-            tags = null;
-
-            return this;
-        }
-
-        tags = [tag];
+        this.tags = tags;
 
         return this;
     }
 
-    public StoriesQueryBuilder Tags(IEnumerable<string> tags)
+    private Bit? isStartpage;
+    public StoriesQueryBuilder IsStartpage(bool? isStartpage)
     {
-        if (tags == null)
+        if (isStartpage == null)
         {
-            this.tags = null;
+            this.isStartpage = null;
 
             return this;
         }
 
-        this.tags = [.. tags];
-
-        return this;
-    }
-
-    private Bit? isStartPage;
-    public StoriesQueryBuilder IsStartPage(bool? isStartPage)
-    {
-        if (isStartPage == null)
-        {
-            this.isStartPage = null;
-
-            return this;
-        }
-
-        this.isStartPage = isStartPage.Value;
+        this.isStartpage = isStartpage.Value;
 
         return this;
     }
@@ -150,6 +131,8 @@ public class StoriesQueryBuilder
     {
         return new StoriesQuery
         {
+            Token = token,
+            CacheVersion = cacheVersion,
             Version = version,
             StartsWith = startsWith,
             SearchTerm = searchTerm,
@@ -159,6 +142,7 @@ public class StoriesQueryBuilder
             BySlugs = bySlugs,
             ExcludingSlugs = excludingSlugs,
             WithTag = tags,
+            IsStartpage = isStartpage,
             FilterQuery = filterQuery
         };
     }

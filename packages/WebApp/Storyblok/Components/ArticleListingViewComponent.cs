@@ -23,7 +23,7 @@ public class ArticleListingViewComponent
         var response = await storyblokApiClient.StoriesAsync<ArticleBlock>(request => request
             .Query(query =>
             {
-                query.IsStartPage(false)
+                query.IsStartpage(false)
                     .SortBy($"{StoryField.FirstPublishedAt}:desc")
                     .FilterBy(FilterQuery.BlockType(ArticleBlock.TechnicalName))
                     .PerPage(perPage);
@@ -35,7 +35,7 @@ public class ArticleListingViewComponent
 
                 if (!string.IsNullOrEmpty(withTag))
                 {
-                    query.Tag(withTag);
+                    query.Tags(withTag);
                 }
             }));
 
