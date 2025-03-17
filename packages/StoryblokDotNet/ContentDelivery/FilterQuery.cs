@@ -1,30 +1,66 @@
 using System.Globalization;
+using System.Text;
 
 namespace StoryblokDotNet.ContentDelivery;
 
-public interface IFilterQuery
-{
-    LogicalFilterQuery AndBy(FilterQuery query);
-    LogicalFilterQuery OrBy(FilterQuery query);
-}
-
 public class FilterQuery
-    : IFilterQuery
 {
     public string Field { get; private set; }
     public string Operator { get; private set; }
     public string[] Value { get; private set; }
+    public string LogicalOperator { get; private set; } = LogicalOperatorType.And;
+    public List<FilterQuery> CompoundQueries { get; private set; } = [];
 
-    private FilterQuery(string field, string @operator, params string[] value)
+    private FilterQuery(
+        string field,
+        string @operator,
+        params string[] value)
+        : this(field, @operator, LogicalOperatorType.And, value)
+    {
+    }
+
+    private FilterQuery(
+        string field,
+        string @operator,
+        string logicalOperator,
+        params string[] value)
     {
         Field = field;
         Operator = @operator;
+        LogicalOperator = logicalOperator;
         Value = value;
+    }
+
+    public string[] Build()
+    {
+        var values = new List<string>
+        {
+            ToQueryString()
+        };
+
+        foreach (FilterQuery query in CompoundQueries)
+        {
+            values.AddRange(query.Build());
+        }
+
+        return values.ToArray();
     }
 
     public override string ToString()
     {
-        return $"filter_query[{Field}][{Operator}]={string.Join(",", Value)}";
+        return string.Join("&", Build());
+    }
+
+    private string ToQueryString()
+    {
+        if (LogicalOperator == LogicalOperatorType.Or)
+        {
+            return $"{StoriesQueryParam.FilterQuery}[__{LogicalOperator}][][{Field}][{Operator}]={string.Join(",", Value)}";
+        }
+        else
+        {
+            return $"{StoriesQueryParam.FilterQuery}[{Field}][{Operator}]={string.Join(",", Value)}";
+        }
     }
 
     public static FilterQuery IsEmpty(string field)
@@ -137,14 +173,34 @@ public class FilterQuery
         return new FilterQuery(field, OperatorType.LtFloat, value.ToString(CultureInfo.InvariantCulture));
     }
 
-    public LogicalFilterQuery AndBy(FilterQuery query)
+    public static FilterQuery BlockType(string technicalName)
     {
-        return new LogicalFilterQuery(this).AndBy(query);
+        return In(StoryBlockField.Component, technicalName);
     }
 
-    public LogicalFilterQuery OrBy(FilterQuery query)
+    public FilterQuery AndBy(FilterQuery query)
     {
-        return new LogicalFilterQuery(this).OrBy(query);
+        // Ensure that the correct logical operator is set
+        query.LogicalOperator = LogicalOperatorType.And;
+
+        CompoundQueries.Add(query);
+
+        return this;
+    }
+
+    public FilterQuery OrBy(FilterQuery query)
+    {
+        // Ensure that the correct logical operator is set
+        FilterQuery previousQuery = CompoundQueries.Count == 0
+            ? this
+            : CompoundQueries.Last();
+
+        previousQuery.LogicalOperator = LogicalOperatorType.Or;
+        query.LogicalOperator = LogicalOperatorType.Or;
+
+        CompoundQueries.Add(query);
+
+        return this;
     }
 
     private static string[] ParseValues(object[] values)
@@ -195,60 +251,6 @@ public class FilterQuery
         public const string False = "false";
         public const string Null = "null";
         public const string NotNull = "not_null";
-    }
-}
-
-public class LogicalFilterQuery
-    : IFilterQuery
-{
-    private List<Tuple<string, FilterQuery>> queries = new();
-
-    public LogicalFilterQuery(FilterQuery query)
-    {
-        // Queries are AND by default
-        queries.Add(Tuple.Create(LogicalOperatorType.And, query));
-    }
-
-    public LogicalFilterQuery AndBy(FilterQuery query)
-    {
-        queries.Add(Tuple.Create(LogicalOperatorType.And, query));
-
-        return this;
-    }
-
-    public LogicalFilterQuery OrBy(FilterQuery query)
-    {
-        // If the previous query is an AND query, then we need to flip it to an OR query
-        (string prevOperator, FilterQuery prevQuery) = queries.Last();
-
-        if(prevOperator == LogicalOperatorType.And)
-        {
-            queries.RemoveAt(queries.Count - 1);
-            queries.Add(Tuple.Create(LogicalOperatorType.Or, prevQuery));
-        }
-
-        queries.AddRange(Tuple.Create(LogicalOperatorType.Or, query));
-
-        return this;
-    }
-
-    public override string ToString()
-    {
-        var filterQuery = new List<string>();
-
-        foreach((string @operator, FilterQuery query) in queries)
-        {
-            if (@operator == LogicalOperatorType.Or)
-            {
-                filterQuery.Add($"filter_query[__or][][{query.Field}][{query.Operator}]={string.Join(",", query.Value)}");
-            }
-            else
-            {
-                filterQuery.Add($"filter_query[{query.Field}][{query.Operator}]={string.Join(",", query.Value)}");
-            }
-        }
-
-        return string.Join("&", filterQuery);
     }
 
     private static class LogicalOperatorType

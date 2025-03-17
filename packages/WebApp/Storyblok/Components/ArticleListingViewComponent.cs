@@ -25,7 +25,7 @@ public class ArticleListingViewComponent
             {
                 query.IsStartPage(false)
                     .SortBy($"{StoryField.FirstPublishedAt}:desc")
-                    .FilterBy(FilterQuery.In(StoryBlockField.Component, ArticleBlock.TechnicalName))
+                    .FilterBy(FilterQuery.BlockType(ArticleBlock.TechnicalName))
                     .PerPage(perPage);
 
                 if (!string.IsNullOrEmpty(startsWith))

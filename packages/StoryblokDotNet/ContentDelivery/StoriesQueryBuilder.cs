@@ -129,8 +129,8 @@ public class StoriesQueryBuilder
 
     // TODO: Other filters...
 
-    private string? filterQuery;
-    public StoriesQueryBuilder FilterBy(IFilterQuery? filterQuery)
+    private string[]? filterQuery;
+    public StoriesQueryBuilder FilterBy(FilterQuery? filterQuery)
     {
         if (filterQuery == null)
         {
@@ -139,7 +139,7 @@ public class StoriesQueryBuilder
             return this;
         }
 
-        this.filterQuery = filterQuery.ToString();
+        this.filterQuery = filterQuery.Build();
 
         return this;
     }

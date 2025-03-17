@@ -84,14 +84,17 @@ public class StoryblokContentDeliveryApiClient
         // TODO: Deal with [Cache invalidation](https://www.storyblok.com/docs/api/content-delivery/v2/getting-started/cache-invalidation) - continue to allow for setting on the request query, but set here if not set
 
         // The format of the `filter_query` parameter is "special" (i.e. not a standard key=value query parameter) so it needs "special" handling
-        string? filterQuery = request.Query.FilterQuery;
+        string[]? filterQuery = request.Query.FilterQuery;
 
         try
         {
             if (filterQuery != null)
             {
                 // Add the filter query to the request
-                restRequest.AddQueryParameter(filterQuery, null, false);
+                foreach (string filter in filterQuery)
+                {
+                    restRequest.AddQueryParameter(filter, null, false);
+                }
 
                 // Clear the filter query to avoid adding it again
                 request.Query.FilterQuery = null;
