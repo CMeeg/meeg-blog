@@ -6,5 +6,6 @@ public class StoryblokContentDeliveryOptions
 
     public string? Token { get; set; }
     public StoryblokRegion Region { get; set; } = StoryblokRegion.EuropeanUnion;
+    public bool ThrowIfBlockTypeNotRegistered { get; set; } = true;
     public Func<IServiceProvider, IStoryBlockTypeRegistry>? StoryBlockTypeRegistryFactory { get; set; }
 }

@@ -7,10 +7,14 @@ public class StoryBlockFieldJsonConverter
     : JsonConverter<StoryBlock>
 {
     private readonly IStoryBlockTypeRegistry storyBlockTypeRegistry;
+    private readonly bool throwIfBlockTypeNotRegistered;
 
-    public StoryBlockFieldJsonConverter(IStoryBlockTypeRegistry storyBlockTypeRegistry)
+    public StoryBlockFieldJsonConverter(
+        IStoryBlockTypeRegistry storyBlockTypeRegistry,
+        bool throwIfBlockTypeNotRegistered = true)
     {
         this.storyBlockTypeRegistry = storyBlockTypeRegistry;
+        this.throwIfBlockTypeNotRegistered = throwIfBlockTypeNotRegistered;
     }
 
     public override StoryBlock Read(
@@ -24,40 +28,58 @@ public class StoryBlockFieldJsonConverter
 
         using var doc = JsonDocument.ParseValue(ref reader);
 
-        if (doc.RootElement.TryGetProperty(StoryBlockField.Component, out JsonElement blockElement))
+        if (!doc.RootElement.TryGetProperty(StoryBlockField.Component, out JsonElement blockElement))
         {
-            string? blockName = blockElement.GetString();
+            throw new JsonException($"Missing required property '{StoryBlockField.Component}'.");
+        }
 
-            if (!string.IsNullOrWhiteSpace(blockName))
+        string? blockName = blockElement.GetString();
+
+        if (string.IsNullOrWhiteSpace(blockName))
+        {
+            throw new JsonException($"Property '{StoryBlockField.Component}' must not be empty.");
+        }
+
+        if (storyBlockTypeRegistry.TryGetBlockType(blockName, out StoryBlockType? blockType))
+        {
+            string rawText = doc.RootElement.GetRawText();
+
+            try
             {
-                if (storyBlockTypeRegistry.TryGetBlockType(blockName, out StoryBlockType? blockType))
+                if (!(JsonSerializer.Deserialize(rawText, blockType.Type, options) is StoryBlock block))
                 {
-                    string rawText = doc.RootElement.GetRawText();
-
-                    try
-                    {
-                        if (!(JsonSerializer.Deserialize(rawText, blockType.Type, options) is StoryBlock block))
-                        {
-                            throw new JsonException($"Type '{blockType.Type.FullName}' registered for block type '{blockName}' must derive from {typeof(StoryBlock).FullName}.");
-                        }
-
-                        return block;
-                    }
-                    catch (JsonException ex)
-                    {
-                        throw new JsonException($"Unable to deserialize ({ex.Message}): {rawText}", ex);
-                    }
+                    throw new JsonException($"Type '{blockType.Type.FullName}' registered for block type '{blockName}' must derive from {typeof(StoryBlock).FullName}.");
                 }
+
+                return block;
+            }
+            catch (JsonException ex)
+            {
+                throw new JsonException($"Unable to deserialize ({ex.Message}): {rawText}", ex);
             }
         }
 
-        // TODO: Add an option to throw an exception if the block type is not registered
+        if (throwIfBlockTypeNotRegistered)
+        {
+            throw new JsonException($"Block type '{blockName}' is not registered.");
+        }
+
         // Don't call JsonSerializer.Deserialize, because it will recurse and we'll get a stack overflow
+
+        if (!doc.RootElement.TryGetProperty(StoryBlockField.Uid, out JsonElement uidElement))
+        {
+            throw new JsonException($"Missing required property '{StoryBlockField.Uid}'.");
+        }
+
+        doc.RootElement.TryGetProperty(StoryBlockField.Editable, out JsonElement editableElement);
+
         return new StoryBlock
         {
-            Uid = doc.RootElement.GetProperty(StoryBlockField.Uid).GetGuid(),
-            Component = doc.RootElement.GetProperty(StoryBlockField.Component).GetString() ?? "",
-            Editable = doc.RootElement.GetProperty(StoryBlockField.Editable).GetString()
+            Uid = uidElement.GetGuid(),
+            Component = blockName,
+            Editable = editableElement.ValueKind == JsonValueKind.Undefined
+                ? null
+                : editableElement.GetString()
         };
     }
 

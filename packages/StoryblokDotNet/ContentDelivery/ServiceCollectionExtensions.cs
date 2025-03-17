@@ -46,7 +46,8 @@ public static class ServiceCollectionExtensions
         var apiClientOptions = new StoryblokContentDeliveryApiClientOptions
         {
             Token = options.Token,
-            Region = options.Region
+            Region = options.Region,
+            ThrowIfBlockTypeNotRegistered = options.ThrowIfBlockTypeNotRegistered
         };
 
         services.AddSingleton(Options.Create(apiClientOptions));

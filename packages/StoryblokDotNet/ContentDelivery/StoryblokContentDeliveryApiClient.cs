@@ -31,7 +31,9 @@ public class StoryblokContentDeliveryApiClient
             PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
         };
 
-        jsonOptions.Converters.Add(new StoryBlockFieldJsonConverter(storyBlockTypeRegistry));
+        jsonOptions.Converters.Add(new StoryBlockFieldJsonConverter(
+            storyBlockTypeRegistry,
+            options.Value.ThrowIfBlockTypeNotRegistered));
         jsonOptions.Converters.Add(new StoryIntFieldJsonConverter());
         jsonOptions.Converters.Add(new StoryNullableIntFieldJsonConverter());
 
