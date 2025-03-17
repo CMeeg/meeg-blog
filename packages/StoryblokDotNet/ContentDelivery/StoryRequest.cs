@@ -26,8 +26,7 @@ public class StoryRequest
         Identifier = uuid;
         Query = query;
 
-        Query.FindBy = StoryFindBy.Uuid;
-
+        Query.FindBy = StoryIdentifierType.Uuid;
     }
 
     public StoryRequest(StoryIdentifier identifier, StoryQuery query)
@@ -36,7 +35,7 @@ public class StoryRequest
         Query = query;
 
         Query.FindBy = identifier.IdentifierType == StoryIdentifierType.Uuid
-            ? StoryFindBy.Uuid
+            ? StoryIdentifierType.Uuid
             : null;
     }
 }

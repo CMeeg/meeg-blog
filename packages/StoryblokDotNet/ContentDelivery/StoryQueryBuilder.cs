@@ -10,8 +10,8 @@ public class StoryQueryBuilder
         return this;
     }
 
-    private StoryFindBy? findBy;
-    public StoryQueryBuilder FindBy(StoryFindBy? findBy)
+    private StoryIdentifierType? findBy;
+    public StoryQueryBuilder FindBy(StoryIdentifierType? findBy)
     {
         this.findBy = findBy;
 

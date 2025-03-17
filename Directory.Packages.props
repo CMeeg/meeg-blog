@@ -3,6 +3,7 @@
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
   </PropertyGroup>
   <ItemGroup>
+    <PackageVersion Include="Ardalis.SmartEnum" Version="8.2.0" />
     <PackageVersion Include="DotNetEnv" Version="3.1.1" />
     <PackageVersion Include="Phoria" Version="0.4.2" />
     <PackageVersion Include="RestSharp" Version="112.1.0" />

@@ -6,7 +6,7 @@ public class StoryQuery
     : StoriesQueryBase
 {
     [RequestProperty(Name = StoryQueryParam.FindBy)]
-    public StoryFindBy? FindBy { get; set; }
+    public StoryIdentifierType? FindBy { get; set; }
 
     // TODO: The rest...
 }
