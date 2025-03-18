@@ -5,7 +5,7 @@ namespace StoryblokDotNet.ContentDelivery;
 public class StoryQuery
     : StoriesQueryBase
 {
-    [RequestProperty(Name = StoryQueryParam.FindBy)]
+    [RequestProperty(Name = StoryQueryParamName.FindBy)]
     public StoryIdentifierType? FindBy { get; set; }
 
     // TODO: The rest...

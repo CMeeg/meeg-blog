@@ -5,9 +5,9 @@ namespace StoryblokDotNet.ContentDelivery;
 // TODO: Can implement IDictionary<TKey, TValue> or similar to access non-mapped fields?
 public class StoryBlock
 {
-    [JsonPropertyName(StoryBlockField.Uid)]
+    [JsonPropertyName(StoryBlockFieldName.Uid)]
     public Guid Uid { get; set; }
     public required string Component { get; set; }
-    [JsonPropertyName(StoryBlockField.Editable)]
+    [JsonPropertyName(StoryBlockFieldName.Editable)]
     public string? Editable { get; set; }
 }

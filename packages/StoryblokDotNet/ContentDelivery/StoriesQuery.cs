@@ -5,38 +5,40 @@ namespace StoryblokDotNet.ContentDelivery;
 public class StoriesQuery
     : StoriesQueryBase
 {
-    [RequestProperty(Name = StoriesQueryParam.StartsWith)]
+    private const string DateFormat = "yyyy-MM-dd HH:mm";
+
+    [RequestProperty(Name = StoriesQueryParamName.StartsWith)]
     public string? StartsWith { get; set; }
-    [RequestProperty(Name = StoriesQueryParam.SearchTerm)]
+    [RequestProperty(Name = StoriesQueryParamName.SearchTerm)]
     public string? SearchTerm { get; set; }
-    [RequestProperty(Name = StoriesQueryParam.SortBy)]
+    [RequestProperty(Name = StoriesQueryParamName.SortBy)]
     public string? SortBy { get; set; }
-    [RequestProperty(Name = StoriesQueryParam.PerPage)]
+    [RequestProperty(Name = StoriesQueryParamName.PerPage)]
     public int? PerPage { get; set; }
-    [RequestProperty(Name = StoriesQueryParam.Page)]
+    [RequestProperty(Name = StoriesQueryParamName.Page)]
     public int? Page { get; set; }
-    [RequestProperty(Name = StoriesQueryParam.BySlugs, ArrayQueryType = RequestArrayQueryType.CommaSeparated)]
+    [RequestProperty(Name = StoriesQueryParamName.BySlugs, ArrayQueryType = RequestArrayQueryType.CommaSeparated)]
     public string[]? BySlugs { get; set; }
-    [RequestProperty(Name = StoriesQueryParam.ExcludingSlugs, ArrayQueryType = RequestArrayQueryType.CommaSeparated)]
+    [RequestProperty(Name = StoriesQueryParamName.ExcludingSlugs, ArrayQueryType = RequestArrayQueryType.CommaSeparated)]
     public string[]? ExcludingSlugs { get; set; }
-    [RequestProperty(Name = StoriesQueryParam.PublishedAtGt, Format = "yyyy-MM-dd HH:mm")]
+    [RequestProperty(Name = StoriesQueryParamName.PublishedAtGt, Format = DateFormat)]
     public DateTime? PublishedAtGt { get; set; }
-    [RequestProperty(Name = StoriesQueryParam.PublishedAtLt, Format = "yyyy-MM-dd HH:mm")]
+    [RequestProperty(Name = StoriesQueryParamName.PublishedAtLt, Format = DateFormat)]
     public DateTime? PublishedAtLt { get; set; }
-    [RequestProperty(Name = StoriesQueryParam.FirstPublishedAtGt, Format = "yyyy-MM-dd HH:mm")]
+    [RequestProperty(Name = StoriesQueryParamName.FirstPublishedAtGt, Format = DateFormat)]
     public DateTime? FirstPublishedAtGt { get; set; }
-    [RequestProperty(Name = StoriesQueryParam.FirstPublishedAtLt, Format = "yyyy-MM-dd HH:mm")]
+    [RequestProperty(Name = StoriesQueryParamName.FirstPublishedAtLt, Format = DateFormat)]
     public DateTime? FirstPublishedAtLt { get; set; }
-    [RequestProperty(Name = StoriesQueryParam.UpdatedAtGt, Format = "yyyy-MM-dd HH:mm")]
+    [RequestProperty(Name = StoriesQueryParamName.UpdatedAtGt, Format = DateFormat)]
     public DateTime? UpdatedAtGt { get; set; }
-    [RequestProperty(Name = StoriesQueryParam.UpdatedAtLt, Format = "yyyy-MM-dd HH:mm")]
+    [RequestProperty(Name = StoriesQueryParamName.UpdatedAtLt, Format = DateFormat)]
     public DateTime? UpdatedAtLt { get; set; }
 
     // TODO: Other filters...
 
-    [RequestProperty(Name = StoriesQueryParam.WithTag, ArrayQueryType = RequestArrayQueryType.CommaSeparated)]
+    [RequestProperty(Name = StoriesQueryParamName.WithTag, ArrayQueryType = RequestArrayQueryType.CommaSeparated)]
     public string[]? WithTag { get; set; }
-    [RequestProperty(Name = StoriesQueryParam.IsStartpage)]
+    [RequestProperty(Name = StoriesQueryParamName.IsStartpage)]
     public Bit? IsStartpage { get; set; }
 
     // TODO: Other filters...
