@@ -40,7 +40,7 @@ public class StoriesQuery
     public Bit? IsStartpage { get; set; }
 
     // TODO: Other filters...
-    public string[]? FilterQuery { get; set; }
+    public string? FilterQuery { get; set; }
 
     // TODO: The rest...
 }

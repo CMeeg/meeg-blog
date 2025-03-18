@@ -42,11 +42,24 @@ public class StoriesQueryBuilder
         return this;
     }
 
-    // TODO: Implement a "Sort by builder" pattern to make this more convenient
     private string? sortBy;
     public StoriesQueryBuilder SortBy(string? sortBy)
     {
         this.sortBy = sortBy;
+
+        return this;
+    }
+
+    public StoriesQueryBuilder SortBy(ISortExpression? expression)
+    {
+        if (expression == null)
+        {
+            sortBy = null;
+
+            return this;
+        }
+
+        sortBy = expression.ToString();
 
         return this;
     }
@@ -110,17 +123,24 @@ public class StoriesQueryBuilder
 
     // TODO: Other filters...
 
-    private string[]? filterQuery;
-    public StoriesQueryBuilder FilterBy(FilterQuery? filterQuery)
+    private string? filterQuery;
+    public StoriesQueryBuilder FilterBy(string? filterQuery)
     {
-        if (filterQuery == null)
+        this.filterQuery = filterQuery;
+
+        return this;
+    }
+
+    public StoriesQueryBuilder FilterBy(IFilterExpression? expression)
+    {
+        if (expression == null)
         {
-            this.filterQuery = null;
+            filterQuery = null;
 
             return this;
         }
 
-        this.filterQuery = filterQuery.Build();
+        filterQuery = expression.ToString();
 
         return this;
     }
