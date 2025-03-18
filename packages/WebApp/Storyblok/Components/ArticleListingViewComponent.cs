@@ -20,24 +20,23 @@ public class ArticleListingViewComponent
 
     public async Task<IViewComponentResult> InvokeAsync(string? startsWith, string? withTag, int perPage)
     {
-        var response = await storyblokApiClient.StoriesAsync<ArticleBlock>(request => request
-            .Query(query =>
+        var response = await storyblokApiClient.StoriesAsync<ArticleBlock>(query =>
+        {
+            query.IsStartpage(false)
+                .SortBy(SortExpression.By(StoryField.FirstPublishedAt).Desc())
+                .FilterBy(FilterExpression.Component(ArticleBlock.TechnicalName))
+                .PerPage(perPage);
+
+            if (!string.IsNullOrEmpty(startsWith))
             {
-                query.IsStartpage(false)
-                    .SortBy(SortExpression.By(StoryField.FirstPublishedAt).Desc())
-                    .FilterBy(FilterExpression.Component(ArticleBlock.TechnicalName))
-                    .PerPage(perPage);
+                query.StartsWith(startsWith);
+            }
 
-                if (!string.IsNullOrEmpty(startsWith))
-                {
-                    query.StartsWith(startsWith);
-                }
-
-                if (!string.IsNullOrEmpty(withTag))
-                {
-                    query.Tags(withTag);
-                }
-            }));
+            if (!string.IsNullOrEmpty(withTag))
+            {
+                query.Tags(withTag);
+            }
+        });
 
         if (response.Data == null)
         {

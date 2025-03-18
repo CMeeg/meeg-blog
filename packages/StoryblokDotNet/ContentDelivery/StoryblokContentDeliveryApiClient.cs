@@ -46,23 +46,23 @@ public class StoryblokContentDeliveryApiClient
     }
 
     public async Task<StoryblokContentDeliveryApiResponse<StoriesResponse<StoryBlock>>> StoriesAsync(
-        Action<StoriesRequestBuilder>? request = null,
+        Action<StoriesQueryBuilder>? query = null,
         CancellationToken cancellationToken = default)
     {
-        return await StoriesAsync<StoryBlock>(request, cancellationToken);
+        return await StoriesAsync<StoryBlock>(query, cancellationToken);
     }
 
     public async Task<StoryblokContentDeliveryApiResponse<StoriesResponse<T>>> StoriesAsync<T>(
-        Action<StoriesRequestBuilder>? request = null,
+        Action<StoriesQueryBuilder>? query = null,
         CancellationToken cancellationToken = default)
         where T : StoryBlock
     {
-        var requestBuilder = new StoriesRequestBuilder();
-        request?.Invoke(requestBuilder);
+        var queryBuilder = new StoriesQueryBuilder();
+        query?.Invoke(queryBuilder);
 
-        StoriesRequest storiesRequest = requestBuilder.Build();
+        var request = new StoriesRequest(queryBuilder.Build());
 
-        return await StoriesAsync<T>(storiesRequest, cancellationToken);
+        return await StoriesAsync<T>(request, cancellationToken);
     }
 
     public async Task<StoryblokContentDeliveryApiResponse<StoriesResponse<StoryBlock>>> StoriesAsync(
@@ -147,44 +147,44 @@ public class StoryblokContentDeliveryApiClient
 
     public async Task<StoryblokContentDeliveryApiResponse<StoryResponse<T>>> StoryAsync<T>(
         string fullSlug,
-        Action<StoryRequestBuilder>? request = null,
+        Action<StoryQueryBuilder>? query = null,
         CancellationToken cancellationToken = default)
         where T : StoryBlock
     {
-        var requestBuilder = new StoryRequestBuilder(fullSlug);
-        request?.Invoke(requestBuilder);
+        var queryBuilder = new StoryQueryBuilder();
+        query?.Invoke(queryBuilder);
 
-        StoryRequest storyRequest = requestBuilder.Build();
+        var request = new StoryRequest(fullSlug, queryBuilder.Build());
 
-        return await StoryAsync<T>(storyRequest, cancellationToken);
+        return await StoryAsync<T>(request, cancellationToken);
     }
 
     public async Task<StoryblokContentDeliveryApiResponse<StoryResponse<T>>> StoryAsync<T>(
         int id,
-        Action<StoryRequestBuilder>? request = null,
+        Action<StoryQueryBuilder>? query = null,
         CancellationToken cancellationToken = default)
         where T : StoryBlock
     {
-        var requestBuilder = new StoryRequestBuilder(id);
-        request?.Invoke(requestBuilder);
+        var queryBuilder = new StoryQueryBuilder();
+        query?.Invoke(queryBuilder);
 
-        StoryRequest storyRequest = requestBuilder.Build();
+        var request = new StoryRequest(id, queryBuilder.Build());
 
-        return await StoryAsync<T>(storyRequest, cancellationToken);
+        return await StoryAsync<T>(request, cancellationToken);
     }
 
     public async Task<StoryblokContentDeliveryApiResponse<StoryResponse<T>>> StoryAsync<T>(
         Guid uuid,
-        Action<StoryRequestBuilder>? request = null,
+        Action<StoryQueryBuilder>? query = null,
         CancellationToken cancellationToken = default)
         where T : StoryBlock
     {
-        var requestBuilder = new StoryRequestBuilder(uuid);
-        request?.Invoke(requestBuilder);
+        var queryBuilder = new StoryQueryBuilder();
+        query?.Invoke(queryBuilder);
 
-        StoryRequest storyRequest = requestBuilder.Build();
+        var request = new StoryRequest(uuid, queryBuilder.Build());
 
-        return await StoryAsync<T>(storyRequest, cancellationToken);
+        return await StoryAsync<T>(request, cancellationToken);
     }
 
     public async Task<StoryblokContentDeliveryApiResponse<StoryResponse<T>>> StoryAsync<T>(
