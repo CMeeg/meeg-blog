@@ -21,9 +21,24 @@ public sealed class StoriesQueryParam
     public static readonly StoriesQueryParam FirstPublishedAtLt = new(nameof(FirstPublishedAtLt), StoriesQueryParamName.FirstPublishedAtLt);
     public static readonly StoriesQueryParam UpdatedAtGt = new(nameof(UpdatedAtGt), StoriesQueryParamName.UpdatedAtGt);
     public static readonly StoriesQueryParam UpdatedAtLt = new(nameof(UpdatedAtLt), StoriesQueryParamName.UpdatedAtLt);
+    public static readonly StoriesQueryParam InWorkflowStages = new(nameof(InWorkflowStages), StoriesQueryParamName.InWorkflowStages);
+    public static readonly StoriesQueryParam ContentType = new(nameof(ContentType), StoriesQueryParamName.ContentType);
+    public static readonly StoriesQueryParam Level = new(nameof(Level), StoriesQueryParamName.Level);
+    public static readonly StoriesQueryParam ResolveRelations = new(nameof(ResolveRelations), StoriesQueryParamName.ResolveRelations);
+    public static readonly StoriesQueryParam ExcludingIds = new(nameof(ExcludingIds), StoriesQueryParamName.ExcludingIds);
+    public static readonly StoriesQueryParam ByUuids = new(nameof(ByUuids), StoriesQueryParamName.ByUuids);
+    public static readonly StoriesQueryParam ByUuidsOrdered = new(nameof(ByUuidsOrdered), StoriesQueryParamName.ByUuidsOrdered);
     public static readonly StoriesQueryParam WithTag = new(nameof(WithTag), StoriesQueryParamName.WithTag);
     public static readonly StoriesQueryParam IsStartpage = new(nameof(IsStartpage), StoriesQueryParamName.IsStartpage);
+    public static readonly StoriesQueryParam ResolveLinks = new(nameof(ResolveLinks), StoriesQueryParamName.ResolveLinks);
+    public static readonly StoriesQueryParam ResolveLinksLevel = new(nameof(ResolveLinksLevel), StoriesQueryParamName.ResolveLinksLevel);
+    public static readonly StoriesQueryParam FromRelease = new(nameof(FromRelease), StoriesQueryParamName.FromRelease);
+    public static readonly StoriesQueryParam FallbackLang = new(nameof(FallbackLang), StoriesQueryParamName.FallbackLang);
+    public static readonly StoriesQueryParam Language = new(nameof(Language), StoriesQueryParamName.Language);
     public static readonly StoriesQueryParam FilterQuery = new(nameof(FilterQuery), StoriesQueryParamName.FilterQuery);
+    public static readonly StoriesQueryParam ExcludingFields = new(nameof(ExcludingFields), StoriesQueryParamName.ExcludingFields);
+    public static readonly StoriesQueryParam ResolveAssets = new(nameof(ResolveAssets), StoriesQueryParamName.ResolveAssets);
+    public static readonly StoriesQueryParam ResolveLevel = new(nameof(ResolveLevel), StoriesQueryParamName.ResolveLevel);
 
     private StoriesQueryParam(string name, string value)
         : base(name, value)
@@ -51,7 +66,22 @@ public static class StoriesQueryParamName
     public const string FirstPublishedAtLt = "first_published_at_lt";
     public const string UpdatedAtGt = "updated_at_gt";
     public const string UpdatedAtLt = "updated_at_lt";
+    public const string InWorkflowStages = "in_workflow_stages";
+    public const string ContentType = "content_type";
+    public const string Level = "level";
+    public const string ResolveRelations = "resolve_relations";
+    public const string ExcludingIds = "excluding_ids";
+    public const string ByUuids = "by_uuids";
+    public const string ByUuidsOrdered = "by_uuids_ordered";
     public const string WithTag = "with_tag";
     public const string IsStartpage = "is_startpage";
+    public const string ResolveLinks = "resolve_links";
+    public const string ResolveLinksLevel = "resolve_links_level";
+    public const string FromRelease = "from_release";
+    public const string FallbackLang = "fallback_lang";
+    public const string Language = "language";
     public const string FilterQuery = "filter_query";
+    public const string ExcludingFields = "excluding_fields";
+    public const string ResolveAssets = "resolve_assets";
+    public const string ResolveLevel = "resolve_level";
 }

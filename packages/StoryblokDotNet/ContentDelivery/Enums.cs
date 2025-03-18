@@ -30,3 +30,18 @@ public sealed class StoryIdentifierType
 
     public override string ToString() => Value;
 }
+
+public sealed class ResolveLinksType
+    : SmartEnum<ResolveLinksType, string>
+{
+    public static readonly ResolveLinksType Link = new(nameof(Url), "link");
+    public static readonly ResolveLinksType Url = new(nameof(Url), "url");
+    public static readonly ResolveLinksType Story = new(nameof(Story), "story");
+
+    private ResolveLinksType(string name, string value)
+        : base(name, value)
+    {
+    }
+
+    public override string ToString() => Value;
+}

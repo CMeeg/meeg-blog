@@ -201,11 +201,6 @@ public class FilterExpression
         return new FilterExpression(field, FilterConditionOperator.LessThanFloat, value.ToString(CultureInfo.InvariantCulture));
     }
 
-    public static FilterExpression Component(string technicalName)
-    {
-        return In(StoryBlockField.Component, technicalName);
-    }
-
     private static string[] ParseValues(object[] values)
     {
         var stringValues = new List<string>();
