@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
@@ -46,8 +47,6 @@ public static class ServiceCollectionExtensions
 
         services.AddSingleton(Options.Create(options));
 
-        services.AddSingleton<StoryblokContentDeliveryApiClient>();
-
         services.AddSingleton(
             options.StoryBlockTypeRegistryFactory ?? new Func<IServiceProvider, IStoryBlockTypeRegistry>(sp =>
             {
@@ -57,8 +56,11 @@ public static class ServiceCollectionExtensions
             })
         );
 
-        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         services.AddScoped<StoryblokRequestContext>();
+
+        services.AddSingleton<StoryblokContentDeliveryApiClient>();
+        services.AddScoped<StoryblokStoriesApiClient>();
 
         return services;
     }

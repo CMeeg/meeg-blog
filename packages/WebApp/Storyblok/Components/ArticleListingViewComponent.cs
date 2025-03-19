@@ -7,20 +7,20 @@ namespace WebApp.Storyblok.Components;
 public class ArticleListingViewComponent
     : ViewComponent
 {
-    private readonly StoryblokContentDeliveryApiClient storyblokApiClient;
+    private readonly StoryblokStoriesApiClient storiesApiClient;
     private readonly ILogger<ArticleListingViewComponent> logger;
 
     public ArticleListingViewComponent(
-        StoryblokContentDeliveryApiClient storyblokApiClient,
+        StoryblokStoriesApiClient storiesApiClient,
         ILogger<ArticleListingViewComponent> logger)
     {
-        this.storyblokApiClient = storyblokApiClient;
+        this.storiesApiClient = storiesApiClient;
         this.logger = logger;
     }
 
     public async Task<IViewComponentResult> InvokeAsync(string? startsWith, string? withTag, int perPage)
     {
-        var response = await storyblokApiClient.StoriesAsync<ArticleBlock>(query =>
+        var response = await storiesApiClient.GetStoriesAsync<ArticleBlock>(query =>
         {
             query.IsStartpage(false)
                 .SortBy(SortExpression.By(StoryField.FirstPublishedAt).Desc())
