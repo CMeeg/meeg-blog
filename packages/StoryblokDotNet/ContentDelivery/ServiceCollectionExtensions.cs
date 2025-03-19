@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -38,19 +39,12 @@ public static class ServiceCollectionExtensions
         this IServiceCollection services,
         StoryblokContentDeliveryOptions options)
     {
-        if (options.Token == null)
+        if (string.IsNullOrEmpty(options.Token))
         {
             throw new InvalidOperationException("The Storyblok Content Delivery API token must be set.");
         }
 
-        var apiClientOptions = new StoryblokContentDeliveryApiClientOptions
-        {
-            Token = options.Token,
-            Region = options.Region,
-            ThrowIfBlockTypeNotRegistered = options.ThrowIfBlockTypeNotRegistered
-        };
-
-        services.AddSingleton(Options.Create(apiClientOptions));
+        services.AddSingleton(Options.Create(options));
 
         services.AddSingleton<StoryblokContentDeliveryApiClient>();
 
@@ -62,6 +56,9 @@ public static class ServiceCollectionExtensions
                 return new AssemblyScanningStoryBlockTypeRegistry(AppDomain.CurrentDomain.GetAssemblies(), logger);
             })
         );
+
+        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        services.AddScoped<StoryblokRequestContext>();
 
         return services;
     }

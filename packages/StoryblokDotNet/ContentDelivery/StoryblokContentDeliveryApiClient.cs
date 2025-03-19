@@ -18,12 +18,12 @@ public class StoryblokContentDeliveryApiClient
         { StoryblokRegion.China, "https://app.storyblokchina.cn" }
     };
 
-    private readonly StoryblokContentDeliveryApiClientOptions options;
+    private readonly StoryblokContentDeliveryOptions options;
     private readonly RestClient client;
 
     public StoryblokContentDeliveryApiClient(
         IStoryBlockTypeRegistry storyBlockTypeRegistry,
-        IOptions<StoryblokContentDeliveryApiClientOptions> options)
+        IOptions<StoryblokContentDeliveryOptions> options)
     {
         this.options = options.Value;
 

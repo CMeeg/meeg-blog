@@ -31,7 +31,7 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 
 builder.Services.AddStoryblokContentDelivery(options => {
     // TODO: Just use appsettings?
-    options.Token = builder.Configuration["STORYBLOK_PREVIEW_TOKEN"];
+    options.Token = builder.Configuration["STORYBLOK_PREVIEW_TOKEN"] ?? "";
 });
 
 builder.Services.AddRazorPages();
