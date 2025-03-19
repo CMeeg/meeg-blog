@@ -32,7 +32,7 @@ public abstract class StoryBlockTypeRegistryBase
     }
 }
 
-public class AssemblyScanningStoryBlockTypeRegistry
+public sealed class AssemblyScanningStoryBlockTypeRegistry
     : StoryBlockTypeRegistryBase
 {
     public AssemblyScanningStoryBlockTypeRegistry(

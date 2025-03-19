@@ -2,7 +2,7 @@ using RestSharp;
 
 namespace StoryblokDotNet.ContentDelivery;
 
-public class StoriesQuery
+public sealed class StoriesQuery
     : StoriesQueryBase
 {
     private const string DateFormat = "yyyy-MM-dd HH:mm";

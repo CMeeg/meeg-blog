@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace StoryblokDotNet.ContentDelivery.Json;
 
-public class StoryBlockFieldJsonConverter
+internal sealed class StoryBlockFieldJsonConverter
     : JsonConverter<StoryBlock>
 {
     private readonly IStoryBlockTypeRegistry storyBlockTypeRegistry;

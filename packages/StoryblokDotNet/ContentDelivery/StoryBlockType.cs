@@ -1,6 +1,6 @@
 namespace StoryblokDotNet.ContentDelivery;
 
-public class StoryBlockType
+public sealed class StoryBlockType
 {
     public string Name { get; set; } = "";
     public Type Type { get; set; } = typeof(object);
@@ -8,7 +8,7 @@ public class StoryBlockType
 }
 
 [AttributeUsage(AttributeTargets.Class)]
-public class StoryBlockTypeAttribute(string name, string? view = null)
+public sealed class StoryBlockTypeAttribute(string name, string? view = null)
     : Attribute
 {
     public string Name { get; } = name;

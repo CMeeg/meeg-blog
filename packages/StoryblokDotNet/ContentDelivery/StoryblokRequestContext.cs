@@ -5,7 +5,7 @@ using Microsoft.Extensions.Options;
 
 namespace StoryblokDotNet.ContentDelivery;
 
-public class StoryblokRequestContext
+public sealed class StoryblokRequestContext
 {
     public StoryblokVisualEditorContext? VisualEditorContext { get; private set; }
     public bool IsVisualEditorRequest => VisualEditorContext != null;
@@ -25,7 +25,7 @@ public class StoryblokRequestContext
     }
 }
 
-public class StoryblokVisualEditorContext
+public sealed class StoryblokVisualEditorContext
 {
     public int StoryId { get; init; }
     public required string SpaceId { get; init; }

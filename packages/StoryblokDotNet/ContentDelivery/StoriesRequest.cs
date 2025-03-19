@@ -1,6 +1,6 @@
 namespace StoryblokDotNet.ContentDelivery;
 
-public class StoriesRequest
+public sealed class StoriesRequest
 {
     public StoriesQuery Query { get; private set; }
 

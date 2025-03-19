@@ -1,6 +1,6 @@
 namespace StoryblokDotNet.ContentDelivery;
 
-public class StoryRequestBuilder
+public sealed class StoryRequestBuilder
 {
     private readonly StoryIdentifier identifier;
 

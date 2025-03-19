@@ -1,6 +1,6 @@
 namespace StoryblokDotNet.ContentDelivery;
 
-public class StoryIdentifier
+public sealed class StoryIdentifier
 {
     public static implicit operator StoryIdentifier(string value) => new(value);
     public static implicit operator StoryIdentifier(int value) => new(value);

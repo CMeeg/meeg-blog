@@ -1,6 +1,6 @@
 namespace StoryblokDotNet.ContentDelivery;
 
-public class StoryblokContentDeliveryOptions
+public sealed class StoryblokContentDeliveryOptions
 {
 	public const string SectionName = "Storyblok__ContentDelivery";
 

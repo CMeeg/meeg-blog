@@ -1,6 +1,6 @@
 namespace StoryblokDotNet.ContentDelivery;
 
-public class StoriesResponse<T>
+public sealed class StoriesResponse<T>
     where T : StoryBlock
 {
     public required Story<T>[] Stories { get; set; }

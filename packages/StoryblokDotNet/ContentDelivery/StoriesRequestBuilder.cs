@@ -1,6 +1,6 @@
 namespace StoryblokDotNet.ContentDelivery;
 
-public class StoriesRequestBuilder
+public sealed class StoriesRequestBuilder
 {
     private StoriesQuery query = new StoriesQuery();
     public StoriesRequestBuilder Query(StoriesQuery query)

@@ -1,6 +1,6 @@
 namespace StoryblokDotNet.ContentDelivery;
 
-public class StoryRequest
+public sealed class StoryRequest
 {
     public StoryIdentifier Identifier { get; private set; }
     public StoryQuery Query { get; private set; }

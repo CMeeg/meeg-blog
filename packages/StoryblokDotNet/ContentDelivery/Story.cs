@@ -1,6 +1,6 @@
 namespace StoryblokDotNet.ContentDelivery;
 
-public class Story<T>
+public sealed class Story<T>
     where T : StoryBlock
 {
     public required string Name { get; set; }
@@ -28,7 +28,7 @@ public class Story<T>
     public required StoryTranslatedSlug[]? TranslatedSlugs { get; set; }
 }
 
-public class StoryAlternate
+public sealed class StoryAlternate
 {
     public int Id { get; set; }
     public required string Name { get; set; }
@@ -38,7 +38,7 @@ public class StoryAlternate
     public bool IsFolder { get; set; }
 }
 
-public class StoryTranslatedSlug
+public sealed class StoryTranslatedSlug
 {
     public required string Path { get; set; }
     public required string Name { get; set; }

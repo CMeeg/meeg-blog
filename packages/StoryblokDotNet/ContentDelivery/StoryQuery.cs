@@ -2,7 +2,7 @@ using RestSharp;
 
 namespace StoryblokDotNet.ContentDelivery;
 
-public class StoryQuery
+public sealed class StoryQuery
     : StoriesQueryBase
 {
     [RequestProperty(Name = StoryQueryParamName.FindBy)]

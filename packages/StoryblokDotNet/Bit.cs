@@ -1,6 +1,6 @@
 namespace StoryblokDotNet;
 
-public class Bit
+public sealed class Bit
 {
     public static implicit operator Bit(bool value) => new Bit(value);
     public static implicit operator bool(Bit bit) => bit.Value;
