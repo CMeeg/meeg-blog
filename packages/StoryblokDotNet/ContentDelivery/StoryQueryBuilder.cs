@@ -34,7 +34,83 @@ public class StoryQueryBuilder
         return this;
     }
 
-    // TODO: The rest...
+    private ResolveLinksType? resolveLinks;
+    public StoryQueryBuilder ResolveLinks(ResolveLinksType? resolveLinks)
+    {
+        this.resolveLinks = resolveLinks;
+
+        return this;
+    }
+
+    private int? resolveLinksLevel;
+    public StoryQueryBuilder ResolveLinksLevel(int? resolveLinksLevel)
+    {
+        this.resolveLinksLevel = resolveLinksLevel;
+
+        return this;
+    }
+
+    private string[]? resolveRelations;
+    public StoryQueryBuilder ResolveRelations(params string[]? relations)
+    {
+        resolveRelations = relations;
+
+        return this;
+    }
+
+    private string? fromRelease;
+    public StoryQueryBuilder FromRelease(string? release)
+    {
+        fromRelease = release;
+
+        return this;
+    }
+
+    private string? fallbackLang;
+    public StoryQueryBuilder FallbackLang(string? fallbackLang)
+    {
+        this.fallbackLang = fallbackLang;
+
+        return this;
+    }
+
+    private string? language;
+    public StoryQueryBuilder Language(string? language)
+    {
+        this.language = language;
+
+        return this;
+    }
+
+    private Bit? resolveAssets;
+    public StoryQueryBuilder ResolveAssets(bool? resolveAssets)
+    {
+        if (resolveAssets == null)
+        {
+            this.resolveAssets = null;
+
+            return this;
+        }
+
+        this.resolveAssets = resolveAssets.Value;
+
+        return this;
+    }
+
+    private Bit? resolveLevel;
+    public StoryQueryBuilder ResolveLevel(bool? resolveLevel)
+    {
+        if (resolveLevel == null)
+        {
+            this.resolveLevel = null;
+
+            return this;
+        }
+
+        this.resolveLevel = resolveLevel.Value;
+
+        return this;
+    }
 
     public StoryQuery Build()
     {
@@ -43,7 +119,15 @@ public class StoryQueryBuilder
             Token = token,
             CacheVersion = cacheVersion,
             Version = version,
-            FindBy = findBy
+            FindBy = findBy,
+            ResolveLinks = resolveLinks,
+            ResolveLinksLevel = resolveLinksLevel,
+            ResolveRelations = resolveRelations,
+            FromRelease = fromRelease,
+            FallbackLang = fallbackLang,
+            Language = language,
+            ResolveAssets = resolveAssets,
+            ResolveLevel = resolveLevel
         };
     }
 }

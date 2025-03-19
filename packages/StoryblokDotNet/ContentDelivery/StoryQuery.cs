@@ -7,6 +7,4 @@ public class StoryQuery
 {
     [RequestProperty(Name = StoryQueryParamName.FindBy)]
     public StoryIdentifierType? FindBy { get; set; }
-
-    // TODO: The rest...
 }

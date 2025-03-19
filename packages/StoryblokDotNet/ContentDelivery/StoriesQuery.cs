@@ -39,8 +39,6 @@ public class StoriesQuery
     public string? ContentType { get; set; }
     [RequestProperty(Name = StoriesQueryParamName.Level)]
     public int? Level { get; set; }
-    [RequestProperty(Name = StoriesQueryParamName.ResolveRelations, ArrayQueryType = RequestArrayQueryType.CommaSeparated)]
-    public string[]? ResolveRelations { get; set; }
     [RequestProperty(Name = StoriesQueryParamName.ExcludingIds, ArrayQueryType = RequestArrayQueryType.CommaSeparated)]
     public int[]? ExcludingIds { get; set; }
     [RequestProperty(Name = StoriesQueryParamName.ByUuids, ArrayQueryType = RequestArrayQueryType.CommaSeparated)]
@@ -51,21 +49,7 @@ public class StoriesQuery
     public string[]? WithTag { get; set; }
     [RequestProperty(Name = StoriesQueryParamName.IsStartpage)]
     public Bit? IsStartpage { get; set; }
-    [RequestProperty(Name = StoriesQueryParamName.ResolveLinks)]
-    public ResolveLinksType? ResolveLinks { get; set; }
-    [RequestProperty(Name = StoriesQueryParamName.ResolveLinksLevel)]
-    public int? ResolveLinksLevel { get; set; }
-    [RequestProperty(Name = StoriesQueryParamName.FromRelease)]
-    public string? FromRelease { get; set; }
-    [RequestProperty(Name = StoriesQueryParamName.FallbackLang)]
-    public string? FallbackLang { get; set; }
-    [RequestProperty(Name = StoriesQueryParamName.Language)]
-    public string? Language { get; set; }
     public string? FilterQuery { get; set; }
     [RequestProperty(Name = StoriesQueryParamName.ExcludingFields, ArrayQueryType = RequestArrayQueryType.CommaSeparated)]
     public string[]? ExcludingFields { get; set; }
-    [RequestProperty(Name = StoriesQueryParamName.ResolveAssets)]
-    public Bit? ResolveAssets { get; set; }
-    [RequestProperty(Name = StoriesQueryParamName.ResolveLevel)]
-    public Bit? ResolveLevel { get; set; }
 }
