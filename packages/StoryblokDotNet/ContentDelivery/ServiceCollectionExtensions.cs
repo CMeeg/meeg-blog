@@ -59,7 +59,8 @@ public static class ServiceCollectionExtensions
         services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         services.AddScoped<StoryblokRequestContext>();
 
-        services.AddSingleton<StoryblokContentDeliveryApiClient>();
+        services.AddSingleton<StoryblokContentDeliveryRestClient>();
+        services.AddScoped<StoryblokContentDeliveryApiClient>();
         services.AddScoped<StoryblokStoriesApiClient>();
 
         return services;

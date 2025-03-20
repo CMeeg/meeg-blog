@@ -10,22 +10,22 @@ public class IndexModel
 {
     private const string Slug = "home";
 
-    private readonly StoryblokStoriesApiClient storiesApiClient;
+    private readonly StoryblokContentDeliveryApiClient storyblokApiClient;
     private readonly ILogger<IndexModel> logger;
 
     public Story<PageBlock>? Story { get; private set; }
 
     public IndexModel(
-        StoryblokStoriesApiClient storiesApiClient,
+        StoryblokContentDeliveryApiClient storyblokApiClient,
         ILogger<IndexModel> logger)
     {
-        this.storiesApiClient = storiesApiClient;
+        this.storyblokApiClient = storyblokApiClient;
         this.logger = logger;
     }
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var response = await storiesApiClient.GetStoryAsync<PageBlock>(Slug);
+        var response = await storyblokApiClient.Stories.GetSingleAsync<PageBlock>(Slug);
 
         if (response.Data == null)
         {

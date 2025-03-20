@@ -5,28 +5,28 @@ namespace StoryblokDotNet.ContentDelivery;
 
 public sealed class StoryblokStoriesApiClient
 {
-    private readonly StoryblokContentDeliveryApiClient contentDeliveryApiClient;
+    private readonly StoryblokContentDeliveryRestClient contentDeliveryRestClient;
     private readonly StoryblokRequestContext storyblokRequestContext;
     private readonly StoryblokContentDeliveryOptions options;
 
     public StoryblokStoriesApiClient(
-        StoryblokContentDeliveryApiClient contentDeliveryApiClient,
+        StoryblokContentDeliveryRestClient contentDeliveryRestClient,
         StoryblokRequestContext storyblokRequestContext,
         IOptions<StoryblokContentDeliveryOptions> options)
     {
-        this.contentDeliveryApiClient = contentDeliveryApiClient;
+        this.contentDeliveryRestClient = contentDeliveryRestClient;
         this.storyblokRequestContext = storyblokRequestContext;
         this.options = options.Value;
     }
 
-    public async Task<StoryblokContentDeliveryApiResponse<StoriesResponse<StoryBlock>>> GetStoriesAsync(
+    public async Task<StoryblokContentDeliveryApiResponse<StoriesResponse<StoryBlock>>> GetMultipleAsync(
         Action<StoriesQueryBuilder>? query = null,
         CancellationToken cancellationToken = default)
     {
-        return await GetStoriesAsync<StoryBlock>(query, cancellationToken);
+        return await GetMultipleAsync<StoryBlock>(query, cancellationToken);
     }
 
-    public async Task<StoryblokContentDeliveryApiResponse<StoriesResponse<T>>> GetStoriesAsync<T>(
+    public async Task<StoryblokContentDeliveryApiResponse<StoriesResponse<T>>> GetMultipleAsync<T>(
         Action<StoriesQueryBuilder>? query = null,
         CancellationToken cancellationToken = default)
         where T : StoryBlock
@@ -36,17 +36,17 @@ public sealed class StoryblokStoriesApiClient
 
         var request = new StoriesRequest(queryBuilder.Build());
 
-        return await GetStoriesAsync<T>(request, cancellationToken);
+        return await GetMultipleAsync<T>(request, cancellationToken);
     }
 
-    public async Task<StoryblokContentDeliveryApiResponse<StoriesResponse<StoryBlock>>> GetStoriesAsync(
+    public async Task<StoryblokContentDeliveryApiResponse<StoriesResponse<StoryBlock>>> GetMultipleAsync(
         StoriesRequest request,
         CancellationToken cancellationToken = default)
     {
-        return await GetStoriesAsync<StoryBlock>(request, cancellationToken);
+        return await GetMultipleAsync<StoryBlock>(request, cancellationToken);
     }
 
-    public async Task<StoryblokContentDeliveryApiResponse<StoriesResponse<T>>> GetStoriesAsync<T>(
+    public async Task<StoryblokContentDeliveryApiResponse<StoriesResponse<T>>> GetMultipleAsync<T>(
         StoriesRequest request,
         CancellationToken cancellationToken = default)
         where T : StoryBlock
@@ -91,12 +91,12 @@ public sealed class StoryblokStoriesApiClient
 
         // TODO: Deal with [Cache invalidation](https://www.storyblok.com/docs/api/content-delivery/v2/getting-started/cache-invalidation) - continue to allow for setting on the request query, but set here if not set
 
-        return await contentDeliveryApiClient.ExecuteAsync<StoriesResponse<T>>(
+        return await contentDeliveryRestClient.ExecuteAsync<StoriesResponse<T>>(
             restRequest,
             cancellationToken);
     }
 
-    public async Task<StoryblokContentDeliveryApiResponse<StoryResponse<T>>> GetStoryAsync<T>(
+    public async Task<StoryblokContentDeliveryApiResponse<StoryResponse<T>>> GetSingleAsync<T>(
         string fullSlug,
         Action<StoryQueryBuilder>? query = null,
         CancellationToken cancellationToken = default)
@@ -107,10 +107,10 @@ public sealed class StoryblokStoriesApiClient
 
         var request = new StoryRequest(fullSlug, queryBuilder.Build());
 
-        return await GetStoryAsync<T>(request, cancellationToken);
+        return await GetSingleAsync<T>(request, cancellationToken);
     }
 
-    public async Task<StoryblokContentDeliveryApiResponse<StoryResponse<T>>> GetStoryAsync<T>(
+    public async Task<StoryblokContentDeliveryApiResponse<StoryResponse<T>>> GetSingleAsync<T>(
         int id,
         Action<StoryQueryBuilder>? query = null,
         CancellationToken cancellationToken = default)
@@ -121,10 +121,10 @@ public sealed class StoryblokStoriesApiClient
 
         var request = new StoryRequest(id, queryBuilder.Build());
 
-        return await GetStoryAsync<T>(request, cancellationToken);
+        return await GetSingleAsync<T>(request, cancellationToken);
     }
 
-    public async Task<StoryblokContentDeliveryApiResponse<StoryResponse<T>>> GetStoryAsync<T>(
+    public async Task<StoryblokContentDeliveryApiResponse<StoryResponse<T>>> GetSingleAsync<T>(
         Guid uuid,
         Action<StoryQueryBuilder>? query = null,
         CancellationToken cancellationToken = default)
@@ -135,10 +135,10 @@ public sealed class StoryblokStoriesApiClient
 
         var request = new StoryRequest(uuid, queryBuilder.Build());
 
-        return await GetStoryAsync<T>(request, cancellationToken);
+        return await GetSingleAsync<T>(request, cancellationToken);
     }
 
-    public async Task<StoryblokContentDeliveryApiResponse<StoryResponse<T>>> GetStoryAsync<T>(
+    public async Task<StoryblokContentDeliveryApiResponse<StoryResponse<T>>> GetSingleAsync<T>(
         StoryRequest request,
         CancellationToken cancellationToken = default)
         where T : StoryBlock
@@ -162,7 +162,7 @@ public sealed class StoryblokStoriesApiClient
 
         // TODO: Deal with [Cache invalidation](https://www.storyblok.com/docs/api/content-delivery/v2/getting-started/cache-invalidation) - continue to allow for setting on the request query, but set here if not set
 
-        return await contentDeliveryApiClient.ExecuteAsync<StoryResponse<T>>(
+        return await contentDeliveryRestClient.ExecuteAsync<StoryResponse<T>>(
             restRequest,
             cancellationToken);
     }
