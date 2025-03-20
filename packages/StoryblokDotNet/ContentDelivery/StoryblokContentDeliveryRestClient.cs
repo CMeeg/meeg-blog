@@ -24,7 +24,10 @@ public sealed class StoryblokContentDeliveryRestClient
         IStoryBlockTypeRegistry storyBlockTypeRegistry,
         IOptions<StoryblokContentDeliveryOptions> options)
     {
-        var clientOptions = new RestClientOptions(regionBaseUrl[options.Value.Region]);
+        var clientOptions = new RestClientOptions(regionBaseUrl[options.Value.Region])
+        {
+            FailOnDeserializationError = true
+        };
 
         var jsonOptions = new JsonSerializerOptions
         {
@@ -46,8 +49,7 @@ public sealed class StoryblokContentDeliveryRestClient
         RestRequest request,
         CancellationToken cancellationToken = default)
     {
-        // TODO: Can deserialization be prevented if the response is not successful?
-        RestResponse<T> response = await client.ExecuteGetAsync<T>(
+        RestResponse response = await client.ExecuteAsync(
             request,
             cancellationToken);
 
@@ -55,21 +57,39 @@ public sealed class StoryblokContentDeliveryRestClient
 
         if (response.IsSuccessful)
         {
-            return new StoryblokContentDeliveryApiResponse<T>
+            try
             {
-                Data = response.Data,
-                ResponseUri = response.ResponseUri
-            };
+                return new StoryblokContentDeliveryApiResponse<T>
+                {
+                    Data = client.Serializers.DeserializeContent<T>(response),
+                    ResponseUri = response.ResponseUri
+                };
+            }
+            catch (JsonException ex)
+            {
+                return CreateErrorResponse<T>(response, ex);
+            }
         }
 
+        // Storyblok doesn't return a consistent response body for errors so we can't reliably deserialize it
+        // Docs say to just use the status code
+        // https://www.storyblok.com/docs/api/content-delivery/v2/getting-started/errors
+
+        return CreateErrorResponse<T>(response);
+    }
+
+    private static StoryblokContentDeliveryApiResponse<T> CreateErrorResponse<T>(
+        RestResponse response,
+        Exception? ex = null)
+    {
         return new StoryblokContentDeliveryApiResponse<T>
         {
             Error = new StoryblokContentDeliveryApiError
             {
                 StatusCode = response.StatusCode,
                 StatusDescription = response.StatusDescription,
-                ErrorMessage = response.ErrorMessage,
-                Exception = response.ErrorException
+                ErrorMessage = ex?.Message ?? response.ErrorMessage,
+                Exception = ex ?? response.ErrorException
             },
             ResponseUri = response.ResponseUri
         };
