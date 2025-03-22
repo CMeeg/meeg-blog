@@ -43,6 +43,10 @@ public sealed class StoryblokContentDeliveryRestClient
         client = new RestClient(
             clientOptions,
             configureSerialization: s => s.UseSystemTextJson(jsonOptions));
+
+        client.AddDefaultQueryParameter(
+            ContentDeliveryQueryParamName.Token,
+            options.Value.Token);
     }
 
     public async Task<StoryblokContentDeliveryApiResponse<T>> ExecuteAsync<T>(

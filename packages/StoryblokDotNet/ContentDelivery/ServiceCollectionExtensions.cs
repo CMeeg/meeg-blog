@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using StoryblokDotNet.ContentDelivery.Spaces;
 
 namespace StoryblokDotNet.ContentDelivery;
 
@@ -62,6 +63,7 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<StoryblokContentDeliveryRestClient>();
         services.AddScoped<StoryblokContentDeliveryApiClient>();
         services.AddScoped<StoryblokStoriesApiClient>();
+        services.AddScoped<StoryblokSpacesApiClient>();
 
         return services;
     }

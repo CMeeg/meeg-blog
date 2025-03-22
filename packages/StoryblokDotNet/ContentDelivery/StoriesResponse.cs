@@ -4,7 +4,7 @@ public sealed class StoriesResponse<T>
     where T : StoryBlock
 {
     public required Story<T>[] Stories { get; set; }
-    public int CV { get; set; }
+    public long CV { get; set; }
     // TODO: rels
     // TODO: links
     public Guid[]? RelUuids { get; set; }

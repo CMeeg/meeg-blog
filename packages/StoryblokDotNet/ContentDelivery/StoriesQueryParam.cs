@@ -5,7 +5,6 @@ namespace StoryblokDotNet.ContentDelivery;
 public sealed class StoriesQueryParam
     : SmartEnum<StoriesQueryParam, string>
 {
-    public static readonly StoriesQueryParam Token = new(nameof(Token), StoriesQueryParamName.Token);
     public static readonly StoriesQueryParam CacheVersion = new(nameof(CacheVersion), StoriesQueryParamName.CacheVersion);
     public static readonly StoriesQueryParam Version = new(nameof(Version), StoriesQueryParamName.Version);
     public static readonly StoriesQueryParam StartsWith = new(nameof(StartsWith), StoriesQueryParamName.StartsWith);
@@ -50,7 +49,6 @@ public sealed class StoriesQueryParam
 
 public static class StoriesQueryParamName
 {
-    public const string Token = "token";
     public const string CacheVersion = "cv";
     public const string Version = "version";
     public const string StartsWith = "starts_with";

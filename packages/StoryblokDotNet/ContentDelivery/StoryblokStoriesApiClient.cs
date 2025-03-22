@@ -53,12 +53,6 @@ public sealed class StoryblokStoriesApiClient
     {
         var restRequest = new RestRequest("stories", Method.Get);
 
-        if (request.Query.Token == null)
-        {
-            // Use the default token if not set on the request
-            restRequest.AddQueryParameter(StoriesQueryParam.Token, options.Token);
-        }
-
         if (request.Query.Version == null)
         {
             // Default to draft version if in visual editor, else published
@@ -89,7 +83,7 @@ public sealed class StoryblokStoriesApiClient
             request.Query.FilterQuery = filterQuery;
         }
 
-        // TODO: Deal with [Cache invalidation](https://www.storyblok.com/docs/api/content-delivery/v2/getting-started/cache-invalidation) - continue to allow for setting on the request query, but set here if not set
+        // TODO: Deal with [Cache invalidation](https://www.storyblok.com/docs/api/content-delivery/v2/getting-started/cache-invalidation) - continue to allow for setting on the request query, but set here if not set (only for `published` version)
 
         return await contentDeliveryRestClient.ExecuteAsync<StoriesResponse<T>>(
             restRequest,
@@ -145,12 +139,6 @@ public sealed class StoryblokStoriesApiClient
     {
         var restRequest = new RestRequest("stories/{identifier}", Method.Get)
             .AddUrlSegment("identifier", request.Identifier.ToString());
-
-        if (request.Query.Token == null)
-        {
-            // Use the default token if not set on the request
-            restRequest.AddQueryParameter(StoryQueryParam.Token, options.Token);
-        }
 
         if (request.Query.Version == null)
         {

@@ -2,14 +2,6 @@ namespace StoryblokDotNet.ContentDelivery;
 
 public class StoryQueryBuilder
 {
-    private string? token;
-    public StoryQueryBuilder Token(string? token)
-    {
-        this.token = token;
-
-        return this;
-    }
-
     private int? cacheVersion;
     public StoryQueryBuilder CacheVersion(int? cacheVersion)
     {
@@ -116,7 +108,6 @@ public class StoryQueryBuilder
     {
         return new StoryQuery
         {
-            Token = token,
             CacheVersion = cacheVersion,
             Version = version,
             FindBy = findBy,
