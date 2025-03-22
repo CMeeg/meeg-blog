@@ -1,17 +1,26 @@
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Caching.Hybrid;
 using Microsoft.Extensions.Options;
+using StoryblokDotNet.ContentDelivery.Spaces;
 
 namespace StoryblokDotNet.ContentDelivery;
 
 public sealed class StoryblokRequestContext
 {
+    private const string CacheVersionKeyName = "StoryblokCacheVersion";
+    private readonly HybridCache cache;
+    private readonly StoryblokSpacesApiClient spacesApiClient;
+    private readonly StoryblokContentDeliveryOptions options;
+
     public StoryblokVisualEditorContext? VisualEditorContext { get; private set; }
     public bool IsVisualEditorRequest => VisualEditorContext != null;
 
     public StoryblokRequestContext(
         IHttpContextAccessor httpContextAccessor,
+        HybridCache cache,
+        StoryblokSpacesApiClient spacesApiClient,
         IOptions<StoryblokContentDeliveryOptions> options)
     {
         IQueryCollection? query = httpContextAccessor.HttpContext?.Request.Query;
@@ -22,6 +31,58 @@ public sealed class StoryblokRequestContext
                 query,
                 options.Value.Token);
         }
+
+        this.cache = cache;
+        this.spacesApiClient = spacesApiClient;
+        this.options = options.Value;
+    }
+
+    public async Task<long?> GetCacheVersion(
+        CancellationToken cancellationToken = default)
+    {
+        return await cache.GetOrCreateAsync(
+            CacheVersionKeyName,
+            async cancel => {
+                if (options.CacheVersion.Mode == StoryblokContentDeliveryOptions.CacheVersionMode.Manual)
+                {
+                    return null;
+                }
+
+                var response = await spacesApiClient.GetCurrentSpaceAsync(cancel);
+                return response.Data?.Space.Version;
+            },
+            CreateCacheVersionEntryOptions(),
+            cancellationToken: cancellationToken
+        );
+    }
+
+    public async Task SetCacheVersion(
+        long cacheVersion,
+        CancellationToken cancellationToken = default)
+    {
+        await cache.SetAsync(
+            CacheVersionKeyName,
+            (long?)cacheVersion,
+            CreateCacheVersionEntryOptions(),
+            cancellationToken: cancellationToken);
+    }
+
+    private HybridCacheEntryOptions CreateCacheVersionEntryOptions()
+    {
+        return new HybridCacheEntryOptions
+        {
+            Expiration = TimeSpan.FromMinutes(options.CacheVersion.CacheForMins),
+            LocalCacheExpiration = TimeSpan.FromMinutes(options.CacheVersion.CacheForMins)
+        };
+    }
+
+    public async Task ClearCacheVersion(
+        CancellationToken cancellationToken = default
+    )
+    {
+        await cache.RemoveAsync(
+            CacheVersionKeyName,
+            cancellationToken);
     }
 }
 

@@ -11,6 +11,7 @@
 
     <ItemGroup>
         <PackageReference Include="Ardalis.SmartEnum" />
+        <PackageReference Include="Microsoft.Extensions.Caching.Hybrid" />
         <PackageReference Include="RestSharp" />
     </ItemGroup>
 

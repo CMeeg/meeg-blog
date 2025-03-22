@@ -1,4 +1,3 @@
-using Microsoft.Extensions.Options;
 using RestSharp;
 
 namespace StoryblokDotNet.ContentDelivery;
@@ -7,16 +6,13 @@ public sealed class StoryblokStoriesApiClient
 {
     private readonly StoryblokContentDeliveryRestClient contentDeliveryRestClient;
     private readonly StoryblokRequestContext storyblokRequestContext;
-    private readonly StoryblokContentDeliveryOptions options;
 
     public StoryblokStoriesApiClient(
         StoryblokContentDeliveryRestClient contentDeliveryRestClient,
-        StoryblokRequestContext storyblokRequestContext,
-        IOptions<StoryblokContentDeliveryOptions> options)
+        StoryblokRequestContext storyblokRequestContext)
     {
         this.contentDeliveryRestClient = contentDeliveryRestClient;
         this.storyblokRequestContext = storyblokRequestContext;
-        this.options = options.Value;
     }
 
     public async Task<StoryblokContentDeliveryApiResponse<StoriesResponse<StoryBlock>>> GetMultipleAsync(
@@ -53,6 +49,12 @@ public sealed class StoryblokStoriesApiClient
     {
         var restRequest = new RestRequest("stories", Method.Get);
 
+        if(!request.Query.CacheVersion.HasValue)
+        {
+            // Default to the current cache version if not set
+            request.Query.CacheVersion = await storyblokRequestContext.GetCacheVersion(cancellationToken);
+        }
+
         if (request.Query.Version == null)
         {
             // Default to draft version if in visual editor, else published
@@ -82,8 +84,6 @@ public sealed class StoryblokStoriesApiClient
             // Ensure that the filter query is restored even if an exception is thrown
             request.Query.FilterQuery = filterQuery;
         }
-
-        // TODO: Deal with [Cache invalidation](https://www.storyblok.com/docs/api/content-delivery/v2/getting-started/cache-invalidation) - continue to allow for setting on the request query, but set here if not set (only for `published` version)
 
         return await contentDeliveryRestClient.ExecuteAsync<StoriesResponse<T>>(
             restRequest,
@@ -140,6 +140,12 @@ public sealed class StoryblokStoriesApiClient
         var restRequest = new RestRequest("stories/{identifier}", Method.Get)
             .AddUrlSegment("identifier", request.Identifier.ToString());
 
+        if(!request.Query.CacheVersion.HasValue)
+        {
+            // Default to the current cache version if not set
+            request.Query.CacheVersion = await storyblokRequestContext.GetCacheVersion(cancellationToken);
+        }
+
         if (request.Query.Version == null)
         {
             // Default to draft version if in visual editor, else published
@@ -147,8 +153,6 @@ public sealed class StoryblokStoriesApiClient
                 ? StoryVersion.Draft.Value
                 : StoryVersion.Published.Value);
         }
-
-        // TODO: Deal with [Cache invalidation](https://www.storyblok.com/docs/api/content-delivery/v2/getting-started/cache-invalidation) - continue to allow for setting on the request query, but set here if not set
 
         return await contentDeliveryRestClient.ExecuteAsync<StoryResponse<T>>(
             restRequest,

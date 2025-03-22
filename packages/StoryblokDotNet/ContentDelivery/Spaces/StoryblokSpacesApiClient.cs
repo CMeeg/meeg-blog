@@ -1,4 +1,3 @@
-using Microsoft.Extensions.Options;
 using RestSharp;
 
 namespace StoryblokDotNet.ContentDelivery.Spaces;
@@ -16,10 +15,10 @@ public sealed class StoryblokSpacesApiClient
     public async Task<StoryblokContentDeliveryApiResponse<SpaceResponse>> GetCurrentSpaceAsync(
         CancellationToken cancellationToken = default)
     {
-        var restRequest = new RestRequest("spaces/me", Method.Get);
+        var request = new RestRequest("spaces/me", Method.Get);
 
         return await contentDeliveryRestClient.ExecuteAsync<SpaceResponse>(
-            restRequest,
+            request,
             cancellationToken);
     }
 }

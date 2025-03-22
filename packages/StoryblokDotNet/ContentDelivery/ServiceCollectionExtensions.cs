@@ -57,6 +57,8 @@ public static class ServiceCollectionExtensions
             })
         );
 
+        services.AddHybridCache();
+
         services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         services.AddScoped<StoryblokRequestContext>();
 

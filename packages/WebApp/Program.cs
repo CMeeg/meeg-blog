@@ -11,15 +11,6 @@ builder.Configuration.AddDotNetEnv();
 
 // Add services to the container
 
-if (!builder.Environment.IsDevelopment())
-{
-    builder.Services.AddResponseCompression(options =>
-    {
-        options.EnableForHttps = true;
-        options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(["image/svg+xml"]);
-    });
-}
-
 string[] supportedCultures = ["en-GB"];
 
 builder.Services.Configure<RequestLocalizationOptions>(options =>
@@ -33,6 +24,15 @@ builder.Services.AddStoryblokContentDelivery(options => {
     // TODO: Just use appsettings?
     options.Token = builder.Configuration["STORYBLOK_PREVIEW_TOKEN"] ?? "";
 });
+
+if (!builder.Environment.IsDevelopment())
+{
+    builder.Services.AddResponseCompression(options =>
+    {
+        options.EnableForHttps = true;
+        options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(["image/svg+xml"]);
+    });
+}
 
 builder.Services.AddRazorPages();
 
