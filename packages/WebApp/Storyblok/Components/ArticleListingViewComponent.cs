@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using StoryblokDotNet.ContentDelivery;
+using StoryblokDotNet.ContentDelivery.Stories;
 using WebApp.Storyblok.Blocks;
 
 namespace WebApp.Storyblok.Components;

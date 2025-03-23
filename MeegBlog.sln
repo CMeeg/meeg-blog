@@ -5,7 +5,7 @@ VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "packages\WebApp\WebApp.csproj", "{6D9968C4-898C-4F52-B675-24430BA17D52}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoryblokDotNet", "packages\StoryblokDotNet\StoryblokDotNet.csproj", "{202BE323-0F21-437E-AE3C-3A03F1F17F96}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoryblokDotNet.ContentDelivery", "packages\StoryblokDotNet.ContentDelivery\StoryblokDotNet.ContentDelivery.csproj", "{202BE323-0F21-437E-AE3C-3A03F1F17F96}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

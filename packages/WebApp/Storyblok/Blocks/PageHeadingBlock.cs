@@ -1,5 +1,5 @@
 using System.Text.Json.Serialization;
-using StoryblokDotNet.ContentDelivery;
+using StoryblokDotNet.ContentDelivery.Stories;
 
 namespace WebApp.Storyblok.Blocks;
 

@@ -10,7 +10,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\StoryblokDotNet\StoryblokDotNet.csproj" />
+      <ProjectReference Include="..\StoryblokDotNet.ContentDelivery\StoryblokDotNet.ContentDelivery.csproj" />
     </ItemGroup>
 
     <PropertyGroup>
