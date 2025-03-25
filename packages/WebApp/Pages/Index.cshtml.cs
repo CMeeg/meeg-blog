@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using StoryblokDotNet.ContentDelivery;
 using StoryblokDotNet.ContentDelivery.Stories;
-using WebApp.Storyblok.Blocks;
+using WebApp.Features.Storyblok.Blocks;
 
 namespace WebApp.Pages;
 

@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using StoryblokDotNet.ContentDelivery;
 using StoryblokDotNet.ContentDelivery.Stories;
-using WebApp.Storyblok.Blocks;
+using WebApp.Features.Storyblok.Blocks;
 
-namespace WebApp.Storyblok.Components;
+namespace WebApp.Features.Storyblok.Components;
 
 public class ArticleListingViewComponent
     : ViewComponent

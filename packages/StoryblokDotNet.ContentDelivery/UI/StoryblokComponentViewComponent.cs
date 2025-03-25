@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using StoryblokDotNet.ContentDelivery.Stories;
 
-namespace WebApp.Storyblok.Components;
+namespace StoryblokDotNet.ContentDelivery.UI;
 
+// TODO: Rename to `StoryComponentViewComponent`?
 public class StoryblokComponentViewComponent
     : ViewComponent
 {

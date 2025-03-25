@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using StoryblokDotNet.ContentDelivery.Stories;
 
-namespace WebApp.Storyblok.Blocks;
+namespace WebApp.Features.Storyblok.Blocks;
 
 [StoryBlockType(TechnicalName)]
 public class ArticleListingBlock
