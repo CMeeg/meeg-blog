@@ -1,18 +1,18 @@
 using StoryblokDotNet.ContentDelivery;
 using StoryblokDotNet.ContentDelivery.Stories;
-using WebApp.Features.Pages.Layout;
 using WebApp.Features.Storyblok.Blocks;
+using WebApp.Features.Storyblok.Layout;
 
-namespace WebApp.Features.Storyblok.Layout;
+namespace WebApp.Features.Pages.Layout;
 
-public class StoryblokPageLayoutContextProvider
+public class MeegBlogPageLayoutContextProvider
     : DefaultPageLayoutContextProvider
 {
     private const string GlobalSlug = "global";
 
     private readonly StoryblokContentDeliveryApiClient storyblokApiClient;
 
-    public StoryblokPageLayoutContextProvider(
+    public MeegBlogPageLayoutContextProvider(
         StoryblokContentDeliveryApiClient storyblokApiClient,
         IHttpContextAccessor httpContextAccessor)
         : base(httpContextAccessor)

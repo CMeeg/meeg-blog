@@ -2,8 +2,8 @@ using DotNetEnv.Configuration;
 using Microsoft.AspNetCore.ResponseCompression;
 using Phoria;
 using StoryblokDotNet.ContentDelivery;
+using WebApp.Features.Localisation;
 using WebApp.Features.Pages.Layout;
-using WebApp.Features.Storyblok.Layout;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -13,13 +13,11 @@ builder.Configuration.AddDotNetEnv();
 
 // Add services to the container
 
-string[] supportedCultures = ["en-GB"];
-
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
-    options.AddSupportedCultures(supportedCultures)
-        .AddSupportedUICultures(supportedCultures)
-        .SetDefaultCulture(supportedCultures[0]);
+    options.AddSupportedCultures(LocalisationConfiguration.SupportedCultures)
+        .AddSupportedUICultures(LocalisationConfiguration.SupportedCultures)
+        .SetDefaultCulture(LocalisationConfiguration.DefaultCulture);
 });
 
 builder.Services.AddStoryblokContentDelivery(options => {
@@ -36,7 +34,7 @@ if (!builder.Environment.IsDevelopment())
     });
 }
 
-builder.Services.AddScoped<IPageLayoutContextProvider, StoryblokPageLayoutContextProvider>()
+builder.Services.AddScoped<IPageLayoutContextProvider, MeegBlogPageLayoutContextProvider>()
     .AddScoped<PageLayoutContext>();
 
 builder.Services.AddRazorPages();

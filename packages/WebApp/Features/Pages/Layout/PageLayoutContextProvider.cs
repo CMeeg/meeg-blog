@@ -1,3 +1,4 @@
+using System.Globalization;
 using Microsoft.AspNetCore.Http.Extensions;
 
 namespace WebApp.Features.Pages.Layout;
@@ -5,6 +6,7 @@ namespace WebApp.Features.Pages.Layout;
 public interface IPageLayoutContextProvider
 {
     Task<PageHead> CreatePageHeadAsync();
+    Task<HtmlAttributeCollection> CreateHtmlAttributesAsync();
 }
 
 public class DefaultPageLayoutContextProvider
@@ -35,6 +37,15 @@ public class DefaultPageLayoutContextProvider
             {
                 CanonicalUrl = canonicalUrl
             }
+        });
+    }
+
+    public virtual Task<HtmlAttributeCollection> CreateHtmlAttributesAsync()
+    {
+        return Task.FromResult(new HtmlAttributeCollection
+        {
+            ["lang"] = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName,
+            ["dir"] = CultureInfo.CurrentUICulture.TextInfo.IsRightToLeft ? "rtl" : "ltr"
         });
     }
 }
