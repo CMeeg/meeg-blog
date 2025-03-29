@@ -1,0 +1,21 @@
+@model WebApp.Features.Pages.Layout.PageHead
+
+@if (!string.IsNullOrEmpty(Model.Metadata.Title))
+{
+    <title>@Model.Metadata.FullTitle</title>
+}
+
+@if (!string.IsNullOrEmpty(Model.Metadata.Description))
+{
+    <meta name="description" content="@Model.Metadata.Description" />
+}
+
+@if (!string.IsNullOrEmpty(Model.Metadata.CanonicalUrl))
+{
+    <link rel="canonical" href="@Model.Metadata.CanonicalUrl" />
+}
+
+@if (Model.OpenGraph != null)
+{
+    <partial name="Components/PageHead/_OpenGraph" for="OpenGraph" />
+}

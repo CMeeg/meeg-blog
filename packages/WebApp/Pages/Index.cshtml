@@ -1,9 +1,4 @@
 ﻿@page
 @model IndexModel
-@{
-    ViewData["Title"] = "Home page";
 
-    var story = Model.Story!;
-}
-
-<vc:storyblok-component block="story.Content" />
+<vc:storyblok-component block="Model.Story!.Content" />

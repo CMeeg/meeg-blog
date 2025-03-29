@@ -2,6 +2,8 @@ using DotNetEnv.Configuration;
 using Microsoft.AspNetCore.ResponseCompression;
 using Phoria;
 using StoryblokDotNet.ContentDelivery;
+using WebApp.Features.Pages.Layout;
+using WebApp.Features.Storyblok.Layout;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +35,9 @@ if (!builder.Environment.IsDevelopment())
         options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(["image/svg+xml"]);
     });
 }
+
+builder.Services.AddScoped<IPageLayoutContextProvider, StoryblokPageLayoutContextProvider>()
+    .AddScoped<PageLayoutContext>();
 
 builder.Services.AddRazorPages();
 

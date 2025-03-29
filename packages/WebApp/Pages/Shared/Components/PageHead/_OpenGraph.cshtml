@@ -1,0 +1,25 @@
+@model WebApp.Features.Pages.Layout.OpenGraphMetadata;
+
+<meta property="og:type" content="@Model.Type" />
+<meta property="og:title" content="@Model.Title" />
+<meta property="og:image" content="@Model.Image" />
+
+@if (!string.IsNullOrEmpty(Model.Url))
+{
+    <meta property="og:url" content="@Model.Url" />
+}
+
+@if (!string.IsNullOrEmpty(Model.Locale))
+{
+    <meta property="og:locale" content="@Model.Locale" />
+}
+
+@if (!string.IsNullOrEmpty(Model.SiteName))
+{
+    <meta property="og:site_name" content="@Model.SiteName" />
+}
+
+@if (!string.IsNullOrEmpty(Model.Description))
+{
+    <meta property="og:description" content="@Model.Description" />
+}
