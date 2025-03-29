@@ -20,6 +20,16 @@
 
     <phoria-island-scripts />
 
+    @* TODO: Create app View Component to set this up *@
+    <script src="https://app.storyblok.com/f/storyblok-v2-latest.js"></script>
+    <script>
+        const storyblokBridge = new StoryblokBridge()
+
+        storyblokBridge.on(['change', 'published'], () => {
+            location.reload(true)
+        })
+    </script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 

@@ -1,8 +1,10 @@
 @model PageHeadingBlock
 
-<h1>@Model.Title</h1>
+<div storyblok-editable="@Model.Editable">
+    <h1>@Model.Title</h1>
 
-@if (Model.Intro != null)
-{
-    <phoria-island component="RichTextField" client="Client.Load" props="new { Doc = Model.Intro }"></phoria-island>
-}
+    @if (Model.Intro != null)
+    {
+        <phoria-island component="RichTextField" client="Client.Load" props="new { Doc = Model.Intro }"></phoria-island>
+    }
+</div>

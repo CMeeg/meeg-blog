@@ -49,18 +49,18 @@ public sealed class StoryblokStoriesApiClient
     {
         var restRequest = new RestRequest("stories", Method.Get);
 
-        if(!request.Query.CacheVersion.HasValue)
-        {
-            // Default to the current cache version if not set
-            request.Query.CacheVersion = await storyblokRequestContext.GetCacheVersion(cancellationToken);
-        }
-
         if (request.Query.Version == null)
         {
             // Default to draft version if in visual editor, else published
             restRequest.AddQueryParameter(StoriesQueryParam.Version, storyblokRequestContext.IsVisualEditorRequest
                 ? StoryVersion.Draft.Value
                 : StoryVersion.Published.Value);
+        }
+
+        if(request.Query.Version == StoryVersion.Published && !request.Query.CacheVersion.HasValue)
+        {
+            // Default to the current cache version if not set
+            request.Query.CacheVersion = await storyblokRequestContext.GetCacheVersion(cancellationToken);
         }
 
         // The format of the `filter_query` parameter is "special" (i.e. not a standard key=value query parameter) so it needs "special" handling
@@ -140,12 +140,6 @@ public sealed class StoryblokStoriesApiClient
         var restRequest = new RestRequest("stories/{identifier}", Method.Get)
             .AddUrlSegment("identifier", request.Identifier.ToString());
 
-        if(!request.Query.CacheVersion.HasValue)
-        {
-            // Default to the current cache version if not set
-            request.Query.CacheVersion = await storyblokRequestContext.GetCacheVersion(cancellationToken);
-        }
-
         if (request.Query.Version == null)
         {
             // Default to draft version if in visual editor, else published
@@ -153,6 +147,14 @@ public sealed class StoryblokStoriesApiClient
                 ? StoryVersion.Draft.Value
                 : StoryVersion.Published.Value);
         }
+
+        if(request.Query.Version == StoryVersion.Published && !request.Query.CacheVersion.HasValue)
+        {
+            // Default to the current cache version if not set
+            request.Query.CacheVersion = await storyblokRequestContext.GetCacheVersion(cancellationToken);
+        }
+
+        restRequest.AddObject(request.Query);
 
         return await contentDeliveryRestClient.ExecuteAsync<StoryResponse<T>>(
             restRequest,

@@ -1,3 +1,5 @@
 @model ArticleListingBlock
 
-<vc:article-listing starts-with="@Model.StartsWith" with-tag="@Model.WithTag" per-page="Model.PerPage" />
+<div storyblok-editable="@Model.Editable">
+    <vc:article-listing starts-with="@Model.StartsWith" with-tag="@Model.WithTag" per-page="Model.PerPage" />
+</div>

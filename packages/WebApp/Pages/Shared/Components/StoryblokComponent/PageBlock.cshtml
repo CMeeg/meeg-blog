@@ -1,6 +1,8 @@
 @model PageBlock
 
-@foreach (var block in Model.Body)
-{
-    <vc:storyblok-component block="block" />
-}
+<div storyblok-editable="@Model.Editable">
+    @foreach (var block in Model.Body)
+    {
+        <vc:storyblok-component block="block" />
+    }
+</div>
