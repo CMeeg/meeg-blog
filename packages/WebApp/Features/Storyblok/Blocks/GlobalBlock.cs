@@ -10,10 +10,11 @@ public class GlobalBlock
 {
     public const string TechnicalName = "global";
 
-    public string? SiteTitle { get; set; }
+    public required Asset Logo { get; set; }
     public string? Copyright { get; set; }
     [JsonPropertyName("github_username")]
     public string? GitHubUsername { get; set; }
     public string? TwitterUsername { get; set; }
+    public string? SiteTitle { get; set; }
     public required SeoMetadataPlugin Metadata { get; set; }
 }
