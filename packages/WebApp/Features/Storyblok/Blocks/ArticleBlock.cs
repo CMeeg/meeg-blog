@@ -10,5 +10,11 @@ public class ArticleBlock
     public const string TechnicalName = "article";
 
     [JsonPropertyName("title")]
-    public required string Title { get; set; }
+    public string Title { get; private set; }
+
+    public ArticleBlock(Guid uid, string component, string title)
+        : base(uid, component)
+    {
+        Title = title;
+    }
 }

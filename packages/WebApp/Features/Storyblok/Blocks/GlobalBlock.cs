@@ -10,11 +10,18 @@ public class GlobalBlock
 {
     public const string TechnicalName = "global";
 
-    public required Asset Logo { get; set; }
-    public string? Copyright { get; set; }
+    public Asset Logo { get; private set; }
+    public string? Copyright { get; init; }
     [JsonPropertyName("github_username")]
-    public string? GitHubUsername { get; set; }
-    public string? TwitterUsername { get; set; }
-    public string? SiteTitle { get; set; }
-    public required SeoMetadataPlugin Metadata { get; set; }
+    public string? GitHubUsername { get; init; }
+    public string? TwitterUsername { get; init; }
+    public string? SiteTitle { get; init; }
+    public SeoMetadataPlugin Metadata { get; private set; }
+
+    public GlobalBlock(Guid uid, string component, Asset logo, SeoMetadataPlugin metadata)
+        : base(uid, component)
+    {
+        Logo = logo;
+        Metadata = metadata;
+    }
 }

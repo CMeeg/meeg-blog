@@ -10,8 +10,17 @@ public class PageHeadingBlock
     public const string TechnicalName = "page_heading";
 
     [JsonPropertyName("title")]
-    public required string Title { get; set; }
+    public string Title { get; private set; }
 
     [JsonPropertyName("intro")]
-    public object? Intro { get; set; }
+    public object? Intro { get; init; }
+
+    public PageHeadingBlock(
+        Guid uid,
+        string component,
+        string title)
+        : base(uid, component)
+    {
+        Title = title;
+    }
 }

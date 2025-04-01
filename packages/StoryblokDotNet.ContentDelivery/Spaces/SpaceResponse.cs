@@ -2,5 +2,10 @@ namespace StoryblokDotNet.ContentDelivery.Spaces;
 
 public sealed class SpaceResponse
 {
-    public required Space Space { get; set; }
+    public Space Space { get; private set; }
+
+    public SpaceResponse(Space space)
+    {
+        Space = space;
+    }
 }

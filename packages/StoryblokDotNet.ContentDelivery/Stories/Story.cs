@@ -1,47 +1,111 @@
 namespace StoryblokDotNet.ContentDelivery.Stories;
 
-public sealed class Story<T>
+public class Story<T>
     where T : StoryBlock
 {
-    public required string Name { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public DateTime? PublishedAt { get; set; }
-    public DateTime UpdatedAt { get; set; }
-    public int Id { get; set; }
-    public Guid Uuid { get; set; }
-    public required T Content { get; set; }
-    public required string Slug { get; set; }
-    public required string FullSlug { get; set; }
-    public DateOnly? SortByDate { get; set; }
-    public int Position { get; set; }
-    public required string[] TagList { get; set; }
-    public bool IsStartpage { get; set; }
-    public int? ParentId { get; set; }
-    public object? MetaData { get; set; }
-    public Guid GroupId { get; set; }
-    public DateTime FirstPublishedAt { get; set; }
-    public int? ReleaseId { get; set; }
-    public required string Lang { get; set; }
-    public string? Path { get; set; }
-    public required StoryAlternate[] Alternates { get; set; }
-    public string? DefaultFullSlug { get; set; }
-    public required StoryTranslatedSlug[]? TranslatedSlugs { get; set; }
+    public string Name { get; private set; }
+    public DateTime CreatedAt { get; private set; }
+    public DateTime? PublishedAt { get; init; }
+    public DateTime UpdatedAt { get; private set; }
+    public int Id { get; private set; }
+    public Guid Uuid { get; private set; }
+    public T Content { get; private set; }
+    public  string Slug { get; private set; }
+    public string FullSlug { get; private set; }
+    public DateOnly? SortByDate { get; init; }
+    public int Position { get; private set; }
+    public string[] TagList { get; private set; }
+    public bool IsStartpage { get; private set; }
+    public int? ParentId { get; init; }
+    public Dictionary<string, object>? MetaData { get; init; }
+    public Guid GroupId { get; private set; }
+    public DateTime FirstPublishedAt { get; private set; }
+    public int? ReleaseId { get; init; }
+    public string Lang { get; private set; }
+    public string? Path { get; init; }
+    public StoryAlternate[] Alternates { get; private set; }
+    public string? DefaultFullSlug { get; init; }
+    public StoryTranslatedSlug[]? TranslatedSlugs { get; private set; }
+
+    public Story(
+        string name,
+        DateTime createdAt,
+        DateTime updatedAt,
+        int id,
+        Guid uuid,
+        T content,
+        string slug,
+        string fullSlug,
+        int position,
+        string[] tagList,
+        bool isStartpage,
+        Guid groupId,
+        DateTime firstPublishedAt,
+        string lang,
+        StoryAlternate[] alternates,
+        StoryTranslatedSlug[]? translatedSlugs)
+    {
+        Name = name;
+        CreatedAt = createdAt;
+        UpdatedAt = updatedAt;
+        Id = id;
+        Uuid = uuid;
+        Content = content;
+        Slug = slug;
+        FullSlug = fullSlug;
+        Position = position;
+        TagList = tagList;
+        IsStartpage = isStartpage;
+        GroupId = groupId;
+        FirstPublishedAt = firstPublishedAt;
+        Lang = lang;
+        Alternates = alternates;
+        TranslatedSlugs = translatedSlugs;
+    }
 }
 
-public sealed class StoryAlternate
+public class StoryAlternate
 {
-    public int Id { get; set; }
-    public required string Name { get; set; }
-    public required string Slug { get; set; }
-    public bool Published { get; set; }
-    public required string FullSlug { get; set; }
-    public bool IsFolder { get; set; }
+    public int Id { get; private set; }
+    public string Name { get; private set; }
+    public string Slug { get; private set; }
+    public bool Published { get; private set; }
+    public string FullSlug { get; private set; }
+    public bool IsFolder { get; private set; }
+
+    public StoryAlternate(
+        int id,
+        string name,
+        string slug,
+        bool published,
+        string fullSlug,
+        bool isFolder)
+    {
+        Id = id;
+        Name = name;
+        Slug = slug;
+        Published = published;
+        FullSlug = fullSlug;
+        IsFolder = isFolder;
+    }
 }
 
-public sealed class StoryTranslatedSlug
+public class StoryTranslatedSlug
 {
-    public required string Path { get; set; }
-    public required string Name { get; set; }
-    public required string Lang { get; set; }
-    public bool Published { get; set; }
+    public string Path { get; private set; }
+    public string Name { get; private set; }
+    public string Lang { get; private set; }
+    public bool Published { get; private set; }
+
+    public StoryTranslatedSlug(
+        string path,
+        string name,
+        string lang,
+        bool published)
+    {
+        Path = path;
+        Name = name;
+        Lang = lang;
+        Published = published;
+    }
 }

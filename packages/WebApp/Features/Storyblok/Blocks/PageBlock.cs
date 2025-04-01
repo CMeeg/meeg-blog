@@ -11,6 +11,13 @@ public class PageBlock
     public const string TechnicalName = "page";
 
     [JsonPropertyName("body")]
-    public required StoryBlock[] Body { get; set; }
-    public required SeoMetadataPlugin Metadata { get; set; }
+    public StoryBlock[] Body { get; private set; }
+    public SeoMetadataPlugin Metadata { get; private set; }
+
+    public PageBlock(Guid uid, string component, StoryBlock[] body, SeoMetadataPlugin metadata)
+        : base(uid, component)
+    {
+        Body = body;
+        Metadata = metadata;
+    }
 }

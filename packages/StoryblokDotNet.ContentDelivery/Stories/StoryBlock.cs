@@ -6,8 +6,14 @@ namespace StoryblokDotNet.ContentDelivery.Stories;
 public class StoryBlock
 {
     [JsonPropertyName(StoryBlockFieldName.Uid)]
-    public Guid Uid { get; set; }
-    public required string Component { get; set; }
+    public Guid Uid { get; private set; }
+    public string Component { get; private set; }
     [JsonPropertyName(StoryBlockFieldName.Editable)]
-    public string? Editable { get; set; }
+    public string? Editable { get; init; }
+
+    public StoryBlock(Guid uid, string component)
+    {
+        Uid = uid;
+        Component = component;
+    }
 }

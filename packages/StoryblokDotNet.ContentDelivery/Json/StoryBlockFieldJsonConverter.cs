@@ -74,10 +74,8 @@ internal sealed class StoryBlockFieldJsonConverter
 
         doc.RootElement.TryGetProperty(StoryBlockField.Editable, out JsonElement editableElement);
 
-        return new StoryBlock
+        return new StoryBlock(uidElement.GetGuid(), blockName)
         {
-            Uid = uidElement.GetGuid(),
-            Component = blockName,
             Editable = editableElement.ValueKind == JsonValueKind.Undefined
                 ? null
                 : editableElement.GetString()

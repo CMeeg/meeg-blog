@@ -1,13 +1,19 @@
 namespace StoryblokDotNet.ContentDelivery.Stories;
 
-public class StoryResponse<T>
+public sealed class StoryResponse<T>
     where T : StoryBlock
 {
-    public required Story<T> Story { get; set; }
-    public long CV { get; set; }
+    public Story<T> Story { get; private set; }
+    public long CV { get; private set; }
     // TODO: rels
     // TODO: links
-    public Guid[]? RelUuids { get; set; }
-    public Guid[]? LinkUuids { get; set; }
+    public Guid[]? RelUuids { get; init; }
+    public Guid[]? LinkUuids { get; init; }
+
+    public StoryResponse(Story<T> story, long cv)
+    {
+        Story = story;
+        CV = cv;
+    }
 }
 
