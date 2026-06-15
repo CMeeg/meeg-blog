@@ -1,0 +1,22 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+
+[*.{js,cjs,mjs,ts,cts,mts}]
+indent_size = 2
+indent_style = tab
+
+[*.{json,jsonc}]
+indent_size = 2
+indent_style = tab
+
+[*.{md}]
+indent_size = 2
+indent_style = space
+
+[*.{yaml,yml}]
+indent_size = 2
+indent_style = space

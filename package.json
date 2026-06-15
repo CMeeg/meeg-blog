@@ -1,28 +1,28 @@
 {
-  "name": "meeg-blog",
-  "version": "3.0.0",
-  "description": "Chris Meagher's blog",
-  "author": "Chris Meagher",
-  "license": "MIT",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "astro": "astro",
-    "build": "astro build",
-    "dev": "astro dev",
-    "preview": "astro preview"
-  },
-  "engines": {
-    "node": ">=22.12.0"
-  },
-  "devEngines": {
-    "packageManager": {
-      "name": "pnpm",
-      "version": "11.5.2",
-      "onFail": "download"
-    }
-  },
-  "dependencies": {
-    "astro": "^6.4.4"
-  }
+	"name": "meeg-blog",
+	"version": "3.0.0",
+	"description": "Chris Meagher's blog",
+	"author": "Chris Meagher",
+	"license": "MIT",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"astro": "astro",
+		"build": "astro build",
+		"dev": "astro dev",
+		"preview": "astro preview"
+	},
+	"engines": {
+		"node": ">=22.12.0"
+	},
+	"devEngines": {
+		"packageManager": {
+			"name": "pnpm",
+			"version": "11.5.2",
+			"onFail": "download"
+		}
+	},
+	"dependencies": {
+		"astro": "^6.4.4"
+	}
 }
