@@ -1,0 +1,56 @@
+{
+  // Scenario-based TSConfig matching Total TypeScript recommendations.
+  // Pick the sections that apply to your project; uncomment and adjust as needed.
+  // See https://www.totaltypescript.com/tsconfig-cheat-sheet
+  //
+  // IMPORTANT: If you use a framework (Astro, Next, SvelteKit, etc.), check
+  // for framework-specific tsconfig guidance FIRST via the `find-docs` skill.
+  // Framework conventions may override these generic defaults.
+  "compilerOptions": {
+
+    /* ── Base Options (recommended for all projects) ── */
+    "esModuleInterop": true,               // CJS ↔ ESM interop
+    "skipLibCheck": true,                  // skip node_modules .d.ts checks
+    "target": "es2022",                    // modern JS output; prefer stability over esnext
+    "allowJs": true,                       // import .js files
+    "resolveJsonModule": true,             // import .json files
+    "moduleDetection": "force",            // treat all files as modules
+    "isolatedModules": true,               // safe for bundlers / transpilers
+    "verbatimModuleSyntax": true,          // enforce `import type` / `export type`
+
+    /* ── Strictness (recommended for all projects) ── */
+    "strict": true,                        // implies the core strict checks
+    "noUncheckedIndexedAccess": true,      // arr[i] is T | undefined
+    "noImplicitOverride": true,            // `override` keyword required
+
+    // Many teams also add these, but they are "noisy" — opt in if you want them:
+    // "noUnusedLocals": true,
+    // "noUnusedParameters": true,
+    // "noImplicitReturns": true,
+    // "noFallthroughCasesInSwitch": true,
+    // "exactOptionalPropertyTypes": true,
+    // "forceConsistentCasingInFileNames": true,
+
+    /* ── Transpiling with TypeScript (uncomment if tsc emits .js) ── */
+    // "module": "NodeNext",
+    // "outDir": "./dist",
+    // "sourceMap": true,
+    //
+    //   ── Library (add if consumers need .d.ts files) ──
+    //   "declaration": true,
+    //
+    //     ── Monorepo library (add if part of a monorepo) ──
+    //     "composite": true,
+    //     "declarationMap": true,
+
+    /* ── NOT transpiling with TypeScript (uncomment if bundler/esbuild/etc. emits) ── */
+    // "module": "preserve",
+    // "noEmit": true,
+
+    /* ── Runtime environment ── */
+    // DOM:     "lib": ["es2022", "dom", "dom.iterable"]
+    // No DOM:  "lib": ["es2022"]
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", ".agents", ".claude", ".opencode"]
+}
