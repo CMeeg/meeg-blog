@@ -27,7 +27,7 @@ This skill is about *idioms and conventions*. For OO design pressure use `solid-
 
 1. Match the symptom in the decision guide to a rule.
 2. Open `references/idioms.md` for that rule's full rationale, a bad example, the idiomatic refactor, and when *not* to apply it.
-3. Copy the closest file from `templates/` and adapt it. The templates already encode the conventions below (strict types, `toString`/`toJSON`, exhaustiveness) so you start compliant instead of retrofitting.
+3. Copy the closest file from `assets/` and adapt it. The templates already encode the conventions below (strict types, `toString`/`toJSON`, exhaustiveness) so you start compliant instead of retrofitting.
 4. **Framework check first** — If the project uses a framework (Astro, Next, SvelteKit, etc.), use `find-docs` to check whether it has its own TypeScript guidance or tsconfig recommendations before applying generic defaults. Framework conventions may override settings like `module`/`moduleResolution`.
 5. Apply the smallest change that removes real pain. Strictness is earned by demonstrated bugs, not applied as ceremony — but the *defaults* here (strict tsconfig, no `any`, no floating promises) are non-negotiable because their failure mode is silent.
 
@@ -38,28 +38,28 @@ This is a hard convention in this codebase, not a suggestion.
 - **`toJSON()`** — returns a plain, serializable object. `JSON.stringify` calls it automatically, so logs, API responses, and persistence get a stable, intentional shape instead of leaking private fields, class internals, or `undefined`. Never return the instance itself.
 - **`toString()`** — returns a short human-readable identifier for logs, error messages, and template literals (`` `order ${order}` ``). It is for humans; `toJSON()` is for machines. They are not interchangeable.
 
-Why it is mandatory: without `toJSON()`, serialization is accidental — it exposes whatever fields happen to be public today and breaks the moment a private field is added. Without `toString()`, a class interpolated into a string is `[object Object]`, which destroys logs and error context. Both methods make the class's *external contract* explicit and decoupled from its internal representation (information hiding). See `references/tostring-tojson.md` for the full rationale, edge cases (circular refs, `Date`, `bigint`, secrets redaction), and the copy-ready pattern. Every template in `templates/` demonstrates it.
+Why it is mandatory: without `toJSON()`, serialization is accidental — it exposes whatever fields happen to be public today and breaks the moment a private field is added. Without `toString()`, a class interpolated into a string is `[object Object]`, which destroys logs and error context. Both methods make the class's *external contract* explicit and decoupled from its internal representation (information hiding). See `references/tostring-tojson.md` for the full rationale, edge cases (circular refs, `Date`, `bigint`, secrets redaction), and the copy-ready pattern. Every template in `assets/` demonstrates it.
 
 ## Decision guide
 
 | Symptom / question | Rule | Where |
 |---|---|---|
-| Setting up a tsconfig from scratch | Use `templates/tsconfig.template.json` — but first check framework guidance with `find-docs` | templates/tsconfig.template.json |
+| Setting up a tsconfig from scratch | Use `assets/tsconfig.template.json` — but first check framework guidance with `find-docs` | assets/tsconfig.template.json |
 | Reaching for `any` to silence the compiler | Use `unknown` + narrowing | idioms.md §1 |
 | `enum Status { ... }` | Use a string-literal union or `as const` object | idioms.md §2 |
 | Object can be in contradictory states | Model with a discriminated union | idioms.md §3 |
-| Two `string` IDs got swapped at a call site | Brand the types (nominal) | idioms.md §4, templates/branded-type.ts |
+| Two `string` IDs got swapped at a call site | Brand the types (nominal) | idioms.md §4, assets/branded-type.ts |
 | `switch` silently misses a new case | Exhaustiveness check with `never` | idioms.md §5 |
 | Config object loses literal types | `as const` + `satisfies` | idioms.md §6 |
-| Throwing for an expected, recoverable failure | Return a `Result<T, E>` | idioms.md §7, templates/result.ts |
-| `catch (e)` then `e.message` | `unknown` catch + error narrowing | idioms.md §8, templates/app-error.ts |
+| Throwing for an expected, recoverable failure | Return a `Result<T, E>` | idioms.md §7, assets/result.ts |
+| `catch (e)` then `e.message` | `unknown` catch + error narrowing | idioms.md §8, assets/app-error.ts |
 | Mutable shared object mutated far away | `readonly` / `Readonly<T>` / freeze | idioms.md §9 |
 | `null` vs `undefined` used interchangeably | Pick one convention; `?.`/`??` | idioms.md §10 |
 | Floating promise / unhandled rejection | Always `await`; `void` deliberate fire-and-forget | idioms.md §11 |
 | Hand-written `{ id: ..., name: ... }` derived from another type | Utility types (`Pick`/`Omit`/`Partial`) | idioms.md §12 |
-| Validating external input by casting | Type guard / assertion function (or a schema lib) | idioms.md §13, templates/type-guards.ts |
-| New class, modeling a domain value | Value object template | templates/value-object.ts |
-| New class with identity/lifecycle | Entity template | templates/entity.ts |
+| Validating external input by casting | Type guard / assertion function (or a schema lib) | idioms.md §13, assets/type-guards.ts |
+| New class, modeling a domain value | Value object template | assets/value-object.ts |
+| New class with identity/lifecycle | Entity template | assets/entity.ts |
 | `interface` vs `type` vs `class` indecision | Decision rule | idioms.md §14 |
 
 ## Reference files
@@ -71,14 +71,14 @@ Why it is mandatory: without `toJSON()`, serialization is accidental — it expo
 
 | File | Use case |
 |---|---|
-| `templates/tsconfig.template.json` | Strict baseline compiler config |
-| `templates/value-object.ts` | Immutable validated value (Money, Email) with factory, `equals`, `toString`/`toJSON` |
-| `templates/entity.ts` | Domain entity with identity, lifecycle, `toString`/`toJSON` |
-| `templates/result.ts` | `Result<T, E>` type + `ok`/`err`/`map`/`unwrap` helpers |
-| `templates/app-error.ts` | Typed error base class + subclasses, serializable, with `toJSON`/`toString` |
-| `templates/discriminated-union.ts` | State modeled as a tagged union with exhaustive handling |
-| `templates/branded-type.ts` | Zero-cost nominal types and smart constructors |
-| `templates/type-guards.ts` | User-defined type guards and assertion functions |
+| `assets/tsconfig.template.json` | Strict baseline compiler config |
+| `assets/value-object.ts` | Immutable validated value (Money, Email) with factory, `equals`, `toString`/`toJSON` |
+| `assets/entity.ts` | Domain entity with identity, lifecycle, `toString`/`toJSON` |
+| `assets/result.ts` | `Result<T, E>` type + `ok`/`err`/`map`/`unwrap` helpers |
+| `assets/app-error.ts` | Typed error base class + subclasses, serializable, with `toJSON`/`toString` |
+| `assets/discriminated-union.ts` | State modeled as a tagged union with exhaustive handling |
+| `assets/branded-type.ts` | Zero-cost nominal types and smart constructors |
+| `assets/type-guards.ts` | User-defined type guards and assertion functions |
 
 ## Non-negotiable defaults
 
