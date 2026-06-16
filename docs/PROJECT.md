@@ -67,26 +67,15 @@ Observable signs this project was worth doing:
 - Total monthly budget ≤ $10
 - Existing Astro expertise is a baseline, but open to changing framework if Astro-on-Cloudflare has known issues or a better stack emerges.
 
-## Design decisions
-
-See `docs/MEMORY.md` for full decision log. Key architectural choices:
-
-- **Astro 6 on Cloudflare Workers** (SSR) — `@astrojs/cloudflare` adapter. No compatibility issues found.
-- **Dato CMS Free plan** — 300 record limit covers projected ~72 records. 100k API calls/month sufficient with worker-side caching.
-- **Dato Structured Text** for article and page bodies — reject Markdown.
-- **CSS custom properties + Open Design AI** — design tokens from DESIGN.md map to CSS vars. No Tailwind, no template.
-- **Vanilla JS theme toggle** — no Preact for a single button.
-- **Cloudflare Web Analytics** — free, built-in. Reject Plausible and Sentry.
-
 ## Open questions
 
-- ~~**Astro on Cloudflare** — any known issues or limitations?~~ ✅ Resolved — `@astrojs/cloudflare` adapter works well on Astro 6.
-- ~~**Dato CMS Free plan record limits** — enough?~~ ✅ Resolved — 300 records, 100k API calls/month; projected ~72 records.
-- ~~**Design approach** — no template, no design skill.~~ ✅ Resolved — Open Design AI for design tokens; CSS custom properties.
+- **Astro on Cloudflare** — any known issues or limitations that would make another framework a better fit?
+- **Dato CMS Free plan record limits** — how many posts/models does it support? Will it cover the full migrated archive?
+- **Design approach** — no template, but no design skill. How to get a unique look without hiring a designer? (e.g. utility CSS framework + good typography?)
 - **Content migration** — what's the effort to move posts from Storyblok to Dato? Manual copy? Scripted?
 
 ## Riskiest unknowns
 
-1. **Design velocity** — not a designer; risk of getting stuck or settling for something that doesn't feel "proud of." Open Design AI chosen to mitigate.
+1. **Design velocity** — not a designer; risk of getting stuck or settling for something that doesn't feel "proud of."
 2. **Maintaining momentum** — rebuild itself could stall if interest drops. Need to ship fast and small.
-3. ~~**Cloudflare + Astro compatibility** — edge rendering, SSR, or build limits might surprise.~~ ✅ Mitigated — no known issues with `@astrojs/cloudflare`.
+3. **Cloudflare + Astro compatibility** — edge rendering, SSR, or build limits might surprise.

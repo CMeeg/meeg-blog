@@ -26,6 +26,7 @@ Chris Meagher's personal blog, rebuilt on Dato CMS + Cloudflare.
 - Use emoji in markdown documents for readability.
 - Get to the point, be terse, do not over explain.
 - Never install a package by editing the manifest; always use `pnpm install`.
+- Phase commands may delegate to Superpowers skills.
 - Each doc in `docs/` has one owning phase command (see below).
 
 ## Phase commands
@@ -33,6 +34,6 @@ Chris Meagher's personal blog, rebuilt on Dato CMS + Cloudflare.
 | Command | Owns | Purpose |
 |---|---|---|
 | `/explore` | `docs/PROJECT.md` | Define what the project is and why |
-| `/design` | `docs/ARCHITECTURE.md`, `docs/SPEC.md` | Architecture and specification |
-| `/plan` | `docs/STORIES.md`, `docs/PLAN.md` | Stories and task breakdown |
+| `/spec` | `docs/specs/` | Architecture and specification |
+| `/plan` | `docs/plans/` | Implementation plans |
 | `/document` | `docs/MEMORY.md`, `README.md` | Decision log and public docs |

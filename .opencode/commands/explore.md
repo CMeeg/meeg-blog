@@ -7,12 +7,12 @@ agent: plan
 
 Think through an idea with me. This is a **problem-space** interview, not a solution. By the end, `docs/PROJECT.md` says what we're building and why, honestly including what we don't know yet.
 
-IMPORTANT: ask if there's an existing spec written anywhere. If so, ask for it and improve on it, otherwise roceed as if nothing existed.
+IMPORTANT: ask if there's an existing spec written anywhere. If so, ask for it and improve on it, otherwise proceed as if nothing existed.
 
 ## Scope
 
 - IN: the problem, the user, the why-now, in/out scope, success, unknowns, light research where a fact is needed to proceed.
-- OUT: architecture, schema, platform, tech choices — all `/design`. If a solution idea comes up, park it under "Open questions", don't decide it.
+- OUT: architecture, schema, platform, tech choices — all `/spec`. If a solution idea comes up, park it under "Open questions", don't decide it.
 
 ## Preflight
 
@@ -46,4 +46,4 @@ Do targeted research only when an answer hinges on a fact you can check.
 
 ## Hand off
 
-State what's still `TODO` in PROJECT.md, then: `Suggested next: /design — or re-run /explore to close open questions first.`
+State what's still `TODO` in PROJECT.md, then: `Suggested next: /spec — or re-run /explore to close open questions first.`

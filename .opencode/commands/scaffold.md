@@ -29,7 +29,7 @@ Use this when creating AGENTS.md
 ## Scope
 
 - IN: create AGENTS.md, the `docs/` skeleton, a README stub, `.gitignore`.
-- OUT: deciding what the project *is* (that is `/explore`), architecture (`/design`), tasks (`/plan`). This command does not interview the problem.
+- OUT: deciding what the project *is* (that is `/explore`), architecture (`/spec`), tasks (`/plan`). This command does not interview the problem.
 
 ## Preflight
 
@@ -40,12 +40,8 @@ Use this when creating AGENTS.md
 
 ## Produce
 
-- **AGENTS.md** (root, owned here) — the **how**: stack, conventions, test & run commands, the phase commands available (`/explore`, `/design`, `/plan`, `/document`), and the rule that each doc has one owner.
+- **AGENTS.md** (root, owned here) — the **how**: stack, conventions, test & run commands, the phase commands available (`/explore`, `/spec`, `/plan`, `/document`), and the rule that each doc has one owner.
 - **docs/PROJECT.md** — stub, owned by `/explore`. Headings: Problem, Who it's for, Goals, Scope (in/out), Open questions.
-- **docs/ARCHITECTURE.md** — stub, owned by `/design`.
-- **docs/SPEC.md** — stub, owned by `/design`.
-- **docs/STORIES.md** — stub, owned by `/plan`.
-- **docs/PLAN.md** — stub, owned by `/plan`. Empty checklist.
 - **docs/MEMORY.md** — the project decision log: decisions made with AI, preserved for the coding agent (OpenCode, Claude Code, etc.). Header + an empty dated-entry list. Curated by `/document`; appended to by every phase command. Distinct from the coding agent's own memory system.
 - **README.md** — one-line stub, owned by `/document`.
 
