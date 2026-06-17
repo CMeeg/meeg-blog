@@ -15,6 +15,16 @@ Project decisions preserved for AI agents. Each entry is dated.
 - **Sentry dropped.** No error-tracking need identified for a personal blog. One less service to manage.
 - **Design must be unique (no templates).** Acknowledged as a risk given no design background. Approach TBD.
 
+## 2026-06-17
+
+### /explore decisions
+
+- **Framework: Astro v6 confirmed.** Evaluated RedwoodSDK, Fresh, React Router v7, Remix v3, and Void as potential Next.js alternatives. Astro's v4-v6 additions (Actions, Sessions, SSR, middleware) make it viable for general-purpose apps beyond content sites, solving the "learning value for work" concern.
+- **React Router v7 ruled out.** Shopify-owned — business partnership conflict at work.
+- **Remix v3 is a different framework.** Complete rewrite with new component model (not React-hooks-based). In beta. Not a viable migration path from Remix v2.
+- **Cloudflare-only frameworks (RedwoodSDK, Void) ruled out.** Work requires multi-cloud (Cloudflare + Azure) support.
+- **Fresh (Deno + Preact) ruled out.** Runtime + framework shift too far from React/.NET team skills.
+
 ## 2026-06-16
 
 ### /spec decisions

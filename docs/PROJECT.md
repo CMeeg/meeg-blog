@@ -67,9 +67,26 @@ Observable signs this project was worth doing:
 - Total monthly budget ≤ $10
 - Existing Astro expertise is a baseline, but open to changing framework if Astro-on-Cloudflare has known issues or a better stack emerges.
 
+## Framework decision
+
+After evaluating RedwoodSDK, Fresh, React Router v7, Remix v3, and Void against the project's goals and the broader aim of evaluating a potential Next.js alternative for work:
+
+**Decision: Stick with Astro v6.**
+
+Astro's v4-v6 additions (Actions, Sessions, SSR, middleware, server islands) make it far more capable for general-purpose apps than its "content site" reputation suggests. For the blog it's ideal; for work, it could serve many use cases (e-commerce, CRUD, marketing) where Next.js is overkill or its Vercel lock-in is a concern. The `.astro` syntax is the main adoption barrier for a React team, but the fundamentals are solid.
+
+Also considered and ruled out:
+
+| Framework | Ruled out because |
+|---|---|
+| **RedwoodSDK** | Cloudflare-only — work requires Azure support |
+| **Fresh** | Deno + Preact — hard sell at a React/.NET shop |
+| **React Router v7** | Excellent multi-cloud story but Shopify-owned — business partnership conflict at work |
+| **Remix v3** | Complete rewrite of Remix — new component model, beta, different framework entirely |
+| **Void** | Cloudflare-only (private beta) |
+
 ## Open questions
 
-- **Astro on Cloudflare** — any known issues or limitations that would make another framework a better fit?
 - **Dato CMS Free plan record limits** — how many posts/models does it support? Will it cover the full migrated archive?
 - **Design approach** — no template, but no design skill. How to get a unique look without hiring a designer? (e.g. utility CSS framework + good typography?)
 - **Content migration** — what's the effort to move posts from Storyblok to Dato? Manual copy? Scripted?
