@@ -46,3 +46,21 @@ Project decisions preserved for AI agents. Each entry is dated.
 - **Layered, colour-matched box-shadows on cards** (Josh Comeau technique) for subtle depth without grey wash.
 - **Coding motifs (// comments, ~ prompts) removed.** Tested and rejected — felt gimmicky rather than authentic.
 - **Footer: minimal, 3 links + scroll-to-top.** Copyright mark (personal branding, not legal), GitHub link, RSS link on left. "Scroll to top" pill on the right. Comment-colour, unobtrusive. IntersectionObserver-driven visibility.
+
+### /plan decisions (2026-06-17)
+
+- **Solution setup plan created** (`docs/plans/2026-06-17-solution-setup.md`) — monorepo restructure, toolchain (Turborepo, Biome, Vitest), DatoCMS CLI config, and CI pipeline. 7 tasks, independently executable, must run before content model plan.
+- **Content model plan updated** — Task 0 (monorepo restructure) removed. Now depends on solution setup plan being completed first.
+- **Content model created via 5 CLI migrations.** Each migration targets one logical group (models, singletons, blocks, wireups, seed). Ran on `uat` fork and promoted to primary after each step.
+- **Migrations in packages/dato-cms/migrations/** — configured via `datocms.config.json` at root.
+- **uat sandbox** used for all migration testing.
+- **Execution order:** Solution setup plan first, then content model plan.
+
+## 2026-06-18
+
+### /plan decisions
+
+- **Visual design system plan created** (`docs/plans/2026-06-18-visual-design-system.md`) — produces design tokens, component mockups, and page layouts via Open Design collaboration, based on spec at `docs/specs/2026-06-16-visual-design.md`.
+- **Depends on solution setup plan.** The monorepo structure (`apps/blog/src/styles/`) must be in place before CSS tokens are committed. Execution order: solution setup → design system → content model.
+- **Execution mode:** Subagent-driven, on demand (user will trigger when ready).
+- **Orange-link light mode resolution deferred to Open Design collaboration.** Task 5 of the plan resolves it within the collab session rather than deferring to implementation.
