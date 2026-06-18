@@ -18,7 +18,7 @@ pnpm-debug.log*
 .DS_Store
 
 # turbo cache
-/.turbo
+.turbo/
 
 # superpowers
 .superpowers/

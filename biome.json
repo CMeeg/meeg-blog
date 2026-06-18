@@ -12,6 +12,9 @@
 	"formatter": {
 		"enabled": true
 	},
+	"files": {
+		"ignore": [".agents/**", ".opencode/**"]
+	},
 	"vcs": {
 		"enabled": true,
 		"clientKind": "git",
