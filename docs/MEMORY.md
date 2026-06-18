@@ -15,16 +15,6 @@ Project decisions preserved for AI agents. Each entry is dated.
 - **Sentry dropped.** No error-tracking need identified for a personal blog. One less service to manage.
 - **Design must be unique (no templates).** Acknowledged as a risk given no design background. Approach TBD.
 
-## 2026-06-17
-
-### /explore decisions
-
-- **Framework: Astro v6 confirmed.** Evaluated RedwoodSDK, Fresh, React Router v7, Remix v3, and Void as potential Next.js alternatives. Astro's v4-v6 additions (Actions, Sessions, SSR, middleware) make it viable for general-purpose apps beyond content sites, solving the "learning value for work" concern.
-- **React Router v7 ruled out.** Shopify-owned — business partnership conflict at work.
-- **Remix v3 is a different framework.** Complete rewrite with new component model (not React-hooks-based). In beta. Not a viable migration path from Remix v2.
-- **Cloudflare-only frameworks (RedwoodSDK, Void) ruled out.** Work requires multi-cloud (Cloudflare + Azure) support.
-- **Fresh (Deno + Preact) ruled out.** Runtime + framework shift too far from React/.NET team skills.
-
 ## 2026-06-16
 
 ### /spec decisions
@@ -47,7 +37,17 @@ Project decisions preserved for AI agents. Each entry is dated.
 - **Coding motifs (// comments, ~ prompts) removed.** Tested and rejected — felt gimmicky rather than authentic.
 - **Footer: minimal, 3 links + scroll-to-top.** Copyright mark (personal branding, not legal), GitHub link, RSS link on left. "Scroll to top" pill on the right. Comment-colour, unobtrusive. IntersectionObserver-driven visibility.
 
-### /plan decisions (2026-06-17)
+## 2026-06-17
+
+### /explore decisions
+
+- **Framework: Astro v6 confirmed.** Evaluated RedwoodSDK, Fresh, React Router v7, Remix v3, and Void as potential Next.js alternatives. Astro's v4-v6 additions (Actions, Sessions, SSR, middleware) make it viable for general-purpose apps beyond content sites, solving the "learning value for work" concern.
+- **React Router v7 ruled out.** Shopify-owned — business partnership conflict at work.
+- **Remix v3 is a different framework.** Complete rewrite with new component model (not React-hooks-based). In beta. Not a viable migration path from Remix v2.
+- **Cloudflare-only frameworks (RedwoodSDK, Void) ruled out.** Work requires multi-cloud (Cloudflare + Azure) support.
+- **Fresh (Deno + Preact) ruled out.** Runtime + framework shift too far from React/.NET team skills.
+
+### /plan decisions
 
 - **Solution setup plan created** (`docs/plans/2026-06-17-solution-setup.md`) — monorepo restructure, toolchain (Turborepo, Biome, Vitest), DatoCMS CLI config, and CI pipeline. 7 tasks, independently executable, must run before content model plan.
 - **Content model plan updated** — Task 0 (monorepo restructure) removed. Now depends on solution setup plan being completed first.

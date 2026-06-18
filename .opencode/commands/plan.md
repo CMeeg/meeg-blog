@@ -16,6 +16,7 @@ Turn specifications into an execution plan. Delegates to the Superpowers `writin
 
 ## Preflight
 
+0. Verify Superpowers is loaded. If not, stop with: `This command requires Superpowers to run. Install it, then try again.`
 1. Read the latest specification doc from `docs/specs/`. If none exists or it's full of TODOs, **stop** — send back to `/spec`.
 2. Read existing plans in `docs/plans/`. Re-entrant: reconcile and extend; never silently drop completed tasks.
 
@@ -29,4 +30,4 @@ The `writing-plans` skill drives the planning:
 
 ## Hand off
 
-Once the plan is written and saved: `Suggested next: /build`
+Once the plan is written and saved: `Suggested next: /implement`

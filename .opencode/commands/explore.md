@@ -5,6 +5,8 @@ agent: plan
 
 # explore
 
+> 🎯 **Design for change.** A problem stated on paper can be changed with a keystroke. A problem assumed in code costs hours to undo. Define scope before you touch a file.
+
 Think through an idea with me. This is a **problem-space** interview, not a solution. By the end, `docs/PROJECT.md` says what we're building and why, honestly including what we don't know yet.
 
 IMPORTANT: ask if there's an existing spec written anywhere. If so, ask for it and improve on it, otherwise proceed as if nothing existed.

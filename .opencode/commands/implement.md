@@ -5,20 +5,18 @@ agent: build
 
 # implement
 
-> 🎯 **Design for change.** Each task's diff should be small, local, and
-> behind a stable seam. Skills gate on spec compliance and code quality —
-> think about seam boundaries before dispatching.
+> 🎯 **Design for change.** Each task's diff should be small, local, and behind a stable seam. Skills gate on spec compliance and code quality — think about seam boundaries before dispatching.
 
 Drive a plan from `docs/plans/` to completion using the Superpowers skills workflow. This command **consumes** a plan; it does not author one — see `/plan` for that.
 
 ## Scope
 
 - IN: plan resolution, worktree isolation, strategy selection, implementation of all tasks through the Superpowers skill workflow.
-- OUT: planning, writing plans, authoring specs, refactoring/refinement passes.
-  This command **consumes** a plan; it does not author one.
+- OUT: planning, writing plans, authoring specs, refactoring/refinement passes. This command **consumes** a plan; it does not author one.
 
 ## Preflight: Resolve the Plan
 
+0. Verify Superpowers is loaded. If not, stop with: `This command requires Superpowers to run. Install it, then try again.`
 1. If `$ARGUMENTS` is provided, resolve it as the plan path.
 2. Otherwise, list `docs/plans/` and ask which plan to implement.
 3. Read the plan. It must contain task checkboxes (`- [ ]`). If not, stop and report.
@@ -41,11 +39,17 @@ Ask the user to choose an execution strategy:
 
 Load the chosen skill via the `skill` tool and follow its instructions to implement every unchecked task in the plan.
 
-When the skill completes, it will hand off to `finishing-a-development-branch` for merge/PR/cleanup decisions.
+Tasks flow through quality skills during execution:
+- `test-driven-development` for new code (red-green cycle per task)
+- `requesting-code-review` before merging branches
+- `finishing-a-development-branch` for final PR/merge/cleanup
+
+All skills gate on spec compliance and code quality.
 
 ## Rules
 
 - Never start implementation on `main`/`master` without explicit consent.
-- Load each skill using OpenCode's `skill` tool — do not read skill files manually.
+- Load each skill using the `skill` tool — do not read skill files manually.
 - Stop and report if a skill reports an unresolvable blocker.
 - Follow each skill's instructions exactly.
+- If implementation reveals a spec gap, stop, log the finding in `docs/MEMORY.md`, and suggest: `Spec gap discovered. Re-run /spec to reconcile before continuing.`

@@ -29,14 +29,16 @@ Chris Meagher's personal blog, rebuilt on Dato CMS + Cloudflare.
 - Phase commands may delegate to Superpowers skills.
 - Each doc in `docs/` has one owning phase command (see below).
 
-## Phase commands
+## Commands
 
 | Command | Owns | Purpose |
 |---|---|---|
 | `/explore` | `docs/PROJECT.md` | Define what the project is and why |
-| `/spec` | `docs/specs/` | Architecture and specification |
+| `/spec` | `docs/specs/`, `docs/ARCHITECTURE.md` | Architecture and specification |
 | `/plan` | `docs/plans/` | Implementation plans |
-| `/document` | `docs/MEMORY.md`, `README.md` | Decision log and public docs |
+| `/document` | `docs/MEMORY.md`, `README.md` | Decision log, public docs, and reconciliation |
+
+**Agent convention:** `agent: plan` for commands that produce docs and specifications (research/writing). `agent: build` for commands that execute code changes.
 
 ## Skill Dispatch
 
