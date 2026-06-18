@@ -79,6 +79,12 @@
       "skillPath": "skills/make-interfaces-feel-better/SKILL.md",
       "computedHash": "54b6e221bbe4e2d1a8461c3f9ecabe69daf891f964e9ee5e699c323daa018f2e"
     },
+    "modern-web-guidance": {
+      "source": "GoogleChrome/modern-web-guidance",
+      "sourceType": "github",
+      "skillPath": "skills/modern-web-guidance/SKILL.md",
+      "computedHash": "b6186e22f682872236f1ed7aba1ef7f3e5427c6e9c3153c339f5d8692837125a"
+    },
     "oklch-skill": {
       "source": "jakubkrehel/oklch-skill",
       "sourceType": "github",
