@@ -1,10 +1,10 @@
 {
-  "profiles": {
-    "default": {
-      "migrations": {
-        "dir": "packages/dato-cms/migrations",
-        "tsconfig": "packages/dato-cms/tsconfig.migrations.json"
-      }
-    }
-  }
+	"profiles": {
+		"default": {
+			"migrations": {
+				"dir": "packages/dato-cms/migrations",
+				"tsconfig": "packages/dato-cms/tsconfig.migrations.json"
+			}
+		}
+	}
 }

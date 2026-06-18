@@ -2,8 +2,10 @@ packages:
   - 'apps/*'
   - 'packages/*'
 allowBuilds:
+  '@biomejs/biome': true
   esbuild: true
   sharp: true
+  yarn: true
 catalog:
   typescript: ^5.8.0
   vitest: ^3.1.0

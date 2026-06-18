@@ -1,23 +1,23 @@
 {
-  "name": "@meeg-blog/dato-cms",
-  "version": "0.1.0",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "build": "tsc",
-    "dev": "tsc --watch",
-    "test": "vitest run"
-  },
-  "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
-    },
-    "./migrations/*": "./migrations/*.ts"
-  },
-  "devDependencies": {
-    "datocms": "catalog:",
-    "typescript": "catalog:",
-    "vitest": "catalog:"
-  }
+	"name": "@meeg-blog/dato-cms",
+	"version": "0.1.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"build": "tsc",
+		"dev": "tsc --watch",
+		"test": "vitest run"
+	},
+	"exports": {
+		".": {
+			"import": "./dist/index.js",
+			"types": "./dist/index.d.ts"
+		},
+		"./migrations/*": "./migrations/*.ts"
+	},
+	"devDependencies": {
+		"datocms": "catalog:",
+		"typescript": "catalog:",
+		"vitest": "catalog:"
+	}
 }

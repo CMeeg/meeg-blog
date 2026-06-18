@@ -1,9 +1,9 @@
 {
-  "vitest.workspaceConfig": "vitest.workspace.ts",
-  "[astro]": {
-    "editor.defaultFormatter": "astro-build.astro-vscode"
-  },
-  "[typescript]": {
-    "editor.defaultFormatter": "biome"
-  }
+	"vitest.workspaceConfig": "vitest.workspace.ts",
+	"[astro]": {
+		"editor.defaultFormatter": "astro-build.astro-vscode"
+	},
+	"[typescript]": {
+		"editor.defaultFormatter": "biome"
+	}
 }

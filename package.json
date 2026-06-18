@@ -1,29 +1,30 @@
 {
-  "name": "meeg-blog",
-  "version": "3.0.0",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "astro": "astro",
-    "dev": "turbo dev",
-    "build": "turbo build",
-    "preview": "pnpm --filter @meeg-blog/blog preview",
-    "lint": "biome check .",
-    "format": "biome check --write .",
-    "test": "turbo test"
-  },
-  "engines": {
-    "node": ">=22.12.0"
-  },
-  "devEngines": {
-    "packageManager": {
-      "name": "pnpm",
-      "version": "11.5.2",
-      "onFail": "download"
-    }
-  },
-  "devDependencies": {
-    "@biomejs/biome": "^1.9.4",
-    "turbo": "^2.5.0"
-  }
+	"name": "meeg-blog",
+	"version": "3.0.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"astro": "astro",
+		"dev": "turbo dev",
+		"build": "turbo build",
+		"preview": "pnpm --filter @meeg-blog/blog preview",
+		"lint": "biome check .",
+		"format": "biome check --write .",
+		"test": "turbo test"
+	},
+	"packageManager": "pnpm@11.5.2",
+	"engines": {
+		"node": ">=22.12.0"
+	},
+	"devEngines": {
+		"packageManager": {
+			"name": "pnpm",
+			"version": "11.5.2",
+			"onFail": "download"
+		}
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^1.9.4",
+		"turbo": "^2.5.0"
+	}
 }
