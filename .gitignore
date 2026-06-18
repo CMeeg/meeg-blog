@@ -17,5 +17,8 @@ pnpm-debug.log*
 # macOS-specific files
 .DS_Store
 
+# turbo cache
+/.turbo
+
 # superpowers
 .superpowers/

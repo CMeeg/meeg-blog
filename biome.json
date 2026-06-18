@@ -11,5 +11,10 @@
 	},
 	"formatter": {
 		"enabled": true
+	},
+	"vcs": {
+		"enabled": true,
+		"clientKind": "git",
+		"useIgnoreFile": true
 	}
 }
