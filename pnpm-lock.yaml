@@ -228,6 +228,12 @@ importers:
 
   apps/blog:
     dependencies:
+      '@fontsource/inter':
+        specifier: ^5.2.8
+        version: 5.2.8
+      '@fontsource/jetbrains-mono':
+        specifier: ^5.2.8
+        version: 5.2.8
       '@meeg-blog/dato-cms':
         specifier: workspace:*
         version: link:../../packages/dato-cms
@@ -237,19 +243,19 @@ importers:
     devDependencies:
       vitest:
         specifier: 'catalog:'
-        version: 3.2.6(@types/debug@4.1.13)(tsx@4.22.4)
+        version: 3.2.6(@types/debug@4.1.13)(supports-color@8.1.1)(tsx@4.22.4)
 
   packages/dato-cms:
     devDependencies:
       datocms:
         specifier: 'catalog:'
-        version: 4.0.28(@datocms/cma-client-node@5.5.1)(@datocms/cma-client@5.5.1)
+        version: 4.0.28(@datocms/cma-client-node@5.5.1)(@datocms/cma-client@5.5.1)(supports-color@8.1.1)
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
       vitest:
         specifier: 'catalog:'
-        version: 3.2.6(@types/debug@4.1.13)(tsx@4.22.4)
+        version: 3.2.6(@types/debug@4.1.13)(supports-color@8.1.1)(tsx@4.22.4)
 
 packages:
 
@@ -707,6 +713,12 @@ packages:
 
   '@fastify/busboy@3.2.0':
     resolution: {integrity: sha512-m9FVDXU3GT2ITSe0UaMA5rU3QkfC/UXtCU8y0gSN/GugTqtVldOBWIB5V6V3sbmenVZUIpU6f+mPEO2+m5iTaA==}
+
+  '@fontsource/inter@5.2.8':
+    resolution: {integrity: sha512-P6r5WnJoKiNVV+zvW2xM13gNdFhAEpQ9dQJHt3naLvfg+LkF2ldgSLiF4T41lf1SQCM9QmkqPTn4TH568IRagg==}
+
+  '@fontsource/jetbrains-mono@5.2.8':
+    resolution: {integrity: sha512-6w8/SG4kqvIMu7xd7wt6x3idn1Qux3p9N62s6G3rfldOUYHpWcc2FKrqf+Vo44jRvqWj2oAtTHrZXEP23oSKwQ==}
 
   '@img/colour@1.1.0':
     resolution: {integrity: sha512-Td76q7j57o/tLVdgS746cYARfSyxk8iEfRxewL9h4OMzYhbW4TAcppl0mT4eyqXddh6L/jwoM75mo7ixa/pCeQ==}
@@ -3598,6 +3610,10 @@ snapshots:
 
   '@fastify/busboy@3.2.0': {}
 
+  '@fontsource/inter@5.2.8': {}
+
+  '@fontsource/jetbrains-mono@5.2.8': {}
+
   '@img/colour@1.1.0':
     optional: true
 
@@ -3817,7 +3833,7 @@ snapshots:
       wordwrap: 1.0.0
       wrap-ansi: 7.0.0
 
-  '@oclif/plugin-autocomplete@3.2.50':
+  '@oclif/plugin-autocomplete@3.2.50(supports-color@8.1.1)':
     dependencies:
       '@oclif/core': 4.11.7
       ansis: 3.17.0
@@ -3839,7 +3855,7 @@ snapshots:
     transitivePeerDependencies:
       - '@types/node'
 
-  '@oclif/plugin-plugins@5.4.74':
+  '@oclif/plugin-plugins@5.4.74(supports-color@8.1.1)':
     dependencies:
       '@oclif/core': 4.11.7
       ansis: 3.17.0
@@ -3855,12 +3871,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@oclif/plugin-warn-if-update-available@3.1.65':
+  '@oclif/plugin-warn-if-update-available@3.1.65(supports-color@8.1.1)':
     dependencies:
       '@oclif/core': 4.11.7
       ansis: 3.17.0
       debug: 4.4.3(supports-color@8.1.1)
-      http-call: 5.3.0
+      http-call: 5.3.0(supports-color@8.1.1)
       lodash: 4.18.1
       registry-auth-token: 5.1.1
     transitivePeerDependencies:
@@ -4464,7 +4480,7 @@ snapshots:
     dependencies:
       array-flatten: 3.0.0
 
-  datocms@4.0.28(@datocms/cma-client-node@5.5.1)(@datocms/cma-client@5.5.1):
+  datocms@4.0.28(@datocms/cma-client-node@5.5.1)(@datocms/cma-client@5.5.1)(supports-color@8.1.1):
     dependencies:
       '@datocms/cli-utils': 4.0.25
       '@datocms/cma-client-analysis': 5.5.1(@datocms/cma-client-node@5.5.1)(@datocms/rest-api-reference@5.4.19)(typescript@5.7.2)
@@ -4473,11 +4489,11 @@ snapshots:
       '@datocms/rest-api-reference': 5.4.19
       '@datocms/rest-client-utils': 5.4.9
       '@inquirer/prompts': 7.10.1
-      '@oclif/plugin-autocomplete': 3.2.50
+      '@oclif/plugin-autocomplete': 3.2.50(supports-color@8.1.1)
       '@oclif/plugin-help': 6.2.50
       '@oclif/plugin-not-found': 3.2.87
-      '@oclif/plugin-plugins': 5.4.74
-      '@oclif/plugin-warn-if-update-available': 3.1.65
+      '@oclif/plugin-plugins': 5.4.74(supports-color@8.1.1)
+      '@oclif/plugin-warn-if-update-available': 3.1.65(supports-color@8.1.1)
       '@toon-format/toon': 2.3.0
       env-paths: 2.2.1
       json5: 2.2.3
@@ -5004,7 +5020,7 @@ snapshots:
 
   http-cache-semantics@4.2.0: {}
 
-  http-call@5.3.0:
+  http-call@5.3.0(supports-color@8.1.1):
     dependencies:
       content-type: 1.0.5
       debug: 4.4.3(supports-color@8.1.1)
@@ -6307,7 +6323,7 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.3
 
-  vite-node@3.2.4(tsx@4.22.4):
+  vite-node@3.2.4(supports-color@8.1.1)(tsx@4.22.4):
     dependencies:
       cac: 6.7.14
       debug: 4.4.3(supports-color@8.1.1)
@@ -6344,7 +6360,7 @@ snapshots:
     optionalDependencies:
       vite: 7.3.5(tsx@4.22.4)
 
-  vitest@3.2.6(@types/debug@4.1.13)(tsx@4.22.4):
+  vitest@3.2.6(@types/debug@4.1.13)(supports-color@8.1.1)(tsx@4.22.4):
     dependencies:
       '@types/chai': 5.2.3
       '@vitest/expect': 3.2.6
@@ -6367,7 +6383,7 @@ snapshots:
       tinypool: 1.1.1
       tinyrainbow: 2.0.0
       vite: 7.3.5(tsx@4.22.4)
-      vite-node: 3.2.4(tsx@4.22.4)
+      vite-node: 3.2.4(supports-color@8.1.1)(tsx@4.22.4)
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@types/debug': 4.1.13

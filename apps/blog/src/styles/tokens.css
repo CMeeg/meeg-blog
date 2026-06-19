@@ -1,0 +1,119 @@
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/600.css';
+@import '@fontsource/inter/700.css';
+@import '@fontsource/jetbrains-mono/400.css';
+@import '@fontsource/jetbrains-mono/500.css';
+@import '@fontsource/jetbrains-mono/700.css';
+
+:root {
+  --font-family-body: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-family-mono: 'JetBrains Mono', monospace;
+
+  --size-step-0: clamp(1rem, 0.96rem + 0.22vw, 1.13rem);
+  --size-step-1: clamp(1.125rem, 1.06rem + 0.33vw, 1.25rem);
+  --size-step-2: clamp(1.25rem, 1.16rem + 0.43vw, 1.5rem);
+  --size-step-3: clamp(1.5rem, 1.36rem + 0.7vw, 1.875rem);
+  --size-step-4: clamp(1.75rem, 1.53rem + 1.1vw, 2.5rem);
+  --size-step-5: clamp(1.875rem, 1.56rem + 1.58vw, 2.75rem);
+
+  --line-height-heading: 1.1;
+  --line-height-body: 1.7;
+
+  --max-width-content: 45rem;
+  --max-width-lede: 50ch;
+
+  --flow-space-default: 1em;
+  --flow-space-heading: 1.5em;
+  --flow-space-after-heading: 0.5em;
+
+  --glass-blur: 12px;
+
+  --card-shadow:
+    0 1px 1px hsl(231deg 15% 8% / 0.5),
+    0 2px 2px hsl(231deg 15% 8% / 0.3),
+    0 4px 4px hsl(231deg 15% 8% / 0.15),
+    0 8px 8px hsl(231deg 15% 8% / 0.1);
+
+  --tag-alpha: 0.15;
+
+  --link-underline-thickness: 0.15em;
+  --link-underline-offset: 0.2em;
+
+  --color-bg-primary: #f8f8f2;
+  --color-bg-secondary: #ffffff;
+  --color-bg-tertiary: rgba(224, 224, 224, 0.5);
+  --color-surface-card: #ffffff;
+  --color-surface-glass: rgba(248, 248, 242, 0.85);
+
+  --color-text-primary: #282a36;
+  --color-text-secondary: #6272a4;
+  --color-text-link: #d96c00;
+
+  --color-border-subtle: rgba(224, 224, 224, 0.5);
+  --color-border-codeblock: rgba(224, 224, 224, 0.5);
+
+  --color-accent-cyan: #0891b2;
+  --color-accent-green: #16a34a;
+  --color-accent-pink: #db2777;
+  --color-accent-purple: #7c3aed;
+  --color-accent-orange: #d96c00;
+  --color-accent-red: #dc2626;
+  --color-accent-yellow: #ca8a04;
+
+  --color-mugshot-ring: #7c3aed;
+  --color-blockquote-border: #7c3aed;
+}
+
+[data-theme='dark'] {
+  --color-bg-primary: #282a36;
+  --color-bg-secondary: #1e1f29;
+  --color-bg-tertiary: rgba(68, 71, 90, 0.12);
+  --color-surface-card: rgba(68, 71, 90, 0.12);
+  --color-surface-glass: rgba(40, 42, 54, 0.75);
+
+  --color-text-primary: #f8f8f2;
+  --color-text-secondary: #6272a4;
+  --color-text-link: #ffb86c;
+
+  --color-border-subtle: rgba(68, 71, 90, 0.25);
+  --color-border-codeblock: rgba(68, 71, 90, 0.25);
+
+  --color-accent-cyan: #8be9fd;
+  --color-accent-green: #50fa7b;
+  --color-accent-pink: #ff79c6;
+  --color-accent-purple: #bd93f9;
+  --color-accent-orange: #ffb86c;
+  --color-accent-red: #ff5555;
+  --color-accent-yellow: #f1fa8c;
+
+  --color-mugshot-ring: #bd93f9;
+  --color-blockquote-border: #bd93f9;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --color-bg-primary: #282a36;
+    --color-bg-secondary: #1e1f29;
+    --color-bg-tertiary: rgba(68, 71, 90, 0.12);
+    --color-surface-card: rgba(68, 71, 90, 0.12);
+    --color-surface-glass: rgba(40, 42, 54, 0.75);
+
+    --color-text-primary: #f8f8f2;
+    --color-text-secondary: #6272a4;
+    --color-text-link: #ffb86c;
+
+    --color-border-subtle: rgba(68, 71, 90, 0.25);
+    --color-border-codeblock: rgba(68, 71, 90, 0.25);
+
+    --color-accent-cyan: #8be9fd;
+    --color-accent-green: #50fa7b;
+    --color-accent-pink: #ff79c6;
+    --color-accent-purple: #bd93f9;
+    --color-accent-orange: #ffb86c;
+    --color-accent-red: #ff5555;
+    --color-accent-yellow: #f1fa8c;
+
+    --color-mugshot-ring: #bd93f9;
+    --color-blockquote-border: #bd93f9;
+  }
+}

@@ -10,8 +10,10 @@
 		"test": "vitest run"
 	},
 	"dependencies": {
-		"astro": "^6.4.4",
-		"@meeg-blog/dato-cms": "workspace:*"
+		"@fontsource/inter": "^5.2.8",
+		"@fontsource/jetbrains-mono": "^5.2.8",
+		"@meeg-blog/dato-cms": "workspace:*",
+		"astro": "^6.4.4"
 	},
 	"devDependencies": {
 		"vitest": "catalog:"

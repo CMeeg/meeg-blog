@@ -64,3 +64,8 @@ Project decisions preserved for AI agents. Each entry is dated.
 - **Depends on solution setup plan.** The monorepo structure (`apps/blog/src/styles/`) must be in place before CSS tokens are committed. Execution order: solution setup → design system → content model.
 - **Execution mode:** Subagent-driven, on demand (user will trigger when ready).
 - **Orange-link light mode resolution deferred to Open Design collaboration.** Task 5 of the plan resolves it within the collab session rather than deferring to implementation.
+- **Light mode link colour resolved during collaboration.** Orange `#ffb86c` is illegible on light background (`#f8f8f2`). Resolved to `#d96c00` (burnt orange) for WCAG AA contrast in light mode.
+- **Design token CSS extracted to `apps/blog/src/styles/tokens.css`.** Dark mode via `prefers-color-scheme` + `[data-theme="dark"]` override, light mode via `:root` default. Includes colour tokens, Utopia fluid type scale, rhythm tokens, glass header, card shadows, and link styling tokens.
+- **Dracula palette preserved exactly in dark mode.** Light mode (Draco) colours adapted with: background `#f8f8f2`, text `#282a36`, surface `#ffffff`, muted `#e0e0e0`, accent colours shifted for light ground (cyans, greens, purples darkened).
+- **Open Design project `meeg-blog-design-system`** contains 12 HTML artifacts: 1 entry index, 2 token references (dark + light), 6 component mockups, and 4 page mockups (home, article, about, archive) in both colour modes.
+- **`@fontsource/inter` and `@fontsource/jetbrains-mono` installed** via pnpm workspace filter.
